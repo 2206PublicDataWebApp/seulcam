@@ -1,0 +1,10 @@
+/* 애플산돌고딕 폰트 적용 */
+@font-face { 
+    font-family: "SDGothic";
+    src: url("/resources/fonts/AppleSDGothicNeoM.ttf") format("truetype");
+    font-weight: normal;
+}
+
+* {
+    font-family: 'SDGothic', serif;
+}
