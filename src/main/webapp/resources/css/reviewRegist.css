@@ -1,0 +1,72 @@
+@charset "UTF-8";
+label {
+    display: block;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.57;
+}
+body > section > div.box-form > input.g-inputbox-medium{
+    width: 100%;
+    padding: 15px 9px 14px 10px;
+ 
+    height: 50px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+body > section > div.box-form > div > textarea{
+    width: 100%;
+    height: 350px;
+    padding: 17px 11px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.box-img-upload{
+    width: 115px;
+  height: 131px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  
+  background-color:rgb(232, 230, 230);
+  
+}
+.drop-zone__prompt{
+    color: darkgrey;
+    font-size: 50px;
+}
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color:honeydew;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 0;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 12px;
+  text-align: center;
+}
+
+

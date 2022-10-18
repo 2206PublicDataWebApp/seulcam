@@ -1,0 +1,122 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-size: 100%;
+    vertical-align: baseline;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+    font-weight: 200;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+body {
+    font-size: 12px;
+    font-family: 'futura', 'Noto Sans CJK KR',sans-serif;
+    overflow-x: hidden;
+}
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body > header, body > nav, body > section, body > footer {
+    width: 100%;
+    position: relative;
+}
+.shop > .list ul {
+    display: table;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+ul {
+    padding-inline-start: 0;
+}
+section.top20 > article.list > ul > li {
+    width: 33.3333333333%;
+}
+.shop > .list ul > li {
+    display: inline-block;
+    width: 50%;
+    float: left;
+    position: relative;
+    border-top: solid 1px #000;
+    border-right: solid 1px #000;
+}
+li {
+    list-style: none;
+}
+.shop > .list ul > li > a {
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 45px;
+    color: #000;
+    position: relative;
+}
+a {
+    text-decoration: none;
+}
+.shop > .list ul > li > a .thumbNail {
+    width: 100%;
+    padding-bottom: 120%;
+    display: inline-block;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    background-size:100% 90%;
+}
+h1, h2, h3, h4, h5, span, small {
+    vertical-align: top;
+}
+section.top20 > article.list > ul > li > a .box {
+    border-top: solid 1px #000;
+    min-height: 41px;
+}
+.shop > .list ul > li > a .box {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    padding: 8px 0 0 4px;
+}
+section.top20 > article.list > ul > li > a .thumbNail p {
+    position: absolute;
+    top: calc( 50% - 10px );
+    left: 0;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    text-align: center;
+}
+section.top20 > article.list > ul > li:nth-child(2n) > a .thumbNail {
+    width: 100%;
+}
+#list > li.top20, #list > li:nth-child(2),#list > li:nth-child(3){
+	border-top:none;
+}
+
+.shop > .list ul > li > a .price {
+    font-size: 10px;
+    color: #aaaaaa;
+    position: absolute;
+    bottom: 0;
+    right: 4px;
+    text-align: right;
+    display: inline-block;
+}
+section.top20 > article.list > ul > li > .label {
+    position: absolute;
+    z-index: 2;
+    top: 5px;
+    left: 5px;
+    font-size: 9px;
+    font-family: "Futura";
+}
