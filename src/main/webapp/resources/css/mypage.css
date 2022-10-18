@@ -1,0 +1,255 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 14px;
+    color: #000;
+    background-color: #f1f1f1;
+}
+
+.body-wrapper {
+    max-width: 400px;
+    margin: 0 auto; 
+    background-color: white;
+    min-height: 100vh;
+}
+
+button {
+    border: 0;
+    background: 0 0;
+    cursor: pointer;
+}
+
+a {
+   text-decoration: none; 
+   color: black;
+}
+
+li {
+    list-style: none;
+}
+
+/* Header */
+#header-block {
+    height: 50px;
+}
+
+header {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    max-width: 400px;
+    margin: 0 auto; 
+}
+
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 385px;
+    margin: 0 auto;
+    height: 50px;
+    position: relative;
+}
+
+header > h1 {
+    font-size: 0;
+}
+
+.icon-list {
+    display: inline-flex;
+    position: absolute;
+    right: 12px;
+    top: 16px;
+    list-style: none;
+}
+
+.icon-list li {
+    margin-left: 15px;
+}
+
+.cart-icon {
+    display: block;
+    width: 27px;
+    height: 27px;
+    background: url(/resources/images/cart.png) no-repeat center;
+    background-size: contain;
+}
+
+.setting-icon {
+    display: block;
+    width: 20px;
+    height: 25px;
+    background: url(/resources/images/setting.png) no-repeat center;
+    background-size: contain;
+}
+
+/* Section */
+.first-layout-wrapper {
+    padding-top: 8px;
+    padding-bottom: 15px;
+    border-bottom: 10px solid rgb(243, 243, 243);
+}
+
+/* Nickname & Profile */
+
+.nickname-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    margin-bottom: 16px;
+}
+
+.nickname-box {
+    display: flex;
+    align-items: center;
+}
+
+.profile-box > input {
+    display: none;
+}
+
+.profile-default {
+    height: 50px;
+    width: 50px;
+}
+
+.profileImage {
+    display: block;
+    position: relative;
+}
+
+.camera-box {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(236, 236, 236);
+    border-radius: 14px;
+    background-color: rgb(255,255,255);
+}
+
+.camera {
+    width: 12px;
+    height: 12px;
+}
+
+.nickname-change {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.nickname {
+    max-width: 130px;
+    margin-right: 5px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 25px;
+}
+
+.pencil {
+    width: 14px;
+    height: 14px;
+}
+
+/* Order box */
+
+.order-list {
+    padding: 10px 30px;
+}
+
+.order-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100px;
+    height: 88px;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: rgb(232 232 232 / 70%) 0px 3px 12px;
+    vertical-align: center;
+}
+
+
+.order-number {
+    font-size: 22px;
+    line-height: 30px;
+    margin-bottom: 2px;
+}
+
+.order-text {
+    font-size: 12px;
+    line-height: 15px;
+}
+
+/* shopping lookup */
+
+.second-layout-wrapper {
+    padding: 28px 15px 31px;
+}
+
+.shop-info {
+    margin-bottom: 4px;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgb(179, 179, 179);
+}
+
+.info-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.list-item {
+    flex: 0 0 50%;
+}
+
+.item-link {
+    display: block;
+    padding: 12px 0 9px;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+.second-shop-layout {
+    margin-top: 20px;
+}
+
+/* footer */
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 28px 15px 20px;
+    background-color: rgb(249, 249, 249);
+    text-align: center;
+}
+
+.footer-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.go-main {
+    margin-right: 15px;
+}

@@ -1,0 +1,165 @@
+* {
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+}
+
+li {
+    list-style: none;
+}
+
+.main-navigation {
+    position: fixed;
+    top: 56px;
+    right: 0;
+    padding: 10px 20px;
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    opacity: 0;
+    visibility: hidden  ;
+    transform: translateX(-100%);
+    overflow-y: scroll;
+}
+
+/* nav 안에 바로 a태그로 연결하는 모양 */
+.main-navigation a{
+    display: block;
+    height: 30px;
+    margin: auto;
+    font-size: 12px;
+    line-height: 26px;
+}
+
+.main-navigation> ul> .main-menu > a:after {
+    content: "+";
+    margin-left: 3px;
+}
+
+.main-navigation.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    transition: 0.3s;
+}
+
+.content {
+    display: none;
+}
+
+.main-menu.active > .content {
+    display: block;
+}
+
+.main-navigation> ul> .main-menu.active > a:after {
+    content: "-";
+}
+
+.sub-menu {
+    margin-left: 20px;
+}
+
+.sub-menu > li > a {
+    font-weight: 200;
+}
+
+header {
+    padding: 0;
+    height: 56px;
+    border-bottom: solid 1px #000;
+    
+
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header h1 {
+    height: 56px;
+    font-size: 0px;
+}
+
+header h1 img {
+    top: 20px;
+    padding-top: 8px;
+}
+
+.more-btn{
+    display: block;
+    position: absolute;
+    left: 12px;
+    top: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    background-color: transparent;
+}
+
+.more-btn .icon {
+    display: block;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    margin: 0 auto;
+    background: url(/resources/images/icon-menu.png) no-repeat center;
+    background-size: contain;
+    
+}
+
+.more-btn.active .icon {
+    background: url(/resources/images/icon-close.png) no-repeat center;
+    background-size: contain;
+    z-index:1;
+}
+
+.icon-list {
+    display: inline-flex;
+    position: absolute;
+    right: 12px;
+    top: 16px;
+    list-style: none;
+}
+
+.icon-list li {
+    margin-left: 6px;
+}
+
+.search-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: url(/resources/images/search.png) no-repeat center;
+    background-size: contain;
+}
+
+
+.cart-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: url(/resources/images/cart.png) no-repeat center;
+    background-size: contain;
+}
+
+.member-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: url(/resources/images/user.png) no-repeat center;
+    background-size: contain;
+}
