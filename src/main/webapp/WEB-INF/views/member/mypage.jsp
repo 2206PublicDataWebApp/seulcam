@@ -86,7 +86,7 @@
                     </li>
 
                     <li class="list-item">
-                        <a class="item-link" href="#">포익트 내역 조회</a>
+                        <a class="item-link" href="#">포인트 내역 조회</a>
                     </li>
 
                     <li class="list-item">

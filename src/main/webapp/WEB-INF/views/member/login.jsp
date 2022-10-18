@@ -41,11 +41,11 @@
             </div>
 
             <div class="login-member">
-                <form name="loginform" class="login-form" action="#" method="post">
+                <form name="loginform" class="login-form" action="/member/login" method="post">
                     <div class="login-member-form">
-                        <input class="login-input" type="text" id="memberId" placeholder="아이디" maxlength="11">
+                        <input class="login-input" type="text" name="memberId" id="memberId" placeholder="아이디" maxlength="11">
                         <div class="password-input-wrapper">
-                            <input class="login-input-pw" type="password" id="memberPwd" placeholder="비밀번호" maxlength="30">
+                            <input class="login-input-pw" type="password" name="memberPw" id="memberPw" placeholder="비밀번호" maxlength="30">
                             <button type="button" class="password-eye"></button>
                         </div>
                     </div>

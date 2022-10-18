@@ -12,14 +12,14 @@ $("#memberId").on('keyup', function () {
     }
 });
 
-$("#memberPwd").on('keyup', function () {
-    if (!regPwd.test($('#memberPwd').val())) {
-        $(".pwd-check").text("영문, 숫자, 특수문자를 최소 한가지씩 조합하여 입력해주세요");
-    } else if($("#memberPwd").val().length<8) {
-        $(".pwd-check").text("8자 이상으로 입력해 주십시오.");
+$("#memberPw").on('keyup', function () {
+    if (!regPwd.test($('#memberPw').val())) {
+        $(".pw-check").text("영문, 숫자, 특수문자를 최소 한가지씩 조합하여 입력해주세요");
+    } else if($("#memberPw").val().length<8) {
+        $(".pw-check").text("8자 이상으로 입력해 주십시오.");
     }
     else {
-        $(".pwd-check").empty();
+        $(".pw-check").empty();
     }
 });
 

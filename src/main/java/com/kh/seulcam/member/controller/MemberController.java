@@ -1,12 +1,23 @@
 package com.kh.seulcam.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import com.kh.seulcam.member.service.MemberService;
+import com.kh.seulcam.member.domain.Member;
 
 @Controller
 public class MemberController {
+	@Autowired
+	private MemberService mService;
+	
 		/* 로그인 관련 */
 	// 비로그인 상태일 때 로그인 창으로 이동
 	@RequestMapping(value="/member/loginView", method=RequestMethod.GET)
@@ -86,6 +97,51 @@ public class MemberController {
 	@RequestMapping(value="/member/addressChangeView", method=RequestMethod.GET)
 	public String addressChangeView(Model model) {
 		return "member/addressChange";
+	}
+	
+	// 로그인 기능
+	@RequestMapping(value="/member/login", method=RequestMethod.POST)
+	public ModelAndView memberLogin(
+			@ModelAttribute Member member
+			, ModelAndView mv
+			, HttpServletRequest request) {
+		try {
+			Member loginUser = mService.loginMember(member);
+			if(loginUser != null) {
+				HttpSession session = request.getSession();
+				session.setAttribute("loginUser", loginUser);
+				mv.setViewName("redirect:/");
+			}else {
+				mv.addObject("msg", "회원정보를 찾을 수 없습니다.");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString());
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// 회원가입 기능
+	@RequestMapping(value="/member/register", method=RequestMethod.POST)
+	public ModelAndView memberRegister(
+			@ModelAttribute Member member
+			, ModelAndView mv) {
+		try {
+			int result = mService.registerMember(member);
+			// 회원가입에 성공하면,
+			if(result > 0) {
+				mv.setViewName("redirect:/member/congView"); 
+			}
+			// 회원가입에 실패하면,
+			else {
+				mv.addObject("msg", "회원가입을 실패했습니다.");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
 	}
 	
 
