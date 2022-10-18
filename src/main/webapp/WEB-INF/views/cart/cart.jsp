@@ -287,7 +287,6 @@ opacity: .3;
 		    selectAll.checked = false;
 		  }
 
-	$('.cart_count').innerText=checked.length;
 		}
 
 		function selectAll(selectAll)  {
