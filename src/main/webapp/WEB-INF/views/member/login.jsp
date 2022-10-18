@@ -23,8 +23,8 @@
                 </h1>
                 <div class="header-wrapper">
                     <div class="back-layout">
-                        <button class="go-back">
-                            <img src="/resources/images/back_arrow.png"> <!--좀 더 작은 이미지 파일로 바꾸기-->
+                        <button class="go-back" onclick="history.back()">
+                            <img src="/resources/images/back_arrow.png">
                         </button>
                     </div>
                     <h2>
@@ -57,8 +57,8 @@
                         <label for="autologin" id="labelAutologin">자동 로그인</label>
 
                         <ul class="util-list">
-                            <li class="util-item1"><a class="find-id" href="#">아이디 찾기</a></li>
-                            <li class="util-item2"><a class="find-pw" href="#">비밀번호 찾기</a></li>
+                            <li class="util-item1"><a class="find-id" href="/member/findIdView">아이디 찾기</a></li>
+                            <li class="util-item2"><a class="find-pw" href="/member/findPwView">비밀번호 찾기</a></li>
                         </ul>
                     </div>
 
@@ -71,7 +71,7 @@
             </div>
 
             <div class="register">
-                <p class="register-text">아직 계정이 없다면? <a href="#">회원가입</a> </p>
+                <p class="register-text">아직 계정이 없다면? <a href="/member/registerView">회원가입</a> </p>
             </div>
 
 

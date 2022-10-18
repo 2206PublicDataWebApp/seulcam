@@ -1,27 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
-    <title>header</title>
-    <link rel="stylesheet" href="/resources/views/header.css">
+    <link rel="stylesheet" href="/resources/css/header.css">
     <!-- 제이쿼리 로드 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
     <header>
         <div class="wrapper">
-            <h1><a href="#"><img class="logo" src="/small-logo.png">슬기로운 캠핑 생활</a></h1>
+            <h1><a href="#"><img class="logo" src="/resources/images/small-logo.png">슬기로운 캠핑 생활</a></h1>
             <button class="more-btn">
                 <i class="icon"></i>
             </button>
             <ul class="icon-list">
                 <li><a href="#"><i class="search-icon"></i></a></li>
                 <li><a href="#"><i class="cart-icon"></i></a></li>
-                <li><a href="#"><i class="member-icon"></i></a></li>
+                <li>
+	                <c:if test="${sessionScope.loginUser eq null}">
+	                <a href="/member/loginView"><i class="member-icon"></i></a>
+	                </c:if>
+	                
+	                <c:if test="${not empty loginUser}">
+	                <a href="/member/myPageView"><i class="member-icon"></i></a>
+	                </c:if>
+                </li>
             </ul>
         </div>
     </header>

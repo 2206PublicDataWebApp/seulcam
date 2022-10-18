@@ -4,6 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace= "MemberMapper">
-  	
-  	
+  	<resultMap type="Member" id="memberResultMap">
+  		<id 	property="memberId" 	column="MEMBER_ID"/>
+  		<result property="memberPw" 	column="MEMBER_PW"/>
+  		<result property="memberNickname" 	column="MEMBER_NICKNAME"/>
+  		<result property="memberEmail" 	column="MEMBER_EMAIL"/>
+  		<result property="memberRecommend" 	column="MEMBER_RECOMMEND"/>
+  		<result property="memberName" 	column="MEMBER_NAME"/>
+  		<result property="memberPhone" 	column="MEMBER_PHONE"/>
+  		<result property="memberZip" 	column="MEMBER_ZIP"/>
+  		<result property="memberAddress1" 	column="MEMBER_ADDRESS1"/>
+  		<result property="memberAddress2" 	column="MEMBER_ADDRESS2"/>
+  		<result property="memberAccountName" 	column="MEMBER_ACCOUNT_NAME"/>
+  		<result property="memberAccountBank" 	column="MEMBER_ACCOUNT_BANK"/>
+  		<result property="memberAccountNumber" 	column="MEMBER_ACCOUNT_NUMBER"/>
+  		<result property="adminCheck" 	column="ADMIN_CHECK"/>
+  		<result property="memberDate" 	column="MEMBER_DATE"/>
+  		<result property="totalPoint" 	column="TOTAL_POINT"/>
+  		<result property="memberImage" 	column="MEMBER_IMAGE"/>
+  		<result property="memberFilename" 	column="MEMBER_FILENAME"/>
+  		<result property="memberFilername" 	column="MEMBER_FILERNAME"/>
+  		<result property="memberCategory" 	column="MEMBER_CATEGORY"/>
+  	</resultMap>
 </mapper>

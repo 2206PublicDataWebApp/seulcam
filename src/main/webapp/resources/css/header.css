@@ -4,7 +4,6 @@
     box-sizing: border-box;
 }
 
-
 a {
     text-decoration: none;
     color: black;
@@ -47,9 +46,6 @@ li {
     content: "+";
     margin-left: 3px;
 }
-
-
-
 
 .main-navigation.active {
     opacity: 1;
@@ -120,13 +116,13 @@ header h1 img {
     width: 24px;
     height: 24px;
     margin: 0 auto;
-    background: url(./icon-menu.png) no-repeat center;
+    background: url(/resources/images/icon-menu.png) no-repeat center;
     background-size: contain;
     
 }
 
 .more-btn.active .icon {
-    background: url(/icon-close.png) no-repeat center;
+    background: url(/resources/images/icon-close.png) no-repeat center;
     background-size: contain;
     z-index:1;
 }
@@ -147,7 +143,7 @@ header h1 img {
     display: block;
     width: 24px;
     height: 24px;
-    background: url(./search.png) no-repeat center;
+    background: url(/resources/images/search.png) no-repeat center;
     background-size: contain;
 }
 
@@ -156,7 +152,7 @@ header h1 img {
     display: block;
     width: 24px;
     height: 24px;
-    background: url(./cart.png) no-repeat center;
+    background: url(/resources/images/cart.png) no-repeat center;
     background-size: contain;
 }
 
@@ -164,6 +160,6 @@ header h1 img {
     display: block;
     width: 24px;
     height: 24px;
-    background: url(./user.png) no-repeat center;
+    background: url(/resources/images/user.png) no-repeat center;
     background-size: contain;
 }
