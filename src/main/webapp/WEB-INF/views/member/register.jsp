@@ -37,79 +37,82 @@
         <!-- content -->
         <section>
             <div class="section-wrapper">
-                <div class="join-membership">
-                    <div class="join-input">
-                        <label id="first-label" for="memberId">
-                            아이디
-                            <span class="label-essential"></span>
-                        </label>
-                        <div class="join-input-wrapper">
-                            <input class="join-input-input" type="text" id="memberId" placeholder="영문, 숫자 5-11자" maxlength="11">
-                        </div>
-                        <p class="id-check"></p>
-                    </div>
-
-                    <div class="join-input">
-                        <label for="memberPwd">
-                            비밀번호
-                            <span class="label-essential"></span>
-                        </label>
-                        <div class="join-input-wrapper">
-                            <input class="join-input-input" type="password" id="memberPwd" placeholder="숫자, 영문, 특수문자 조합 최소 8자" maxlength="30">
-                            <button type="button" class="password-eye"></button>
-                        </div>
-                        <p class="pwd-check"></p>
-                    </div>
-
-                    <div class="join-input">
-                        <div class="join-input-wrapper">
-                            <input class="join-input-input" type="password" id="memberPwdCheck" placeholder="비밀번호 재입력" maxlength="30">
-                            <button type="button" class="password-eye active"></button>
-                        </div>
-                    </div>
-
-                    <div class="join-input">
-                        <label for="memberNickname">
-                            닉네임
-                            <span class="label-essential"></span>
-                        </label>
-                        <div class="join-input-wrapper">
-                            <input class="join-input-input" type="text" id="memberNickname">
-                        </div>
-                    </div>
-
-                    <div class="join-input">
-                        <label for="memberEmail">
-                            이메일
-                            <span class="label-essential"></span>
-                        </label>
-                        <div class="join-input-wrapper">
-                            <input class="join-input-input" type="email" id="memberEmail">
-                        </div>
-                    </div>
-                    <p class="email-check"></p>
-                    <p class="email-text">계정 분실 시 본인인증 정보로 활용됩니다.</p>
-
-                    <div class="join-input">
-                        <label for="friend">
-                            초대 추천인 아이디
-                        </label>
-                        <div class="join-input-wrapper">
-                            <input class="join-input-input" type="text" id="friend" maxlength="11">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="join-button-wrapper">
-                    <button type="submit" class="join-button" onclick="location.href='/member/congView';">
-                        가입하기
-                    </button>
-                </div>
-
-                <ul>
-                    <li>본인인증이 어려운 경우(만 14세 미만 포함), <a href="/" class="no-login">메인으로 이동</a>할 수 있습니다.</li>
-                </ul>
+            	<form action="/member/register" method="post">
+	                <div class="join-membership">
+	                    <div class="join-input">
+	                        <label id="first-label" for="memberId">
+	                            아이디
+	                            <span class="label-essential"></span>
+	                        </label>
+	                        <div class="join-input-wrapper">
+	                            <input class="join-input-input" type="text" name="memberId" placeholder="영문, 숫자 5-11자" maxlength="11">
+	                        </div>
+	                        <p class="id-check"></p>
+	                    </div>
+	
+	                    <div class="join-input">
+	                        <label for="memberPw">
+	                            비밀번호
+	                            <span class="label-essential"></span>
+	                        </label>
+	                        <div class="join-input-wrapper">
+	                            <input class="join-input-input" type="password" name="memberPw" placeholder="숫자, 영문, 특수문자 조합 최소 8자" maxlength="30">
+	                            <button type="button" class="password-eye"></button>
+	                        </div>
+	                        <p class="pwd-check"></p>
+	                    </div>
+	
+	                    <div class="join-input">
+	                        <div class="join-input-wrapper">
+	                            <input class="join-input-input" type="password" id="memberPwdCheck" placeholder="비밀번호 재입력" maxlength="30">
+	                            <button type="button" class="password-eye active"></button>
+	                        </div>
+	                    </div>
+	
+	                    <div class="join-input">
+	                        <label for="memberNickname">
+	                            닉네임
+	                            <span class="label-essential"></span>
+	                        </label>
+	                        <div class="join-input-wrapper">
+	                            <input class="join-input-input" type="text" name="memberNickname">
+	                        </div>
+	                    </div>
+	
+	                    <div class="join-input">
+	                        <label for="memberEmail">
+	                            이메일
+	                            <span class="label-essential"></span>
+	                        </label>
+	                        <div class="join-input-wrapper">
+	                            <input class="join-input-input" type="email" name="memberEmail">
+	                        </div>
+	                    </div>
+	                    <p class="email-check"></p>
+	                    <p class="email-text">계정 분실 시 본인인증 정보로 활용됩니다.</p>
+	
+	                    <div class="join-input">
+	                        <label for="friend">
+	                            초대 추천인 아이디
+	                        </label>
+	                        <div class="join-input-wrapper">
+	                            <input class="join-input-input" type="text" name="memberRecommend" maxlength="11">
+	                        </div>
+	                    </div>
+	                </div>
+	
+	                <div class="join-button-wrapper">
+	                    <button type="submit" class="join-button">
+	                        가입하기
+	                    </button>
+	                </div>
+	
+	                <ul>
+	                    <li>본인인증이 어려운 경우(만 14세 미만 포함), <a href="/" class="no-login">메인으로 이동</a>할 수 있습니다.</li>
+	                </ul>
+                </form>
             </div>
+            
         </section>
     </div>
     <script src="/resources/js/register.js"></script>

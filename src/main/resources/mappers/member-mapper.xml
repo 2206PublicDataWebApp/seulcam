@@ -26,4 +26,16 @@
   		<result property="memberFilername" 	column="MEMBER_FILERNAME"/>
   		<result property="memberCategory" 	column="MEMBER_CATEGORY"/>
   	</resultMap>
+  	
+  		<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER_TABLE
+		VALUES(#{memberId}, #{memberPw}, #{memberNickname}, #{memberEmail}, #{memberRecommend}, NULL, NULL,NULL,NULL,NULL,NULL,NULL,NULL,
+        DEFAULT,DEFAULT,DEFAULT,NULL,NULL,NULL,DEFAULT)
+		</insert>
+		
+		<select id="selectLoginOne" resultMap="memberResultMap">
+		SELECT * FROM MEMBER_TABLE
+		 WHERE MEMBER_ID = #{memberId } AND MEMBER_PW = #{memberPw }
+		</select>
 </mapper>
+

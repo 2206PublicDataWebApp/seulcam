@@ -178,6 +178,7 @@ section {
 
 .join-button-wrapper {
     margin-top: 40px;
+    cursor: pointer;
 }
 
 .join-button {

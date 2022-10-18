@@ -1,0 +1,40 @@
+@charset "UTF-8";
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.social-link {
+    display: inline-flex;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.social-link > li {
+    margin-right: 15px;
+}
+
+.social-link > li > a > i {
+    font-size: 18px;
+    color: black;
+}
+
+.copyright {
+    font-size: 12px;
+    padding: 15px;
+    font-weight: 200;
+    line-height: 1.5;
+    letter-spacing: 0em;
+}
+

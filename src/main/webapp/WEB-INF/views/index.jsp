@@ -12,5 +12,8 @@
 <body>
 	<!-- 헤더 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+	
+	<!-- 푸터 -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>
 </html>
