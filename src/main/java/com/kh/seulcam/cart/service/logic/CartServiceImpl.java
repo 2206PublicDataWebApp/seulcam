@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.kh.seulcam.cart.domain.Cart;
 import com.kh.seulcam.cart.service.CartService;
 import com.kh.seulcam.cart.store.CartStore;
+import com.kh.seulcam.member.domain.Member;
+import com.kh.seulcam.product.domain.Product;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -19,10 +21,28 @@ public class CartServiceImpl implements CartService {
 	private CartStore cStore;
 
 	@Override
-	public List<Cart> printAllCart(String memberId) {
+	public List<Cart> printAllCart(Member memberId) {
 		List<Cart>cList= cStore.selectCart(session,memberId);
 		
 		return cList;
+	}
+
+	@Override
+	public List<Product> printAllProduct(int productNo) {
+		List<Product>pList = cStore.selectProduct(session,productNo);
+		return pList;
+	}
+
+	@Override
+	public int changeCart(Cart cart) {
+		int result = cStore.updateCount(session,cart);
+		return result;
+	}
+
+	@Override
+	public int deleteOne(Integer cartNo) {
+		int result = cStore.deleteOne(session,cartNo);
+		return result;
 	}
 
 }
