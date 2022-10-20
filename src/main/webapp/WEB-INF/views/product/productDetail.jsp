@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable= no">
 <title>상품상세</title>
 </head>
-<link rel="stylesheet" href="/resources/css/productDetail.css">
+<link rel="stylesheet" href="/resources/css/product/productDetail.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zj6zbz23cl"></script>
 

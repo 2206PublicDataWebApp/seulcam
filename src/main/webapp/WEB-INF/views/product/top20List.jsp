@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable= no">
 <title>상품Top20</title>
 </head>
-<link rel="stylesheet" href="/resources/css/top20List.css">
+<link rel="stylesheet" href="/resources/css/product/top20List.css">
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <section class="top20 shop">

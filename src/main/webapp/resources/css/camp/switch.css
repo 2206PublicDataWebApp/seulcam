@@ -1,0 +1,51 @@
+.switch-button {
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 30px;
+}
+
+.switch-button input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.onoff-switch {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius:20px;
+    background-color: #ccc;
+    box-shadow: inset 1px 5px 1px #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.onoff-switch:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #fff;
+    -webkit-transition: .5s;
+    transition: .4s;
+    border-radius:20px;
+}
+
+.switch-button input:checked + .onoff-switch {
+    background-color: #0078ff;;
+    box-shadow: inset 1px 5px 1px #1079f1;
+}
+
+.switch-button input:checked + .onoff-switch:before {
+    -webkit-transform: translateX(39px);
+    -ms-transform: translateX(39px);
+    transform: translateX(39px);
+}
+/* 출처: https://ordinary-code.tistory.com/53 [김평범's OrdinaryCode:티스토리] */

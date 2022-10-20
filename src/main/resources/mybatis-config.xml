@@ -13,7 +13,9 @@
 		<typeAlias type="com.kh.seulcam.member.domain.Member" alias="Member"/>
 		<typeAlias type="com.kh.seulcam.camp.domain.Camp" alias="Camp"/>
 		<typeAlias type="com.kh.seulcam.product.domain.Product" alias="Product"/>
+		<typeAlias type="com.kh.seulcam.product.domain.Brand" alias="Brand"/>
 		<typeAlias type="com.kh.seulcam.basket.domain.Basket" alias="Basket"/>
+		<typeAlias type="com.kh.seulcam.cart.domain.Cart" alias="Cart"/>
 		
 	</typeAliases>
 	<mappers>
@@ -21,5 +23,6 @@
 		<mapper resource="mappers/camp-mapper.xml"></mapper>
 		<mapper resource="mappers/product-mapper.xml"></mapper>
 		<mapper resource="mappers/basket-mapper.xml"></mapper>
+		<mapper resource="mappers/cart-mapper.xml"></mapper>
 	</mappers>
 </configuration>

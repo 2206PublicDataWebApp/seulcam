@@ -23,9 +23,6 @@ public class ProductController {
 		return "product/reviewRegist";
 	}
 	
-	@RequestMapping(value="/admin/productRegist", method=RequestMethod.GET)
-	public String productRegister(Model model) {
-		return "admin/productRegist";
-	}
+
 	
 }
