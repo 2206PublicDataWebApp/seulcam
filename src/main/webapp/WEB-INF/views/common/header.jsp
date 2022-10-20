@@ -16,7 +16,7 @@
             </button>
             <ul class="icon-list">
                 <li><a href="#"><i class="search-icon"></i></a></li>
-                <li><a href="#"><i class="cart-icon"></i></a></li>
+                <li><a href="/cart/cart.kh"><i class="cart-icon"></i></a></li>
                 <li>
 	                <c:if test="${sessionScope.loginUser eq null}">
 	                <a href="/member/loginView"><i class="member-icon"></i></a>

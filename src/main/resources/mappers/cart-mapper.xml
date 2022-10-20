@@ -22,4 +22,36 @@
 		SELECT * FROM CART_TBL
 		 WHERE MEMBER_ID = #{memberId }
 		</select>
+		
+		<update id="updateCount">
+			UPDATE CART_TBL SET CART_COUNT=#{cartCount} WHERE PRODUCT_NO=#{productNo}
+		</update>
+		
+		<delete id="deleteOne">
+			DELETE FROM CART_TBL WHERE CART_NUM=#{cartNo}
+		</delete>
+		
+	<resultMap type="Product" id="productResultMap">
+  		<id 	property="productNo" 		column="PRODUCT_NO"/>
+  		<result property="productName" 		column="PRODUCT_NAME"/>
+  		<result property="category" 		column="CATEGORY"/>
+  		<result property="productPrice" 	column="PRODUCT_PRICE"/>
+  		<result property="productColor" 	column="PRODUCT_COLOR"/>
+  		<result property="productStock" 	column="PRODUCT_STOCK"/>
+  		<result property="mainFileName" 	column="MAIN_FILE_NAME"/>
+  		<result property="mainFilePath" 	column="MAIN_FILE_PATH"/>
+  		<result property="mainFileRename" 	column="MAIN_FILE_RENAME"/>
+  		<result property="updateDate" 		column="UPDATE_DATE"/>
+  		<result property="brandName" 		column="BRAND_NAME"/>
+  		<result property="productMaterial" 	column="PRODUCT_MATERIAL"/>
+  		<result property="saleCount" 		column="SALE_COUNT"/>
+
+  		
+  	</resultMap>
+		
+		
+		<select id="selectAllProduct" resultMap="productResultMap">
+		SELECT *FROM PRODUCT_TBL
+		WHERE PRODUCT_NO=#{productNo}
+		</select>
 </mapper>
