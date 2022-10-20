@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,23 +23,13 @@
 }
 .click_table{
 	width:100%;
-	/* display:block; */
 	border: 1px solid #444444;
 
 }
 .list_table {
-	/* position: relative;
-	left:100px; */
-	/* display:block;  */
 	width:100%;
 	border: 1px solid #444444;
 	text-align:center;
-	/* display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 50px;
-	position: relative;
-	font-size: 16px; */
 }
 .price_table{
 	width:100%;
@@ -90,7 +81,6 @@
     display: inline-block;
     width: 30px;
     height: 30px;
-   /*  transform: rotate(45deg); */
     opacity: .3;
     font-size: 50;
     
@@ -131,8 +121,8 @@ opacity: .3;
 
 		</div>
 		<div class="cart_wrap">
-
-
+		
+			
 			<table class="click_table">
 				<tr>
 					<td>
@@ -141,7 +131,7 @@ opacity: .3;
 					<span id="total_cart_cnt"><strong id="cart_count"></strong>개</span>
 					</td>
 					<td align="right">
-						<button class="cart_button">선택 삭제</button>
+						<button class="cart_button" onclick="cart_delete()">선택 삭제</button>
 					</td>
 				</tr>
 				<tr>
@@ -157,7 +147,8 @@ opacity: .3;
 		
 
 		<div class="cart_list">
-		
+		<c:forEach items="${cList}" var="cart" varStatus="i ">
+		<input type="hidden" name="cartCount" value="${cart.cartCount }"/>	
 		<table class="list_table">
 		<tr>
 		<td rowspan="4">
@@ -197,10 +188,12 @@ opacity: .3;
 		</td>
 		</tr>
 		</table>
+		
+		</c:forEach>
 		<table class="list_table">
 		<tr>
 		<td rowspan="4">
-				<input type="checkbox" name="cartbox" id="check_select"onclick="checkSelectAll()" /> 
+				<input type="checkbox" id="check_select" name="cartbox" onclick="checkSelectAll()" /> 
 		</td>
 		<td rowspan="4">
 		<img src="//image.msscdn.net/images/goods_img/20220906/2774157/2774157_1_160.jpg" alt="윅(WICK) ACID 워싱 볼캡-차콜" >
@@ -210,7 +203,7 @@ opacity: .3;
 		</td>
 		<td align="right" >
 		
-		<button class="delete" onclick="selectDelete(this)">X</button>
+		<button class="delete">X</button>
 		</td>
 		</tr>
 		
@@ -236,6 +229,7 @@ opacity: .3;
 		</td>
 		</tr>
 		</table>
+		
 		
 
 		</div>
@@ -325,6 +319,13 @@ opacity: .3;
 	        }
 	    }
 	});
+	
+	
+	
+	
+	function cart_delete(){
+		
+	}
 	</script>
 
 </body>

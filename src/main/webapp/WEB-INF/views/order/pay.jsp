@@ -15,7 +15,7 @@
 <body>
 <div id="app">
     <h1>iamport-checkout</h1>
-    <input v-model="impCode" placeholder="가맹점 식별코드">
+   <!--  <input v-model="impCode" placeholder="가맹점 식별코드" value="imp56144003"> -->
     <input v-model="order.name" placeholder="상품명">
     <input v-model="order.amount" placeholder="상품가격">
     <input v-model="order.buyer_tel" placeholder="주문자 전화번호">
@@ -39,7 +39,7 @@
             requestPay: function(){
                 //1. 객체 초기화 (가맹점 식별코드 삽입)
                 var IMP = window.IMP;
-                IMP.init(this.impCode);
+                IMP.init("imp56144003");
                 //3. 결제창 호출
                 IMP.request_pay({
                     pg : 'jtnet',
