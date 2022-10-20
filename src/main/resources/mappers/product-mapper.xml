@@ -7,6 +7,22 @@
 	<resultMap type="Map" id="brandNameResultMap">
 		<result property="brandName"	column="BRAND_NAME"/>
 	</resultMap>
+	<resultMap type="Product" id="productResultMap">
+		<id property="productNo"			column="PRODUCT_NO"/>
+		<result property="productName"		column="PRODUCT_NAME"/>
+		<result property="category"			column="CATEGORY"/>
+		<result property="productPrice"		column="PRODUCT_PRICE"/>
+		<result property="productColor"		column="PRODUCT_COLOR"/>
+		<result property="productStock"		column="PRODUCT_STOCK"/>
+		<result property="mainFileName"		column="MAIN_FILE_NAME"/>
+		<result property="mainFilePath"		column="MAIN_FILE_PATH"/>
+		<result property="mainFileRename"	column="MAIN_FILE_RENAME"/>
+		<result property="updateDate"		column="UPDATE_DATE"/>
+		<result property="brandName"		column="BRAND_NAME"/>
+		<result property="productMaterial"	column="PRODUCT_MATERIAL"/>
+		<result property="saleCount"		column="SALE_COUNT"/>
+  	
+	</resultMap>
   	<insert id="insertBrand" parameterType="Brand">
   		INSERT INTO BRAND_TBL
   		VALUES(#{brandName},#{storeZipcode},#{storeAddr},#{storeAddrDetail})
@@ -14,9 +30,11 @@
   	<select id="selectAllStoreName" resultMap="brandNameResultMap">
   		SELECT BRAND_NAME FROM BRAND_TBL
   	</select>
-  	<insert id="" parameterType="Product">
+  	<insert id="insertProduct" parameterType="Product">
   	 	INSERT INTO PRODUCT_TBL
-  	 	VALUES()
+  	 	VALUES(PRODUCT_SEQNO.NEXTVAL, #{productName},#{category},#{productPrice},#{productColor},#{productStock},#{mainFileName},#{mainFilePath},#{mainFileRename},DEFAULT,#{brandName},#{productMaterial},DEFAULT)
   	</insert>
-  	
+  	<select id="selectAllProduct" resultMap="productResultMap">
+  		SELECT * FROM PRODUCT_TBL
+  	</select>
 </mapper>

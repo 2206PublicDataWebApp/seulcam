@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+<form action="/admin/productRegister" enctype="multipart/form-data" method="post">
    <section class="productRegist">
         <div class="leftForm">
             <div class="box-form">
@@ -20,36 +20,39 @@
             </div>
             <div class="box-form">
                 <label>브랜드</label>
-                <select class="selectBox" placeholder="브랜드를 선택해주세요" name="productBrand">
+                <select class="selectBox" placeholder="브랜드를 선택해주세요" name="brandName">
                     <c:forEach items="${sNameList }" var="brandName" varStatus="i">
-                   		 <option>${brandName.brandName }</option>
-
+                   		 <option value="${brandName.brandName }">${brandName.brandName }</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="box-form">
                 <label>카테고리</label>
                 <select class="selectBox" placeholder="카테고리를 선택해주세요" name="category">
-						<option>텐트</option>
-						<option>타프</option>
-						<option>테이블</option>
-						<option>체어</option>
-						<option>침낭</option>
-						<option>매트</option>
-						<option>야전침대</option>
-						<option>코펠</option>
-						<option>취사도구</option>
-						<option>컵/머그컵</option>
-						<option>스토브</option>
-						<option>화로대</option>
-						<option>난로</option>
-						<option>전자용품</option>
-						<option>기타소품</option>
+						<option value="텐트">텐트</option>
+						<option value="타프">타프</option>
+						<option value="테이블">테이블</option>
+						<option value="체어">체어</option>
+						<option value="침낭">침낭</option>
+						<option value="매트">매트</option>
+						<option value="야전침대">야전침대</option>
+						<option value="코펠">코펠</option>
+						<option value="취사도구">취사도구</option>
+						<option value="컵/머그컵">컵/머그컵</option>
+						<option value="스토브">스토브</option>
+						<option value="화로대">화로대</option>
+						<option value="난로">난로</option>
+						<option value="전자용품">전자용품</option>
+						<option value="기타소품">기타소품</option>
                 </select>
             </div>
             <div class="box-form">
                 <label>가격</label>
                 <input type="text" class="g-inputbox-medium textarea-title" placeholder="가격을 입력해주세요." name="productPrice" value="" >
+            </div>
+             <div class="box-form">
+                <label>색상</label>
+                <input type="text" class="g-inputbox-medium textarea-title" placeholder="색상을 입력해주세요." name="productColor" value="" >
             </div>
             <div class="box-form">
                 <label>재고</label>
@@ -76,10 +79,10 @@
                 <p><label>상세 사진1</label></p>
                 <div class="box-img-upload">
                     <span class="drop-zone__prompt">+</span>
-                    <input type="file" name="myFile" class="drop-zone__input" >
+                    <input type="file" name="dList[0].detailFileName" class="drop-zone__input" >
                 </div>
                 <div class="box-textarea">
-                    <textarea placeholder="상세설명을 입력해주세요." name="qa_msg"></textarea>
+                    <textarea placeholder="상세설명을 입력해주세요." name="dList[0].detailContents"></textarea>
                 </div>
            </div>
            
@@ -87,10 +90,10 @@
                 <label>상세 사진2</label>
                     <div class="box-img-upload">
                         <span class="drop-zone__prompt">+</span>
-                        <input type="file" name="myFile" class="drop-zone__input">
+                        <input type="file" name="dList[1].detailFileName" class="drop-zone__input">
                     </div>    
                     <div class="box-textarea">
-                        <textarea placeholder="상세설명을 입력해주세요." name="qa_msg"></textarea>
+                        <textarea placeholder="상세설명을 입력해주세요." name="dList[1].detailContents"></textarea>
                     </div>
             </div>
         </div>
@@ -100,7 +103,7 @@
 	        <button id="submit">등록하기</button>
         </div>
     </section>
-
+</form>
 
 
 <script>
@@ -173,7 +176,7 @@ function goBack() {
 	
 	    reader.readAsDataURL(file);
 	    reader.onload = () => {
-	      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+	      thumbnailElement.style.backgroundImage = `url(`+reader.result+`)`;
 	    };
 	  } else {
 	    thumbnailElement.style.backgroundImage = null;

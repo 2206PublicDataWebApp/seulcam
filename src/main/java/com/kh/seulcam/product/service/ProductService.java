@@ -18,4 +18,6 @@ public interface ProductService {
 
 	public int registerProduct(Product product);
 
+	public List<Product> getTotalProduct();
+
 }

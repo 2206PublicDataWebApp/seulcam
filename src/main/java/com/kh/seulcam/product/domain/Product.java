@@ -14,6 +14,8 @@ public class Product {
 	private String brandName;
 	private String productMaterial;
 	private int saleCount;
+	
+	
 	public int getProductNo() {
 		return productNo;
 	}
@@ -94,13 +96,13 @@ public class Product {
 	}
 	@Override
 	public String toString() {
-		return "Product [productNo=" + productNo + ", productName=" + productName + ", category=" + category
-				+ ", productPrice=" + productPrice + ", productColor=" + productColor + ", productStock=" + productStock
-				+ ", mainFileName=" + mainFileName + ", mainFilePath=" + mainFilePath + ", mainFileRename="
-				+ mainFileRename + ", updateDate=" + updateDate + ", brandName=" + brandName + ", productMaterial="
-				+ productMaterial + ", saleCount=" + saleCount + "]";
+		return "Product [productNo=" + productNo + ", productName=" + productName +
+				 ", category=" + category + ", productPrice=" + productPrice + ", productColor=" + productColor
+				+ ", productStock=" + productStock + ", mainFileName=" + mainFileName + ", mainFilePath=" + mainFilePath
+				+ ", mainFileRename=" + mainFileRename + ", updateDate=" + updateDate + ", brandName=" + brandName
+				+ ", productMaterial=" + productMaterial + ", saleCount=" + saleCount + "]";
 	}
-	
+
 	
 	
 }

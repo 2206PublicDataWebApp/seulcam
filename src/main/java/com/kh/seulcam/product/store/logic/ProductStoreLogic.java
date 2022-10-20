@@ -32,4 +32,10 @@ public class ProductStoreLogic implements ProductStore {
 		return result;
 	}
 
+	@Override
+	public List<Product> selectAllProduct(SqlSession session) {
+		List<Product> pList=session.selectList("ProductMapper.selectAllProduct");
+		return pList;
+	}
+
 }

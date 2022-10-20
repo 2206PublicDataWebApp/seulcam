@@ -38,4 +38,10 @@ public class ProductServiceImpl implements ProductService{
 		return result;
 	}
 
+	@Override
+	public List<Product> getTotalProduct() {
+		List<Product> pList = pStore.selectAllProduct(session);
+		return pList;
+	}
+
 }

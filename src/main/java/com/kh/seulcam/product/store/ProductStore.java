@@ -20,4 +20,6 @@ public interface ProductStore {
 
 	public int insertProduct(SqlSession session, Product product);
 
+	public List<Product> selectAllProduct(SqlSession session);
+
 }

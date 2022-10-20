@@ -14,7 +14,7 @@ label {
     width: 100%;
     
 }
-body > section >div> div.box-form > input.g-inputbox-medium, .selectBox{
+body >form> section >div> div.box-form > input.g-inputbox-medium, .selectBox{
     width: 100%;
     padding: 15px 9px 14px 10px;
  
@@ -92,5 +92,6 @@ button#submit, button#goBack{
     float: right;
     margin-right: 75px;
     border: 0;
+    cursor:pointer;
 }
 

@@ -2,6 +2,7 @@ package com.kh.seulcam.product.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.seulcam.product.domain.Brand;
+import com.kh.seulcam.product.domain.Detail;
 import com.kh.seulcam.product.domain.Product;
 import com.kh.seulcam.product.service.ProductService;
 
@@ -37,16 +40,21 @@ public class ProductAdminController {
 	public String brandRegisterView(Model model) {
 		return "admin/brandRegist";
 	}
+	
 	//브랜드 등록
+	@ResponseBody
 	@RequestMapping(value="/admin/brandRegister", method=RequestMethod.POST)
 	public String brandRegister(ModelAndView mv
-			,@ModelAttribute Brand brand) {
-		System.out.println(brand.toString());
+			,@ModelAttribute Brand brand
+			,HttpServletResponse response) throws IOException {
+		//System.out.println(brand.toString());
 		int result = pService.registerbrand(brand);
-		if(result>0) {			
-			
-			return "redirect:/admin/productList";
-			
+		if(result>0) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('브랜드 등록되었습니다.'); location.href='/admin/productList' </script>");
+			out.flush();
+			return null;			
 		}else {
 			return "/common/errorPage";
 		}
@@ -64,13 +72,15 @@ public class ProductAdminController {
 	}
 	//상품등록
 	@RequestMapping(value="/admin/productRegister", method=RequestMethod.POST)
-	public ModelAndView productRegister(ModelAndView mv
+	public String productRegister(ModelAndView mv
 			,@ModelAttribute Product product
 			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
-			,HttpServletRequest request) {
-		
-
 			
+			,HttpServletRequest request
+			,HttpServletResponse response
+			) {
+			//System.out.println(detail.getdList().toString());
+
 			try {
 				String mainFileName = uploadFile.getOriginalFilename();
 				if(!mainFileName.equals("")){
@@ -89,8 +99,16 @@ public class ProductAdminController {
 					product.setMainFileRename(mainFileRename);
 					product.setMainFilePath(mainFilePath);
 				}	
+				//System.out.println(product.toString());
 				int result = pService.registerProduct(product);
-				mv.setViewName("redirect:/admin/productList");
+				if(result>0) {
+					
+					response.setContentType("text/html; charset=utf-8");
+					PrintWriter out = response.getWriter();
+					out.println("<script>alert('상품 등록되었습니다.'); location.href='/admin/productList' </script>");
+					out.flush();
+		
+				}
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -102,13 +120,17 @@ public class ProductAdminController {
 			}
 			
 			
-			return mv;
+			return null;
 		
 		
 	}
 	
 	@RequestMapping(value="/admin/productList", method=RequestMethod.GET)
-	public String findAllProduct(Model model) {
-		return "admin/productList";
+	public ModelAndView findAllProduct(ModelAndView mv) {
+		List<Product> pList = pService.getTotalProduct();
+		if(!pList.isEmpty()) {
+			mv.addObject("pList", pList);
+		}
+		return mv;
 	}
 }
