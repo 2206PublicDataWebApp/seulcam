@@ -111,16 +111,16 @@ select {
 
 </style>
 <body>
-	<div class="body-wrapper">
 	<!-- 헤더&메뉴바 -->
 	<header>
 		<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 	</header>
 	<!-- 검색 -->
-
-
+	
+	
 	<!-- 컨텐츠 -->
-		
+	
+	<div class="body-wrapper">
 		
 		
 		<div class="campListMain">
@@ -163,113 +163,6 @@ select {
 
 
 			</div>
-			<!-- <div class="camp_List" id="campsite-2301">
-				<div class="card mb-4">
-					<a href="/campsites/2301/view" data-id="2301">
-						<div
-							style="height: 225px; background: url('https://www.guryecamp.com/img_up/shop_pds/kp740/design/img/new_royal.jpg') no-repeat center center #343a40; background-size: 100%;"></div>
-					</a>
-					<div class="card-body" style="padding-top: 0.75rem;">
-
-						<div class="text-right" stlyle="padding-bottom: 0.75rem;">
-							<small class="text-muted">이미지 출처: 소보루의 소비 생활</small>
-						</div>
-
-						<a href="/campsites/2301/view" data-id="2301">
-							<h5 class="card-title">블루문캠핑장</h5>
-							<p class="card-text">경기 가평군 상면</p>
-						</a>
-						<div class="text-right">
-							<div class="btn-group">
-								<button type="button"
-									class="btn btn-sm btn-outline-danger btn-pick"
-									data-campsite-id="2301">
-									<i class="fas fa-heart"></i><span class="pick-total"
-										data-campsite-id="2301"></span>
-								</button>
-								<button type="button"
-									class="btn btn-sm btn-outline-dark btn-visit"
-									data-campsite-id="2301">
-									<i class="fas fa-walking"></i><span class="visit-total"
-										data-campsite-id="2301"></span>
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="camp_List" id="campsite-1759">
-				<div class="card mb-4">
-					<a href="/campsites/1759/view" data-id="1759">
-						<div
-							style="height: 225px; background: url(/image/blog_image/2296/229642.jpg) no-repeat center center #343a40; background-size: 100%;"></div>
-					</a>
-					<div class="card-body" style="padding-top: 0.75rem;">
-
-						<div class="text-right" stlyle="padding-bottom: 0.75rem;">
-							<small class="text-muted">이미지 출처: 윰로그</small>
-						</div>
-
-						<a href="/campsites/1759/view" data-id="1759">
-							<h5 class="card-title">산중오토캠핑장</h5>
-							<p class="card-text">경상남도 거창군 북상면</p>
-						</a>
-						<div class="text-right">
-							<div class="btn-group">
-								<button type="button"
-									class="btn btn-sm btn-outline-danger btn-pick"
-									data-campsite-id="1759">
-									<i class="fas fa-heart"></i><span class="pick-total"
-										data-campsite-id="1759"></span>
-								</button>
-								<button type="button"
-									class="btn btn-sm btn-outline-dark btn-visit"
-									data-campsite-id="1759">
-									<i class="fas fa-walking"></i><span class="visit-total"
-										data-campsite-id="1759"></span>
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="camp_List" id="campsite-3067">
-				<div class="card mb-4">
-					<a href="/campsites/3067/view" data-id="3067">
-						<div
-							style="height: 225px; background: url(/image/blog_image/2338/233889.jpg) no-repeat center center #343a40; background-size: 100%;"></div>
-					</a>
-					<div class="card-body" style="padding-top: 0.75rem;">
-
-						<div class="text-right" stlyle="padding-bottom: 0.75rem;">
-							<small class="text-muted">이미지 출처: 내맘대로 성장기</small>
-						</div>
-
-						<a href="/campsites/3067/view" data-id="3067">
-							<h5 class="card-title">유명산밸리캠핑장</h5>
-							<p class="card-text">경기 가평군 설악면</p>
-						</a>
-						<div class="text-right">
-							<div class="btn-group">
-								<button type="button"
-									class="btn btn-sm btn-outline-danger btn-pick"
-									data-campsite-id="3067">
-									<i class="fas fa-heart"></i><span class="pick-total"
-										data-campsite-id="3067"></span>
-								</button>
-								<button type="button"
-									class="btn btn-sm btn-outline-dark btn-visit"
-									data-campsite-id="3067">
-									<i class="fas fa-walking"></i><span class="visit-total"
-										data-campsite-id="3067"></span>
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> -->
 		</div>
 	
 	<!-- 푸터 -->
@@ -279,66 +172,22 @@ select {
 		$(document)
 				.ready(
 						function() {
-							var url = 'https://apis.data.go.kr/B551011/GoCamping/basedList'; /*URL*/
-							var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'qbHoplMaKq5PUqUFEhfVjBpLiBxBcVPOw%2Fio3GvQ91q8xQjh%2BLZMz4caQ5Nqyt%2BU%2BeCGuAPRaJHRIhTzUqKmHw%3D%3D'; /*Service Key*/
-							queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-							queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10');
-							queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('WIN');
-							queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('seulcam'); /**/
-							queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json');  
-							var urli = url+queryParams;
-							console.log($(document).height())
 							$.ajax({
-										url : urli,
-										type : "GET",
-										data : {},
-										dataType : "json",
-										async: false,
-										success : function(data) {
-											console.log(data.response.body.numOfRows)
-											var str = "";
-											for (var i = 0; i < data.response.body.items.item.length; i++) {
-												var campItem = data.response.body.items.item;
-												// if(campItem[i].facltDivNm =="민ㅇ간" && campItem[i].doNm == "ㄹ전라남도" && campItem[i].manageSttus == "운영"){
-													str += "<div class='camp_List' id='campsite-"+campItem[i].contentId+"'>"
-													str += "<a href='#' data-id='"+campItem[i].contentId+"'>"
-													str += "<div style='height: 225px; background: url("+campItem[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
-													str += "<div class='card-body 'style='padding-top: 0.75rem;'><div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>"+campItem[i].induty+"</small></div>"
-													str += "<a href='#' data-id='"+campItem[i].contentId+"'><h3 class='card-title tt'>"+campItem[i].facltNm+"</h3><p class='card-text tt'>"+campItem[i].addr1+"</p></a></div><hr>좋아요 : 0</div>"
-													$.ajax({
-														url : "",
-														type : "GET",
-														data : {},
-														dataType : "json",
-														success : function(result){
-
-														},
-														error : function(){
-															
-														}
-
-													})
-												// }
-												
-											}
-											if(str == ""){
-												$("#list_area").append("없서용");
-											}
-											$("#list_area").append(str);
-
-										},
-										error : function() {
-											console.log("출력실패");
-										}
-									})
-
-							$.ajax({
-								url : "/campListShow.kh",
+								url : "/camp/campListShow.kh",
 								type : "GET",
 								data : {},
 								dataType : "json",
 								success : function(data) {
-									console.log(data)
+									console.log(data[0].contentId)
+									var str = "";
+									for (var i = 0; i < data.length; i++) {
+									str += "<div class='camp_List' id='campsite-"+data[i].contentId+"'>"
+									str += "<a href='#' data-id='"+data[i].contentId+"'>"
+									str += "<div style='height: 225px; background: url("+data[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
+									str += "<div class='card-body 'style='padding-top: 0.75rem;'><div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>"+data[i].induty+"</small></div>"
+									str += "<a href='#' data-id='"+data[i].contentId+"'><h3 class='card-title tt'>"+data[i].facltNm+"</h3><p class='card-text tt'>"+data[i].addr1+"</p></a></div><hr>좋아요 : 0</div>"
+									}
+									$("#list_area").append(str);
 								},
 								error : function() {
 									console.log("출력실패");
@@ -346,37 +195,30 @@ select {
 							})
 
 						})
-		var page = 2;
+		//자동 스크롤시 페이지 갱신
+		var page = 0;
 		function scrollload(){
-			var url = 'https://apis.data.go.kr/B551011/GoCamping/basedList'; /*URL*/
-				var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'qbHoplMaKq5PUqUFEhfVjBpLiBxBcVPOw%2Fio3GvQ91q8xQjh%2BLZMz4caQ5Nqyt%2BU%2BeCGuAPRaJHRIhTzUqKmHw%3D%3D'; /*Service Key*/
-				queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent(page); /**/
-				queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10');
-				queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('WIN');
-				queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('seulcam'); /**/
-				queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json');  
-				var urli = url+queryParams;
 				page++;
-				console.log("페이지 : " + page)
 				$.ajax({
-							url : urli,
+							url : "",
 							type : "GET",
-							data : {},
+							data : {
+								"page" : page
+							},
 							dataType : "json",
 							async: false,
 							success : function(data) {
-								console
-										.log(data.response.body.numOfRows)
+								console.log(data)
 								var str = "";
-								for (var i = 0; i < data.response.body.items.item.length; i++) {
-									var campItem = data.response.body.items.item;
-									str += "<div class='camp_List' id='campsite-"+campItem[i].contentId+"'>"
-									str += "<a href='#' data-id='"+campItem[i].contentId+"'>"
-									str += "<div style='height: 225px; background: url("+campItem[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
-									str += "<div class='card-body 'style='padding-top: 0.75rem;'><div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>"+campItem[i].induty+"</small></div>"
-									str += "<a href='#' data-id='"+campItem[i].contentId+"'><h3 class='card-title tt'>"+campItem[i].facltNm+"</h3><p class='card-text tt'>"+campItem[i].addr1+"</p></a></div><hr>좋아요 : 0</div>"
-								}
-								$("#list_area").append(str);
+								// for (var i = 0; i < data.response.body.items.item.length; i++) {
+								// 	var campItem = data.response.body.items.item;
+								// 	str += "<div class='camp_List' id='campsite-"+campItem[i].contentId+"'>"
+								// 	str += "<a href='#' data-id='"+campItem[i].contentId+"'>"
+								// 	str += "<div style='height: 225px; background: url("+campItem[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
+								// 	str += "<div class='card-body 'style='padding-top: 0.75rem;'><div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>"+campItem[i].induty+"</small></div>"
+								// 	str += "<a href='#' data-id='"+campItem[i].contentId+"'><h3 class='card-title tt'>"+campItem[i].facltNm+"</h3><p class='card-text tt'>"+campItem[i].addr1+"</p></a></div><hr>좋아요 : 0</div>"
+								// }
+								// $("#list_area").append(str);
 
 							},
 							error : function() {
@@ -384,7 +226,7 @@ select {
 							}
 						})
 		}
-
+		//자동 스크롤시 페이지 갱신
 		$(window).scroll(function () {
 			// setTimeout(function(){
 			var scrollHeight = $(window).scrollTop() + $(window).height();
@@ -399,26 +241,7 @@ select {
 
 
 
-		// var xhr = new XMLHttpRequest();
-		// var url = 'https://apis.data.go.kr/B551011/GoCamping/basedList'; /*URL*/
-		// var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'qbHoplMaKq5PUqUFEhfVjBpLiBxBcVPOw%2Fio3GvQ91q8xQjh%2BLZMz4caQ5Nqyt%2BU%2BeCGuAPRaJHRIhTzUqKmHw%3D%3D'; /*Service Key*/
-		// queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-		// queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10');
-		// queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('WIN');
-		// queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('seulcam'); /**/
-		// queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json');        
-		// xhr.open('GET', url + queryParams);
-		// xhr.onreadystatechange = function () {
-
-		//     if (this.readyState == 4) {
-		//         // console.log(this.response);
-		//         console.log('Status: '+this.status+'nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'nBody: '+this.responseText);
-		//     }
-		// };
-		// function clicki(){
-		//     console.log(queryParams)
-		// }
-		// xhr.send('');
+		
 	</script>
 </body>
 </html>

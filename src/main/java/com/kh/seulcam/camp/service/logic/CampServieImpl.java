@@ -1,5 +1,35 @@
 package com.kh.seulcam.camp.service.logic;
 
-public class CampServieImpl {
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.service.CampServie;
+import com.kh.seulcam.camp.store.CampStore;
+
+@Service
+public class CampServieImpl implements CampServie{
+	
+	@Autowired
+	private SqlSessionTemplate session;
+	
+	@Autowired
+	private CampStore cStore;
+	
+	@Override
+	public int insertCampList(Camp camp) {
+		int result = cStore.insertCampList(session , camp);
+				
+		return result;
+	}
+
+	@Override
+	public List<Camp> printCampList(int page) {
+		List<Camp> cList = cStore.selectCampList(session,page);
+		return cList;
+	}
 
 }

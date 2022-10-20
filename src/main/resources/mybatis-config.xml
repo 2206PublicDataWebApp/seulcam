@@ -24,5 +24,6 @@
 		<mapper resource="mappers/product-mapper.xml"></mapper>
 		<mapper resource="mappers/basket-mapper.xml"></mapper>
 		<mapper resource="mappers/cart-mapper.xml"></mapper>
+		<mapper resource="mappers/campAdmin-mapper.xml"></mapper>
 	</mappers>
 </configuration>
