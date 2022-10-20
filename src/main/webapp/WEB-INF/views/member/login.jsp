@@ -53,8 +53,8 @@
                     <button type="submit" class="login-button">로그인</button>
 
                     <div class="member-util">
-                        <input class="autologin" type="checkbox" id="autologin" name="autologin" value="1">
-                        <label for="autologin" id="labelAutologin">자동 로그인</label>
+                        <input class="autologin" type="checkbox" id="autologin" name="useCookie" value="1">
+                        <label for="autologin" id="labelAutologin">로그인 유지</label>
 
                         <ul class="util-list">
                             <li class="util-item1"><a class="find-id" href="/member/findIdView">아이디 찾기</a></li>
