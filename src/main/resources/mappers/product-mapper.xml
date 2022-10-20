@@ -3,7 +3,20 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace= "ProductMapper">
-  	
+<mapper namespace= "ProductMapper" >
+	<resultMap type="Map" id="brandNameResultMap">
+		<result property="brandName"	column="BRAND_NAME"/>
+	</resultMap>
+  	<insert id="insertBrand" parameterType="Brand">
+  		INSERT INTO BRAND_TBL
+  		VALUES(#{brandName},#{storeZipcode},#{storeAddr},#{storeAddrDetail})
+  	</insert>
+  	<select id="selectAllStoreName" resultMap="brandNameResultMap">
+  		SELECT BRAND_NAME FROM BRAND_TBL
+  	</select>
+  	<insert id="" parameterType="Product">
+  	 	INSERT INTO PRODUCT_TBL
+  	 	VALUES()
+  	</insert>
   	
 </mapper>
