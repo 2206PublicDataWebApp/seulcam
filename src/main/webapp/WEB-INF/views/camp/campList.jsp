@@ -282,7 +282,7 @@ select {
 							var url = 'https://apis.data.go.kr/B551011/GoCamping/basedList'; /*URL*/
 							var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'qbHoplMaKq5PUqUFEhfVjBpLiBxBcVPOw%2Fio3GvQ91q8xQjh%2BLZMz4caQ5Nqyt%2BU%2BeCGuAPRaJHRIhTzUqKmHw%3D%3D'; /*Service Key*/
 							queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-							queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3240');
+							queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10');
 							queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('WIN');
 							queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('seulcam'); /**/
 							queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json');  
@@ -299,7 +299,7 @@ select {
 											var str = "";
 											for (var i = 0; i < data.response.body.items.item.length; i++) {
 												var campItem = data.response.body.items.item;
-												if(campItem[i].facltDivNm =="민ㅇ간" && campItem[i].doNm == "ㄹ전라남도" && campItem[i].manageSttus == "운영"){
+												// if(campItem[i].facltDivNm =="민ㅇ간" && campItem[i].doNm == "ㄹ전라남도" && campItem[i].manageSttus == "운영"){
 													str += "<div class='camp_List' id='campsite-"+campItem[i].contentId+"'>"
 													str += "<a href='#' data-id='"+campItem[i].contentId+"'>"
 													str += "<div style='height: 225px; background: url("+campItem[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
@@ -311,14 +311,14 @@ select {
 														data : {},
 														dataType : "json",
 														success : function(result){
-															
-														},
-														error : function({
 
-														})
+														},
+														error : function(){
+															
+														}
 
 													})
-												}
+												// }
 												
 											}
 											if(str == ""){
@@ -363,6 +363,7 @@ select {
 							type : "GET",
 							data : {},
 							dataType : "json",
+							async: false,
 							success : function(data) {
 								console
 										.log(data.response.body.numOfRows)
@@ -384,7 +385,7 @@ select {
 						})
 		}
 
-		/* $(window).scroll(function () {
+		$(window).scroll(function () {
 			// setTimeout(function(){
 			var scrollHeight = $(window).scrollTop() + $(window).height();
 			var documentHeight = $(document).height();
@@ -394,7 +395,7 @@ select {
 				scrollload()
 				}
 			// },300)
-		});		 */		
+		});		 
 
 
 
