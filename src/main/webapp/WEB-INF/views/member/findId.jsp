@@ -42,8 +42,8 @@
             <h3>이메일을 통해 아이디 찾기</h3>
 
             <div class="email-auth">
-                    <input type="email" class="email-input" placeholder="이메일을 입력해주세요.">
-                    <button type="button" class="auth-button">인증 요청</button>
+                    <input type="email" class="email-input" id="memberEmail" name="memberEmail" placeholder="이메일을 입력해주세요." disabled>
+                    <button type="button" class="auth-button" disabled>인증 요청</button>
             </div>
 
             <input class="email-auth-number" placeholder="인증번호">
@@ -51,7 +51,7 @@
 
         <footer>
             <div class="footer-wrapper">
-                <button type="button" class="submit-button" onclick="location.href='/member/idResultView';" >
+                <button type="button" class="submit-button" disabled onclick="location.href='/member/idResultView';" >
                 아이디 찾기
                 </button>
             </div>
