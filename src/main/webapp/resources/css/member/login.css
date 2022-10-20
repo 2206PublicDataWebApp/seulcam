@@ -9,7 +9,7 @@ a {
 }
 
 a:visited {
-    color: #000;
+    color: #aaa;
 }
 
 h2 {
@@ -152,8 +152,10 @@ header > h1 {
     height: 30px;
     width: 30px;
     margin-right: 7px;
-    background: url(https://static.msscdn.net/ui/build/m/img/login/ic-30-show-button.svg?v=20221004155758) 
-    no-repeat 50% 50%;
+}
+
+#toggle-eye {
+	color: #aaa;
 }
 
 .login-button {

@@ -1,5 +1,7 @@
 package com.kh.seulcam.member.service.logic;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +28,17 @@ public class MemberServiceImpl implements MemberService {
 		Member mOne 
 		= mStore.selectLoginMember(session, member);
 		return mOne;
+	}
+	
+	@Override
+	public int checkOneEmail(String memberEmail) {
+		int result = mStore.countByEmail(session, memberEmail);
+		return result;
+	}
+	
+	@Override
+	public List<Member> listIdByEmail(String memberEmail) {
+		List<Member> mList = mStore.selectIdListByEmail(session, memberEmail);
+		return mList;
 	}
 }

@@ -1,22 +1,32 @@
 package com.kh.seulcam.member.controller;
 
+import java.util.List;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.kh.seulcam.member.service.MemberService;
 import com.kh.seulcam.member.domain.Member;
+
 
 @Controller
 public class MemberController {
 	@Autowired
 	private MemberService mService;
+	@Autowired
+	private JavaMailSender mailSender;
 	
 		/* 로그인 관련 */
 	// 비로그인 상태일 때 로그인 창으로 이동
@@ -29,12 +39,6 @@ public class MemberController {
 	@RequestMapping(value="/member/findIdView", method=RequestMethod.GET)
 	public String findIdView(Model model) {
 		return "member/findId";
-	}
-	
-	// 아이디 찾기 결과 창으로 이동
-	@RequestMapping(value="/member/idResultView", method=RequestMethod.GET)
-	public String idResultView(Model model) {
-		return "member/idResult";
 	}
 	
 	// 비밀번호 찾기 창으로 이동
@@ -99,6 +103,49 @@ public class MemberController {
 		return "member/addressChange";
 	}
 	
+	// 이메일 DB에 존재하는 지 검사하는 기능
+	@ResponseBody
+	@RequestMapping(value= "/member/memberEmailCheck", method = RequestMethod.GET)
+	public String EmailCheck(@RequestParam("memberEmail") String memberEmail) {
+		
+		int result = mService.checkOneEmail(memberEmail);
+		
+		return result+"";
+	}
+	
+	// 이메일 인증 기능
+	@ResponseBody
+	@RequestMapping(value = "emailAuth", method = RequestMethod.POST)
+	public String emailAuth(String email) {		
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+
+		/* 이메일 보내기 */
+        String setFrom = "cji3604@naver.com";
+        String toMail = email;
+        String title = "회원가입 인증 이메일 입니다.";
+        String content = 
+                "홈페이지를 방문해주셔서 감사합니다." +
+                "<br><br>" + 
+                "인증 번호는 " + checkNum + "입니다." + 
+                "<br>" + 
+                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+        
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return Integer.toString(checkNum);
+	}
+	
 	// 로그인 기능
 	@RequestMapping(value="/member/login", method=RequestMethod.POST)
 	public ModelAndView memberLogin(
@@ -144,6 +191,20 @@ public class MemberController {
 		return mv;
 	}
 	
+	// 아이디 찾기 결과 창으로 이동
+	@RequestMapping(value="/member/idResult", method=RequestMethod.GET)
+	public ModelAndView idResult(@RequestParam("memberEmail") String memberEmail
+			, ModelAndView mv) {
+	try {
+		List<Member> mList = mService.listIdByEmail(memberEmail);
+		mv.addObject("mList", mList);
+		mv.setViewName("/member/idResult");
+	} catch (Exception e) {
+		mv.addObject("msg", e.getMessage());
+		mv.setViewName("common/errorPage");
+	}
+	return mv;
+	}
 
 	
 

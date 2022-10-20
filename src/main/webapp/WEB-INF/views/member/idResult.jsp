@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>아이디 찾기 결과</title>
-    <link rel="stylesheet" href="/resources/css/idResult.css">
+    <link rel="stylesheet" href="/resources/css/member/idResult.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
     <link rel="shortcut icon" href="resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="resources/images/faviconlogo.ico" type="image/x-icon">
@@ -40,11 +42,13 @@
                 </p>
 
                 <ul class="result-box">
+                	<c:forEach items="${mList}" var="member" varStatus="i">
                     <li class="result">
-                        <div class="id-result"><b>khuser01</b></div>
+                        <div class="id-result"><b>${member.memberId}</b></div>
                         <div class="auth-result">이메일 인증</div>
-                        <div class="register-date">2022.10.07 가입</div>
+                        <div class="register-date"><fmt:formatDate value="${member.memberDate }" pattern="yyyy.MM.dd"/> 가입</div>
                     </li>
+                    </c:forEach>
                 </ul>
             </div>
 
