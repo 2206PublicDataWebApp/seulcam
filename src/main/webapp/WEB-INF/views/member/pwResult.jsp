@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>비밀번호 재설정</title>
-    <link rel="stylesheet" href="/resources/css/pwResult.css">
+    <link rel="stylesheet" href="/resources/css/member/pwResult.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
     <link rel="shortcut icon" href="resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="resources/images/faviconlogo.ico" type="image/x-icon">

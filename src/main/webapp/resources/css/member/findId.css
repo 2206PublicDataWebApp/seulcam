@@ -149,7 +149,6 @@ section {
     border: none;
     border-radius: 4px;
     font-size: 15px;
-    background-color: #fff;
     padding: 0 12px;
 }
 
@@ -163,6 +162,7 @@ section {
     font-size: 14px;
     margin-right: 11px;
     color: #b3b3b3;
+    cursor: default;
 }
 
 .email-auth-number {
@@ -171,7 +171,7 @@ section {
     border: 1px solid #f1f1f1;
     border-radius: 4px;
     font-size: 15px;
-    background-color: #fff;
+    background-color: #f3f3f3;
     padding: 0 12px;
     margin-top: 8px;
 }
@@ -204,4 +204,5 @@ footer {
     font-size: 16px;
     justify-content: center;
     align-items: center;
+    cursor: default;
 }

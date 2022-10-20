@@ -7,10 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>슬기로운 캠핑 생활</title>
-    <link rel="stylesheet" href="/resources/css/login.css">
+    <link rel="stylesheet" href="/resources/css/member/login.css">
+    <link rel="stylesheet" href="/resources/css/memberCommon.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 
 </head>
 <body>
@@ -43,10 +46,10 @@
             <div class="login-member">
                 <form name="loginform" class="login-form" action="/member/login" method="post">
                     <div class="login-member-form">
-                        <input class="login-input" type="text" name="memberId" id="memberId" placeholder="아이디" maxlength="11">
+                        <input class="login-input" type="text" name="memberId" id="memberId" placeholder="아이디" maxlength="11" autocomplete="off">
                         <div class="password-input-wrapper">
                             <input class="login-input-pw" type="password" name="memberPw" id="memberPw" placeholder="비밀번호" maxlength="30">
-                            <button type="button" class="password-eye"></button>
+                            <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                         </div>
                     </div>
 
@@ -73,10 +76,8 @@
             <div class="register">
                 <p class="register-text">아직 계정이 없다면? <a href="/member/registerView">회원가입</a> </p>
             </div>
-
-
         </section>
     </div>
-    
+    <script src="/resources/js/member/pwInputCommon.js"></script>
 </body>
 </html>

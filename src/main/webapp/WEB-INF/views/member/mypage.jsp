@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
     <title>마이페이지</title>
-    <link rel="stylesheet" href="/resources/css/mypage.css">
+    <link rel="stylesheet" href="/resources/css/member/mypage.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 </head>

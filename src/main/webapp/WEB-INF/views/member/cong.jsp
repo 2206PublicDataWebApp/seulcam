@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>회원가입을 축하합니다.</title>
-    <link rel="stylesheet" href="/resources/css/cong.css">
+    <link rel="stylesheet" href="/resources/css/member/cong.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
     <link rel="shortcut icon" href="resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="resources/images/faviconlogo.ico" type="image/x-icon">

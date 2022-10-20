@@ -1,0 +1,31 @@
+/* 인풋 박스 자동 완성 시에도 파란 배경 안뜨게 하기  */
+input:-webkit-autofill { 
+	-webkit-box-shadow: 0 0 0 30px #fff inset ;
+	 -webkit-text-fill-color: #000; 
+}
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+	transition: background-color 5000s ease-in-out 0s; 
+}
+
+/* 인풋 박스 포커스시 border 없애기*/
+input:focus { outline: none; }
+
+* {
+	transition: all 1s;
+}
+
+/* 유효성 검사 텍스트*/
+.ok {
+	margin-top: 8px;
+	font-size: 11px;
+	line-height: 16.5px;
+	color: #14aaff;
+}
+
+.error {
+	margin-top: 8px;
+	font-size: 11px;
+	line-height: 16.5px;
+	color: red;
+}
+

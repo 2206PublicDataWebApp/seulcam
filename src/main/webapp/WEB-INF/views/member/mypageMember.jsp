@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
     <title>내 정보 관리</title>
-    <link rel="stylesheet" href="/resources/css/mypageMember.css">
+    <link rel="stylesheet" href="/resources/css/member/mypageMember.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
 </head>
 <body>
