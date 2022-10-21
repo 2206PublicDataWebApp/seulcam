@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -40,6 +41,8 @@
         </div>
 
         <!-- Section -->
+        <form action="/member/changeAccount" method="post">
+        <input type="hidden" name="memberId" value="${loginUser.memberId }">
         <section>
             <div class="account-wrapper">
                 <p class="account-text">
@@ -51,24 +54,24 @@
                     <div class="order-form">
                         <h4 class="order-form-title">예금주</h4>
                         <div class="input-box">
-                            <input type="text" class="order-form-input" value="" placeholder="예금주를 입력해주세요.">
+                            <input type="text" class="order-form-input" value="${member.memberAccountName }" name="memberAccountName" maxlength="10" placeholder="예금주를 입력해주세요.">
                         </div>
                     </div>
 
                     <div class="order-form">
                         <h4 class="order-form-title">입금 은행</h4>
                         <div class="input-box">
-                            <select class="order-select">
-                                <option>입금은행을 선택해주세요.</option>
-                                <option value="bank1">우리은행</option>
-                                <option value="bank2">신한은행</option>
-                                <option value="bank3">기업은행</option>
-                                <option value="bank4">대구은행</option>
-                                <option value="bank5">부산은행</option>
-                                <option value="bank6">광주은행</option>
-                                <option value="bank7">경남은행</option>
-                                <option value="bank8">토스뱅크</option>
-                                <option value="bank9">농협중앙회</option>
+                            <select class="order-select" name="memberAccountBank">
+                                <option disabled <c:if test="${empty member.memberAccountBank}"> selected </c:if>>입금은행을 선택해주세요.</option>
+                                <option value="bank1" <c:if test="${member.memberAccountBank=='bank1'}"> selected </c:if>>우리은행</option>
+                                <option value="bank2" <c:if test="${member.memberAccountBank=='bank2'}"> selected </c:if>>신한은행</option>
+                                <option value="bank3" <c:if test="${member.memberAccountBank=='bank3'}"> selected </c:if>>기업은행</option>
+                                <option value="bank4" <c:if test="${member.memberAccountBank=='bank4'}"> selected </c:if>>대구은행</option>
+                                <option value="bank5" <c:if test="${member.memberAccountBank=='bank5'}"> selected </c:if>>부산은행</option>
+                                <option value="bank6" <c:if test="${member.memberAccountBank=='bank6'}"> selected </c:if>>광주은행</option>
+                                <option value="bank7" <c:if test="${member.memberAccountBank=='bank7'}"> selected </c:if>>경남은행</option>
+                                <option value="bank8" <c:if test="${member.memberAccountBank=='bank8'}"> selected </c:if>>토스뱅크</option>
+                                <option value="bank9" <c:if test="${member.memberAccountBank=='bank9'}"> selected </c:if>>농협중앙회</option>
                             </select>
                         </div>
                     </div>
@@ -76,7 +79,7 @@
                     <div class="order-form">
                         <h4 class="order-form-title">계좌번호</h4>
                         <div class="input-box">
-                            <input type="text" class="order-form-input" value="" placeholder="계좌번호를 입력해 주세요.">
+                            <input type="text" class="order-form-input" value="${member.memberAccountNumber }" name="memberAccountNumber" placeholder="계좌번호를 입력해 주세요.">
                         </div>
                     </div>
                 </div>
@@ -85,11 +88,12 @@
 
         <footer>
             <div class="footer-wrapper">
-                <button type="button" class="submit-button" >
+                <button type="submit" class="submit-button" >
                 변경
                 </button>
             </div>
         </footer>
+        </form>
     </div>
 
     

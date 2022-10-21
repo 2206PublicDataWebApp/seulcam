@@ -37,8 +37,38 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public int checkOneNickname(String memberNickname) {
+		int result = mStore.countByNickname(session, memberNickname);
+		return result;
+	}
+	
+	@Override
+	public int checkOnePw(Member member) {
+		int result = mStore.countByIdPw(session, member);
+		return result;
+	}
+	
+	@Override
 	public List<Member> listIdByEmail(String memberEmail) {
 		List<Member> mList = mStore.selectIdListByEmail(session, memberEmail);
 		return mList;
+	}
+	
+	@Override
+	public Member printOneById(String memberId) {
+		Member member = mStore.selectOneById(session, memberId);
+		return member;
+	}
+	
+	@Override
+	public int modifyMemberNickname(Member member) {
+		int result = mStore.updateMemberNickname(session, member);
+		return result;
+	}
+	
+	@Override
+	public int modifyMemberAccount(Member member) {
+		int result = mStore.updateMemberAccount(session, member);
+		return result;
 	}
 }

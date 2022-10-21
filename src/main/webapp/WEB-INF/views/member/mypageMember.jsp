@@ -41,7 +41,7 @@
                 <a class="user-info">
                     <p>
                         <b>회원 정보</b>
-                        <span>khuser01</span>
+                        <span>${sessionScope.loginUser.memberId }</span>
                     </p>
                 </a>
 
@@ -66,24 +66,7 @@
                     </p>
                 </a>
             </div>
-
-
         </section>
-
-
-
-
-
-
-
-
-
-
     </div>
-    
-
-
-
-
 </body>
 </html>

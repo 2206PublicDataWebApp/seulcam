@@ -69,20 +69,56 @@ public class MemberController {
 		/* 마이페이지 관련 */
 	// 로그인 상태일 때 마이페이지 창으로 이동
 	@RequestMapping(value="/member/myPageView", method=RequestMethod.GET)
-	public String memberMyPageView(Model model) {
-		return "member/mypage";
+	public ModelAndView memberMyPageView(HttpServletRequest request
+			, ModelAndView mv) {
+		try {
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginUser");
+			String memberId = member.getMemberId();
+			Member mOne = mService.printOneById(memberId);
+			mv.addObject("member", mOne);
+			mv.setViewName("member/mypage");
+
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
 	}
 	
 	// 닉네임 변경 창으로 이동
 	@RequestMapping(value="/member/nicknameChangeView", method=RequestMethod.GET)
-	public String nicknameChangeView(Model model) {
-		return "member/nicknameChange";
-	}
+	public ModelAndView nicknameChangeView(HttpServletRequest request
+			, ModelAndView mv) {
+		try {
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginUser");
+			String memberId = member.getMemberId();
+			Member mOne = mService.printOneById(memberId);
+			mv.addObject("member", mOne);
+			mv.setViewName("member/nicknameChange");
+
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}	
 	
 	// 마이페이지 회원정보 관리 창으로 이동
 	@RequestMapping(value="/member/mypageMemberView", method=RequestMethod.GET)
-	public String mypageMemberView(Model model) {
-		return "member/mypageMember";
+	public ModelAndView mypageMemberView(HttpServletRequest request
+			, ModelAndView mv) {
+		try {
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginUser");
+			String memberId = member.getMemberId();
+			Member mOne = mService.printOneById(memberId);
+			mv.addObject("member", mOne);
+			mv.setViewName("member/mypageMember");
+
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
 	}
 	
 	// 마이페이지 회원정보 비밀번호 변경 창으로 이동
@@ -93,8 +129,20 @@ public class MemberController {
 	
 	// 마이페이지 회원정보 환불 계좌 변경 창으로 이동
 	@RequestMapping(value="/member/accountChangeView", method=RequestMethod.GET)
-	public String accountChangeView(Model model) {
-		return "member/accountChange";
+	public ModelAndView accountChangeView(HttpServletRequest request
+			, ModelAndView mv) {
+		try {
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginUser");
+			String memberId = member.getMemberId();
+			Member mOne = mService.printOneById(memberId);
+			mv.addObject("member", mOne);
+			mv.setViewName("member/accountChange");
+
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
 	}
 	
 	// 마이페이지 회원정보 배송지 관리 창으로 이동
@@ -106,10 +154,29 @@ public class MemberController {
 	// 이메일 DB에 존재하는 지 검사하는 기능
 	@ResponseBody
 	@RequestMapping(value= "/member/memberEmailCheck", method = RequestMethod.GET)
-	public String EmailCheck(@RequestParam("memberEmail") String memberEmail) {
-		
+	public String emailCheck(@RequestParam("memberEmail") String memberEmail) {
 		int result = mService.checkOneEmail(memberEmail);
-		
+		return result+"";
+	}
+	
+	// 닉네임 DB에 존재하는 지 검사하는 기능
+	@ResponseBody
+	@RequestMapping(value= "/member/memberNicknameCheck", method = RequestMethod.GET)
+	public String nicknameCheck(@RequestParam("memberNickname") String memberNickname) {
+		int result = mService.checkOneNickname(memberNickname);
+		return result+"";
+	}
+	
+	// 비밀번호가 DB와 일치하는지 검사하는 기능
+	@ResponseBody
+	@RequestMapping(value= "/member/memberPwCheck", method = RequestMethod.POST)
+	public String memberPwCheck(
+			@RequestParam("memberId") String memberId,
+			@RequestParam("memberPw") String memberPw) {
+		Member member = new Member();
+		member.setMemberId(memberId);
+		member.setMemberPw(memberPw);
+		int result = mService.checkOnePw(member);
 		return result+"";
 	}
 	
@@ -121,7 +188,7 @@ public class MemberController {
 		int checkNum = random.nextInt(888888) + 111111;
 
 		/* 이메일 보내기 */
-        String setFrom = "cji3604@naver.com";
+        String setFrom = "cji961336@naver.com";
         String toMail = email;
         String title = "회원가입 인증 이메일 입니다.";
         String content = 
@@ -169,6 +236,22 @@ public class MemberController {
 		return mv;
 	}
 	
+	// 로그아웃
+	@RequestMapping(value="/member/logout", method=RequestMethod.GET)
+	public ModelAndView memberLogout(
+			HttpServletRequest request
+			, ModelAndView mv) {
+		HttpSession session = request.getSession();
+		if(session != null) {
+			session.invalidate();
+			mv.setViewName("redirect:/");
+		}else {
+			mv.addObject("msg", "로그아웃 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
 	// 회원가입 기능
 	@RequestMapping(value="/member/register", method=RequestMethod.POST)
 	public ModelAndView memberRegister(
@@ -205,7 +288,44 @@ public class MemberController {
 	}
 	return mv;
 	}
-
 	
+	// 닉네임 수정
+	@RequestMapping(value="/member/changeNickname", method=RequestMethod.POST)
+	public ModelAndView changeNickname(
+			@ModelAttribute Member member
+			, ModelAndView mv) {
+		try {
+			int result = mService.modifyMemberNickname(member);
+			if(result > 0) {
+				mv.setViewName("redirect:/member/myPageView");
+			}else {
+				mv.addObject("msg", "회원 정보 수정 실패!");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// 환불 계좌 수정
+	@RequestMapping(value="/member/changeAccount", method=RequestMethod.POST)
+	public ModelAndView changeAccount(
+			@ModelAttribute Member member
+			, ModelAndView mv) {
+		try {
+			int result = mService.modifyMemberAccount(member);
+			if(result > 0) {
+				mv.setViewName("redirect:/member/mypageMemberView");
+			}else {
+				mv.addObject("msg", "회원 정보 수정 실패!");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+
 
 }

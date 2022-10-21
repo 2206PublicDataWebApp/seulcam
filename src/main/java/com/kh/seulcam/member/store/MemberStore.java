@@ -16,6 +16,21 @@ public interface MemberStore {
 	// selectOneByEmail
 	public int countByEmail(SqlSession session, String memberEmail);
 	
+	// selectOneByNickname
+	public int countByNickname(SqlSession session, String memberNickname);
+	
+	// selectOneByPw
+	public int countByIdPw(SqlSession session, Member member);
+	
 	// 이메일로 아이디 리스트 가져오기
 	public List<Member> selectIdListByEmail(SqlSession session, String memberEmail);
+
+	// selectOneById
+	public Member selectOneById(SqlSession session, String memberId);
+	
+	// 닉네임 바꾸기
+	public int updateMemberNickname(SqlSession session, Member member);
+	
+	//환불 계좌 정보 바꾸기
+	public int updateMemberAccount(SqlSession session, Member member);
 }

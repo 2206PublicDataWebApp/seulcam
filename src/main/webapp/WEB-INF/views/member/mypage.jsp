@@ -47,7 +47,7 @@
                     </div>
                     <a class="nickname-change" href="/member/nicknameChangeView"">
                         <p class="nickname">
-                            campcamp
+                            ${member.memberNickname }
                         </p>
                         <img class="pencil" src="/resources/images/pencil.png">
                     </a>
@@ -120,9 +120,9 @@
 
     <footer>
         <div class="footer-wrapper">
-            <a class="go-main"href="#"><b>메인으로</b></a>
-            <button>
-                <span>khuser01</span>
+            <a class="go-main"href="/"><b>메인으로</b></a>
+            <button onclick="location.href='/member/logout'">
+                <span>${sessionScope.loginUser.memberId }</span>
                 <b>로그아웃</b>
             </button>
         </div>
