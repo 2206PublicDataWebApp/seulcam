@@ -9,8 +9,10 @@
     <title>비밀번호 변경</title>
     <link rel="stylesheet" href="/resources/css/member/passwordChange.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
+    <link rel="stylesheet" href="/resources/css/memberCommon.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+    <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
     <!-- header -->
@@ -35,25 +37,26 @@
 
         <!-- content -->
         <section>
+        <input type="hidden" id="memberId" name="memberId" value="${loginUser.memberId }">
             <div class="join-input">
-                <div class="join-input-wrapper">
-                    <input class="join-input-input" type="password" id="memberPwd" placeholder="기존 비밀번호" maxlength="30">
+                <div class="join-input-wrapper" class="curPw">
+                    <input class="join-input-input" type="password" name="memberPw" id="memberPw" placeholder="기존 비밀번호" maxlength="16">
                     <button type="button" class="password-eye"></button>
                 </div>
-                <p class="pwd-check"></p>
             </div>
+            <p class="password ok">비밀번호가 일치합니다.</p>
+           	<p class="password error">비밀번호가 일치하지 않습니다.</p>
 
             <div class="join-input">
                 <div class="join-input-wrapper">
-                    <input class="join-input-input" type="password" id="newMemberPwd" placeholder="새 비밀번호" maxlength="30">
+                    <input class="join-input-input" type="password" id="newMemberPw" placeholder="새 비밀번호" maxlength="16">
                     <button type="button" class="password-eye"></button>
                 </div>
-                <p class="pwd-check"></p>
             </div>
-    
+    		<p class="newpassword error">8 ~ 16자 영문, 숫자, 특수문자를 최소 한가지씩 조합해주세요.</p>
             <div class="join-input">
                 <div class="join-input-wrapper">
-                    <input class="join-input-input" type="password" id="newMemberPwdCheck" placeholder="새 비밀번호 확인" maxlength="30">
+                    <input class="join-input-input" type="password" id="newMemberPwCheck" placeholder="새 비밀번호 확인" maxlength="16">
                     <button type="button" class="password-eye active"></button>
                 </div>
             </div>
@@ -61,11 +64,12 @@
 
         <footer>
             <div class="footer-wrapper">
-                <button type="button" class="submit-button" >
+                <button type="button" class="submit-button" disabled>
                 비밀번호 변경
                 </button>
             </div>
         </footer>
     </div>
+    <script src="/resources/js/member/passwordChange.js"></script>
 </body>
 </html>

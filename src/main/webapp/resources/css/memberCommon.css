@@ -29,3 +29,9 @@ input:focus { outline: none; }
 	color: red;
 }
 
+.regerror {
+	margin-top: 8px;
+	font-size: 11px;
+	line-height: 16.5px;
+	color: red;
+}

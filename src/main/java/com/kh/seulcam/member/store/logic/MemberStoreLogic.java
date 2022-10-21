@@ -29,8 +29,38 @@ public class MemberStoreLogic implements MemberStore{
 	}
 	
 	@Override
+	public int countByNickname(SqlSession session, String memberNickname) {
+		int result = session.selectOne("MemberMapper.selectOneByNickname", memberNickname);
+		return result;
+	}
+	
+	@Override
+	public int countByIdPw(SqlSession session, Member member) {
+		int result = session.selectOne("MemberMapper.selectOneByidPw", member);
+		return result;
+	}
+	
+	@Override
 	public List<Member> selectIdListByEmail(SqlSession session, String memberEmail) {
 		List<Member> mList = session.selectList("MemberMapper.selectIdListByEmail", memberEmail);
 		return mList;
+	}
+	
+	@Override
+	public Member selectOneById(SqlSession session, String memberId) {
+		Member member = session.selectOne("MemberMapper.selectOneById", memberId);
+		return member;
+	}
+
+	@Override
+	public int updateMemberNickname(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updateMemberNickname", member);
+		return result;
+	}
+	
+	@Override
+	public int updateMemberAccount(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updateMemberAccount", member);
+		return result;
 	}
 }

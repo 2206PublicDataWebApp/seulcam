@@ -42,9 +42,35 @@
 		select count(MEMBER_EMAIL) FROM MEMBER_TABLE WHERE MEMBER_EMAIL = #{memberEmail}
 		</select>
 		
+		<select id="selectOneByNickname" resultType="_int">
+		select count(MEMBER_NICKNAME) FROM MEMBER_TABLE WHERE MEMBER_NICKNAME = #{memberNickname}
+		</select>
+		
+		<select id="selectOneByidPw" resultType="_int">
+		select count(MEMBER_ID) FROM MEMBER_TABLE WHERE MEMBER_ID = #{memberId } AND MEMBER_PW = #{memberPw }
+		</select>
+		
 		<select id="selectIdListByEmail" resultMap="memberResultMap">
 		SELECT MEMBER_ID, MEMBER_DATE FROM MEMBER_TABLE WHERE MEMBER_EMAIL = #{memberEmail}
 		</select>
+		
+		<select id="selectOneById" resultMap="memberResultMap">
+		SELECT * FROM MEMBER_TABLE WHERE MEMBER_ID = #{memberId }
+		</select>
+		
+		<update id="updateMemberNickname" parameterType="Member">
+			UPDATE MEMBER_TABLE
+			SET MEMBER_NICKNAME = #{memberNickname }
+			WHERE MEMBER_ID = #{memberId }
+		</update>
+		
+		<update id="updateMemberAccount" parameterType="Member">
+			UPDATE MEMBER_TABLE
+			SET MEMBER_ACCOUNT_NAME = #{memberAccountName },
+			MEMBER_ACCOUNT_BANK = #{memberAccountBank },
+			MEMBER_ACCOUNT_NUMBER = #{memberAccountNumber }
+			WHERE MEMBER_ID = #{memberId }
+		</update>
 		
 </mapper>
 
