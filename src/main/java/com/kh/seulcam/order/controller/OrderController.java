@@ -25,11 +25,17 @@ public class OrderController {
 	
 	
 	//결제
-	@RequestMapping(value="/order.kh", method=RequestMethod.GET)
+	@RequestMapping(value="/pay.kh", method=RequestMethod.GET)
 	public String showpay() {
 		return "order/pay";
 	}
 	
+	//주문
+	@RequestMapping(value="/order/order.kh", method=RequestMethod.GET)
+	public String order() {
+		
+		return "order/orderDetail";
+	}
 	
 	//주문 완료
 	@RequestMapping(value="/order/finish.kh", method=RequestMethod.GET)

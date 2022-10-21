@@ -130,8 +130,7 @@
 
 			<table class="click_table">
 				<tr>
-					<td><input type="checkbox" id="check_all"
-						name="cart_selectAll" onclick="selectAll(this)" /> <label>전체</label>
+					<td><input type="checkbox" id="check_all" name="cart_selectAll" onclick="selectAll(this)" /> <label>전체</label>
 						<span id="total_cart_cnt"><strong id="p-count"></strong>개</span>
 					</td>
 					<td align="right">
@@ -231,13 +230,15 @@
 		  // 선택된 체크박스
 		  const checked 
 		    = document.querySelectorAll('input[name="cartbox"]:checked');
-		  $("#p-count").html(checked.length);
+		  //$("#p-count").html(checked.length);
 		  // select all 체크박스
 		  const selectAll 
 		    = document.querySelector('input[name="cart_selectAll"]');
-		  
+		  $("#p-count").html(checked.length);
+		
 		  if(checkboxes.length === checked.length)  {
 		    selectAll.checked = true;
+		  
 		  }else {
 		    selectAll.checked = false;
 		  }
@@ -279,7 +280,6 @@
 	        }
 	        if(num != now){
 	        	alert(productNo);
-	        	/* $count.val(num); */
 	        	$.ajax({
 	        		url:"/cart/changeCount.kh",
 	        		type:"post",
