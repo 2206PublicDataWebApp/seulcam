@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,29 +10,31 @@
 <title>상품상세</title>
 </head>
 <link rel="stylesheet" href="/resources/css/product/productDetail.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/resources/css/fonts.css">
+
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zj6zbz23cl"></script>
 
 <body>
+ <jsp:include page="/WEB-INF/views/common/header.jsp" />
  <section class="shop detail">
         <article class="gallery">
             <div class="swiper-container">
                 <div class="swiper-wrapper" id="product-image">
                     <a href="" class="swiper-slide">
-                        <img src="http://helinoxstore.co.kr/shopimages/helinox/0020030001272.jpg?1658475962">
+                        <img src="../resources/puploadFiles/${product.mainFileRename}">
                     </a>
                 </div>
             </div>
         </article>
         <article class="order">
             <div class="cont">
-                <h1>제품이름 / 제품색상</h1>
+                <h1>${product.productName }</h1>
                 <p class="color">
-                    "색상"
-                    <span class="colorchip" ></span>
+                    ${product.productColor }
+                    <span class="colorchip" style="background-color:${product.productColor };">□</span>
                 </p>
                 <span class="price">
-                    <span id="product-price" class="ProductPrice">389,000</span>
+                    <span id="product-price" class="ProductPrice">${product.productPrice }</span>
                     <input id="product_price" name="product_price" value="389000" type="hidden">
                 </span>
                 <br>
@@ -44,7 +47,8 @@
             </div>
             <br><br><br>
             <div class="totalPrice">
-                <span>총액</span>
+                <span id="totalPriceSum">0</span>
+                <span style="float:left">총액</span>
 
             </div>
             
@@ -173,16 +177,19 @@
         </div>
     </section>
  <script>
+ 
+ //갯수변경, 총액계산
+ 
+ 	$(".inp").val(0);
     $('._count :button').on({
     'click' : function(e){
         e.preventDefault();
         var $count = $(this).parent('._count').find('.inp');
         var now = parseInt($count.val());
-        var min = 1;
-        var max = 999;
+        var min = 0;
+        var max = ${product.productStock};
         var num = now;
-        var price=$('#product-price').text();
-        $('.totalPrice').html(price*now);
+       
         if($(this).hasClass('minus')){
             var type = 'm';
         }else{
@@ -195,6 +202,8 @@
         }else{
             if(now<max){
                 num = now + 1;
+            }else{
+            	alert("재고가 부족합니다!");
             }
         }
         if(num != now){
@@ -203,7 +212,42 @@
     }
 });
     
-    var mapOptions = {
+    $('.minus').click(function(e){
+        e.preventDefault();
+    	var now = $(".inp").val();
+        
+	    var price=$('#product-price').text();
+	    $('.totalPrice').children("#totalPriceSum").text(price*now);
+    });
+    	
+   
+    $('.plus').click(function(e){
+        e.preventDefault();
+    	var now = $(".inp").val();
+	    var price=$('#product-price').text();
+	    $('.totalPrice').children("#totalPriceSum").text(price*now);
+    });
+ 
+ $("#ac-1").change(function(){
+	 var productNo="${product.productNo}";
+	 if($("#ac-1").is(":checked")){
+		 $.ajax({
+			 url:"/product/productDetailInfo",
+			 data:{"productNo":productNo},
+			 type:"get",
+			 success : function(dList){
+				 console.log(dList);
+			 },
+			 error : function(){
+				 console.log("에러");
+			 }
+		 });
+	 }
+	 
+ });  
+    
+    
+/*     var mapOptions = {
     	    center: new naver.maps.LatLng(37.3595704, 127.105399),
     	    zoom: 10
     	};
@@ -236,7 +280,7 @@
             '<div class="iw_inner">',
             '   <h3>서울특별시청</h3>',
             '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-            '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+            '       <img src="#" width="55" height="55" alt="서울시청" class="thumb" /><br />',
             '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
             '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
             '   </p>',
@@ -255,7 +299,7 @@
         }
     });
 
-    infowindow.open(map, marker);
+    infowindow.open(map, marker); */
 
 </script>
 </body>

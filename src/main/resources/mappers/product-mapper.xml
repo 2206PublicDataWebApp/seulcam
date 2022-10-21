@@ -23,6 +23,13 @@
 		<result property="saleCount"		column="SALE_COUNT"/>
   	
 	</resultMap>
+	<resultMap type="Detail" id="detailResultMap">
+		<id property="productNo"		column="PRODUCT_NO"/>
+		<result property="detailFileName" column="DETAIL_FILE_NAME"/>
+		<result property="detailFilePath" column="DETAIL_FILE_PATH"/>
+		<result property="detailFileRename" column="DETAIL_FILE_RENAME"/>
+		<result property="detailContents" column="DETAIL_CONTENTS"/>
+	</resultMap>
   	<insert id="insertBrand" parameterType="Brand">
   		INSERT INTO BRAND_TBL
   		VALUES(#{brandName},#{storeZipcode},#{storeAddr},#{storeAddrDetail})
@@ -31,10 +38,26 @@
   		SELECT BRAND_NAME FROM BRAND_TBL
   	</select>
   	<insert id="insertProduct" parameterType="Product">
+  		<selectKey resultType="int" keyProperty="productNo" order="BEFORE">
+			SELECT PRODUCT_SEQNO.NEXTVAL FROM DUAL
+		</selectKey>
   	 	INSERT INTO PRODUCT_TBL
-  	 	VALUES(PRODUCT_SEQNO.NEXTVAL, #{productName},#{category},#{productPrice},#{productColor},#{productStock},#{mainFileName},#{mainFilePath},#{mainFileRename},DEFAULT,#{brandName},#{productMaterial},DEFAULT)
+  	 	VALUES(#{productNo}, #{productName},#{category},#{productPrice},#{productColor},#{productStock},#{mainFileName},#{mainFilePath},#{mainFileRename},DEFAULT,#{brandName},#{productMaterial},DEFAULT)
   	</insert>
   	<select id="selectAllProduct" resultMap="productResultMap">
   		SELECT * FROM PRODUCT_TBL
+  	</select>
+  	<insert id="insertProductDetail" parameterType="Detail">
+  		INSERT INTO DETAIL_TBL
+  		VALUES(#{productNo},#{detailFileName},#{detailFilePath},#{detailFileRename},#{detailContents})
+  	</insert>
+  	<select id="selectNewArrivalList" resultMap="productResultMap">
+  		SELECT*FROM(SELECT*FROM PRODUCT_TBL ORDER BY UPDATE_DATE DESC) WHERE  <![CDATA[ROWNUM<=20 ]]>
+  	</select>
+  	<select id="selectProductByNo" resultMap="productResultMap">
+  		SELECT*FROM PRODUCT_TBL WHERE PRODUCT_NO=#{productNo}
+  	</select>
+  	<select id="selectAllDetailInfo" resultMap="detailResultMap">
+  		SELECT*FROM DETAIL_TBL WHERE PRODUCT_NO=#{productNo}
   	</select>
 </mapper>

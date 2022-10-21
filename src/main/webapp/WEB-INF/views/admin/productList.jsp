@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>제품리스트</title>
 <link rel="stylesheet" href="/resources/css/product/productList.css">
+<link rel="stylesheet" href="/resources/css/fonts.css">
 </head>
 <body>
 	<h1 align="center">전체 제품 목록</h1>

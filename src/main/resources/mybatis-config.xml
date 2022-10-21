@@ -16,6 +16,7 @@
 		<typeAlias type="com.kh.seulcam.product.domain.Brand" alias="Brand"/>
 		<typeAlias type="com.kh.seulcam.basket.domain.Basket" alias="Basket"/>
 		<typeAlias type="com.kh.seulcam.cart.domain.Cart" alias="Cart"/>
+		<typeAlias type="com.kh.seulcam.product.domain.Detail" alias="Detail"/>
 		
 	</typeAliases>
 	<mappers>

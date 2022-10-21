@@ -8,6 +8,7 @@
 <title>브랜드등록</title>
 </head>
 <link rel="stylesheet" href="/resources/css/product/brandRegist.css">
+<link rel="stylesheet" href="/resources/css/fonts.css">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <body>

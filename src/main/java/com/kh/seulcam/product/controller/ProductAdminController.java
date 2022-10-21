@@ -75,19 +75,20 @@ public class ProductAdminController {
 	public String productRegister(ModelAndView mv
 			,@ModelAttribute Product product
 			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
-			
+			,@ModelAttribute Detail detail
 			,HttpServletRequest request
 			,HttpServletResponse response
 			) {
 			//System.out.println(detail.getdList().toString());
-
+			
 			try {
 				String mainFileName = uploadFile.getOriginalFilename();
 				if(!mainFileName.equals("")){
 					String root=request.getSession().getServletContext().getRealPath("resources");
 					String savePath = root+"\\puploadFiles";
+					System.out.println(savePath);
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-					String mainFileRename =sdf.format(new Date(System.currentTimeMillis()))+"수정."
+					String mainFileRename =sdf.format(new Date(System.currentTimeMillis()))+product.getProductName()+"메인사진."
 						+mainFileName.substring(mainFileName.lastIndexOf(".")+1);
 					File file = new File(savePath);
 					if(!file.exists()) {
@@ -98,10 +99,37 @@ public class ProductAdminController {
 					product.setMainFileName(mainFileName);
 					product.setMainFileRename(mainFileRename);
 					product.setMainFilePath(mainFilePath);
-				}	
+					
+				}
+				int productNo = pService.registerProduct(product);
+				
+				for(int i=0; i<detail.getdList().size(); i++) {
+					Detail dt=detail.getdList().get(i);
+					dt.setProductNo(productNo);
+					String detailFileName = dt.getDetailFileNameMPF().getOriginalFilename();
+					if(!detailFileName.equals("")){
+						String root=request.getSession().getServletContext().getRealPath("resources");
+						String savePath = root+"\\puploadFiles";
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+						String detailFileRename =sdf.format(new Date(System.currentTimeMillis()))+
+								product.getProductName()+"상세사진("+(i+1)+")."
+							+detailFileName.substring(detailFileName.lastIndexOf(".")+1);
+						File file = new File(savePath);
+						if(!file.exists()) {
+							file.mkdir();
+						}
+						uploadFile.transferTo(new File(savePath+"\\"+detailFileRename));
+						String detailFilePath=savePath+"\\"+detailFileRename;
+						dt.setDetailFileName(detailFileName);
+						dt.setDetailFilePath(detailFilePath);
+						dt.setDetailFileRename(detailFileRename);
+
+					}
+					int result = pService.registerProductDetail(dt);
+				}
+				//System.out.println(detail.getdList().toString());
 				//System.out.println(product.toString());
-				int result = pService.registerProduct(product);
-				if(result>0) {
+				if(productNo>0) {
 					
 					response.setContentType("text/html; charset=utf-8");
 					PrintWriter out = response.getWriter();

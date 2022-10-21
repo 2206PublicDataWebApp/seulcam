@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.seulcam.product.domain.Brand;
+import com.kh.seulcam.product.domain.Detail;
 import com.kh.seulcam.product.domain.Product;
 import com.kh.seulcam.product.store.ProductStore;
 
@@ -28,14 +29,38 @@ public class ProductStoreLogic implements ProductStore {
 
 	@Override
 	public int insertProduct(SqlSession session, Product product) {
-		int result = session.insert("ProductMapper.insertProduct",product);
-		return result;
+		int productNo = session.insert("ProductMapper.insertProduct",product);
+		return productNo;
 	}
 
 	@Override
 	public List<Product> selectAllProduct(SqlSession session) {
 		List<Product> pList=session.selectList("ProductMapper.selectAllProduct");
 		return pList;
+	}
+
+	@Override
+	public int insertProductDetail(SqlSession session, Detail detail) {
+		int result = session.insert("ProductMapper.insertProductDetail", detail);
+		return result;
+	}
+
+	@Override
+	public List<Product> selectNewArrivalList(SqlSession session) {
+		List<Product> pList = session.selectList("ProductMapper.selectNewArrivalList");
+		return pList;
+	}
+
+	@Override
+	public Product selectProductByNo(SqlSession session, Integer productNo) {
+		Product product = session.selectOne("ProductMapper.selectProductByNo", productNo);
+		return product;
+	}
+
+	@Override
+	public List<Detail> selectAllDetailInfo(SqlSession session, Integer productNo) {
+		List<Detail> dList=session.selectList("ProductMapper.selectAllDetailInfo", productNo);
+		return dList;
 	}
 
 }

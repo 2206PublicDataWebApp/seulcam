@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.seulcam.product.domain.Brand;
+import com.kh.seulcam.product.domain.Detail;
 import com.kh.seulcam.product.domain.Product;
 import com.kh.seulcam.product.service.ProductService;
 import com.kh.seulcam.product.store.ProductStore;
@@ -34,14 +35,39 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public int registerProduct(Product product) {
-		int result = pStore.insertProduct(session, product);
-		return result;
+		pStore.insertProduct(session, product);
+		int productNo = product.getProductNo();
+		return productNo;
 	}
 
 	@Override
 	public List<Product> getTotalProduct() {
 		List<Product> pList = pStore.selectAllProduct(session);
 		return pList;
+	}
+
+	@Override
+	public int registerProductDetail(Detail detail) {
+		int result = pStore.insertProductDetail(session, detail);
+		return result;
+	}
+
+	@Override
+	public List<Product> getNewArrivalList() {
+		List<Product> pList = pStore.selectNewArrivalList(session);
+		return pList;
+	}
+
+	@Override
+	public Product getProductByNo(Integer productNo) {
+		Product product = pStore.selectProductByNo(session, productNo);
+		return product;
+	}
+
+	@Override
+	public List<Detail> printAllDetailInfo(Integer productNo) {
+		List<Detail> dList = pStore.selectAllDetailInfo(session, productNo);
+		return dList;
 	}
 
 }

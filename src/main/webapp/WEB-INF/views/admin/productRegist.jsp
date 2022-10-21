@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link rel="stylesheet" href="/resources/css/product/productRegist.css">
+<link rel="stylesheet" href="/resources/css/fonts.css">
 </head>
 
 <body>
@@ -79,7 +80,7 @@
                 <p><label>상세 사진1</label></p>
                 <div class="box-img-upload">
                     <span class="drop-zone__prompt">+</span>
-                    <input type="file" name="dList[0].detailFileName" class="drop-zone__input" >
+                    <input type="file" name="dList[0].detailFileNameMPF" class="drop-zone__input" >
                 </div>
                 <div class="box-textarea">
                     <textarea placeholder="상세설명을 입력해주세요." name="dList[0].detailContents"></textarea>
@@ -90,7 +91,7 @@
                 <label>상세 사진2</label>
                     <div class="box-img-upload">
                         <span class="drop-zone__prompt">+</span>
-                        <input type="file" name="dList[1].detailFileName" class="drop-zone__input">
+                        <input type="file" name="dList[1].detailFileNameMPF" class="drop-zone__input">
                     </div>    
                     <div class="box-textarea">
                         <textarea placeholder="상세설명을 입력해주세요." name="dList[1].detailContents"></textarea>

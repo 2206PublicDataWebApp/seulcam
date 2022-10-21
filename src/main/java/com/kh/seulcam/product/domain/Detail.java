@@ -2,8 +2,11 @@ package com.kh.seulcam.product.domain;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Detail {
 	private int productNo;
+	private MultipartFile detailFileNameMPF;
 	private String detailFileName;
 	private String detailFilePath;
 	private String detailFileRename;
@@ -16,6 +19,14 @@ public class Detail {
 	}
 	public void setProductNo(int productNo) {
 		this.productNo = productNo;
+	}
+	
+
+	public MultipartFile getDetailFileNameMPF() {
+		return detailFileNameMPF;
+	}
+	public void setDetailFileNameMPF(MultipartFile detailFileNameMPF) {
+		this.detailFileNameMPF = detailFileNameMPF;
 	}
 	public String getDetailFileName() {
 		return detailFileName;
@@ -51,11 +62,10 @@ public class Detail {
 	}
 	@Override
 	public String toString() {
-		return "Detail [productNo=" + productNo + ", detailFileName=" + detailFileName + ", detailFilePath="
-				+ detailFilePath + ", detailFileRename=" + detailFileRename + ", detailContents=" + detailContents
-				+ "]";
+		return "Detail [productNo=" + productNo + ", detailFileNameMPF=" + detailFileNameMPF + ", detailFileName="
+				+ detailFileName + ", detailFilePath=" + detailFilePath + ", detailFileRename=" + detailFileRename
+				+ ", detailContents=" + detailContents + "]";
 	}
-	
-	
+
 	
 }
