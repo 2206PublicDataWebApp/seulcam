@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.store.CampStore;
 @Repository
 public class CampStoreLogic implements CampStore{
@@ -17,8 +18,13 @@ public class CampStoreLogic implements CampStore{
 	}
 
 	@Override
-	public List<Camp> selectCampList(SqlSession session, int page) {
-		List<Camp> cList = session.selectList("CampMapper.selectCampList",page);
+	public List<Camp> selectCampList(SqlSession session, SearchList sList) {
+		System.out.println(sList.getCity());
+		String citys = "강원도";
+		sList.setCity(citys);
+		List<Camp> cList = session.selectList("CampMapper.selectCampList",sList);
+		
+		System.out.println(cList);
 		return cList;
 	}
 

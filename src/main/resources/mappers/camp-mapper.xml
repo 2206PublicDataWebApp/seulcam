@@ -34,7 +34,12 @@
   	</resultMap>
   	<!-- 캠핑장 리스트 첫번째 조회 -->
   	<select id="selectCampList" resultMap="CampResultMap">
-  		SELECT * FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL) WHERE NUM BETWEEN (#{page}*10)+1 AND (#{page}+1)*10
+  		SELECT * FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL 
+  		
+  		WHERE DONM = #{city} 
+  		
+  		) WHERE NUM BETWEEN (#{page}*10)+1 AND (#{page}+1)*10
   	</select>
+  	
   	
 </mapper>
