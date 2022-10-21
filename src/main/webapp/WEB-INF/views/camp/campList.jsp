@@ -121,21 +121,40 @@ select {
 	<!-- 컨텐츠 -->
 	
 	<div class="body-wrapper">
-		
-		
 		<div class="campListMain">
 			<div class="search_area">
-				<h2>최근 인기 캠핑장 추천, 슬캠</h2>
+				<h2><a href="/camp/campList.kh">최근 인기 캠핑장 추천, 슬캠 ${msg }</a></h2>
 				<div class="searchCity">
 					<label for="city_select"><p>지역 </p></label>
-					<select name="" id="city_select">
-						<option value="0" >지역 시/군/구</option>
+					<select class="selectList" name="city_select" id="city_select">
+						<option value="" disabled selected>지역 시/도</option>
+						<option value="강원도" >강원도</option>
+						<option value="경기도" >경기도</option>
+						<option value="경상남도" >경상남도</option>
+						<option value="경상북도" >경상북도</option>
+						<option value="광주시" >광주시</option>
+						<option value="대구시" >대구시</option>
+						<option value="대전시" >대전시</option>
+						<option value="부산시" >부산시</option>
+						<option value="서울시" >서울시</option>
+						<option value="세종시" >세종시</option>
+						<option value="울산시" >울산시</option>
+						<option value="인천시" >인천시</option>
+						<option value="전라남도" >전라남도</option>
+						<option value="전라북도" >전라북도</option>
+						<option value="제주도" >제주도</option>
+						<option value="충청남도" >충청남도</option>
+						<option value="충청북도" >충청북도</option>
 					</select>
 				</div>
 				<div class="searchCity">
 					<label for="category_select"><p>카테고리 </p></label>
-					<select name="" id="category_select">
-						<option value="0" >카테고리</option>
+					<select class="selectList" name="category_select" id="category_select">
+						<option value="" disabled selected>카테고리</option>
+						<option value="글램핑" >글램핑</option>
+						<option value="일반야영장" >일반야영장</option>
+						<option value="자동차야영장" >자동차야영장</option>
+						<option value="카라반" >카라반</option>
 					</select>
 				</div>
 				<div class="switch_area">
@@ -145,7 +164,7 @@ select {
 					</span>
 					<span id="switch">
 						<label class="switch-button">
-							<input type="checkbox"/>
+							<input type="checkbox" name="registCheck" />
 							<span class="onoff-switch"></span>
 						</label>
 					</span>
@@ -169,75 +188,101 @@ select {
 
 
 	<script>
-		$(document)
-				.ready(
-						function() {
-							$.ajax({
-								url : "/camp/campListShow.kh",
+		var page = 0;
+		var city ="";
+		var category ="";
+		var search = "";
+		var regist ="N";
+		var listUrl ="";
+		function urlLoad(){
+			$.ajax({
+								url : listUrl,
 								type : "GET",
-								data : {},
+								data : {
+									"page" : page,
+									"city" : city,
+									"category" : category,
+									"search" : search,
+									"regist" : regist
+								},
 								dataType : "json",
+								async : false,
 								success : function(data) {
-									console.log(data[0].contentId)
 									var str = "";
 									for (var i = 0; i < data.length; i++) {
-									str += "<div class='camp_List' id='campsite-"+data[i].contentId+"'>"
-									str += "<a href='#' data-id='"+data[i].contentId+"'>"
-									str += "<div style='height: 225px; background: url("+data[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
-									str += "<div class='card-body 'style='padding-top: 0.75rem;'><div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>"+data[i].induty+"</small></div>"
-									str += "<a href='#' data-id='"+data[i].contentId+"'><h3 class='card-title tt'>"+data[i].facltNm+"</h3><p class='card-text tt'>"+data[i].addr1+"</p></a></div><hr>좋아요 : 0</div>"
+										str += "<div class='camp_List' id='campsite-"+data[i].contentId+"'>"
+										str += "<a href='/camp/campDetail.kh?contentId="+data[i].contentId+"' data-id='"+data[i].contentId+"'>"
+												if(data[i].firstImageUrl == null){
+										str += "<div style='height: 225px; background: url(https://3.bp.blogspot.com/-ZKBbW7TmQD4/U6P_DTbE2MI/AAAAAAAADjg/wdhBRyLv5e8/s1600/noimg.gif) no-repeat center center #343a40; background-size: 100%;'></div></a>"
+									}else{
+										str += "<div style='height: 225px; background: url("+data[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
+									}	
+										str += "<div class='card-body 'style='padding-top: 0.75rem;'><div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>"+data[i].induty+"</small></div>"
+										str += "<a href='/camp/campDetail.kh?contentId="+data[i].contentId+"' data-id='"+data[i].contentId+"'><h3 class='card-title tt'>"+data[i].facltNm+"</h3><p class='card-text tt'>"+data[i].addr1+"</p></a></div><hr>좋아요 : 0</div>"
 									}
-									$("#list_area").append(str);
+									if(listUrl == "/camp/campListScroll.kh"){
+										$("#list_area").append(str);
+									}else{
+										$("#list_area").html(str);
+									}
+									page++
 								},
 								error : function() {
 									console.log("출력실패");
 								}
 							})
-
-						})
-		//자동 스크롤시 페이지 갱신
-		var page = 0;
-		function scrollload(){
-				page++;
-				$.ajax({
-							url : "",
-							type : "GET",
-							data : {
-								"page" : page
-							},
-							dataType : "json",
-							async: false,
-							success : function(data) {
-								console.log(data)
-								var str = "";
-								// for (var i = 0; i < data.response.body.items.item.length; i++) {
-								// 	var campItem = data.response.body.items.item;
-								// 	str += "<div class='camp_List' id='campsite-"+campItem[i].contentId+"'>"
-								// 	str += "<a href='#' data-id='"+campItem[i].contentId+"'>"
-								// 	str += "<div style='height: 225px; background: url("+campItem[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
-								// 	str += "<div class='card-body 'style='padding-top: 0.75rem;'><div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>"+campItem[i].induty+"</small></div>"
-								// 	str += "<a href='#' data-id='"+campItem[i].contentId+"'><h3 class='card-title tt'>"+campItem[i].facltNm+"</h3><p class='card-text tt'>"+campItem[i].addr1+"</p></a></div><hr>좋아요 : 0</div>"
-								// }
-								// $("#list_area").append(str);
-
-							},
-							error : function() {
-								console.log("출력실패");
-							}
-						})
 		}
-		//자동 스크롤시 페이지 갱신
+
+		//리스트 진입시 목록 출력
+		$(document).ready(function() {
+			listUrl = "/camp/campListShow.kh";
+			urlLoad();
+						})
+		//자동 스크롤시 페이지 갱신 ajax
+		function scrollload(){
+			listUrl = "/camp/campListScroll.kh";
+			// page++;
+			urlLoad();
+		}
+		//자동 스크롤시 페이지 갱신 코드
 		$(window).scroll(function () {
 			// setTimeout(function(){
 			var scrollHeight = $(window).scrollTop() + $(window).height();
 			var documentHeight = $(document).height();
-			console.log(scrollHeight)
-			console.log(documentHeight)
-			if (scrollHeight+page  >= documentHeight) {
+			//현재 높이 측정
+			// console.log(scrollHeight)
+			// console.log(documentHeight)
+			if (scrollHeight+page  >= documentHeight -1) {
+				console.log()
 				scrollload()
 				}
-			// },300)
+			// },500)
 		});		 
+
+		// 예약가능 스위치 활성화
+		$("input[name='registCheck']").change(function(){
+			if(this.checked == true){
+				regist = "Y"
+			}else{
+				regist = "N"
+			}
+		})
+
+		// 검색결과 출력
+		$("select").change(function(){
+			if(this.name == "city_select"){
+				city ="\'"+$(this).val()+"\'";
+			}else if(this.name == "category_select"){
+				category ="\'"+$(this).val()+"\'";
+			}
+			$(".word_area").html("<h2>"+ city +" "+ category+" 검색결과</h2> ")
+			listUrl = "/camp/campListShow.kh";
+			// if(page != 0){
+			// 	page=0;
+			// }
+			urlLoad();
+			});
+
 
 
 

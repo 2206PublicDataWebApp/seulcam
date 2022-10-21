@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.service.CampServie;
 import com.kh.seulcam.camp.store.CampStore;
 
@@ -27,8 +28,8 @@ public class CampServieImpl implements CampServie{
 	}
 
 	@Override
-	public List<Camp> printCampList(int page) {
-		List<Camp> cList = cStore.selectCampList(session,page);
+	public List<Camp> printCampList(SearchList sList) {
+		List<Camp> cList = cStore.selectCampList(session,sList);
 		return cList;
 	}
 
