@@ -41,7 +41,7 @@
             <div class="join-input">
                 <div class="join-input-wrapper" class="curPw">
                     <input class="join-input-input" type="password" name="memberPw" id="memberPw" placeholder="기존 비밀번호" maxlength="16">
-                    <button type="button" class="password-eye"></button>
+                    <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             </div>
             <p class="password ok">비밀번호가 일치합니다.</p>
@@ -50,14 +50,14 @@
             <div class="join-input">
                 <div class="join-input-wrapper">
                     <input class="join-input-input" type="password" id="newMemberPw" placeholder="새 비밀번호" maxlength="16">
-                    <button type="button" class="password-eye"></button>
+                    <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             </div>
     		<p class="newpassword error">8 ~ 16자 영문, 숫자, 특수문자를 최소 한가지씩 조합해주세요.</p>
             <div class="join-input">
                 <div class="join-input-wrapper">
                     <input class="join-input-input" type="password" id="newMemberPwCheck" placeholder="새 비밀번호 확인" maxlength="16">
-                    <button type="button" class="password-eye active"></button>
+                    <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             </div>
         </section>
@@ -71,5 +71,6 @@
         </footer>
     </div>
     <script src="/resources/js/member/passwordChange.js"></script>
+    <script src="/resources/js/member/pwInputCommon.js"></script>
 </body>
 </html>
