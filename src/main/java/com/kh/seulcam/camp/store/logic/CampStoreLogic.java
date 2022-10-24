@@ -3,10 +3,12 @@ package com.kh.seulcam.camp.store.logic;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
+import com.kh.seulcam.camp.domain.campReview;
 import com.kh.seulcam.camp.store.CampStore;
 @Repository
 public class CampStoreLogic implements CampStore{
@@ -19,13 +21,26 @@ public class CampStoreLogic implements CampStore{
 
 	@Override
 	public List<Camp> selectCampList(SqlSession session, SearchList sList) {
-		System.out.println(sList.getCity());
-		String citys = "강원도";
-		sList.setCity(citys);
 		List<Camp> cList = session.selectList("CampMapper.selectCampList",sList);
-		
-		System.out.println(cList);
 		return cList;
+	}
+
+	@Override
+	public Camp selectCampDetail(SqlSession session, String contentId) {
+		Camp camp = session.selectOne("CampMapper.selectCampDetail",contentId);
+		return camp;
+	}
+
+	@Override
+	public int insertCampReview(SqlSession session, campReview cReview) {
+		int result = session.insert("CampMapper.insertCampReview", cReview);
+		return result;
+	}
+
+	@Override
+	public List<campReview> selectCampReview(SqlSessionTemplate session, String contentId) {
+		List<campReview> rList = session.selectList("CampMapper.selectCampReview",contentId);
+		return rList;
 	}
 
 }

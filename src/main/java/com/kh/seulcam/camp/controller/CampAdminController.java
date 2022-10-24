@@ -34,6 +34,7 @@ public class CampAdminController {
 		
 	}
 	
+	// 캠핑장 데이터 db 등록
 	@RequestMapping(value = "/campAdmin/campInsert.kh", method = RequestMethod.GET)
 	public String campInsert() {
 		try {
@@ -92,6 +93,7 @@ public class CampAdminController {
 	        		camp.setSigunguNm(item.get("sigunguNm").toString());
 	        		camp.setZipcode(item.get("zipcode").toString());
 	        		camp.setAddr1(item.get("addr1").toString());
+	        		camp.setTel(item.get("tel").toString());
 	        		camp.setMapX(item.get("mapX").toString());
 	        		camp.setMapY(item.get("mapY").toString());
 	        		camp.setHomepage(item.get("homepage").toString());
