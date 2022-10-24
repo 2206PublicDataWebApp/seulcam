@@ -46,6 +46,14 @@
 		select count(MEMBER_NICKNAME) FROM MEMBER_TABLE WHERE MEMBER_NICKNAME = #{memberNickname}
 		</select>
 		
+		<select id="selectCountById" resultType="_int">
+		select count(MEMBER_ID) FROM MEMBER_TABLE WHERE MEMBER_ID = #{memberId}
+		</select>
+		
+		<select id="selectCountByIdEmail" resultType="_int">
+		select count(MEMBER_ID) FROM MEMBER_TABLE WHERE MEMBER_ID = #{memberId} AND MEMBER_EMAIL = #{memberEmail }
+		</select>
+		
 		<select id="selectOneByidPw" resultType="_int">
 		select count(MEMBER_ID) FROM MEMBER_TABLE WHERE MEMBER_ID = #{memberId } AND MEMBER_PW = #{memberPw }
 		</select>

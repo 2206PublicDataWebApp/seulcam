@@ -10,14 +10,20 @@ public interface MemberService {
 	// 로그인
 	public Member loginMember(Member member);
 	
-	// 이메일로 회원 정보 값 리턴
+	// 이메일로 회원 존재하는 지 리턴
 	public int checkOneEmail(String memberEmail);
 	
-	// 이메일로 회원 정보 값 리턴
+	// 아이디로 회원 존재하는 지 리턴
+	public int checkOneId(String memberId);
+	
+	// 닉네임으로 회원 존재하는 지 리턴
 	public int checkOneNickname(String memberNickname);
 	
 	// 현재 비밀번호 체크
 	public int checkOnePw(Member member);
+	
+	// 아이디와 이메일 값 체크
+	public int checkIdEmail(Member member);
 	
 	// 아이디 리스트를 이메일로 조회
 	public List<Member> listIdByEmail(String memberEmail);

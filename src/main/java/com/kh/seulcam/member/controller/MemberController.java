@@ -49,8 +49,20 @@ public class MemberController {
 	
 	// 비밀번호 찾기 결과 창으로 이동
 	@RequestMapping(value="/member/pwResultView", method=RequestMethod.GET)
-	public String pwResultView(Model model) {
-		return "member/pwResult";
+	public ModelAndView pwResultView(
+			String memberId
+			, ModelAndView mv
+			, HttpServletRequest request) {
+		try {
+			Member pwResult = mService.printOneById(memberId);
+			HttpSession session = request.getSession();
+			session.setAttribute("pwResult", pwResult);
+			mv.addObject("member", pwResult);
+			mv.setViewName("member/pwResult");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
 	}
 	
 	// 회원가입 창으로 이동
@@ -151,6 +163,14 @@ public class MemberController {
 		return "member/addressChange";
 	}
 	
+	// 아이디 DB에 존재하는 지 검사하는 기능
+	@ResponseBody
+	@RequestMapping(value= "/member/memberIdCheck", method = RequestMethod.GET)
+	public String IdCheck(@RequestParam("memberId") String memberId) {
+		int result = mService.checkOneId(memberId);
+		return result+"";
+	}
+	
 	// 이메일 DB에 존재하는 지 검사하는 기능
 	@ResponseBody
 	@RequestMapping(value= "/member/memberEmailCheck", method = RequestMethod.GET)
@@ -177,6 +197,19 @@ public class MemberController {
 		member.setMemberId(memberId);
 		member.setMemberPw(memberPw);
 		int result = mService.checkOnePw(member);
+		return result+"";
+	}
+	
+	// 아이디와 이메일이 DB와 일치하는지 검사하는 기능
+	@ResponseBody
+	@RequestMapping(value= "/member/memberIdEmailCheck", method = RequestMethod.GET)
+	public String memberIdEmailCheck(
+			@RequestParam("memberId") String memberId,
+			@RequestParam("memberEmail") String memberEmail) {
+		Member member = new Member();
+		member.setMemberId(memberId);
+		member.setMemberEmail(memberEmail);
+		int result = mService.checkIdEmail(member);
 		return result+"";
 	}
 	

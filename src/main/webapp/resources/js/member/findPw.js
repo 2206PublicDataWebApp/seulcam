@@ -7,8 +7,55 @@ $(function() {
 	$(".auth-number.error").hide();
 	let email_auth_cd = 'derg51ergegv';
 
+
+    $("#memberId").on("keyup", function(){
+        let memberEmail = $("#memberEmail").val();
+	    let memberId = $("#memberId").val();
+	    $.ajax({
+	        url:"/member/memberIdCheck",
+	        type:"get",
+	        data:{"memberId" : memberId},
+	        success:function(result){
+	            if(result != "0"){    // 해당하는 아이디가 존재하면,
+	                $(".id.ok").show();
+	                $(".id.error").hide();
+	
+	            }else{  // 해당하는 아이디가 존재하지 않으면,
+	                $(".id.ok").hide();
+	                $(".id.error").show();
+	            }
+	        },
+	        error:function(){
+	        }
+	    });
+
+        $.ajax({
+            url:"/member/memberIdEmailCheck",
+            type:"get",
+            data:{"memberEmail" : memberEmail,
+                   "memberId" : memberId },
+            success:function(check){
+                if(check != "0") {
+                    $(".auth-button").attr("disabled",false);
+	                $(".auth-button").css('background-color', '#0078ff')
+	                                 .css("color", '#fff')
+	                                 .css("cursor", "pointer");
+                }else{
+                    $(".auth-button").attr("disabled",true);
+	                $(".auth-button").css('background-color', '#f3f3f3')
+	                                 .css("color", '#b3b3b3')
+	                                 .css("cursor", "default");
+                }
+            },
+            error:function(){
+            }
+        });
+	});
+
+
 	$("#memberEmail").on("keyup", function(){
 	    let memberEmail = $("#memberEmail").val();
+        let memberId = $("#memberId").val();
 	    $.ajax({
 	        url:"/member/memberEmailCheck",
 	        type:"get",
@@ -17,10 +64,7 @@ $(function() {
 	            if(result != "0"){    // 해당하는 이메일이 존재하면,
 	                $(".email.ok").show();
 	                $(".email.error").hide();
-	                $(".auth-button").attr("disabled",false);
-	                $(".auth-button").css('background-color', '#0078ff')
-	                                 .css("color", '#fff')
-	                                 .css("cursor", "pointer");
+
 	
 	            }else{  // 해당하는 이메일이 존재하지 않으면,
 					$(".email.ok").hide();
@@ -34,6 +78,29 @@ $(function() {
 	        error:function(){
 	        }
 	    });
+
+
+        $.ajax({
+            url:"/member/memberIdEmailCheck",
+            type:"get",
+            data:{"memberEmail" : memberEmail,
+                   "memberId" : memberId },
+            success:function(check){
+                if(check != "0") {
+                    $(".auth-button").attr("disabled",false);
+	                $(".auth-button").css('background-color', '#0078ff')
+	                                 .css("color", '#fff')
+	                                 .css("cursor", "pointer");
+                }else{
+                    $(".auth-button").attr("disabled",true);
+	                $(".auth-button").css('background-color', '#f3f3f3')
+	                                 .css("color", '#b3b3b3')
+	                                 .css("cursor", "default");
+                }
+            },
+            error:function(){
+            }
+        });
 	});
 	
 	
@@ -46,6 +113,8 @@ $(function() {
 	           success: function(data){
 	               alert("인증번호가 발송되었습니다.");
 	               email_auth_cd = data;
+                   $(".id.ok").hide();
+                   $(".id.error").hide();
 	               $(".email.ok").hide();
 	               $("#memberEmail").attr("readonly",true);
 	               $("#memberEmail").css('background-color', '#f3f3f3')
@@ -57,6 +126,9 @@ $(function() {
 	               $(".auth-button").attr("disabled",true);
 	               $(".auth-button").css('background-color', '#E6E6E6')
 	               					.css("cursor", "default");
+                   $(".findpw-id").attr("readonly",true);
+                   $(".findpw-id").css('background-color', '#f3f3f3')
+                                  .css("cursor", "default");
 	           },
 	           error: function(data){
 	               alert("메일 발송에 실패했습니다.");

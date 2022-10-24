@@ -37,6 +37,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public int checkOneId(String memberId) {
+		int result = mStore.countById(session, memberId);
+		return result;
+	}
+	
+	@Override
 	public int checkOneNickname(String memberNickname) {
 		int result = mStore.countByNickname(session, memberNickname);
 		return result;
@@ -45,6 +51,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int checkOnePw(Member member) {
 		int result = mStore.countByIdPw(session, member);
+		return result;
+	}
+	
+	@Override
+	public int checkIdEmail(Member member) {
+		int result = mStore.countByIdEmail(session, member);
 		return result;
 	}
 	
