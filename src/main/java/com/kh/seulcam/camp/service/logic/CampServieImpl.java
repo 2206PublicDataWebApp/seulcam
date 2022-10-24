@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
-import com.kh.seulcam.camp.domain.campReview;
+import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.service.CampServie;
 import com.kh.seulcam.camp.store.CampStore;
 
@@ -41,14 +41,14 @@ public class CampServieImpl implements CampServie{
 	}
 
 	@Override
-	public int campReviewWrite(campReview cReview) {
+	public int campReviewWrite(CampReview cReview) {
 		int result = cStore.insertCampReview(session,cReview);
 		return result;
 	}
 
 	@Override
-	public List<campReview> campReviewList(String contentId) {
-		List<campReview> rList = cStore.selectCampReview(session,contentId);
+	public List<CampReview> campReviewList(String contentId) {
+		List<CampReview> rList = cStore.selectCampReview(session,contentId);
 		return rList;
 	}
 

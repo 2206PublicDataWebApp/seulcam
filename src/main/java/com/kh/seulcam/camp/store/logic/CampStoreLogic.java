@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
-import com.kh.seulcam.camp.domain.campReview;
+import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.store.CampStore;
 @Repository
 public class CampStoreLogic implements CampStore{
@@ -32,14 +32,14 @@ public class CampStoreLogic implements CampStore{
 	}
 
 	@Override
-	public int insertCampReview(SqlSession session, campReview cReview) {
+	public int insertCampReview(SqlSession session, CampReview cReview) {
 		int result = session.insert("CampMapper.insertCampReview", cReview);
 		return result;
 	}
 
 	@Override
-	public List<campReview> selectCampReview(SqlSessionTemplate session, String contentId) {
-		List<campReview> rList = session.selectList("CampMapper.selectCampReview",contentId);
+	public List<CampReview> selectCampReview(SqlSessionTemplate session, String contentId) {
+		List<CampReview> rList = session.selectList("CampMapper.selectCampReview",contentId);
 		return rList;
 	}
 

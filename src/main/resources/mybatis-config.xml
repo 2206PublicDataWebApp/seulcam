@@ -12,11 +12,16 @@
 	<typeAliases>
 		<typeAlias type="com.kh.seulcam.member.domain.Member" alias="Member"/>
 		<typeAlias type="com.kh.seulcam.camp.domain.Camp" alias="Camp"/>
+		<typeAlias type="com.kh.seulcam.camp.domain.CampReview" alias="CampReview"/>
+		<typeAlias type="com.kh.seulcam.camp.domain.CampLike" alias="CampLike"/>
+		<typeAlias type="com.kh.seulcam.camp.domain.CampRegist" alias="CampRegist"/>
+		<typeAlias type="com.kh.seulcam.camp.domain.CampSite" alias="CampSite"/>
 		<typeAlias type="com.kh.seulcam.product.domain.Product" alias="Product"/>
 		<typeAlias type="com.kh.seulcam.product.domain.Brand" alias="Brand"/>
 		<typeAlias type="com.kh.seulcam.basket.domain.Basket" alias="Basket"/>
 		<typeAlias type="com.kh.seulcam.cart.domain.Cart" alias="Cart"/>
 		<typeAlias type="com.kh.seulcam.product.domain.Detail" alias="Detail"/>
+		<typeAlias type="com.kh.seulcam.product.domain.Review" alias="Review"/>
 		
 		
 	</typeAliases>
@@ -28,5 +33,6 @@
 		<mapper resource="mappers/cart-mapper.xml"></mapper>
 		<mapper resource="mappers/campAdmin-mapper.xml"></mapper>
 		<mapper resource="mappers/order-mapper.xml"></mapper>
+		<mapper resource="mappers/productReview-mapper.xml"></mapper>
 	</mappers>
 </configuration>

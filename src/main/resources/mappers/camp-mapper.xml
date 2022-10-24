@@ -35,7 +35,7 @@
 		<result property="blogCount" column="BLOGCOUNT" />
 		<result property="registAvi" column="REGISTAVI" />
   	</resultMap>
-  	<!-- <resultMap type="campReview" id="CampReviewResultMap">
+  	<resultMap type="CampReview" id="CampReviewResultMap">
   		<id property="campReviewNo" column="CAMP_REVIEW_NO" />
   		<result property="memberId" column="MEMBER_ID" />
   		<result property="memberNickname" column="MEMBER_NICKNAME" />
@@ -45,7 +45,7 @@
   		<result property="campReviewStar" column="CAMP_REVIEW_STAR" />
   		<result property="rCreateDate" column="R_CREATE_DATE" />
   		<result property="rModifyDate" column="R_MODIFY_DATE" />
-  	</resultMap> -->
+  	</resultMap>
   	<!-- 캠핑장 리스트 첫번째 조회 -->
   	<select id="selectCampList" resultMap="CampResultMap">
   		SELECT * FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL 

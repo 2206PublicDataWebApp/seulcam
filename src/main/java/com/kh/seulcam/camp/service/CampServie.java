@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
-import com.kh.seulcam.camp.domain.campReview;
+import com.kh.seulcam.camp.domain.CampReview;
 
 public interface CampServie {
 
@@ -14,8 +14,8 @@ public interface CampServie {
 
 	public Camp printCampDetail(String contentId);
 
-	public int campReviewWrite(campReview cReview);
+	public int campReviewWrite(CampReview cReview);
 
-	public List<campReview> campReviewList(String contentId);
+	public List<CampReview> campReviewList(String contentId);
 
 }

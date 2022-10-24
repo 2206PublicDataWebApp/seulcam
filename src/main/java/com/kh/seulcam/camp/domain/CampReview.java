@@ -2,7 +2,7 @@ package com.kh.seulcam.camp.domain;
 
 import java.sql.Date;
 
-public class campReview {
+public class CampReview {
 	private int campReviewNo;
 	private String memberId;
 	private String memberNickname;
@@ -14,10 +14,10 @@ public class campReview {
 	private Date rModifyDate;
 	
 	
-	public campReview() {}
+	public CampReview() {}
 	
 	
-	public campReview(int campReviewNo, String memberId, String memberNickname, String campId, String campName,
+	public CampReview(int campReviewNo, String memberId, String memberNickname, String campId, String campName,
 			String campReviewContents, String campReviewStar, Date rCreateDate, Date rModifyDate) {
 		super();
 		this.campReviewNo = campReviewNo;

@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
-import com.kh.seulcam.camp.domain.campReview;
+import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.service.CampServie;
 
 @Controller
@@ -143,7 +143,7 @@ public class CampController {
 	@ResponseBody
 	@RequestMapping(value = "/camp/campReviewWrite.kh", method = RequestMethod.POST )
 	public String campReviewWrite(
-			@ModelAttribute campReview cReview,
+			@ModelAttribute CampReview cReview,
 			HttpServletRequest request
 			) {
 			try {
@@ -164,7 +164,7 @@ public class CampController {
 			HttpServletRequest request
 			) {
 		try {
-			List<campReview> rList = cService.campReviewList(contentId);
+			List<CampReview> rList = cService.campReviewList(contentId);
 			System.out.println(rList);
 			return new Gson().toJson(rList);
 		} catch (Exception e) {

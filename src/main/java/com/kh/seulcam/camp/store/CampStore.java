@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
-import com.kh.seulcam.camp.domain.campReview;
+import com.kh.seulcam.camp.domain.CampReview;
 
 public interface CampStore {
 
@@ -17,8 +17,8 @@ public interface CampStore {
 
 	public Camp selectCampDetail(SqlSession session, String contentId);
 
-	public int insertCampReview(SqlSession session, campReview cReview);
+	public int insertCampReview(SqlSession session, CampReview cReview);
 
-	public List<campReview> selectCampReview(SqlSessionTemplate session, String contentId);
+	public List<CampReview> selectCampReview(SqlSessionTemplate session, String contentId);
 
 }
