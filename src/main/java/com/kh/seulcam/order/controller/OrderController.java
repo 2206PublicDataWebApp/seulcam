@@ -6,8 +6,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.seulcam.cart.domain.Cart;
@@ -32,9 +35,14 @@ public class OrderController {
 	
 	//주문
 	@RequestMapping(value="/order/order.kh", method=RequestMethod.GET)
-	public String order() {
-		
-		return "order/orderDetail";
+	public ModelAndView order(
+			ModelAndView mv
+			,HttpSession session) {
+		Member memberId = (Member)session.getAttribute("loginUser");
+		Member member = oService.printMemberInfo(memberId);
+		mv.addObject("member",member);
+		mv.setViewName("order/orderDetail");
+		return mv;
 	}
 	
 	//주문 완료
@@ -42,6 +50,17 @@ public class OrderController {
 	public String orderFinish() {
 		
 		return "order/orderComplete";
+	}
+	
+	//주문 주소 변경
+	@ResponseBody
+	@RequestMapping(value="/order/addressChange.kh",method=RequestMethod.POST)
+	public String addressChange(
+			@ModelAttribute Member member
+			) {
+		int result = oService.changeAddress(member);
+		return"success";
+		
 	}
 
 
