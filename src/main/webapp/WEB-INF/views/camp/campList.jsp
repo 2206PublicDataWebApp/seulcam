@@ -9,14 +9,17 @@
 	<meta name="viewport"
 	content="width=device-width, initial-scale=1.0 user-scalable=no">
 	<title>캠핑장 리스트</title>
-	<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-		<link href="../resources/css/layout.css"" rel="stylesheet">
-		<link href="../resources/css/bootstrap.min.css"" rel="stylesheet"> -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script> -->
+	<link rel="stylesheet" href="/resources/css/camp/switch.css">
+	<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/resources/css/fonts.css">
+	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+    <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 		<!-- jQuery -->
 		<script src="../../../resources/js/jquery-3.6.1.min.js"></script>
-		<link rel="stylesheet" href="/resources/css/camp/switch.css">
 	</head>
 	<style>
+		/* 헤더 - 바디 css */
 body {
 	font-size: 14px;
 	color: #000;
@@ -48,6 +51,8 @@ header {
     background-color: white;
     min-height: 100vh;
 }
+/* 컨텐츠 css */
+
 .campListMain {
 	padding-top: 50px;
 }
@@ -89,6 +94,14 @@ select {
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
+.input-group{
+	margin: auto;
+	max-width: 600px;
+}
+.list_area {
+	margin: auto;
+	max-width: 600px;
+}
 .switch_area #switchName {
 	margin: auto;
 	font-size: 20px;
@@ -100,7 +113,7 @@ select {
 }
 .camp_List {
 	padding-bottom: 15px;
-	border: solid #343a40 1px;
+	border-bottom: solid rgb(243, 243, 243) 10px;
 }
 .tt {
 	margin: 5px;
@@ -126,8 +139,8 @@ select {
 				<h2><a href="/camp/campList.kh">최근 인기 캠핑장 추천, 슬캠 ${msg }</a></h2>
 				<div class="searchCity">
 					<label for="city_select"><p>지역 </p></label>
-					<select class="selectList" name="city_select" id="city_select">
-						<option value="" disabled selected>지역 시/도</option>
+					<select class="selectList form-select" name="city_select" id="city_select">
+						<option value="" selected>지역 시/도 전체</option>
 						<option value="강원도" >강원도</option>
 						<option value="경기도" >경기도</option>
 						<option value="경상남도" >경상남도</option>
@@ -149,8 +162,8 @@ select {
 				</div>
 				<div class="searchCity">
 					<label for="category_select"><p>카테고리 </p></label>
-					<select class="selectList" name="category_select" id="category_select">
-						<option value="" disabled selected>카테고리</option>
+					<select class="selectList form-select" name="category_select" id="category_select">
+						<option value="" selected>카테고리 전체</option>
 						<option value="글램핑" >글램핑</option>
 						<option value="일반야영장" >일반야영장</option>
 						<option value="자동차야영장" >자동차야영장</option>
@@ -171,12 +184,15 @@ select {
 				
 				</div>
 				
-				<input type="text">
+				<div class="input-group mb-3">
+					<input type="text" class="searchForm form-control" placeholder="검색어를 입력해주세요">
+					<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="searchForm()">Search</button>
+				</div>
 
 			</div>
 			<div class="list_area" >
 				<div class="word_area">
-					<h2>검색결과</h2>
+					<h5>검색결과</h5>
 				</div>
 			<div id="list_area">
 
@@ -194,7 +210,11 @@ select {
 		var search = "";
 		var regist ="N";
 		var listUrl ="";
+
+		// 리스트 생성 function
 		function urlLoad(){
+			
+			$(".word_area").html("<h5>"+ city +" "+ category+" "+search+" 검색결과</h5> ")
 			$.ajax({
 								url : listUrl,
 								type : "GET",
@@ -218,7 +238,7 @@ select {
 										str += "<div style='height: 225px; background: url("+data[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
 									}	
 										str += "<div class='card-body 'style='padding-top: 0.75rem;'><div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>"+data[i].induty+"</small></div>"
-										str += "<a href='/camp/campDetail.kh?contentId="+data[i].contentId+"' data-id='"+data[i].contentId+"'><h3 class='card-title tt'>"+data[i].facltNm+"</h3><p class='card-text tt'>"+data[i].addr1+"</p></a></div><hr>좋아요 : 0</div>"
+										str += "<a href='/camp/campDetail.kh?contentId="+data[i].contentId+"' data-id='"+data[i].contentId+"'><h5 class='card-title tt'>"+data[i].facltNm+"</h5><p class='card-text tt'>"+data[i].addr1+"</p></a></div><hr>좋아요 : 0</div>"
 									}
 									if(listUrl == "/camp/campListScroll.kh"){
 										$("#list_area").append(str);
@@ -254,6 +274,7 @@ select {
 			// console.log(documentHeight)
 			if (scrollHeight+page  >= documentHeight -1) {
 				console.log()
+				
 				scrollload()
 				}
 			// },500)
@@ -263,26 +284,49 @@ select {
 		$("input[name='registCheck']").change(function(){
 			if(this.checked == true){
 				regist = "Y"
+				if(page != 0){
+				page=0;
+			}
 			}else{
 				regist = "N"
+				if(page != 0){
+				page=0;
+			}
 			}
 		})
 
-		// 검색결과 출력
+		// select값 으로 검색결과 출력
 		$("select").change(function(){
 			if(this.name == "city_select"){
-				city ="\'"+$(this).val()+"\'";
+				city = $(this).val();
+				var city1 ="\'"+$(this).val()+"\'";
 			}else if(this.name == "category_select"){
-				category ="\'"+$(this).val()+"\'";
+				category = $(this).val();
+				var category1 ="\'"+$(this).val()+"\'";
 			}
-			$(".word_area").html("<h2>"+ city +" "+ category+" 검색결과</h2> ")
 			listUrl = "/camp/campListShow.kh";
-			// if(page != 0){
-			// 	page=0;
-			// }
+			if(page != 0){
+				page=0;
+			}
 			urlLoad();
 			});
-
+		
+		//검색어 입력시 리스트 출력
+		function searchForm(){
+			if($(".searchForm").val().trim() != ""){
+				search = $(".searchForm").val();
+				if(page != 0){
+				page=0;
+				}
+				urlLoad();
+			}else{
+				search = "";
+				if(page != 0){
+				page=0;
+				}
+				urlLoad();
+			}
+		}
 
 
 

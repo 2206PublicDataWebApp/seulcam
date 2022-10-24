@@ -1,21 +1,32 @@
 package com.kh.seulcam.camp.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
+import com.kh.seulcam.camp.domain.campReview;
 import com.kh.seulcam.camp.service.CampServie;
 
 @Controller
@@ -33,11 +44,52 @@ public class CampController {
 	
 	// 캠핑장 상세페이지
 		@RequestMapping(value = "/camp/campDetail.kh", method = RequestMethod.GET)
-		public String campDetail(
-				@RequestParam(value="contentId", required = false) String contentId
+		public ModelAndView campDetail(
+				@RequestParam(value="contentId", required = false) String contentId,
+				ModelAndView mv
 				) {
-			System.out.println(contentId);
-			return "camp/campDetail";
+			Camp camp= cService.printCampDetail(contentId);
+			try {
+				
+				String apiURL = "https://dapi.kakao.com/v2/search/blog?sort=accuracy&page=1&size=10&query="+camp.getFacltNm();
+				URL url = new URL(apiURL);
+				HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
+				con.setRequestMethod("GET");
+				con.setRequestProperty("Authorization", "KakaoAK 7072f1c5ec76f11a0937d2337e6cad4e");
+				con.setRequestProperty("Content-type", "application/json");
+				System.out.println("Printing Response Header...\n" + con.getResponseCode());
+				
+				int responseCode = con.getResponseCode(); //
+				BufferedReader br;
+				if(responseCode==200) 
+				{ // 정상 호출
+					br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8")); 
+				} 
+				else 
+				{  // 에러 발생
+					br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
+				}
+				String inputLine;
+				StringBuffer sb = new StringBuffer();
+				while ((inputLine = br.readLine()) != null) 
+				{
+					sb.append(inputLine);
+				}
+				br.close();
+				 JSONParser parser = new JSONParser();
+			        // json data 최상단
+			        JSONObject objmain = (JSONObject) parser.parse(sb.toString());
+			     // json.response
+			        JSONObject objResponse = (JSONObject) parser.parse(objmain.get("meta").toString());
+				System.out.println("sd>>  "+sb.toString());
+				System.out.println(objResponse.get("total_count"));
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			mv.addObject("camp",camp);
+			mv.setViewName("camp/campDetail");
+			return mv;
 		}
 	
 	//캠핑장 리스트 출력
@@ -87,10 +139,44 @@ public class CampController {
 		return null;
 	}
 	
+	// 캠핑장 댓글 등록
+	@ResponseBody
+	@RequestMapping(value = "/camp/campReviewWrite.kh", method = RequestMethod.POST )
+	public String campReviewWrite(
+			@ModelAttribute campReview cReview,
+			HttpServletRequest request
+			) {
+			try {
+				int result = cService.campReviewWrite(cReview);
+				return "success";
+			} catch (Exception e) {
+				e.printStackTrace();
+				request.setAttribute("msg", "댓글 저장 실패");
+				return "common/errorPage";
+			}
+	}
+	
+	// 캠핑장 댓글 출력
+	@ResponseBody
+	@RequestMapping(value = "/camp/campReviewList.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )
+	public String campReviewList(
+			@RequestParam(value="contentId", required = false) String contentId,
+			HttpServletRequest request
+			) {
+		try {
+			List<campReview> rList = cService.campReviewList(contentId);
+			System.out.println(rList);
+			return new Gson().toJson(rList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("msg", "댓글 출력 실패");
+			return "common/errorPage";
+		}
+	}
 	
 	
 	@ResponseBody
-	@RequestMapping(value = "/campLike.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )
+	@RequestMapping(value = "/camp/campLike.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )
 	public String campLike() {
 		
 		

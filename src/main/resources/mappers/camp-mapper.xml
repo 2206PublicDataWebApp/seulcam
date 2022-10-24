@@ -17,6 +17,7 @@
 		<result property="sigunguNm" column="SIGUNGUNM" />
 		<result property="zipcode" column="ZIPCODE" />
 		<result property="addr1" column="ADDR1" />
+		<result property="tel" column="TEL" />
 		<result property="mapX" column="MAPX" />
 		<result property="mapY" column="MAPY" />
 		<result property="homepage" column="HOMEPAGE" />
@@ -31,15 +32,43 @@
 		<result property="animalCmgCl" column="ANIMALCMGCL" />
 		<result property="tourEraCl" column="TOURERACL" />
 		<result property="firstImageUrl" column="FIRSTIMAGEURL" />
+		<result property="blogCount" column="BLOGCOUNT" />
+		<result property="registAvi" column="REGISTAVI" />
   	</resultMap>
+  	<!-- <resultMap type="campReview" id="CampReviewResultMap">
+  		<id property="campReviewNo" column="CAMP_REVIEW_NO" />
+  		<result property="memberId" column="MEMBER_ID" />
+  		<result property="memberNickname" column="MEMBER_NICKNAME" />
+  		<result property="campId" column="CAMP_ID" />
+  		<result property="campName" column="CAMP_NAME" />
+  		<result property="campReviewContents" column="CAMP_REVIEW_CONTENTS" />
+  		<result property="campReviewStar" column="CAMP_REVIEW_STAR" />
+  		<result property="rCreateDate" column="R_CREATE_DATE" />
+  		<result property="rModifyDate" column="R_MODIFY_DATE" />
+  	</resultMap> -->
   	<!-- 캠핑장 리스트 첫번째 조회 -->
   	<select id="selectCampList" resultMap="CampResultMap">
   		SELECT * FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL 
-  		
-  		WHERE DONM = #{city} 
-  		
+  		<where>
+  			<if test="city != ''"> AND DONM = #{city}</if>
+  			<if test="category != ''"> AND INDUTY LIKE '%'||#{category}||'%'</if>
+  			<if test="search != ''"> 
+  			AND (facltNm LIKE '%'||#{search}||'%' 
+  			or SIGUNGUNM LIKE '%'||#{search}||'%'
+  			or DONM LIKE '%'||#{search}||'%')
+  			</if>
+  		</where>
   		) WHERE NUM BETWEEN (#{page}*10)+1 AND (#{page}+1)*10
   	</select>
   	
+  	<select id="selectCampDetail" resultMap="CampResultMap">
+  		SELECT * FROM CAMP_TBL WHERE CONTENTID = #{contentId}
+  	</select>
+  	<insert id="insertCampReview">
+  		INSERT INTO CAMP_REVIEW_TBL VALUES(SEQ_CAMP_REVIEW_NO.NEXTVAL,#{memberId},#{memberNickname},#{campId},#{campName},#{campReviewContents},#{campReviewStar},DEFAULT,DEFAULT)
+  	</insert>
+  	<select id="selectCampReview" resultMap="CampReviewResultMap">
+  		SELECT * FROM CAMP_REVIEW_TBL WHERE CAMP_ID = #{contentId}
+  	</select>
   	
 </mapper>

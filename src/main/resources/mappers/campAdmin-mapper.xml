@@ -5,7 +5,7 @@
  
  <mapper namespace= "CampAdminMapper">
   	<insert id="insertCampList">
-  		INSERT INTO CAMP_TBL VALUES(#{contentId},#{facltNm},#{lineIntro},#{intro},#{bizrno},#{featureNm},#{induty},#{lctCl},#{doNm},#{sigunguNm},#{zipcode},#{addr1},#{mapX},#{mapY},#{homepage},#{resveUrl},#{tooltip},#{glampInnerFclty},#{caravInnerFclty},#{operPdCl},#{operDeCl},#{sbrsCl},#{sbrsEtc},#{animalCmgCl},#{tourEraCl},#{firstImageUrl})
+  		INSERT INTO CAMP_TBL VALUES(#{contentId},#{facltNm},#{lineIntro},#{intro},#{bizrno},#{featureNm},#{induty},#{lctCl},#{doNm},#{sigunguNm},#{zipcode},#{addr1},#{tel},#{mapX},#{mapY},#{homepage},#{resveUrl},#{tooltip},#{glampInnerFclty},#{caravInnerFclty},#{operPdCl},#{operDeCl},#{sbrsCl},#{sbrsEtc},#{animalCmgCl},#{tourEraCl},#{firstImageUrl},DEFAULT,DEFAULT)
   	</insert>
   	
 </mapper>
