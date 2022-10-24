@@ -33,11 +33,11 @@
     <nav class="main-navigation">
         <ul>
             <li>
-                <a class="top20" href="#"><b>TOP 20</b></a>
+                <a class="top20" href="/product/top20List"><b>TOP 20</b></a>
             </li>
             
             <li>
-                <a class="newarrival" href="#"><b>NEW ARRIVAL</b></a>
+                <a class="newarrival" href="/product/newArrivalList"><b>NEW ARRIVAL</b></a>
             </li>
 
             <li>

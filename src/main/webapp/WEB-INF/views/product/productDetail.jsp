@@ -73,7 +73,7 @@
             <article class="ac-text">
 
                 <div class="ac-sub">                
-                        <p>상품 상세정보</p>                     
+                        <p id="detail_photo_info"></p>                     
                 </div>
             </article>
 
@@ -172,7 +172,7 @@
                     </article>
                 </div>
                 <br><br>
-                <a href="/product/reviewForm">후기작성</div>
+                <a href="/product/reviewRegist?productNo=${product.productNo }">후기작성</div>
             </article>
         </div>
     </section>
@@ -236,7 +236,20 @@
 			 data:{"productNo":productNo},
 			 type:"get",
 			 success : function(dList){
-				 console.log(dList);
+				 $(".detail_photo_info").html("");				
+				 var strDOM="";
+				 if(dList != null){
+					 for(var i in dList){
+					 	var pUrl="../resources/puploadFiles/";
+						var title = dList[i].detailContents;
+			  			strDOM += '<div class="image_panel">';
+				        strDOM += '<img src='+pUrl+dList[i].detailFileRename+' >';
+				        strDOM += '<p class="title">'+ title +'</p>';
+				        strDOM += '</div>';
+					 }
+				$("#detail_photo_info").append(strDOM);
+				 
+				 }
 			 },
 			 error : function(){
 				 console.log("에러");
@@ -301,6 +314,10 @@
 
     infowindow.open(map, marker); */
 
+    
+    
+    
+ 
 </script>
 </body>
 </html>

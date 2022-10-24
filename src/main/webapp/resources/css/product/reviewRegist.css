@@ -1,4 +1,65 @@
 @charset "UTF-8";
+body{
+	margin-top:150px;
+}
+.go-back {
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+
+.go-back img {
+    width: 25px;
+    height: 25px;
+}
+.logo {
+    width: 95px;
+    height: 40px;
+}
+
+.back-layout {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 5px;
+    left: 5px;
+}
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    margin: 0 auto;
+    height: 50px;
+    position: relative;
+}
+header {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    max-width: 100%;
+    margin: 0 auto; 
+}
+#header-block {
+    height: 50px;
+}
+h2 {
+    font-size: 18px;
+}
+button {
+    border: 0;
+    background: 0 0;
+    cursor: pointer;
+}
+header > h1 {
+    font-size: 0;
+}
 label {
     display: block;
     padding-top: 20px;
@@ -6,7 +67,7 @@ label {
     font-size: 14px;
     line-height: 1.57;
 }
-body > section > div.box-form > input.g-inputbox-medium{
+body >section > form>div.box-form > input.g-inputbox-medium{
     width: 100%;
     padding: 15px 9px 14px 10px;
  
@@ -15,7 +76,7 @@ body > section > div.box-form > input.g-inputbox-medium{
     margin-bottom: 10px;
 }
 
-body > section > div.box-form > div > textarea{
+body > section > form>div.box-form > div > textarea{
     width: 100%;
     height: 350px;
     padding: 17px 11px;
@@ -25,7 +86,7 @@ body > section > div.box-form > div > textarea{
 .box-img-upload{
     width: 115px;
   height: 131px;
-
+  float:left;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,8 +95,9 @@ body > section > div.box-form > div > textarea{
   font-weight: 500;
   font-size: 20px;
   cursor: pointer;
-  
+  margin:2px;
   background-color:rgb(232, 230, 230);
+  margin-bottom:20px;
   
 }
 .drop-zone__prompt{
@@ -69,4 +131,163 @@ body > section > div.box-form > div > textarea{
   text-align: center;
 }
 
+.join-button-wrapper {
+   
+    cursor: pointer;
 
+}
+
+.submit-button{
+	
+    height: 50px;
+    width: 100%;
+    border-color: #0078ff;
+    border-radius: 4px;
+    background-color: #0078ff;
+    color: #fff;
+    padding: 14px 16px 15px;
+    font-weight: 700;
+    cursor: default;
+
+}
+ul {
+    display: block;
+    margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom:20px;
+    font-size: 14px;
+    list-style: none;
+}
+
+ul li {
+    color: #777;
+    display: block;
+    position: relative;
+    text-align: left;
+    word-break: break-all;
+}
+
+
+
+
+
+.range {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin: -10px 0 0 -50px;
+    width: 100px;
+    height: 20px;
+    white-space: nowrap;
+    transform: scale(2);
+}
+
+.range .number {
+    display: none;
+    width: 35px;
+    height: 20px;
+    background-color:#ffffff;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    margin-left: -10px;
+    text-align: center;
+    font-size:5px;
+}
+
+.range .number:after {
+    content: "/10";
+    font: inherit;
+    color: inherit;
+}
+
+.range .number:first-child {
+    display: block;
+}
+
+.range input {
+    position: absolute;
+    float: right;
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+.range input:checked~.range-star,
+.range input:checked~.range-star:before,
+.range input:checked~.range-star:after {
+    border-bottom-color: rgb(243, 243, 0);
+}
+
+.range input:checked+.range-star+.number {
+    display: block;
+}
+
+.range .range-star {
+    position: relative;
+    float: right;
+    width: 10px;
+    height: 20px;
+    overflow: hidden;
+}
+
+.range .range-star:before,
+.range .range-star:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    border-bottom-color: #f7b731
+}
+
+.range .range-star:before {
+    border-width: 6px 11px;
+    top: 6px;
+    left: 1px;
+    transform: rotate(111deg);
+}
+
+.range .range-star:after {
+    top: 7px;
+    left: 0;
+    border-width: 7px 10px;
+    transform: rotate(180deg);
+}
+
+.range .range-star.x2:before {
+    left: -13px;
+    transform: rotate(-111deg);
+}
+
+.range .range-star.x2:after {
+    left: -10px;
+    transform: rotate(-180deg);
+}
+
+.range .range-star:hover,
+.range .range-star:hover~.range-star,
+.range .range-star:hover:before,
+.range .range-star:hover~.range-star:before,
+.range .range-star:hover:after,
+.range .range-star:hover~.range-star:after {
+    border-bottom-color: rgb(243, 243, 0) !important;
+}
+
+.range:hover input,
+.range:hover input:checked,
+.range:hover input~.range-star,
+.range:hover input:checked~.range-star,
+.range:hover input:before,
+.range:hover input:checked:before,
+.range:hover input~.range-star:before,
+.range:hover input:checked~.range-star:before,
+.range:hover input:after,
+.range:hover input:checked:after,
+.range:hover input~.range-star:after,
+.range:hover input:checked~.range-star:after {
+    border-bottom-color: #f7b731;
+}

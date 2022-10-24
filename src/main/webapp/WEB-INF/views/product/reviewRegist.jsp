@@ -6,32 +6,121 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable= no">
-	<title>Insert title here</title>
+	<title>리뷰작성</title>
 </head>
 <link rel="stylesheet" href="/resources/css/product/reviewRegist.css">
 <link rel="stylesheet" href="/resources/css/fonts.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<header>
+	<div id="header-block">
+          <div class="header-wrapper">
+              <div class="back-layout">
+                  <button class="go-back" onclick="history.back()">
+                      <img src="/resources/images/back_arrow.png">
+                  </button>
+              </div>
+              <h2>
+                  상품 리뷰작성
+              </h2>
+          </div>
+     </div>
+</header>
 <body>
- <section class="review">
+ <section class="review" >
+ <form action="/product/reviewRegister" enctype="multipart/form-data" method="post"> 
+
+ <input type="hidden" value="#" name="reviewGrade" id="reviewGrade">  
+	 	<div class="range">
+	        <span class="number" id="gradeNumber">0</span>
+	        <input type="radio" name="range" id="range10" value=10 />
+	        <label for="range10" class="range-star x2"></label>
+	        <span class="number">10</span>
+	        <input type="radio" name="range" id="range9" value=9 />
+	        <label for="range9" class="range-star"></label>
+	        <span class="number">9</span>
+	        <input type="radio" name="range" id="range8" value=8 />
+	        <label for="range8" class="range-star x2"></label>
+	        <span class="number">8</span>
+	        <input type="radio" name="range" id="range7" value=7 />
+	        <label for="range7" class="range-star"></label>
+	        <span class="number">7</span>
+	        <input type="radio" name="range" id="range6" value=6 />
+	        <label for="range6" class="range-star x2"></label>
+	        <span class="number">6</span>
+	        <input type="radio" name="range" id="range5" value=5 />
+	        <label for="range5" class="range-star"></label>
+	        <span class="number">5</span>
+	        <input type="radio" name="range" id="range4" value=4 />
+	        <label for="range4" class="range-star x2"></label>
+	        <span class="number">4</span>
+	        <input type="radio" name="range" id="range3" value=3 />
+	        <label for="range3" class="range-star"></label>
+	        <span class="number">3</span>
+	        <input type="radio" name="range" id="range2" value=2 />
+	        <label for="range2" class="range-star x2"></label>
+	        <span class="number">2</span>
+	        <input type="radio" name="range" id="range1" value=1 />
+	        <label for="range1" class="range-star"></label>
+	        <span class="number">1</span>
+	    </div>
+
         <div class="box-form">
             <label>상품명</label>
-            <input type="text" class="g-inputbox-medium textarea-title" placeholder="(해당상품명 불러오기)" name="subject" value="" readonly>
+            <input type="text" class="g-inputbox-medium textarea-title" placeholder="${productName }" name="productName" value="" readonly>
+        </div>
+        <div class="box-form">
+            <label>작성자 아이디</label>
+            <input type="text" class="g-inputbox-medium textarea-title" placeholder="${memberId }" name="memberId" value="${memberId }" readonly>
         </div>
         <div class="box-form">
             <label>내용</label>
-            <input type="text" class="g-inputbox-medium textarea-title" placeholder="제목을 입력해주세요." name="subject" value="">
+            <input type="text" class="g-inputbox-medium textarea-title" placeholder="제목을 입력해주세요." name="reviewTitle" value="">
             <div class="box-textarea">
-                <textarea placeholder="내용을 입력해주세요." name="qa_msg"></textarea>
+                <textarea placeholder="내용을 입력해주세요." name="reviewContents"></textarea>
             </div>
         </div>
+         
+           
         <label>사진</label>
         <div class="box-img-upload">
             <span class="drop-zone__prompt">+</span>
              <input type="file" name="myFile" class="drop-zone__input">
 		</div>
+		        <div class="box-img-upload">
+            <span class="drop-zone__prompt">+</span>
+             <input type="file" name="myFile" class="drop-zone__input">
+		</div>
+        <div class="box-img-upload">
+            <span class="drop-zone__prompt">+</span>
+             <input type="file" name="myFile" class="drop-zone__input">
+		</div>
+		 <ul>
+             <li> 최대 3개까지 등록 가능합니다.</li>
+         </ul>
+      
+		<div class="join-button-wrapper">
+              <button type="submit" class="submit-button">
+                  등록하기
+              </button>
+        </div>
+       
+         <ul>
+             <li> 상품과 무관한 사진/동영상을 첨부한 리뷰는 통보없이 삭제 및 적립 혜택이 회수됩니다.</li>
+         </ul>
+		</form>
     </section>
 </body>
+<footer>
+<!-- <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> --> 
+</footer>
 <script>
+$('input[type=radio][name=range]').change(function() {
+	$("#reviewGrade").val($('input[name=range]:checked').val());	
+});
+
+
+
+
  document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
   const dropZoneElement = inputElement.closest(".box-img-upload");
 
