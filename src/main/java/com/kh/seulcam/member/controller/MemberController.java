@@ -54,10 +54,10 @@ public class MemberController {
 			, ModelAndView mv
 			, HttpServletRequest request) {
 		try {
-			Member pwResult = mService.printOneById(memberId);
 			HttpSession session = request.getSession();
-			session.setAttribute("pwResult", pwResult);
-			mv.addObject("member", pwResult);
+			//Member pwResult = mService.printOneById(memberId);
+			mv.addObject("pwResult", memberId);
+			//mv.addObject("member", pwResult);
 			mv.setViewName("member/pwResult");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");

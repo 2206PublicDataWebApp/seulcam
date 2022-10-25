@@ -43,12 +43,12 @@
 
             <h3>이메일을 통해 비밀번호 찾기</h3>
 
-            <input type="text" class="findpw-id" id="memberId" placeholder="아이디를 입력해주세요." autocomplete="off">
+            <input type="text" class="findpw-id" id="memberId" name="memberId" placeholder="아이디를 입력해주세요." autocomplete="off">
             <p class="id ok">해당하는 아이디가 존재합니다.</p>
             <p class="id error">해당하는 아이디가 존재하지 않습니다.</p>
 
             <div class="email-auth">
-                    <input type="email" class="email-input" id="memberEmail" placeholder="이메일을 입력해주세요." autocomplete="off">
+                    <input type="email" class="email-input" id="memberEmail" name="memberEmail" placeholder="이메일을 입력해주세요." autocomplete="off">
                     <button type="button" class="auth-button" disabled>인증 요청</button>
             </div>
             <p class="email ok">해당하는 이메일이 존재합니다.</p>
@@ -61,13 +61,13 @@
 
         <footer>
             <div class="footer-wrapper">
-                <button type="button" class="submit-button" onclick="location.href='/member/pwResultView';" disabled >
+                <button type="button" class="submit-button" onclick="getPwResult();" disabled >
                 비밀번호 찾기
                 </button>
             </div>
         </footer>
     </div>
-    
+
     <script src="/resources/js/member/findPw.js"></script>
 </body>
 </html>
