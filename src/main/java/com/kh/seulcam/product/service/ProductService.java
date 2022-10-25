@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.seulcam.product.domain.Brand;
 import com.kh.seulcam.product.domain.Detail;
 import com.kh.seulcam.product.domain.Product;
+import com.kh.seulcam.product.domain.Review;
 
 @Service
 public interface ProductService {
@@ -28,5 +29,11 @@ public interface ProductService {
 	public Product getProductByNo(Integer productNo);
 
 	public List<Detail> printAllDetailInfo(Integer productNo);
+
+	public int registerProductReview(Review review);
+
+	public List<Review> getReviewByProductNo(Integer productNo);
+
+	public Brand getbrandStore(String brandName);
 
 }

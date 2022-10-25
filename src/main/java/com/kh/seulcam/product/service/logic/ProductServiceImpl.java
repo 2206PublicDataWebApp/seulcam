@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.seulcam.product.domain.Brand;
 import com.kh.seulcam.product.domain.Detail;
 import com.kh.seulcam.product.domain.Product;
+import com.kh.seulcam.product.domain.Review;
 import com.kh.seulcam.product.service.ProductService;
 import com.kh.seulcam.product.store.ProductStore;
 
@@ -68,6 +69,24 @@ public class ProductServiceImpl implements ProductService{
 	public List<Detail> printAllDetailInfo(Integer productNo) {
 		List<Detail> dList = pStore.selectAllDetailInfo(session, productNo);
 		return dList;
+	}
+
+	@Override
+	public int registerProductReview(Review review) {
+		int result = pStore.insertProductReview(session, review);
+		return result;
+	}
+
+	@Override
+	public List<Review> getReviewByProductNo(Integer productNo) {
+		List<Review> rList=pStore.selectReviewByProductNo(session, productNo);
+		return rList;
+	}
+
+	@Override
+	public Brand getbrandStore(String brandName) {
+		Brand brand = pStore.selectOneBrand(session, brandName);
+		return brand;
 	}
 
 }

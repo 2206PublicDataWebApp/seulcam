@@ -3,7 +3,37 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace= "ProductReviewMapper.xml">
-  	
-  	
+<mapper namespace= "ProductReviewMapper">
+	<resultMap type="Review" id="reviewResultMap">
+		<id property="reviewNo"			column="REVIEW_NO"/>
+		<result property="productNo"		column="PRODUCT_NO"/>
+		<result property="memberId"			column="MEMBER_ID"/>
+		<result property="reviewGrade"		column="REVIEW_GRADE"/>
+		<result property="reviewTitle"		column="REVIEW_TITLE"/>
+		<result property="reviewContents"		column="REVIEW_CONTENTS"/>
+		<result property="reviewFileName1"		column="REVIEW_FILE_NAME1"/>
+		<result property="reviewFilePath1"		column="REVIEW_FILE_PATH1"/>
+		<result property="reviewFileRename1"	column="REVIEW_FILE_RENAME1"/>
+		<result property="reviewFileName2"		column="REVIEW_FILE_NAME2"/>
+		<result property="reviewFilePath2"		column="REVIEW_FILE_PATH2"/>
+		<result property="reviewFileRename2"	column="REVIEW_FILE_RENAME2"/>
+		<result property="reviewFileName3"		column="REVIEW_FILE_NAME3"/>
+		<result property="reviewFilePath3"		column="REVIEW_FILE_PATH3"/>
+		<result property="reviewFileRename3"	column="REVIEW_FILE_RENAME3"/>
+		<result property="uploadDate"	column="UPLOAD_DATE"/>
+		
+	</resultMap>
+  	<insert id="insertProductReview" parameterType="Review">
+  		INSERT INTO PRODUCT_REVIEW_TBL
+		VALUES(PRODUCT_REVIEW_SEQNO.NEXTVAL,
+		#{productNo},#{memberId},#{reviewGrade},
+		#{reviewTitle},#{reviewContents},
+		#{reviewFileName1},#{reviewFilePath1},#{reviewFileRename1},
+		#{reviewFileName2},#{reviewFilePath2},#{reviewFileRename2},
+		#{reviewFileName3},#{reviewFilePath3},#{reviewFileRename3},
+		DEFAULT)
+	</insert>
+  	<select id="selectReviewByProductNo" resultMap="reviewResultMap">
+  		SELECT * FROM PRODUCT_REVIEW_TBL WHERE PRODUCT_NO=#{productNo}
+  	</select>
 </mapper>

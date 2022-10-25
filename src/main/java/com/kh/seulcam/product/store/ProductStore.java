@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.seulcam.product.domain.Brand;
 import com.kh.seulcam.product.domain.Detail;
 import com.kh.seulcam.product.domain.Product;
+import com.kh.seulcam.product.domain.Review;
 
 @Repository
 public interface ProductStore {
@@ -30,5 +31,11 @@ public interface ProductStore {
 	public Product selectProductByNo(SqlSession session, Integer productNo);
 
 	public List<Detail> selectAllDetailInfo(SqlSession session, Integer productNo);
+
+	public int insertProductReview(SqlSession session, Review review);
+
+	public List<Review> selectReviewByProductNo(SqlSession session, Integer productNo);
+
+	public Brand selectOneBrand(SqlSession session, String brandName);
 
 }

@@ -150,6 +150,10 @@ body > section.detail_menu label.ac-label{
   margin-bottom: .5em;
   transition: opacity .5s ease-in-out;
   overflow: hidden;
+ 
+}
+#reviewTitle{
+	border-bottom:0px;
 }
 .ac-input:checked ~ .ac-text, .ac-sub .ac-input:checked ~ .ac-sub-text { 
   opacity: 1;
@@ -181,6 +185,11 @@ body > section.detail_menu label.ac-label{
 }
 label#reviewTitle{
     padding-left: 30px;
+}
+body > section.detail_menu > div> article > div > a{
+	float:right;
+	margin-right:30px;
+	font-size:12px;
 }
 
 .count-wrap {
@@ -217,4 +226,18 @@ div.ac-sub{
 	margin:15px;
 	
 	
+}
+img{
+	width:95%;
+	onerror:display:none;
+
+}
+#no_review{
+	text-align:center;
+	margin-top:50px;
+	margin-bottom:50px;
+}
+
+#review_title > li> article.ac-text{
+	border-bottom:1px solid gray;
 }

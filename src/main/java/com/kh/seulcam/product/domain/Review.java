@@ -1,5 +1,7 @@
 package com.kh.seulcam.product.domain;
 
+import java.util.Date;
+
 public class Review {
 	
 	private int reviewNo;
@@ -17,6 +19,8 @@ public class Review {
 	private String reviewFileName3;
 	private String reviewFilePath3;
 	private String reviewFileRename3;
+	private Date uploadDate;
+	
 	
 	public int getReviewNo() {
 		return reviewNo;
@@ -110,6 +114,14 @@ public class Review {
 	public void setReviewFileRename3(String reviewFileRename3) {
 		this.reviewFileRename3 = reviewFileRename3;
 	}
+	
+	
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
+	}
 	@Override
 	public String toString() {
 		return "Review [reviewNo=" + reviewNo + ", productNo=" + productNo + ", memberId=" + memberId + ", reviewGrade="
@@ -118,7 +130,7 @@ public class Review {
 				+ ", reviewFileRename1=" + reviewFileRename1 + ", reviewFileName2=" + reviewFileName2
 				+ ", reviewFilePath2=" + reviewFilePath2 + ", reviewFileRename2=" + reviewFileRename2
 				+ ", reviewFileName3=" + reviewFileName3 + ", reviewFilePath3=" + reviewFilePath3
-				+ ", reviewFileRename3=" + reviewFileRename3 + "]";
+				+ ", reviewFileRename3=" + reviewFileRename3 + ", uploadDate=" + uploadDate + "]";
 	}
 
 	

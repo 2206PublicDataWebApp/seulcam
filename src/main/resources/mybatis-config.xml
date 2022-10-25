@@ -34,5 +34,6 @@
 		<mapper resource="mappers/campAdmin-mapper.xml"></mapper>
 		<mapper resource="mappers/order-mapper.xml"></mapper>
 		<mapper resource="mappers/productReview-mapper.xml"></mapper>
+		<mapper resource="mappers/brand-mapper.xml"></mapper>
 	</mappers>
 </configuration>
