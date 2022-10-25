@@ -13,11 +13,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.service.CampServie;
 
 @Controller
@@ -27,12 +31,33 @@ public class CampAdminController {
 	private CampServie cService;
 	
 	@RequestMapping(value = "/campAdmin/campAdminMain.kh", method = RequestMethod.GET)
-	public String campAdmin() {
-		return "admin/campMain";
+	public ModelAndView campAdmin(
+			@RequestParam(value = "page", required = false) Integer page,
+			@ModelAttribute SearchList sList,
+			ModelAndView mv) {
+		try {
+			List<Camp> cList = cService.printCampList(sList);
+			mv.addObject("cList",cList);
+			mv.setViewName("admin/campMain");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", "리스트 조회 실패").setViewName("common/errorPage");
+		}
+		return mv;
 		
 		
 		
 	}
+
+	// 캠핑장 리스트 검색
+	@RequestMapping(value = "/campAdmin/campAdminSearch.kh", method = RequestMethod.GET)
+	public String campAdminSearch(
+			@ModelAttribute SearchList sList) {
+		System.out.println(sList);
+		
+		return "admin/campMain";
+	}
+
 	
 	// 캠핑장 데이터 db 등록
 	@RequestMapping(value = "/campAdmin/campInsert.kh", method = RequestMethod.GET)

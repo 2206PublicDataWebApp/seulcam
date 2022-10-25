@@ -8,13 +8,14 @@
 	<meta name="viewport"
 	content="width=device-width, initial-scale=1.0 user-scalable=no">
 <title>${camp.facltNm}</title>
-<link rel="stylesheet" href="/resources/css/camp/switch.css">
+    <link rel="stylesheet" href="/resources/css/camp/switch.css">
 	<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="/resources/css/fonts.css">
 	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
-		<!-- jQuery -->
-		<script src="../../../resources/js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <!-- jQuery -->
+    <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <style>
     body {
@@ -29,7 +30,7 @@
         top: 0px;
         height: 50px;
         background-color: rgb(255, 255, 255);
-        z-index: 1;
+        z-index: 200;
         max-width: 600px;
         margin: 0 auto; 
     }
@@ -135,6 +136,42 @@
     overflow: hidden;
     pointer-events: none;
   }
+
+  .reviewList {
+    min-height: 100px;
+    
+    width: 100%;
+  }
+  .reviewList::after{
+    content: "";
+    display: block;
+    clear: both;
+  }
+  .review_contents {
+    float: left;
+    width: 80%;
+    height: 100%;
+  }
+  .review_info {
+    width: 20%;
+    height: 100%;
+    padding: 5px;
+    float: left;
+  }
+  .review_contents p {
+    font-size: 20px;
+  }
+  .bi-trash-fill {
+    visibility: hidden;
+  }
+  .reviewList i {
+    padding-right: 5px;
+  }
+  .reviewList i:hover {
+    color: blue;
+  }
+
+
     </style>
 <body >
 
@@ -202,14 +239,14 @@
                     <div id="map" style="width:100%;height:400px;"></div>
                     <hr>
                 </div>
-                <h4>리뷰등록 ${sessionScope.loginUser.memberId}</h4>
+                <h4>리뷰등록</h4>
                 <div class="reviewWrite_area">
                     <div id="input">
                         <span class="star">
                             ★★★★★
                             <span id="checkstar">★★★★★</span>
-                            <input type="range" id="starCount" oninput="drawStar(this)" value="10" step="1" min="0" max="10">
-                          </span>
+                            <input type="range" id="starCount" oninput="drawStar(this)" value="10" step="1" min="1" max="10">
+                        </span>
                         <textarea style="border-radius: 5px;width: 95%;" name="reviewWrite" id="reviewWrite"  rows="3" placeholder=" 리뷰를 남겨주세요."></textarea>
                     </div>
                     <div class="btn btn-secondary btn-block text-light button" onclick="insertReview()">
@@ -218,11 +255,8 @@
                 </div>
                 <hr>
                 <div class="review_area">
-                    
-                </div>
-            </div>
-        
-        
+                 
+                 </div>
         </div>
     </div>
             
@@ -248,7 +282,6 @@
                         headers : {Authorization: "KakaoAK 7072f1c5ec76f11a0937d2337e6cad4e"},
                         async: false,
                         success : function(data) {
-                            console.log(data.documents)   
                             var str = "";
                             for (var i = 0; i < data.documents.length; i++) {
                             str += "<a href='"+data.documents[i].url+"' target='_blank'><div class='row blog' style='margin: 10px;'>"
@@ -258,13 +291,15 @@
                             }
                             $(".blog_area").append(str)
                         },
-                        error : function() {
-                            console.log("출력실패");
+                        error : function(request, status, error){
+                            console.log("code: " + request.status)
+                            console.log("message: " + request.responseText)
+                            console.log("error: " + error);
                         }
                     })
             }
          
-    // 블로그 글 출력
+    // 블로그 글, 리뷰 리스트 출력
     $(document).ready(function() {
         blogLoad();
         campReviewList();
@@ -277,20 +312,74 @@
     }
 
     // 댓글 별점 구현
+    var reviewId = "";
     const drawStar = (target) => {
-        $('.star span').css({ width :  target.value*10+'%' });
+        console.log(target.id)
+        if(target.id == "starCount"){
+            $('.star #checkstar').css({ width :  target.value*10+'%' });
+        }else{
+            $('.star #checkstar'+target.id+'').css({ width :  target.value*10+'%' });
+        }
     }
+
+    // 댓글 수정창 출력
+    function reviewModify(campReviewContents,campReviewNo,memberNickname,campReviewStar){
+        console.log(campReviewContents)
+        // $("#11").css({visibility: 'hidden'})
+        campReviewList()
+        var str=""
+        str += "<br><div class='reviewList' style='padding : 5px; border : 3px solid #ccc; border-radius : 5px;'><div class='review_contents'>"
+        str += "<span class='star'>★★★★★<span id='checkstar"+campReviewNo+"' style='width : "+campReviewStar*10+"%'>★★★★★</span>"
+        str += "<input type='range' id='"+campReviewNo+"' oninput='drawStar(this)' value='"+campReviewStar+"' step='1' min='1' max='10'></span>"
+        str += "<textarea style='border-radius: 5px;width: 95%;' name='reviewWrite' id='revieRewWrite'  rows='3' placeholder=' 리뷰를 남겨주세요.'>"+campReviewContents+"</textarea></div>"
+        str += "<div class='review_info'><div style='height: 50%;text-align: left;font-size: large;'><b>"+memberNickname+"</b><input type='button' class='btn btn-secondary' onclick='modify("+campReviewNo+",\""+campReviewContents+"\","+campReviewStar+")' style='width : 100%' value='수정'/></div><div style='height: 50%;text-align: left;'><input type='button' class='btn btn-outline-secondary' onclick='modifyCancle()' style='width : 100%' value='취소'/> </div></div></div><br>"
+        $("#reviewList-"+campReviewNo+"").html(str);
+    }
+
+    // 수정창 취소
+    function modifyCancle(){
+        campReviewList()
+    }
+
+    // 댓글 수정
+    function modify(ReviewNo,ReviewContents,ReviewStar){
+        console.log(ReviewNo + ":"+ReviewContents+":"+ReviewStar)
+        var campReviewNo = ReviewNo;
+        var campReviewContents = $("#revieRewWrite").val();
+        var campReviewStar = $("#"+ReviewNo+"").val();
+        if(confirm("수정 하시겠습니까?")){
+
+            $.ajax({
+                url : "/camp/campReviewModify.kh",
+                type : "post",
+                data : {
+                    "campReviewNo" : campReviewNo,
+                    "campReviewContents" : campReviewContents,
+                    "campReviewStar" : campReviewStar
+                },
+                success : function(result){
+                    if(result == "success"){
+                        campReviewList()
+                    }
+                },
+                error : function(request, status, error){
+                    console.log("code: " + request.status)
+                    console.log("message: " + request.responseText)
+                    console.log("error: " + error);
+                }
+    
+            })
+        }
+    }
+
     // 댓글 등록
     function insertReview(){
-        console.log($('#starCount').val());
-        console.log($('#reviewWrite').val());
         var memberId = "${sessionScope.loginUser.memberId}";
         var memberNickname = "${sessionScope.loginUser.memberNickname}";
         var campId = "${camp.contentId}";
         var campName = "${camp.facltNm}";
         var campReviewContents =$('#reviewWrite').val();
         var campReviewStar = $('#starCount').val();
-        console.log(campReviewContents)
         if(memberId == ""){
             alert("로그인 후 작성 가능합니다.");
             location.href="/member/loginView";
@@ -312,16 +401,18 @@
                     "campReviewStar" : campReviewStar
                 },
                 success : function(result){
-                    console.log(result)
                     if(result == "success"){
                         alert("등록완료");
+                        campReviewList()
                     }else{
                         alert("등록실패");
                     }
 
                 },
-                error : function(){
-                    console.log("출력실패")
+                error : function(request, status, error){
+                    console.log("code: " + request.status)
+                    console.log("message: " + request.responseText)
+                    console.log("error: " + error);
                 }
             })
             
@@ -330,19 +421,74 @@
     }
     // 댓글 리스트 출력
     function campReviewList(){
+        var contentId = "${camp.contentId}";
         $.ajax({
             url : "/camp/campReviewList.kh",
             type : "get",
-            data : {},
-            success : function(data){
-                console.log(data);
+            data : {
+                "contentId" : contentId
             },
-            error : function(){
-
+            async: false,
+            success : function(data){
+                var str = "";
+                for(var i = 0; i<data.length ; i++){
+                    str += "<div class='reviewList' id='reviewList-"+data[i].campReviewNo+"'><div id='"+data[i].campReviewNo+"'><div class='review_contents'><span class='starx' style='position: relative;font-size: 1.5rem;color: #ddd;'>★★★★★";
+                    str += "<span style='width: "+data[i].campReviewStar*10+"%; position: absolute; left: 0; color: red;overflow: hidden; pointer-events: none;'>★★★★★</span></span>"
+                    str += "<p>"+data[i].campReviewContents+"</p></div><div class='review_info'><div style='height: 50%;text-align: right;font-size: large;'>"
+                    if(data[i].memberId == "${sessionScope.loginUser.memberId}"){
+                        str += "<a><i class='bi bi-pencil-square' style='visibility: initial;' onclick='reviewModify(\""+data[i].campReviewContents+"\","+data[i].campReviewNo+",\""+data[i].memberNickname+"\","+data[i].campReviewStar+")'></i></a>"
+                        str += "<a><i class='bi bi-trash-fill' style='visibility: initial;' onclick='reviewDelete("+data[i].campReviewNo+",\""+data[i].memberId+"\")'></i></a>"
+                    }else{
+                        str += "<a><i class='bi bi-pencil-square' style='visibility: hidden;' onclick='reviewModify(\""+data[i].campReviewContents+"\","+data[i].campReviewNo+",\""+data[i].memberNickname+"\","+data[i].campReviewStar+")'></i></a>"
+                        str += "<a><i class='bi bi-trash-fill' onclick='reviewDelete("+data[i].campReviewNo+",\""+data[i].memberId+"\")'></i></a>"
+                    }
+                    str += "</div><div style='height: 50%;text-align: left;'><h6><b>"+data[i].memberNickname+"</b></h6>"
+                    str += "<small>"+data[i].rCreateDate+"</small></div></div></div></div><hr>"
+                    }
+                    $(".review_area").html(str);
+                
+            },
+            error : function(request, status, error){
+                    console.log("code: " + request.status)
+                    console.log("message: " + request.responseText)
+                    console.log("error: " + error);
             }
 
         })
     }
+
+    // 댓글 삭제
+    function reviewDelete(campReviewNo,memberId){
+        if(confirm("댓글을 삭제하시겠습니까?")){
+            console.log(campReviewNo + ":" + memberId)
+            $.ajax({
+                url : "/camp/campReviewRemove.kh",
+                type : "post",
+                data : {
+                    "campReviewNo" : campReviewNo,
+                    "memberId" : memberId
+                },
+                success : function(result){
+                    console.log(result)
+                    if(result == "success"){
+                        alert("댓글 삭제 완료");
+                        campReviewList();
+                    }else{
+                        alert("댓글 삭제 실패");
+                        campReviewList();
+                    }
+                },
+                error : function(request, status, error){
+                    console.log("code: " + request.status)
+                    console.log("message: " + request.responseText)
+                    console.log("error: " + error);
+                }
+
+
+            })
+        }
+    }
+    
     
     // 지도 위치 표시
     function addSearch(){

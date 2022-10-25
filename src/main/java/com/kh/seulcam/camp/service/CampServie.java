@@ -18,4 +18,8 @@ public interface CampServie {
 
 	public List<CampReview> campReviewList(String contentId);
 
+	public int removeReview(CampReview cReview);
+
+	public int modifyReview(CampReview cReview);
+
 }

@@ -19,6 +19,10 @@ public interface CampStore {
 
 	public int insertCampReview(SqlSession session, CampReview cReview);
 
-	public List<CampReview> selectCampReview(SqlSessionTemplate session, String contentId);
+	public List<CampReview> selectCampReview(SqlSession session, String contentId);
+
+	public int deleteReview(SqlSession session, CampReview cReview);
+
+	public int updateReview(SqlSession session, CampReview cReview);
 
 }

@@ -165,7 +165,6 @@ public class CampController {
 			) {
 		try {
 			List<CampReview> rList = cService.campReviewList(contentId);
-			System.out.println(rList);
 			return new Gson().toJson(rList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -174,6 +173,40 @@ public class CampController {
 		}
 	}
 	
+	// 캠핑장 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value = "/camp/campReviewRemove.kh", method = RequestMethod.POST )
+	public String campReviewRemove(
+			@ModelAttribute CampReview cReview,
+			HttpServletRequest request
+			) {
+		try {
+			int result = cService.removeReview(cReview);
+			return "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("msg", "댓글 삭제 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	// 캠핑장 댓글 수정
+	@ResponseBody
+	@RequestMapping(value = "/camp/campReviewModify.kh", method = RequestMethod.POST )
+	public String campReviewModify(
+			@ModelAttribute CampReview cReview,
+			HttpServletRequest request
+			) {
+		try {
+			System.out.println(cReview);
+			int result = cService.modifyReview(cReview);
+			return "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("msg", "댓글 수정 실패");
+			return "common/errorPage";
+		}
+	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/camp/campLike.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )

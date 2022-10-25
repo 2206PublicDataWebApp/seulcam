@@ -32,7 +32,7 @@ header {
 	top: 0px;
 	height: 50px;
 	background-color: rgb(255, 255, 255);
-	z-index: 1;
+	z-index: 200;
 	max-width: 400px;
 	margin: 0 auto; 
 }

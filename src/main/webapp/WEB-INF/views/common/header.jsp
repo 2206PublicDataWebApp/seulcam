@@ -115,7 +115,7 @@
 
         </ul>
 
-        <a href="#"><b>캠핑장 예약</b></a>
+        <a href="/camp/campList.kh"><b>캠핑장 검색</b></a>
         <a href="#"><b>로그인</b></a>
     </nav>
 
