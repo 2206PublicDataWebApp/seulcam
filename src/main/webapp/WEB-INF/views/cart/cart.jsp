@@ -112,6 +112,10 @@
 	color: #fff;
 	width: 100px;
 }
+.p-img{
+width:100px;
+height:100px;
+}
 </style>
 
 <body>
@@ -161,16 +165,16 @@
 									<input type="checkbox" id="check_select" name="cartbox" onclick="checkSelectAll()" />
 									</td>
 									<td rowspan="4">
-									<img src="//image.msscdn.net/images/goods_img/20220906/2774157/2774157_1_160.jpg" alt="윅(WICK) ACID 워싱 볼캡-차콜"></td>
-									<td>${product.productName }</td>
+									<img class="p-img" src="//image.msscdn.net/images/goods_img/20220906/2774157/2774157_1_160.jpg" alt="윅(WICK) ACID 워싱 볼캡-차콜"></td>
+									<td style="width:50% ; font-weight:bold">${product.productName }</td>
 									<td align="right">
 										<button class="delete" id="one-delete" onclick="deleteOne(${cart.cartNo })">X</button>
 									</td>
 								</tr>
 
 								<tr>
-									<td>수량</td>
-									<td>
+									<td style="width:50%">수량</td>
+									<td style="width:50%">
 										<div class="count-wrap _count">
 											<input type="hidden" class="no" value="${cart.productNo }" />
 											<button type="button" class="minus" >-</button>
@@ -180,8 +184,8 @@
 									</td>
 								</tr>
 								<tr>
-									<td>가격</td>
-									<td><span id="price${cart.cartNo }" data-value="${product.productPrice }">${product.productPrice }</span></td>
+									<td style="width:50%">가격</td>
+									<td style="width:50%"><span id="price${cart.cartNo }" data-value="${product.productPrice }">${product.productPrice }</span></td>
 								</tr>
 							</table>
 						</c:if>
@@ -208,7 +212,7 @@
 
 			</div>
 			<div>
-				<button class="order">주문하기</button>
+				<button class="order" onclick="orderProduct()">주문하기</button>
 			</div>
 
 		</div>
@@ -226,14 +230,14 @@
 	function checkSelectAll()  {
 		  // 전체 체크박스
 		  const checkboxes 
-		    = document.querySelectorAll('input[name="cartbox"]');
+		    =$('input[name="cartbox"]');
 		  // 선택된 체크박스
 		  const checked 
-		    = document.querySelectorAll('input[name="cartbox"]:checked');
+		  =$('input[name="cartbox"]:checked');
 		  //$("#p-count").html(checked.length);
 		  // select all 체크박스
 		  const selectAll 
-		    = document.querySelector('input[name="cart_selectAll"]');
+		    = $('input[name="cart_selectAll"]');
 		  $("#p-count").html(checked.length);
 		
 		  if(checkboxes.length === checked.length)  {
@@ -248,9 +252,11 @@
 		function selectAll(selectAll)  {
 		  const checkboxes 
 		     = document.getElementsByName('cartbox');
-		  
+		    $("#p-count").html($('input[name="cartbox"]').length);
 		  checkboxes.forEach((checkbox) => {
 		    checkbox.checked = selectAll.checked
+		  
+		  
 		  })
 		}
 	
