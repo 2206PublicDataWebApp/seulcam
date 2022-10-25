@@ -88,8 +88,11 @@ width:100%;
 	float:right;
 }
 .pointinfo{
-	color:lightblue;
+	color:blue;
 	float:right;
+}
+#message{
+width:100%;
 }
 
 </style>
@@ -117,7 +120,7 @@ width:100%;
 			<div id="adress1">${member.memberAddress1 }</div>
 			<div id="adress2">${member.memberAddress2 }</div>
 			<select id="message">
-				<option value="" disabled selected hidden>배송시 요청사항을 선택하세요</option>
+				<option  value="" disabled selected hidden>배송시 요청사항을 선택하세요</option>
 				<option>부재 시 경비실에 맡겨주세요</option>
 				<option>부재 시 택배함에 넣어주세요</option>
 				<option>부재 시 집 앞에 넣어주세요</option>
@@ -136,8 +139,7 @@ width:100%;
 						alt="윅(WICK) ACID 워싱 볼캡-차콜"></td>
 					<td>상품명</td>
 					<td align="right">
-						<%-- <button class="delete" id="one-delete"
-							onclick="deleteOne(${cart.cartNo })">X</button> --%>
+						
 					</td>
 				</tr>
 
@@ -149,8 +151,7 @@ width:100%;
 				</tr>
 				<tr>
 					<td>가격</td>
-					<td><span id="price${cart.cartNo }"
-						data-value="${product.productPrice }">10000000</span></td>
+					<td><span id="price_price" data-value="1000" >10000000</span></td>
 				</tr>
 			</table>
 		</div>
@@ -162,25 +163,25 @@ width:100%;
 		<div>
 		포인트
 		<span class="point-right">
-		<input type="text"/>
-		<button class="info-button">사용취소</button>
+		<input id="point" type="text"/>
+		<button class="info-button" onclick="pointCancle()">사용취소</button>
 		</span>
 		</div>
-		<div class="pointinfo">사용가능 포인트 <span>${member.totalPoint}</span>원</div>
+		<div class="pointinfo">사용가능 포인트 <span id="available-point">${member.totalPoint}</span>원</div>
 		</div>
 		</div>
 
 		<div class="info">
 		<div class="small-title">결제 상세</div><br>
-		<div>상품 금액<span class="price">122,000원</span></div>
-		<div>포인트 할인<span class="price">-1,000원</span></div>
-		<div style="font-weight:bold">총 결제 금액<span class="price">121,000원</span></div>
+		<div>상품 금액<span class="price" id="product_price">원</span></div>
+		<div>포인트 할인 <span class="price" id="point-price">원</span></div>
+		<div style="font-weight:bold">총 결제 금액<span class="price" id="total-price"></span></div>
 		
 		</div>
 		
 		
 		<div class="payButton">
-		<button class="pay-button">****원 결제하기</button>
+		<button class="pay-button"><span id="total-button"></span>원 결제하기</button>
 		</div>
 
 	</div>
@@ -193,7 +194,7 @@ width:100%;
 	function addressChange(obj){
 		event.preventDefault();
 		var $div=$("<div id='addressChangeForm'>");
-		$div.append("<span>주소 변경</span>");
+		$div.append("<span style='font-weight:bold'>주소 변경</span>");
 		$div.append("<span><button class='adress-button'  id='postcodify_search_button'onclick='popup(this)'>주소찾기</button></span> ");
 		$div.append("<div><input type='text'id='cng-post' name='post' class='post postcodify_postcode5' readonly></div>");
 		$div.append("<div><input type='text'id='cng-ad1' name='address1' class='post postcodify_address' readonly></div>");
@@ -235,6 +236,43 @@ width:100%;
 			
 		})
 		
+	}
+	
+
+	$("#point").on("blur",function(){
+	$("#available-point").html("${member.totalPoint}");
+	
+	var point=$("#point").val();
+	var userpoint=$("#available-point").text();
+	if(parseInt(point)>parseInt(userpoint)){
+		alert ("보유 포인트를 초과하였습니다.");
+		pointCancle();
+		
+	}
+	else{
+	$("#point-price").html('-'+point+'원');
+	
+	var userpoint=$("#available-point").text();
+	$("#available-point").html(userpoint-point);
+	
+	var totalPrice=totalProduct-point;
+	$("#total-price").html(totalPrice+'원');
+	$("#total-button").html(totalPrice);
+	}
+	})
+	
+	var totalProduct=$('#price_price').text();
+	$("#product_price").prepend(totalProduct);
+	
+	$("#total-price").prepend(totalProduct+'원');
+	$("#total-button").prepend(totalProduct);
+	
+	function pointCancle(){
+	$("#point").val("");
+	$("#available-point").html("${member.totalPoint}");
+	$("#point-price").html('0원');
+	$("#total-price").html(totalProduct+'원');
+	$("#total-button").html(totalProduct);
 	}
 	
 	</script>
