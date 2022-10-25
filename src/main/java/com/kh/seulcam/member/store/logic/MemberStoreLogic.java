@@ -35,8 +35,20 @@ public class MemberStoreLogic implements MemberStore{
 	}
 	
 	@Override
+	public int countById(SqlSession session, String memberId) {
+		int result = session.selectOne("MemberMapper.selectCountById", memberId);
+		return result;
+	}
+	
+	@Override
 	public int countByIdPw(SqlSession session, Member member) {
 		int result = session.selectOne("MemberMapper.selectOneByidPw", member);
+		return result;
+	}
+	
+	@Override
+	public int countByIdEmail(SqlSession session, Member member) {
+		int result = session.selectOne("MemberMapper.selectCountByIdEmail", member);
 		return result;
 	}
 	

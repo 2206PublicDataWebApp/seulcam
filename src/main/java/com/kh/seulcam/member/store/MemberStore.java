@@ -19,8 +19,14 @@ public interface MemberStore {
 	// selectOneByNickname
 	public int countByNickname(SqlSession session, String memberNickname);
 	
+	// selectOneById
+	public int countById(SqlSession session, String memberId);
+	
 	// selectOneByPw
 	public int countByIdPw(SqlSession session, Member member);
+	
+	// selectOneByPw
+	public int countByIdEmail(SqlSession session, Member member);
 	
 	// 이메일로 아이디 리스트 가져오기
 	public List<Member> selectIdListByEmail(SqlSession session, String memberEmail);
