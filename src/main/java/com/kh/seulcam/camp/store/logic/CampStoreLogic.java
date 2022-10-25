@@ -38,9 +38,23 @@ public class CampStoreLogic implements CampStore{
 	}
 
 	@Override
-	public List<CampReview> selectCampReview(SqlSessionTemplate session, String contentId) {
+	public List<CampReview> selectCampReview(SqlSession session, String contentId) {
+		System.out.println(contentId);
 		List<CampReview> rList = session.selectList("CampMapper.selectCampReview",contentId);
+//		System.out.println(rList);
 		return rList;
+	}
+
+	@Override
+	public int deleteReview(SqlSession session, CampReview cReview) {
+		int result= session.delete("CampMapper.deleteReview",cReview);
+		return result;
+	}
+
+	@Override
+	public int updateReview(SqlSession session, CampReview cReview) {
+		int result = session.update("CampMapper.updateReview",cReview);
+		return result;
 	}
 
 }

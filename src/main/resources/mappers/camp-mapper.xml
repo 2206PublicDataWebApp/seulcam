@@ -50,9 +50,9 @@
   	<select id="selectCampList" resultMap="CampResultMap">
   		SELECT * FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL 
   		<where>
-  			<if test="city != ''"> AND DONM = #{city}</if>
-  			<if test="category != ''"> AND INDUTY LIKE '%'||#{category}||'%'</if>
-  			<if test="search != ''"> 
+  			<if test="city != '' and city != null"> AND DONM = #{city}</if>
+  			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>
+  			<if test="search != '' and search != null"> 
   			AND (facltNm LIKE '%'||#{search}||'%' 
   			or SIGUNGUNM LIKE '%'||#{search}||'%'
   			or DONM LIKE '%'||#{search}||'%')
@@ -68,7 +68,13 @@
   		INSERT INTO CAMP_REVIEW_TBL VALUES(SEQ_CAMP_REVIEW_NO.NEXTVAL,#{memberId},#{memberNickname},#{campId},#{campName},#{campReviewContents},#{campReviewStar},DEFAULT,DEFAULT)
   	</insert>
   	<select id="selectCampReview" resultMap="CampReviewResultMap">
-  		SELECT * FROM CAMP_REVIEW_TBL WHERE CAMP_ID = #{contentId}
+  		SELECT * FROM CAMP_REVIEW_TBL WHERE CAMP_ID = #{contentId} ORDER BY CAMP_REVIEW_NO DESC
   	</select>
+  	<delete id="deleteReview">
+  		DELETE FROM CAMP_REVIEW_TBL WHERE CAMP_REVIEW_NO = #{campReviewNo}
+  	</delete>
+  	<update id="updateReview">
+  		UPDATE CAMP_REVIEW_TBL SET CAMP_REVIEW_CONTENTS = #{campReviewContents}, CAMP_REVIEW_STAR = #{campReviewStar} WHERE CAMP_REVIEW_NO =#{campReviewNo}
+  	</update>
   	
 </mapper>
