@@ -19,6 +19,9 @@
 		<result property="productMaterial"	column="PRODUCT_MATERIAL"/>
 		<result property="saleCount"		column="SALE_COUNT"/> 	
 	</resultMap>
+	<resultMap type="Product" id="productNameResultMap">
+		<result property="productName"		column="PRODUCT_NAME"/>
+	</resultMap>
 	<resultMap type="Detail" id="detailResultMap">
 		<id property="productNo"		column="PRODUCT_NO"/>
 		<result property="detailFileName" column="DETAIL_FILE_NAME"/>
@@ -48,6 +51,9 @@
   	</select>
   	<select id="selectAllDetailInfo" resultMap="detailResultMap">
   		SELECT*FROM DETAIL_TBL WHERE PRODUCT_NO=#{productNo}
+  	</select>
+  	<select id="selectProductName" resultType="String">
+  		SELECT PRODUCT_NAME FROM PRODUCT_TBL WHERE PRODUCT_NO=#{productNo}
   	</select>
   	
 </mapper>

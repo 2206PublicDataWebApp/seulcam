@@ -84,9 +84,21 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public Brand getbrandStore(String brandName) {
-		Brand brand = pStore.selectOneBrand(session, brandName);
-		return brand;
+	public List<Brand> getbrandStore(String brandName) {
+		List<Brand> bsList = pStore.selectOneBrand(session, brandName);
+		return bsList;
+	}
+
+	@Override
+	public Review getOneReview(Integer reviewNo) {
+		Review review = pStore.selectOneReview(session, reviewNo);
+		return review;
+	}
+
+	@Override
+	public String findProductName(int productNo) {
+		String productName = pStore.selectProductName(session, productNo);
+		return productName;
 	}
 
 }

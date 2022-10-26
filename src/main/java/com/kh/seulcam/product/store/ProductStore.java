@@ -36,6 +36,10 @@ public interface ProductStore {
 
 	public List<Review> selectReviewByProductNo(SqlSession session, Integer productNo);
 
-	public Brand selectOneBrand(SqlSession session, String brandName);
+	public List<Brand> selectOneBrand(SqlSession session, String brandName);
+
+	public Review selectOneReview(SqlSession session, Integer reviewNo);
+
+	public String selectProductName(SqlSession session, int productNo);
 
 }

@@ -1,15 +1,24 @@
 package com.kh.seulcam.product.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +30,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.GeocoderStatus;
+import com.google.code.geocoder.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.product.domain.Brand;
 import com.kh.seulcam.product.domain.Detail;
 import com.kh.seulcam.product.domain.Product;
@@ -32,6 +49,7 @@ import com.kh.seulcam.product.service.ProductService;
 @Controller
 public class ProductController {
 	
+	private static final HttpsURLConnection HttpsURLConnection = null;
 	@Autowired
 	private ProductService pService ;
 
@@ -54,16 +72,22 @@ public class ProductController {
 	public ModelAndView detailView(Model model
 			,ModelAndView mv
 			,@RequestParam ("productNo") Integer productNo
+			
 			,HttpSession session) {
-		//System.out.println(productNo);
+	
 		Product product = pService.getProductByNo(productNo);
-		
+		Member member=null;
+		if(session.getAttribute("loginUser") != null) {
+			member =(Member)session.getAttribute("loginUser");
+			System.out.println(member.toString());
+			mv.addObject("loginUser",member);
+		}
 		if(product!=null) {
 			mv.addObject("product", product);
 		}
 		return mv;
 	}
-	
+	//상품상세 ->상품상세ajax
 	@ResponseBody
 	@RequestMapping(value="/product/productDetailInfo", produces="application/json;charset=utf-8", method=RequestMethod.GET)
 	public String productDetailInfo(
@@ -71,7 +95,7 @@ public class ProductController {
 			,HttpSession session
 			) {		
 		List<Detail> dList = pService.printAllDetailInfo(productNo);
-		//System.out.println(dList.toString());
+		//System.out.println(dList.toString());	
 		session.setAttribute("productNo", productNo);
 		if(!dList.isEmpty()) {
 			Gson gson = new GsonBuilder().create();
@@ -82,18 +106,20 @@ public class ProductController {
 	
 	
 	
-
+	//리뷰등록화면
 	@RequestMapping(value="/product/reviewRegist", method=RequestMethod.GET)
 	public ModelAndView reviewRegistView(ModelAndView mv
-			,@RequestParam ("productNo")Integer productNo) {
+			,@RequestParam ("productNo")Integer productNo
+			, HttpSession session) {
 		Product product = pService.getProductByNo(productNo);
-		String memberId ="user1";  //로그인해서 세션값 가져오기 . 하드
+		Member member =(Member) session.getAttribute("loginUser");
+		String memberId = member.getMemberId();
+		System.out.println(memberId);
 		mv.addObject("productName", product.getProductName());
 		mv.addObject("memberId", memberId);
-		
 		return mv;
 	}
-	
+	//리뷰등록
 	@RequestMapping(value="/product/reviewRegister", method=RequestMethod.POST)
 	public String reviewRegister(ModelAndView mv
 			,@ModelAttribute Review review
@@ -155,17 +181,36 @@ public class ProductController {
 		}else {
 			return "errorPage";
 		}
-			
-		
 	
+	}
+	//리뷰수정 화면
+	@RequestMapping(value="/product/reviewModify", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public ModelAndView reviewModifyForm(ModelAndView mv
+			,@RequestParam("reviewNo") Integer reviewNo) {
+		Review review = pService.getOneReview(reviewNo);
+		System.out.println(review.getProductNo());
+		String productName = pService.findProductName(review.getProductNo());
+		System.out.println(review);
+		mv.addObject("review", review);
+		mv.addObject("productName", productName);
+		return mv;
+		
+	}
+	//리뷰수정하기
+	@RequestMapping(value="/product/reviewModify", produces="application/json;charset=utf-8", method=RequestMethod.POST)
+	public ModelAndView reviewModify(ModelAndView mv) {
+		return mv;
+		
 	}
 	//리뷰리스트출력
 	@ResponseBody
 	@RequestMapping(value="/product/reviewList", produces="application/json;charset=utf-8", method=RequestMethod.GET)
 	public String reviewListView(
-			@RequestParam("productNo") Integer productNo) {
+			@RequestParam("productNo") Integer productNo
+			,HttpServletRequest request
+			) {
 		List<Review> rList = pService.getReviewByProductNo(productNo);
-		System.out.println(rList);
+
 		if(!rList.isEmpty()) {
 			Gson gson = new GsonBuilder().create();
 			return gson.toJson(rList);
@@ -180,30 +225,67 @@ public class ProductController {
 	public String storeMapView(
 			@RequestParam("brandName") String brandName
 			,HttpServletRequest req, HttpServletResponse response) throws IOException {
-		Brand brand = pService.getbrandStore(brandName);
+		List<Brand> bsList = pService.getbrandStore(brandName);
+//		for(int i=0; i<bsList.size();i++) {
+//			
+//			
+//			try {
+//				String addr=URLEncoder.encode(bsList.get(i).getStoreAddr(),"utf-8");
+//				String api ="https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="+addr;
+//				
+//				StringBuffer sb = new StringBuffer();
+//				URL url = new URL(api);
+//				HttpsURLConnection http=(HttpsURLConnection) url.openConnection();
+//				http.setRequestProperty("Content-Type", "application/json");
+//				http.setRequestProperty("X-NCP-APIGW-API-KEY-ID", "zj6zbz23cl");
+//				http.setRequestProperty("X-NCP-APIGW-API-KEY", "8M3TIgsO5a64vd8zz6otkUJ7ieZSipBkdD0mNcSh");
+//				http.setRequestMethod("GET");
+//				http.connect();
+//				
+//				InputStreamReader in = new InputStreamReader(http.getInputStream(),"utf-8");
+//				BufferedReader br = new BufferedReader(in);
+//				String line;
+//				while((line=br.readLine())!=null) {
+//					sb.append(line).append("\n");
+//					
+//				}
+//				JSONParser parser = new JSONParser();
+//				JSONObject jsonObject;
+//				JSONObject jsonObject2;
+//				JSONArray jsonArray;
+//				String x="";
+//				String y="";
+//				
+//				jsonObject = (JSONObject) parser.parse(sb.toString());
+//				jsonArray = (JSONArray) jsonObject.get(bsList.get(i).getStoreAddr());
+//				
+//					jsonObject2=(JSONObject) jsonArray.get(i);
+//					if(null!=jsonObject2.get("x")) {
+//						x=jsonObject2.get("x").toString();
+//					
+//					if(null!=jsonObject2.get("y")) {
+//						y=jsonObject2.get("y").toString();
+//					}
+//					
+//				}
+//				br.close();
+//				in.close();
+//				http.disconnect();
+//				System.out.println(x+":"+y);
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+			
+			
+			
+			
+			
+			
 		
-		
-		String location = req.getParameter("addr");
-        
-//	      Geocoder geocoder = new Geocoder();
-//	      // setAddress : 변환하려는 주소 (경기도 성남시 분당구 등)
-//	      // setLanguate : 인코딩 설정
-//	      GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(location).setLanguage("ko").getGeocoderRequest();
-//	      GeocodeResponse geocoderResponse;
-//	      geocoderResponse = geocoder.geocode(geocoderRequest);
-//	            if (geocoderResponse.getStatus() == GeocoderStatus.OK & !geocoderResponse.getResults().isEmpty()) {
-//	                  GeocoderResult geocoderResult=geocoderResponse.getResults().iterator().next();
-//	                  LatLng latitudeLongitude = geocoderResult.getGeometry().getLocation();
-//	                                           
-//	                  Float[] coords = new Float[2];
-//	                  coords[0] = latitudeLongitude.getLat().floatValue();
-//	                  coords[1] = latitudeLongitude.getLng().floatValue();
-//	                  String coordStr = Float.toString(coords[0])+"&"+Float.toString(coords[1]);
-//	                  
-//	                  response.setCharacterEncoding("UTF-8");
-//	              response.setContentType("text/xml");
-//	              response.getWriter().write(coordStr); // 응답결과반환
-//	            }
+
+	            
 		return null;
 		
 	            

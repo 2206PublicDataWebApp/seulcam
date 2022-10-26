@@ -1,6 +1,7 @@
 @charset "UTF-8";
 body{
 	margin-top:150px;
+	position:relative;
 }
 .go-back {
     display: inline-flex;
@@ -98,6 +99,8 @@ body > section > form>div.box-form > div > textarea{
   margin:2px;
   background-color:rgb(232, 230, 230);
   margin-bottom:20px;
+  background-size:115px;
+  z-index:100;
   
 }
 .drop-zone__prompt{
@@ -150,27 +153,35 @@ body > section > form>div.box-form > div > textarea{
     cursor: default;
 
 }
-ul {
-    display: block;
-    margin-top: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom:20px;
-    font-size: 14px;
-    list-style: none;
-}
 
-ul li {
+
+.guide {
+	font-size: 14px;
     color: #777;
     display: block;
     position: relative;
     text-align: left;
     word-break: break-all;
+    display: block;
+    margin-top: 20px;
+    margin-bottom:20px;
+    font-size: 14px;
+    list-style: none;
+	max-width:400px;     
 }
 
+#upload-box-form{
+	 height: 131px;
+}
 
-
-
+input[type=button]{
+	margin-left:80px;
+	margin-right:3px;
+	background-color:#ffffff;
+	border:none;
+	cursor:pointer;
+	
+}
 .range {
     position: relative;
     left: 50%;

@@ -34,6 +34,10 @@ public interface ProductService {
 
 	public List<Review> getReviewByProductNo(Integer productNo);
 
-	public Brand getbrandStore(String brandName);
+	public List<Brand> getbrandStore(String brandName);
+
+	public Review getOneReview(Integer reviewNo);
+
+	public String findProductName(int productNo);
 
 }

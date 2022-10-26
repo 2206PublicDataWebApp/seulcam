@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable= no">
-	<title>리뷰작성</title>
+	<title>리뷰수정</title>
 </head>
 <link rel="stylesheet" href="/resources/css/product/reviewRegist.css">
 <link rel="stylesheet" href="/resources/css/fonts.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 <header>
 	<div id="header-block">
           <div class="header-wrapper">
@@ -21,16 +21,16 @@
                   </button>
               </div>
               <h2>
-                  상품 리뷰작성
+                  상품 리뷰수정
               </h2>
           </div>
      </div>
 </header>
 <body>
  <section class="review" >
- <form action="/product/reviewRegister" enctype="multipart/form-data" method="post"> 
+ <form action="/product/reviewModify" enctype="multipart/form-data" method="post"> 
 
- <input type="hidden" value=10 name="reviewGrade" id="reviewGrade">  
+ <input type="hidden" value=${review.reviewGrade } name="reviewGrade" id="reviewGrade">  
 	 	<div class="range">
 	        <span class="number" id="gradeNumber">0</span>
 	        <input type="radio" name="range" id="range10" value=10 />
@@ -71,67 +71,103 @@
         </div>
         <div class="box-form">
             <label>작성자 아이디</label>
-            <input type="text" class="g-inputbox-medium textarea-title" placeholder="${memberId }" name="memberId" value="${memberId }" readonly>
+            <input type="text" class="g-inputbox-medium textarea-title" placeholder="${review.memberId }" name="memberId" value="${memberId }" readonly>
         </div>
         <div class="box-form">
             <label>내용</label>
-            <input type="text" class="g-inputbox-medium textarea-title" placeholder="제목을 입력해주세요." name="reviewTitle" value="">
+            <input type="text" class="g-inputbox-medium textarea-title"name="reviewTitle" value="${review.reviewTitle }">
             <div class="box-textarea">
-                <textarea placeholder="내용을 입력해주세요." name="reviewContents"></textarea>
+                <textarea name="reviewContents" >"${review.reviewContents }"</textarea>
             </div>
         </div>
-         
-           
+<%--          
+        <label>업로드 사진</label>
+        <div id="upload-box-form">
+	  		<c:if test="${review.reviewFileName1 ne null }">
+	         	<div class="box-img-upload" >
+	        		<div class="drop-zone__thumb" data-label="${review.reviewFileName1 }" 
+					             style="background-image:url('../resources/puploadFiles/${review.reviewFileRename1}')"></div>
+				</div>
+				<input type="button" value="X">
+			</c:if>
+			<c:if test="${review.reviewFileName2 ne null }">
+				<div class="box-img-upload" >
+	        		<div class="drop-zone__thumb" data-label="${review.reviewFileName2 }" 
+					             style="background-image:url('../resources/puploadFiles/${review.reviewFileRename2}')"></div>
+				</div>
+					<input type="button" value="X">
+			</c:if>
+			<c:if test="${review.reviewFileName3 ne null }">
+				<div class="box-img-upload" >
+	        		<div class="drop-zone__thumb" data-label="${review.reviewFileName3 }" 
+					             style="background-image:url('../resources/puploadFiles/${review.reviewFileRename3}')"></div>
+				</div>
+					<input type="button" value="X">
+			</c:if>
+        </div> --%>
+        <br>
         <label>사진</label>
-       <div id="upload-box-form">
-	        <div class="box-img-upload">
-	            <span class="drop-zone__prompt">+</span>
-	             <input type="file" name="myFile" class="drop-zone__input">
+        <div id="upload-box-form">
+		        <div class="box-img-upload" >
+			       	  <c:if test="${review.reviewFileName1 eq null }">
+			            <span class="drop-zone__prompt" >+</span>
+			          </c:if>
+		         	  <input type="file" name="myFile" class="drop-zone__input" >
+			          <c:if test="${review.reviewFileName1 ne null }">
+			             		<div class="drop-zone__thumb" data-label="${review.reviewFileName1 }" 
+						             style="background-image:url('../resources/puploadFiles/${review.reviewFileRename1}')"></div>
+			          </c:if>
+				</div>
+				<div class="box-img-upload" >
+		            <c:if test="${review.reviewFileName2 eq null }">
+			            <span class="drop-zone__prompt" >+</span>
+			          </c:if>
+		             <input type="file" name="myFile" class="drop-zone__input">
+		             <c:if test="${review.reviewFileName2 ne null }">
+			             		<div class="drop-zone__thumb" data-label="${review.reviewFileName2 }" 
+						             style="background-image:url('../resources/puploadFiles/${review.reviewFileRename2}')"></div>
+			          </c:if>
+				</div>
+		        <div class="box-img-upload">
+		             <c:if test="${review.reviewFileName3 eq null }">
+			            <span class="drop-zone__prompt" >+</span>
+			         </c:if>
+		             <input type="file" name="myFile" class="drop-zone__input">
+		              <c:if test="${review.reviewFileName3 ne null }">
+			             		<div class="drop-zone__thumb" data-label="${review.reviewFileName3 }" 
+						             style="background-image:url('../resources/puploadFiles/${review.reviewFileRename3}')"></div>
+			          </c:if>
+				</div>
 			</div>
-			        <div class="box-img-upload">
-	            <span class="drop-zone__prompt">+</span>
-	             <input type="file" name="myFile" class="drop-zone__input">
-			</div>
-	        <div class="box-img-upload">
-	            <span class="drop-zone__prompt">+</span>
-	             <input type="file" name="myFile" class="drop-zone__input">
-			</div>
-        </div>
-        <p class="guide" >
+		<p class="guide" >
 			
 			<input type="button" class="img-delete-bt" value="삭제">
 			<input type="button" class="img-delete-bt" value="삭제">
 			<input type="button" class="img-delete-bt" value="삭제">
 		</p>
-		<p class="guide"> 최대 3개까지 등록 가능합니다.</p>
-	        
-	      
+		  <p class="guide">최대 3개까지 등록 가능합니다.</p>
+         
+      
 		<div class="join-button-wrapper">
               <button type="submit" class="submit-button">
                   등록하기
               </button>
         </div>
        
-         
-         <p class="guide">상품과 무관한 사진/동영상을 첨부한 리뷰는 통보없이 삭제 및 적립 혜택이 회수됩니다.</p>
-         
+      
+            <p class="guide">상품과 무관한 사진/동영상을 첨부한 리뷰는 통보없이 삭제 및 적립 혜택이 회수됩니다.</p>
+      
 		</form>
     </section>
 </body>
 <footer>
-<%-- <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> --%>
+<!-- <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> --> 
 </footer>
 <script>
-
 $(".img-delete-bt").eq(1).click(function(){
 	
 	alert("취소!");
 });
-
-$('input[type=radio][name=range]').change(function() {
-	$("#reviewGrade").val($('input[name=range]:checked').val());	
-});
-
 
 
 

@@ -77,9 +77,21 @@ public class ProductStoreLogic implements ProductStore {
 	}
 
 	@Override
-	public Brand selectOneBrand(SqlSession session, String brandName) {
-		Brand brand=session.selectOne("BrandMapper.selectOneBrand", brandName);
-		return brand;
+	public List<Brand> selectOneBrand(SqlSession session, String brandName) {
+		List<Brand> bsList=session.selectList("BrandMapper.selectOneBrand", brandName);
+		return bsList;
+	}
+
+	@Override
+	public Review selectOneReview(SqlSession session, Integer reviewNo) {
+		Review review = session.selectOne("ProductReviewMapper.selectOneReview", reviewNo);
+		return review;
+	}
+
+	@Override
+	public String selectProductName(SqlSession session, int productNo) {
+		String productName = session.selectOne("ProductMapper.selectProductName", productNo);
+		return productName;
 	}
 
 }
