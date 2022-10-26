@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.domain.CampReview;
+import com.kh.seulcam.camp.domain.CampSite;
 
 public interface CampServie {
 
@@ -23,5 +24,11 @@ public interface CampServie {
 	public int modifyReview(CampReview cReview);
 
 	public int printListCount(SearchList sList);
+
+    public int printSiteListCount(int contentId);
+
+    public int registerSite(CampSite campSite);
+
+    public int campRegistAviModify(int contentId, int yes);
 
 }

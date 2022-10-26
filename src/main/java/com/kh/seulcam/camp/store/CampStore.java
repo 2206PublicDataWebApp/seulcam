@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.domain.CampReview;
+import com.kh.seulcam.camp.domain.CampSite;
 
 public interface CampStore {
 
@@ -26,5 +27,11 @@ public interface CampStore {
 	public int updateReview(SqlSession session, CampReview cReview);
 
 	public int selectListCount(SqlSession session, SearchList sList);
+
+    public int selectSiteListCount(SqlSession session, int contentId);
+
+    public int insertSite(SqlSession session, CampSite campSite);
+
+    public int updateCampRegistAvi(SqlSessionTemplate session, int contentId, int confirm);
 
 }

@@ -1,12 +1,17 @@
 package com.kh.seulcam.camp.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -22,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.service.CampServie;
 
@@ -84,10 +90,12 @@ public class CampAdminController {
 	        @RequestParam(value="contentId", required = false) String contentId,
 	        ModelAndView mv) {
 	    try {
+            //세션에 있는 아이디가 어드민이 아니라면 접근하지 못하도록 작동시켜야함
+
             Camp camp= cService.printCampDetail(contentId);
             
             mv.addObject("camp",camp);
-            mv.setViewName("admin/campSite");
+            mv.setViewName("admin/campSiteList");
         } catch (Exception e) {
             e.printStackTrace();
             mv.addObject("msg", "리스트 조회 실패").setViewName("common/errorPage");
@@ -101,9 +109,9 @@ public class CampAdminController {
             @RequestParam(value="contentId", required = false) String contentId,
             ModelAndView mv) {
         try {
+            //세션에 있는 아이디가 어드민이 아니라면 접근하지 못하도록 작동시켜야함
             Camp camp= cService.printCampDetail(contentId);
-            
-            
+             
             
             mv.addObject("camp",camp);
             mv.setViewName("admin/campSiteRegist");    
@@ -114,17 +122,54 @@ public class CampAdminController {
         return mv;
     }
     
- // 캠핑장 사이트 등록창 출력
+ // 캠핑장 사이트 등록
     @RequestMapping(value = "/campAdmin/campSiteInsert.kh", method = RequestMethod.POST)
-    public String campSiteInsert(
+    public ModelAndView campSiteInsert(
+            @RequestParam(value = "uploadFile", required = false) MultipartFile uploadFile,
+            @ModelAttribute CampSite campSite,
+            HttpServletRequest request,
             ModelAndView mv) {
         try {
+            System.out.println(campSite);
+            //세션에 있는 아이디가 어드민이 아니라면 등록하지못하도록 작동시켜야함
+            int contentId = campSite.getCampId();
+            // 캠프 컨트롤러에서도 contentId로 계속 쓰임
+            int result = cService.printSiteListCount(contentId);
+            System.out.println(result);
             
+            //등록시작
+            String thumbnailName = uploadFile.getOriginalFilename();
+            /////////////////////////// 경로,파일이름 설정
+            if (!thumbnailName.equals("")) {
+                String root = request.getSession().getServletContext().getRealPath("resources");
+                String savePath = root + "\\ruploadFiles";
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyymmddhhss");
+                String thumbnailRename = sdf.format(new Date(System.currentTimeMillis())) + "." // 시간
+                        + thumbnailName.substring(thumbnailName.lastIndexOf(".") + 1); // 확장자명
+                File file = new File(savePath);
+                if (!file.exists()) {
+                    file.mkdir();
+                }
+                uploadFile.transferTo(new File(savePath + "\\" + thumbnailRename));// 저장할때는 rename으로 저장 실제경로에 저장
+                String thumbnailpath = savePath + "\\" + thumbnailRename;
+                // 파일을 ruploadFile경로에 저장하는 메소드
+                campSite.setSiteThumbnailName(thumbnailName);
+                campSite.setSiteThumbnailPath(thumbnailpath);
+                campSite.setSiteThumbnailRename(thumbnailRename);
+            }
+            int regist = cService.registerSite(campSite);
+            
+            if(result == 0 && regist == 1) {
+                int confirm = 1;
+                int update = cService.campRegistAviModify(contentId,confirm);
+            }
+            
+            mv.setViewName("redirect:/campAdmin/campAdminSite.kh?contentId=" + campSite.getCampId());
         } catch (Exception e) {
             // TODO: handle exception
         }
         
-        return "admin/campSiteRegist";
+        return mv;
     }
 
 	

@@ -65,50 +65,79 @@ div.leftForm, div.rightForm {
 	position: relative;
 	width: 100%;
 }
+label {
+	width: 100%;
+}
+
 </style>
 <body>
-	<form action="/" method="post">
+	<form action="/campAdmin/campSiteInsert.kh" method="post">
 		<div class="container">
 			<div class="table-responsive">
 				<h1 style="margin-top: 20px;">캠핑장 사이트 등록</h1>
 				<div class="leftForm">
+					<input type="hidden" class="form-control hidden" name="campId" value="${camp.contentId}" readonly>
 					<div>
-						<label>캠핑장이름 <input type="text" class="form-control">
+						<label>캠핑장이름 
+							<input type="text" class="form-control" name="campName" value="${camp.facltNm}" readonly>
 						</label>
 					</div>
 
 					<div>
-						<label>특징 <input type="text" class="form-control">
+						<label>사이트이름 <input type="text" name="siteName" class="form-control">
+						</label>
+					</div>
+
+					<div>
+						<label>특징 <input type="text" name="siteChar" class="form-control">
 						</label>
 					</div>
 
 
 					<div>
-						<label>정보 <input type="text" class="form-control">
+						<label>정보 <input type="text" name="siteInfo" class="form-control">
 						</label>
 					</div>
 
 					<div>
-						<label> 소개 <textarea name="" id="" cols="50" rows="5"
+						<label> 소개 <textarea name="siteIntro" id="" cols="50" rows="5"
 								class="form-control"></textarea>
 						</label>
 					</div>
 					<div>
-						<label> 기준인원 <select name="" id=""
+						<label> 기준인원 <select name="standardPeople" id=""
 							class="selectList form-select">
 								<option value="">기준인원</option>
+								<option value="2">2인</option>
+								<option value="3">3인</option>
+								<option value="4">4인</option>
+								<option value="5">5인</option>
+								<option value="6">6인</option>
+
 						</select></label>
 					</div>
 					<div>
-						<label> 최대인원 <select name="" id=""
+						<label> 최대인원 <select name="maxPeople" id=""
 							class="selectList form-select">
 								<option value="">최대인원</option>
+								<option value="2">2인</option>
+								<option value="3">3인</option>
+								<option value="4">4인</option>
+								<option value="5">5인</option>
+								<option value="6">6인</option>
+								<option value="7">7인</option>
+								<option value="8">8인</option>
 						</select></label>
 					</div>
 					<div>
-						<label> 인원추가비용 <select name="" id=""
+						<label> 인원추가비용 <select name="excessCharge" id=""
 							class="selectList form-select">
-								<option value="">최대인원</option>
+								<option value="">인원추가비용</option>
+								<option value="5000">5000원</option>
+								<option value="10000">10000원</option>
+								<option value="15000">15000원</option>
+								<option value="20000">20000원</option>
+								<option value="25000">25000원</option>
 						</select></label>
 					</div>
 
@@ -116,25 +145,49 @@ div.leftForm, div.rightForm {
 				<div class="rightForm">
 
 					<div>
-						<label> 입실시간 <select name="" id=""
+						<label> 입실시간 <select name="inTime" id=""
 							class="selectList form-select">
 								<option value="">입실시간</option>
+								<option value="12">12시</option>
+								<option value="13">1시</option>
+								<option value="14">2시</option>
+								<option value="15">3시</option>
+								<option value="16">4시</option>
+								<option value="17">5시</option>
+
 						</select></label>
 					</div>
 					<div>
-						<label> 퇴실시간 <select name="" id=""
+						<label> 퇴실시간 <select name="outTime" id=""
 							class="selectList form-select">
 								<option value="">퇴실시간</option>
+								<option value="10">10시</option>
+								<option value="11">11시</option>
+								<option value="12">12시</option>
+								<option value="13">1시</option>
+								<option value="14">2시</option>
+								<option value="15">3시</option>
 						</select></label>
 					</div>
 					<div>
-						<label> 사이트가격 <input type="text" class="form-control">
+						<label> 사이트가격 <input type="text" name="sitePrice" class="form-control">
 							</select></label>
 					</div>
 					<div>
-						<label> 사이트갯수 <select name="" id=""
+						<label> 사이트갯수 <select name="siteCount" id=""
 							class="selectList form-select">
 								<option value="">사이트갯수</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+
 						</select></label>
 					</div>
 					<div>
@@ -153,7 +206,7 @@ div.leftForm, div.rightForm {
 				</div>
 			</div>
 			<div style="text-align: center;">
-				<a href="#" class="btn btn-secondary">취소</a>
+				<a href="/campAdmin/campAdminSite.kh?contentId=${camp.contentId}" class="btn btn-secondary">취소</a>
 				<button type="submit" class="btn btn-secondary">등록</button>
 			</div>
 		</div>

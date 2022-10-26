@@ -4,8 +4,44 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace= "CampAdminMapper">
+ 	<resultMap type="CampSite" id="CampSiteResultMap">
+  		<id property="siteNo" column="SITE_NO" />
+  		<result property="siteName" column="SITE_NAME" />
+  		<result property="campId" column="CAMP_ID" />
+  		<result property="campName" column="CAMP_NAME" />
+  		<result property="siteChar" column="SITE_CHAR" />
+  		<result property="siteInfo" column="SITE_INFO" />
+  		<result property="siteIntro" column="SITE_INTRO" />
+  		<result property="standardPeople" column="STANDARD_PEOPLE" />
+  		<result property="maxPeople" column="MAX_PEOPLE" />
+  		<result property="excessCharge" column="EXCESS_CHARGE" />
+  		<result property="inTime" column="IN_TIME" />
+  		<result property="outTime" column="OUT_TIME" />
+  		<result property="sitePrice" column="SITE_PRICE" />
+  		<result property="siteCount" column="SITE_COUNT" />
+  		<result property="siteThumbnailName" column="SITE_THUMBNAIL_NAME" />
+  		<result property="siteThumbnailPath" column="SITE_THUMBNAIL_PATH" />
+  		<result property="siteThumbnailRename" column="SITE_THUMBNAIL_RENAME" />
+  		<result property="sCreateDate" column="S_CREATE_DATE" />
+ 	</resultMap>
   	<insert id="insertCampList">
   		INSERT INTO CAMP_TBL VALUES(#{contentId},#{facltNm},#{lineIntro},#{intro},#{bizrno},#{featureNm},#{induty},#{lctCl},#{doNm},#{sigunguNm},#{zipcode},#{addr1},#{tel},#{mapX},#{mapY},#{homepage},#{resveUrl},#{tooltip},#{glampInnerFclty},#{caravInnerFclty},#{operPdCl},#{operDeCl},#{sbrsCl},#{sbrsEtc},#{animalCmgCl},#{tourEraCl},#{firstImageUrl},DEFAULT,DEFAULT)
   	</insert>
+  	<select id="selectSiteListCount" resultType="_int">
+  		SELECT COUNT(*) FROM CAMP_SITE_TBL WHERE CAMP_ID = #{contentId}
+  	</select>
+  	<insert id="insertSite">
+  		INSERT INTO CAMP_SITE_TBL VALUES(SEQ_SITE_NO.NEXTVAL,#{siteName},#{campId},#{campName},#{siteChar},#{siteInfo},#{siteIntro},#{standardPeople},#{maxPeople},#{excessCharge},#{inTime},#{outTime},#{sitePrice},#{siteCount},#{siteThumbnailName},#{siteThumbnailPath},#{siteThumbnailRename},DEFAULT)
+  	</insert>
+  	<update id="updateCampRegistAvi">
+  		UPDATE CAMP_TBL SET 
+  		<if test="confirm == 1">
+	  		REGISTAVI = 'Y' 
+  		</if>
+  		<if test="confirm == 0">
+	  		REGISTAVI = 'N' 
+  		</if>
+  		WHERE CONTENTID = #{contentId}
+  	</update>
   	
 </mapper>
