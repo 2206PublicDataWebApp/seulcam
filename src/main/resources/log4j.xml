@@ -10,6 +10,11 @@
 		</layout>
 	</appender>
 	
+	<!-- Application Loggers -->
+	<logger name="com.kh.seulcam">
+		<level value="info" />
+	</logger>
+	
 		<!-- SQL Logger part2 -->
 	<!-- 열려있는 연결 수립 및 해제 이벤트를 기록 -->
 	<logger name="jdbc.connection" additivity="false">

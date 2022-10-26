@@ -1,5 +1,6 @@
 package com.kh.seulcam.camp.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.domain.CampReview;
+import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.store.CampStore;
 @Repository
 public class CampStoreLogic implements CampStore{
@@ -39,7 +41,6 @@ public class CampStoreLogic implements CampStore{
 
 	@Override
 	public List<CampReview> selectCampReview(SqlSession session, String contentId) {
-		System.out.println(contentId);
 		List<CampReview> rList = session.selectList("CampMapper.selectCampReview",contentId);
 //		System.out.println(rList);
 		return rList;
@@ -56,5 +57,32 @@ public class CampStoreLogic implements CampStore{
 		int result = session.update("CampMapper.updateReview",cReview);
 		return result;
 	}
+
+	@Override
+	public int selectListCount(SqlSession session, SearchList sList) {
+		int result=session.selectOne("CampMapper.selectListCount",sList);
+		return result;
+	}
+
+    @Override
+    public int selectSiteListCount(SqlSession session, int contentId) {
+        int result = session.selectOne("CampAdminMapper.selectSiteListCount",contentId);
+        return result;
+    }
+
+    @Override
+    public int insertSite(SqlSession session, CampSite campSite) {
+        int result = session.insert("CampAdminMapper.insertSite",campSite);
+        return result;
+    }
+
+    @Override
+    public int updateCampRegistAvi(SqlSessionTemplate session, int contentId, int confirm) {
+        HashMap<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("contentId", contentId);
+        paramMap.put("confirm",confirm);
+        int result = session.update("CampAdminMapper.updateCampRegistAvi",paramMap);
+        return result;
+    }
 
 }

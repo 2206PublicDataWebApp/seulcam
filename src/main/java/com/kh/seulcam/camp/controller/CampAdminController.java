@@ -1,12 +1,17 @@
 package com.kh.seulcam.camp.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,10 +22,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.service.CampServie;
 
@@ -30,13 +37,41 @@ public class CampAdminController {
 	@Autowired
 	private CampServie cService;
 	
+	// 캠핑리스트 관리 페이지
 	@RequestMapping(value = "/campAdmin/campAdminMain.kh", method = RequestMethod.GET)
 	public ModelAndView campAdmin(
 			@RequestParam(value = "page", required = false) Integer page,
 			@ModelAttribute SearchList sList,
 			ModelAndView mv) {
 		try {
+		    System.out.println(page);
+		    if(page != null) {
+		        sList.setPage(page);
+		    }
 			List<Camp> cList = cService.printCampList(sList);
+			int result = cService.printListCount(sList);
+			
+			int currentPage = sList.getPage()+1;
+			int totalCount = result;
+			int pageLimit = 10;
+			int naviLimit = 5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			maxPage = (int) ((double) totalCount / pageLimit + 0.9);
+            startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+            endNavi = startNavi + naviLimit - 1;
+            if (maxPage < endNavi) {
+                endNavi = maxPage;
+            }
+			
+            mv.addObject("startNavi", startNavi);
+            mv.addObject("endNavi", endNavi);
+            mv.addObject("maxPage", maxPage);
+            mv.addObject("currentPage", currentPage);
+            mv.addObject("totalCount", totalCount);
+			mv.addObject("sList",sList);
+			mv.addObject("count",result);
 			mv.addObject("cList",cList);
 			mv.setViewName("admin/campMain");
 		} catch (Exception e) {
@@ -49,14 +84,93 @@ public class CampAdminController {
 		
 	}
 
-	// 캠핑장 리스트 검색
-	@RequestMapping(value = "/campAdmin/campAdminSearch.kh", method = RequestMethod.GET)
-	public String campAdminSearch(
-			@ModelAttribute SearchList sList) {
-		System.out.println(sList);
-		
-		return "admin/campMain";
+	// 캠핑장 사이트 관리
+	@RequestMapping(value = "/campAdmin/campAdminSite.kh", method = RequestMethod.GET)
+	public ModelAndView campAdminSite(
+	        @RequestParam(value="contentId", required = false) String contentId,
+	        ModelAndView mv) {
+	    try {
+            //세션에 있는 아이디가 어드민이 아니라면 접근하지 못하도록 작동시켜야함
+
+            Camp camp= cService.printCampDetail(contentId);
+            
+            mv.addObject("camp",camp);
+            mv.setViewName("admin/campSiteList");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mv.addObject("msg", "리스트 조회 실패").setViewName("common/errorPage");
+        }
+		return mv;
 	}
+	
+	// 캠핑장 사이트 등록창 출력
+    @RequestMapping(value = "/campAdmin/campAdminSiteRegist.kh", method = RequestMethod.GET)
+    public ModelAndView campAdminSiteRegist(
+            @RequestParam(value="contentId", required = false) String contentId,
+            ModelAndView mv) {
+        try {
+            //세션에 있는 아이디가 어드민이 아니라면 접근하지 못하도록 작동시켜야함
+            Camp camp= cService.printCampDetail(contentId);
+             
+            
+            mv.addObject("camp",camp);
+            mv.setViewName("admin/campSiteRegist");    
+        } catch (Exception e) {
+            e.printStackTrace();
+            mv.addObject("msg", "사이트 등록창 출력 실패").setViewName("common/errorPage");
+        }
+        return mv;
+    }
+    
+ // 캠핑장 사이트 등록
+    @RequestMapping(value = "/campAdmin/campSiteInsert.kh", method = RequestMethod.POST)
+    public ModelAndView campSiteInsert(
+            @RequestParam(value = "uploadFile", required = false) MultipartFile uploadFile,
+            @ModelAttribute CampSite campSite,
+            HttpServletRequest request,
+            ModelAndView mv) {
+        try {
+            System.out.println(campSite);
+            //세션에 있는 아이디가 어드민이 아니라면 등록하지못하도록 작동시켜야함
+            int contentId = campSite.getCampId();
+            // 캠프 컨트롤러에서도 contentId로 계속 쓰임
+            int result = cService.printSiteListCount(contentId);
+            System.out.println(result);
+            
+            //등록시작
+            String thumbnailName = uploadFile.getOriginalFilename();
+            /////////////////////////// 경로,파일이름 설정
+            if (!thumbnailName.equals("")) {
+                String root = request.getSession().getServletContext().getRealPath("resources");
+                String savePath = root + "\\ruploadFiles";
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyymmddhhss");
+                String thumbnailRename = sdf.format(new Date(System.currentTimeMillis())) + "." // 시간
+                        + thumbnailName.substring(thumbnailName.lastIndexOf(".") + 1); // 확장자명
+                File file = new File(savePath);
+                if (!file.exists()) {
+                    file.mkdir();
+                }
+                uploadFile.transferTo(new File(savePath + "\\" + thumbnailRename));// 저장할때는 rename으로 저장 실제경로에 저장
+                String thumbnailpath = savePath + "\\" + thumbnailRename;
+                // 파일을 ruploadFile경로에 저장하는 메소드
+                campSite.setSiteThumbnailName(thumbnailName);
+                campSite.setSiteThumbnailPath(thumbnailpath);
+                campSite.setSiteThumbnailRename(thumbnailRename);
+            }
+            int regist = cService.registerSite(campSite);
+            
+            if(result == 0 && regist == 1) {
+                int confirm = 1;
+                int update = cService.campRegistAviModify(contentId,confirm);
+            }
+            
+            mv.setViewName("redirect:/campAdmin/campAdminSite.kh?contentId=" + campSite.getCampId());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        
+        return mv;
+    }
 
 	
 	// 캠핑장 데이터 db 등록

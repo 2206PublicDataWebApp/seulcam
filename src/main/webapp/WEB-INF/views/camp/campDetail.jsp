@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/resources/css/camp/switch.css">
 	<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="/resources/css/fonts.css">
+    <!-- <link rel="stylesheet" href="/resources/css/memberCommon.css"> -->
 	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
@@ -286,10 +287,11 @@
                             for (var i = 0; i < data.documents.length; i++) {
                             str += "<a href='"+data.documents[i].url+"' target='_blank'><div class='row blog' style='margin: 10px;'>"
                             str += "<div class='col-md-4'  style='height: 120px; width: 185px; background: url("+data.documents[i].thumbnail+") no-repeat center center #343a40; background-size: 100%;'></div>"
-                            str += "<div class='col-md-8 blog_body' style='overflow: hidden; height: 130px;'><h6><b>"+data.documents[i].title+"</b></h6><div class='text-right tt' stlyle='padding-bottom: 0.25rem;'><small class='text-muted'>작성일 : "+data.documents[i].datetime.substr(0,10)+"</small></div>"
+                            str += "<div class='col-md-8 blog_body' style='overflow: hidden; height: 130px;'><h6><b>"+data.documents[i].title+"</b></h6><div class='text-right tt' stlyle='padding-bottom: 0.25rem;'><small class='text-muted'>작성일 : "+data.documents[i].datetime.substr(0,10)+" | 블로그 : "+data.documents[i].blogname+"</small></div>"
                             str += "<p>"+data.documents[i].contents+"</p></div></div></a>"
                             }
                             $(".blog_area").append(str)
+                            console.log(data.meta.total_count)
                         },
                         error : function(request, status, error){
                             console.log("code: " + request.status)
@@ -328,7 +330,7 @@
         // $("#11").css({visibility: 'hidden'})
         campReviewList()
         var str=""
-        str += "<br><div class='reviewList' style='padding : 5px; border : 3px solid #ccc; border-radius : 5px;'><div class='review_contents'>"
+        str += "<br><div class='reviewList' style='padding : 5px; border : none; border-radius : 5px;'><div class='review_contents'>"
         str += "<span class='star'>★★★★★<span id='checkstar"+campReviewNo+"' style='width : "+campReviewStar*10+"%'>★★★★★</span>"
         str += "<input type='range' id='"+campReviewNo+"' oninput='drawStar(this)' value='"+campReviewStar+"' step='1' min='1' max='10'></span>"
         str += "<textarea style='border-radius: 5px;width: 95%;' name='reviewWrite' id='revieRewWrite'  rows='3' placeholder=' 리뷰를 남겨주세요.'>"+campReviewContents+"</textarea></div>"
