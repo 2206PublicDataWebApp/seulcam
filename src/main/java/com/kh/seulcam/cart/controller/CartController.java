@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.seulcam.cart.domain.Cart;
 import com.kh.seulcam.cart.service.CartService;
 import com.kh.seulcam.member.domain.Member;
+import com.kh.seulcam.order.domain.OrderList;
 import com.kh.seulcam.product.domain.Product;
 
 
@@ -51,6 +52,7 @@ public class CartController {
 			 totalPrice+=price;
 			 }
 			mv.addObject("totalPrice",totalPrice);
+			mv.addObject("memberId",memberId);
 			mv.addObject("count",count);
 			mv.addObject("pList",pList);
 			mv.addObject("cList",cList);
@@ -88,6 +90,35 @@ public class CartController {
 		}
 	}
 
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value="/cart/order.kh",method=RequestMethod.POST) public
+	 * String cartOrder(
+	 * 
+	 * @RequestParam(value="memberId")String memberId,
+	 * 
+	 * @RequestParam(value="productNoList[]") List<String>productNoList ) {
+	 * for(String product : productNoList) { System.out.println(product); }
+	 * System.out.println(memberId);
+	 * 
+	 * 
+	 * return"success"; }
+	 */
+	@RequestMapping(value="/cart/order.kh",method=RequestMethod.POST)
+	public ModelAndView cartOrder(
+			ModelAndView mv
+			,@ModelAttribute(value="OrderList")OrderList order
+			) {
+		int result = cService.orderProduct(order);
+		
+		mv.setViewName("order/ordr");
+		return mv;
+		
+		}
+		
+		
+	
 	
 	
 	

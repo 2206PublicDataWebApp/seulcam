@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.seulcam.cart.domain.Cart;
 import com.kh.seulcam.member.domain.Member;
+import com.kh.seulcam.order.domain.OrderList;
 import com.kh.seulcam.product.domain.Product;
 
 public interface CartService {
@@ -15,5 +16,7 @@ public interface CartService {
 	public int changeCart(Cart cart);
 
 	public int deleteOne(Integer cartNo);
+
+	public int orderProduct(OrderList order);
 
 }

@@ -10,6 +10,7 @@ import com.kh.seulcam.cart.domain.Cart;
 import com.kh.seulcam.cart.service.CartService;
 import com.kh.seulcam.cart.store.CartStore;
 import com.kh.seulcam.member.domain.Member;
+import com.kh.seulcam.order.domain.OrderList;
 import com.kh.seulcam.product.domain.Product;
 
 @Service
@@ -42,6 +43,13 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public int deleteOne(Integer cartNo) {
 		int result = cStore.deleteOne(session,cartNo);
+		return result;
+	}
+
+	@Override
+	public int orderProduct(OrderList order) {
+		int result =cStore.insertOrder(session,order);
+		
 		return result;
 	}
 
