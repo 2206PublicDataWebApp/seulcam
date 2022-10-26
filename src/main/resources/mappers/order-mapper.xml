@@ -38,4 +38,44 @@
   WHERE MEMBER_ID=#{memberId}
   </update>
   
+   <resultMap  type="Order" id="orderResultMap">
+ 
+  <id property="orderNo" 	column="ORDER_NUMBER"/>
+  		<result property="productNo" 	column="PRODUCT_NO"/>
+  		<result property="memberId" 	column="MEMBER_ID"/>
+  		<result property="orderCount" 	column="ORDER_COUNT"/>
+  		<result property="memberName" 	column="ORDER_NAME"/>
+  		<result property="memberPhone" 	column="ORDER_PHONE"/>
+  		<result property="orderMessage" 	column="ORDER_MESSAGE"/>
+  		<result property="orderAddressPost" 	column="ORDER_POST"/>
+  		<result property="orderAddress1" 	column="ORDER_ADDRESS1"/>
+  		<result property="orderAddress2" 	column="ORDER_ADDRESS2"/>
+  		<result property="payStatus" 	column="PAY_STATUS"/>
+  		<result property="dirivaryStatus" 	column="DILIVERY_STATUS"/>
+  		<result property="cancleStatus" 	column="CANCLE_STATUS"/>
+  		<result property="refundStatus" 	column="REFUND_STATUS"/>
+  		
+  </resultMap>
+  
+  <insert id="insertProduct">
+  INSERT INTO ORDER_TBL
+  </insert>
+  <insert id="insertPlan" parameterType="list">
+ 	INSERT INTO PLAN_TBL
+	SELECT SEQ_ORDER.NEXTVAL AS ORDER_NUMBER, A.*
+	FROM ( 
+ 	<foreach collection="orderList" item="item" separator="UNION ALL" >
+ 	SELECT	
+ 	#{item.boardNo} AS PLANNER_NO ,#{item.day} AS PLAN_DAY,#{item.y} AS Y,#{item.x} AS X,#{item.address} AS ADDRESS ,#{item.memo} AS MEMO FROM DUAL
+ 	</foreach>)A
+  </insert> 
+  <insert id="insertPlan" parameterType="list">
+ 	INSERT INTO PLAN_TBL
+	SELECT SEQ_PLANNO.NEXTVAL AS PLAN_NO, A.*
+	FROM ( 
+ 	<foreach collection="planList" item="item" separator="UNION ALL" >
+ 	SELECT	
+ 	#{item.boardNo} AS PLANNER_NO ,#{item.day} AS PLAN_DAY,#{item.y} AS Y,#{item.x} AS X,#{item.address} AS ADDRESS ,#{item.memo} AS MEMO FROM DUAL
+ 	</foreach>)A
+  </insert> 
   </mapper>

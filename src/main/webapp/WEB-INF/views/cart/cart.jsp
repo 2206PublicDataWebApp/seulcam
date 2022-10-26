@@ -116,6 +116,9 @@
 width:100px;
 height:100px;
 }
+.info-middle{
+width:30%
+}
 </style>
 
 <body>
@@ -153,45 +156,84 @@ height:100px;
 
 
 			<div class="cart_list">
+			<table class="list_table">
+			
 				<c:forEach items="${cList}" var="cart" varStatus="i">
 				<input id="cartNo" type="hidden" value=${cart.cartNo }>
+				<input id="memberId" type="hidden" value=${cart.memberId }>
 					<c:forEach items="${pList}" var="product" varStatus="p">
 						<c:if test="${cart.productNo eq product.productNo }">
 							<input id="cc" type="hidden" value= "${p.count }">
+							
+							<%-- <table class="list_table">
 
-							<table class="list_table">
 								<tr>
 									<td rowspan="4">
 									<input type="checkbox" id="check_select" name="cartbox" onclick="checkSelectAll()" />
 									</td>
 									<td rowspan="4">
 									<img class="p-img" src="//image.msscdn.net/images/goods_img/20220906/2774157/2774157_1_160.jpg" alt="윅(WICK) ACID 워싱 볼캡-차콜"></td>
-									<td style="width:50% ; font-weight:bold">${product.productName }</td>
+									<td id="product-name"style="width:50% ; font-weight:bold">${product.productName }</td>
 									<td align="right">
 										<button class="delete" id="one-delete" onclick="deleteOne(${cart.cartNo })">X</button>
 									</td>
 								</tr>
 
-								<tr>
+								<tr id="countt">
 									<td style="width:50%">수량</td>
-									<td style="width:50%">
+									<td style="width:50%" id="counttt">
 										<div class="count-wrap _count">
 											<input type="hidden" class="no" value="${cart.productNo }" />
 											<button type="button" class="minus" >-</button>
-											<input type="text" class="inp" value="${cart.cartCount }" />
+											<input type="text" class="inp" id="p-count"value="${cart.cartCount }" />
 											<button type="button" class="plus" >+</button>
 										</div>
 									</td>
+									
 								</tr>
-								<tr>
+								
+								<tr id="price">
 									<td style="width:50%">가격</td>
-									<td style="width:50%"><span id="price${cart.cartNo }" data-value="${product.productPrice }">${product.productPrice }</span></td>
+									<td style="width:50%"><span id="p-price" data-value="${product.productPrice }">${product.productPrice }</span></td>
 								</tr>
-							</table>
+							</table> --%>
+							
+							<tr>
+									
+									<td><input type="checkbox"  name="cartbox" onclick="checkSelectAll()" />
+									<input id="productNo" type="hidden" value= "${product.productNo }"/></td>
+									<td><img class="p-img" src="//image.msscdn.net/images/goods_img/20220906/2774157/2774157_1_160.jpg" alt="윅(WICK) ACID 워싱 볼캡-차콜"></td>
+									<td class="info-middle">
+									<ul>
+									<li style="font-weight: bold;" id="p-product">${product.productName }</li>
+									<li>수량</li>
+									<li>가격</li>
+									</ul>
+									</td>
+									<td>
+									<ul style="text-align:right;">
+									<li>
+									
+										<button class="delete" id="one-delete" onclick="deleteOne(${cart.cartNo })">X</button>
+									
+									</li>
+									<li style="float:right" id="count">
+										<div class="count-wrap _count" >
+											<input type="hidden" class="no" value="${cart.productNo }" />
+											<button type="button" class="minus" >-</button>
+											<input type="text" class="inp" id="p-count"value="${cart.cartCount }" />
+											<button type="button" class="plus" >+</button>
+										</div>
+									</li>
+									<li id="p-price">${product.productPrice }</li>
+									</ul>
+									</td>
+									
+								</tr>
 						</c:if>
 					</c:forEach>
 				</c:forEach>
-
+				</table>
 			</div>
 
 			<div class="price">
@@ -212,8 +254,13 @@ height:100px;
 
 			</div>
 			<div>
-				<button class="order" onclick="orderProduct()">주문하기</button>
+				<button class="order" id="orderCart">주문하기</button>
 			</div>
+			
+			<form action="/cart/order.kh" method="post" class="order-form">
+			<%-- <input type="text" class="form-memberId" value="${memberId.memberId }"/> --%>
+			</form>
+			
 
 		</div>
 	</div>
@@ -229,7 +276,7 @@ height:100px;
 	
 	function checkSelectAll()  {
 		  // 전체 체크박스
-		  const checkboxes 
+		  var checkboxes 
 		    =$('input[name="cartbox"]');
 		  // 선택된 체크박스
 		  const checked 
@@ -240,19 +287,17 @@ height:100px;
 		    = $('input[name="cart_selectAll"]');
 		  $("#p-count").html(checked.length);
 		
-		  if(checkboxes.length === checked.length)  {
+		  if(checkboxes.length == checked.length)  {
 		    selectAll.checked = true;
-		  
 		  }else {
 		    selectAll.checked = false;
 		  }
-		 	
 		}
 
 		function selectAll(selectAll)  {
 		  const checkboxes 
 		     = document.getElementsByName('cartbox');
-		    $("#p-count").html($('input[name="cartbox"]').length);
+		   $("#p-count").html($('input[name="cartbox"]').length); 
 		  checkboxes.forEach((checkbox) => {
 		    checkbox.checked = selectAll.checked
 		  
@@ -329,6 +374,104 @@ height:100px;
 		})
 		
 	}
+/* 	$("#orderCart").click(function(){
+		 var productArr=new Array();
+		var countArr=new Array();
+		var priceArr=new Array(); 
+		var productNoArr=new Array();
+		var checked =$('input[name="cartbox"]:checked');
+		
+		if(checked.length>0){
+			checked.each(function(i){
+			product=checked.parent().parent().eq(i).children().eq(2).children().children('#p-product').html();
+			count=checked.parent().parent().eq(i).children().eq(3).children().children('#count').children().children("#p-count").val();
+			price=checked.parent().parent().eq(i).children().eq(3).children().children('#p-price').text();
+			
+		productNo=checked.parent().children('#productNo').val();
+		alert(productNo);
+		productNoArr.push(productNo);
+		productArr.push(product);
+		countArr.push(count);
+		priceArr.push(price);
+			}) */
+			
+		//alert(productArr);
+		//alert(countArr);
+		//alert(priceArr);
+/* 		var objParams = {
+		   "memberId" : $('#memberId').val(),
+           "productArr" : productArr,        
+           "countArr" : countArr,        
+           "priceArr" : priceArr        
+  			}; */
+		 /*  	$.ajax({
+				url:"/cart/order.kh",
+				dataType:"json",
+	            contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+				type:"post",
+				data: objParams,
+				success:function(data){
+					if(data=="success"){
+						alert("성공.");
+					}else{
+						alert("실패");
+					}
+				},error:function(){
+					alert("ajax 통신 실패! 관리자에게 문의해 주세요!");
+					
+				}
+			}) */
+		/* 		
+			$.ajax({
+				
+				url:"/cart/order.kh",
+				dataType:"json",
+	            contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+				type:"post",
+				data: {"memberId" : $('#memberId').val(),
+		           	  "productNoList" : productNoArr },   
+				success:function(data){
+					if(data=="success"){
+						alert("성공.");
+						location.replace();
+					}else{
+						alert("실패");
+					}
+				},error:function(){
+					alert("ajax 통신 실패! 관리자에게 문의해 주세요!");
+					
+				}
+				
+			}); */	
+			  
+			 
+			
+/* 		}
+	}) */
+	
+	$("#orderCart").on("click",function(){
+		var checked =$('input[name="cartbox"]:checked');
+		//var productNoArr=new Array();
+		//var countArr = new Array();
+		let orderNumber = 0;
+		if(checked.length>0){
+			checked.each(function(i){
+			count=checked.parent().parent().eq(i).children().eq(3).children().children('#count').children().children("#p-count").val();
+			productNo=checked.parent().children('#productNo').val();
+			alert(count);
+			alert(productNo);
+			var input = ("<input type='text'name='orders[" + orderNumber + "].productNo' value='"+productNo+"'/>")
+			input+=("<input type='text' name='orders[" + orderNumber + "].orderCount'value='"+count+"'/>")
+			input+=("<input type='text'name='orders[" + orderNumber + "].memberId' value='${memberId.memberId}'/>")
+			
+			orderNumber += 1;
+			$(".order-form").append(input);
+			
+		$(".order_form").submit();
+		
+			})
+		}
+	})
 	
 	function cart_delete(){
 		

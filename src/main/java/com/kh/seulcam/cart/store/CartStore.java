@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.kh.seulcam.cart.domain.Cart;
 import com.kh.seulcam.member.domain.Member;
+import com.kh.seulcam.order.domain.OrderList;
 import com.kh.seulcam.product.domain.Product;
 
 public interface CartStore {
@@ -17,5 +18,7 @@ public interface CartStore {
 	public int updateCount(SqlSession session, Cart cart);
 
 	public int deleteOne(SqlSession session, Integer cartNo);
+
+	public int insertOrder(SqlSession session, OrderList order);
 
 }
