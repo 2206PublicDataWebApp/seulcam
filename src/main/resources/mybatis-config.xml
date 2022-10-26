@@ -22,7 +22,8 @@
 		<typeAlias type="com.kh.seulcam.cart.domain.Cart" alias="Cart"/>
 		<typeAlias type="com.kh.seulcam.product.domain.Detail" alias="Detail"/>
 		<typeAlias type="com.kh.seulcam.product.domain.Review" alias="Review"/>
-		<typeAlias type="com.kh.seulcam.product.domain.Order" alias="Order"/>
+		<typeAlias type="com.kh.seulcam.order.domain.Order" alias="Order"/>
+
 		
 		
 	</typeAliases>
