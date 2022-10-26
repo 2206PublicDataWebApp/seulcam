@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -30,13 +31,41 @@ public class CampAdminController {
 	@Autowired
 	private CampServie cService;
 	
+	// 캠핑리스트 관리 페이지
 	@RequestMapping(value = "/campAdmin/campAdminMain.kh", method = RequestMethod.GET)
 	public ModelAndView campAdmin(
 			@RequestParam(value = "page", required = false) Integer page,
 			@ModelAttribute SearchList sList,
 			ModelAndView mv) {
 		try {
+		    System.out.println(page);
+		    if(page != null) {
+		        sList.setPage(page);
+		    }
 			List<Camp> cList = cService.printCampList(sList);
+			int result = cService.printListCount(sList);
+			
+			int currentPage = sList.getPage()+1;
+			int totalCount = result;
+			int pageLimit = 10;
+			int naviLimit = 5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			maxPage = (int) ((double) totalCount / pageLimit + 0.9);
+            startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+            endNavi = startNavi + naviLimit - 1;
+            if (maxPage < endNavi) {
+                endNavi = maxPage;
+            }
+			
+            mv.addObject("startNavi", startNavi);
+            mv.addObject("endNavi", endNavi);
+            mv.addObject("maxPage", maxPage);
+            mv.addObject("currentPage", currentPage);
+            mv.addObject("totalCount", totalCount);
+			mv.addObject("sList",sList);
+			mv.addObject("count",result);
 			mv.addObject("cList",cList);
 			mv.setViewName("admin/campMain");
 		} catch (Exception e) {
@@ -49,14 +78,54 @@ public class CampAdminController {
 		
 	}
 
-	// 캠핑장 리스트 검색
-	@RequestMapping(value = "/campAdmin/campAdminSearch.kh", method = RequestMethod.GET)
-	public String campAdminSearch(
-			@ModelAttribute SearchList sList) {
-		System.out.println(sList);
-		
-		return "admin/campMain";
+	// 캠핑장 사이트 관리
+	@RequestMapping(value = "/campAdmin/campAdminSite.kh", method = RequestMethod.GET)
+	public ModelAndView campAdminSite(
+	        @RequestParam(value="contentId", required = false) String contentId,
+	        ModelAndView mv) {
+	    try {
+            Camp camp= cService.printCampDetail(contentId);
+            
+            mv.addObject("camp",camp);
+            mv.setViewName("admin/campSite");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mv.addObject("msg", "리스트 조회 실패").setViewName("common/errorPage");
+        }
+		return mv;
 	}
+	
+	// 캠핑장 사이트 등록창 출력
+    @RequestMapping(value = "/campAdmin/campAdminSiteRegist.kh", method = RequestMethod.GET)
+    public ModelAndView campAdminSiteRegist(
+            @RequestParam(value="contentId", required = false) String contentId,
+            ModelAndView mv) {
+        try {
+            Camp camp= cService.printCampDetail(contentId);
+            
+            
+            
+            mv.addObject("camp",camp);
+            mv.setViewName("admin/campSiteRegist");    
+        } catch (Exception e) {
+            e.printStackTrace();
+            mv.addObject("msg", "사이트 등록창 출력 실패").setViewName("common/errorPage");
+        }
+        return mv;
+    }
+    
+ // 캠핑장 사이트 등록창 출력
+    @RequestMapping(value = "/campAdmin/campSiteInsert.kh", method = RequestMethod.POST)
+    public String campSiteInsert(
+            ModelAndView mv) {
+        try {
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        
+        return "admin/campSiteRegist";
+    }
 
 	
 	// 캠핑장 데이터 db 등록

@@ -71,4 +71,10 @@ public class CampServieImpl implements CampServie{
 		return result;
 	}
 
+	@Override
+	public int printListCount(SearchList sList) {
+		int result = cStore.selectListCount(session,sList);
+		return result;
+	}
+
 }

@@ -2,7 +2,9 @@ package com.kh.seulcam.camp.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -50,14 +52,17 @@ public class CampController {
 				) {
 			Camp camp= cService.printCampDetail(contentId);
 			try {
-				
-				String apiURL = "https://dapi.kakao.com/v2/search/blog?sort=accuracy&page=1&size=10&query="+camp.getFacltNm();
-				URL url = new URL(apiURL);
-				HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
+				StringBuilder urlBuilder = new StringBuilder("https://dapi.kakao.com/v2/search/blog");
+	            urlBuilder.append("?" + URLEncoder.encode("sort","UTF-8") + "=" + URLEncoder.encode("accuracy", "UTF-8")); /*페이지 번호*/
+	            urlBuilder.append("&" + URLEncoder.encode("page","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*한 페이지 결과 수*/
+	            urlBuilder.append("&" + URLEncoder.encode("size","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*OS*/
+	            urlBuilder.append("&" + URLEncoder.encode("query","UTF-8") + "=" + URLEncoder.encode(camp.getFacltNm(), "UTF-8")); /*OS*/
+	            URL url = new URL(urlBuilder.toString());
+	            HttpURLConnection con = (HttpURLConnection) url.openConnection();
 				con.setRequestMethod("GET");
 				con.setRequestProperty("Authorization", "KakaoAK 7072f1c5ec76f11a0937d2337e6cad4e");
 				con.setRequestProperty("Content-type", "application/json");
-				System.out.println("Printing Response Header...\n" + con.getResponseCode());
+				System.out.println("Printing Response Header...\n" + "responseCode : " +con.getResponseCode());
 				
 				int responseCode = con.getResponseCode(); //
 				BufferedReader br;
@@ -81,14 +86,14 @@ public class CampController {
 			        JSONObject objmain = (JSONObject) parser.parse(sb.toString());
 			     // json.response
 			        JSONObject objResponse = (JSONObject) parser.parse(objmain.get("meta").toString());
-				System.out.println("sd>>  "+sb.toString());
-				System.out.println(objResponse.get("total_count"));
-				
+//				System.out.println("sd>>  "+sb.toString());
+//				System.out.println(objResponse.get("total_count"));
+			        mv.addObject("camp",camp);
+			        mv.setViewName("camp/campDetail");
 			} catch (Exception e) {
-				// TODO: handle exception
+			    e.printStackTrace();
+			    mv.addObject("msg", "레시피조회 실패").setViewName("common/errorPage");
 			}
-			mv.addObject("camp",camp);
-			mv.setViewName("camp/campDetail");
 			return mv;
 		}
 	
@@ -100,8 +105,12 @@ public class CampController {
 			HttpServletRequest request
 			) {
 		try {
-			System.out.println(sList);
 			List<Camp> cList = cService.printCampList(sList);
+			int result = cService.printListCount(sList);
+			if(!cList.isEmpty()) {
+			    cList.get(0).setBlogCount(result);
+			}
+           
 	        return new Gson().toJson(cList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -198,7 +207,6 @@ public class CampController {
 			HttpServletRequest request
 			) {
 		try {
-			System.out.println(cReview);
 			int result = cService.modifyReview(cReview);
 			return "success";
 		} catch (Exception e) {

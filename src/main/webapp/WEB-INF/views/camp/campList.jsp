@@ -214,7 +214,7 @@ select {
 		// 리스트 생성 function
 		function urlLoad(){
 			
-			$(".word_area").html("<h5>"+ city +" "+ category+" "+search+" 검색결과</h5> ")
+			$(".word_area").html("<h5 id='searchResult'>"+ city +" "+ category+" "+search+" 검색결과</h5> ")
 			$.ajax({
 								url : listUrl,
 								type : "GET",
@@ -245,10 +245,18 @@ select {
 									}else{
 										$("#list_area").html(str);
 									}
+									if(data.length == 0){
+										var sr = "<b> [0개]</b>";
+									}else{
+										var sr = "<b> ["+data[0].blogCount+"개]</b>";
+									}
+									$("#searchResult").append(sr);
 									page++
 								},
-								error : function() {
-									console.log("출력실패");
+								error : function(request, status, error){
+									console.log("code: " + request.status)
+									console.log("message: " + request.responseText)
+									console.log("error: " + error);
 								}
 							})
 		}
@@ -286,12 +294,14 @@ select {
 				regist = "Y"
 				if(page != 0){
 				page=0;
-			}
+				}
+				urlLoad()
 			}else{
 				regist = "N"
 				if(page != 0){
 				page=0;
-			}
+				}
+				urlLoad()
 			}
 		})
 

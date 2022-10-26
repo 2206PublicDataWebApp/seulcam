@@ -25,4 +25,6 @@ public interface CampStore {
 
 	public int updateReview(SqlSession session, CampReview cReview);
 
+	public int selectListCount(SqlSession session, SearchList sList);
+
 }

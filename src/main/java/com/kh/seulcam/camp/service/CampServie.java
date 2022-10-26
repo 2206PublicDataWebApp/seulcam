@@ -22,4 +22,6 @@ public interface CampServie {
 
 	public int modifyReview(CampReview cReview);
 
+	public int printListCount(SearchList sList);
+
 }

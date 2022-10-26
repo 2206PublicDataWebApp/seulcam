@@ -39,7 +39,6 @@ public class CampStoreLogic implements CampStore{
 
 	@Override
 	public List<CampReview> selectCampReview(SqlSession session, String contentId) {
-		System.out.println(contentId);
 		List<CampReview> rList = session.selectList("CampMapper.selectCampReview",contentId);
 //		System.out.println(rList);
 		return rList;
@@ -54,6 +53,12 @@ public class CampStoreLogic implements CampStore{
 	@Override
 	public int updateReview(SqlSession session, CampReview cReview) {
 		int result = session.update("CampMapper.updateReview",cReview);
+		return result;
+	}
+
+	@Override
+	public int selectListCount(SqlSession session, SearchList sList) {
+		int result=session.selectOne("CampMapper.selectListCount",sList);
 		return result;
 	}
 
