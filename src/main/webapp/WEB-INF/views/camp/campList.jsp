@@ -290,6 +290,7 @@ select {
 
 		// 예약가능 스위치 활성화
 		$("input[name='registCheck']").change(function(){
+			listUrl = "/camp/campListShow.kh";
 			if(this.checked == true){
 				regist = "Y"
 				if(page != 0){
@@ -325,6 +326,7 @@ select {
 		function searchForm(){
 			if($(".searchForm").val().trim() != ""){
 				search = $(".searchForm").val();
+				listUrl = "/camp/campListShow.kh";
 				if(page != 0){
 				page=0;
 				}

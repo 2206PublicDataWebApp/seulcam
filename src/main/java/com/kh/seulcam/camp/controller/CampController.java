@@ -47,7 +47,7 @@ public class CampController {
 	// 캠핑장 상세페이지
 		@RequestMapping(value = "/camp/campDetail.kh", method = RequestMethod.GET)
 		public ModelAndView campDetail(
-				@RequestParam(value="contentId", required = false) String contentId,
+				@RequestParam(value="contentId", required = false) int contentId,
 				ModelAndView mv
 				) {
 			Camp camp= cService.printCampDetail(contentId);
@@ -169,7 +169,7 @@ public class CampController {
 	@ResponseBody
 	@RequestMapping(value = "/camp/campReviewList.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )
 	public String campReviewList(
-			@RequestParam(value="contentId", required = false) String contentId,
+			@RequestParam(value="contentId", required = false) int contentId,
 			HttpServletRequest request
 			) {
 		try {

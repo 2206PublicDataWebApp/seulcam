@@ -16,11 +16,11 @@ public interface CampStore {
 
 	public List<Camp> selectCampList(SqlSession session, SearchList sList);
 
-	public Camp selectCampDetail(SqlSession session, String contentId);
+	public Camp selectCampDetail(SqlSession session, int contentId);
 
 	public int insertCampReview(SqlSession session, CampReview cReview);
 
-	public List<CampReview> selectCampReview(SqlSession session, String contentId);
+	public List<CampReview> selectCampReview(SqlSession session, int contentId);
 
 	public int deleteReview(SqlSession session, CampReview cReview);
 
@@ -32,6 +32,14 @@ public interface CampStore {
 
     public int insertSite(SqlSession session, CampSite campSite);
 
-    public int updateCampRegistAvi(SqlSessionTemplate session, int contentId, int confirm);
+    public int updateCampRegistAvi(SqlSession session, int contentId, int confirm);
+
+    public List<CampSite> selectSiteList(SqlSession session, int contentId);
+
+    public int deleteSite(SqlSession session, int siteNo);
+
+    public CampSite selectSite(SqlSession session, int siteNo);
+
+    public int updateSite(SqlSession session, CampSite campSite);
 
 }

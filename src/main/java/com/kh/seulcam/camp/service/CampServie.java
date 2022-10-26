@@ -13,11 +13,11 @@ public interface CampServie {
 
 	public List<Camp> printCampList(SearchList sList);
 
-	public Camp printCampDetail(String contentId);
+	public Camp printCampDetail(int contentId);
 
 	public int campReviewWrite(CampReview cReview);
 
-	public List<CampReview> campReviewList(String contentId);
+	public List<CampReview> campReviewList(int contentId);
 
 	public int removeReview(CampReview cReview);
 
@@ -30,5 +30,13 @@ public interface CampServie {
     public int registerSite(CampSite campSite);
 
     public int campRegistAviModify(int contentId, int yes);
+
+    public List<CampSite> printSiteList(int contentId);
+
+    public int removeSite(int siteNo);
+
+    public CampSite printSite(int siteNo);
+
+    public int modifySite(CampSite campSite);
 
 }

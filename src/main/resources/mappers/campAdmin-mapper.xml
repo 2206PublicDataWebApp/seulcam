@@ -43,5 +43,20 @@
   		</if>
   		WHERE CONTENTID = #{contentId}
   	</update>
+  	<select id="selectSiteList" resultMap="CampSiteResultMap">
+  		SELECT * FROM CAMP_SITE_TBL WHERE CAMP_ID = #{contentId}
+  	</select>
+  	<delete id="deleteSite">
+  		DELETE FROM CAMP_SITE_TBL WHERE SITE_NO = #{siteNo}
+  	</delete>
+  	<select id="selectSite" resultMap="CampSiteResultMap">
+  		SELECT * FROM CAMP_SITE_TBL WHERE SITE_NO = #{siteNo}
+  	</select>
+  	<update id="updateSite">
+  		UPDATE CAMP_SITE_TBL SET SITE_NAME = #{siteName}, SITE_CHAR = #{siteChar}, SITE_INFO = #{siteInfo}, SITE_INTRO = #{siteIntro}, STANDARD_PEOPLE = #{standardPeople}, MAX_PEOPLE = #{maxPeople}, EXCESS_CHARGE = #{excessCharge}, IN_TIME = #{inTime}, OUT_TIME = #{outTime}, SITE_PRICE = #{sitePrice}, SITE_COUNT = #{siteCount}, SITE_THUMBNAIL_NAME = #{siteThumbnailName}, SITE_THUMBNAIL_PATH = #{siteThumbnailPath}, SITE_THUMBNAIL_RENAME = #{siteThumbnailRename} WHERE SITE_NO = #{siteNo}
+  	</update>
+  	<update id="updateSiteNoImg">
+  		UPDATE CAMP_SITE_TBL SET SITE_NAME = #{siteName}, SITE_CHAR = #{siteChar}, SITE_INFO = #{siteInfo}, SITE_INTRO = #{siteIntro}, STANDARD_PEOPLE = #{standardPeople}, MAX_PEOPLE = #{maxPeople}, EXCESS_CHARGE = #{excessCharge}, IN_TIME = #{inTime}, OUT_TIME = #{outTime}, SITE_PRICE = #{sitePrice}, SITE_COUNT = #{siteCount} WHERE SITE_NO = #{siteNo}
+  	</update>
   	
 </mapper>
