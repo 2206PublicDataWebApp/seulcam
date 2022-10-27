@@ -6,10 +6,11 @@
 
 a {
     text-decoration: none;
+    color: #000;
 }
 
 a:visited {
-    color: #aaa;
+    color: #000;
 }
 
 h2 {

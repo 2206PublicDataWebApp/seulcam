@@ -159,8 +159,20 @@ public class MemberController {
 	
 	// 마이페이지 회원정보 배송지 관리 창으로 이동
 	@RequestMapping(value="/member/addressChangeView", method=RequestMethod.GET)
-	public String addressChangeView(Model model) {
-		return "member/addressChange";
+	public ModelAndView addressChangeView(HttpServletRequest request
+			, ModelAndView mv) {
+		try {
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginUser");
+			String memberId = member.getMemberId();
+			Member mOne = mService.printOneById(memberId);
+			mv.addObject("member", mOne);
+			mv.setViewName("member/addressChange");
+
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
 	}
 	
 	// 아이디 DB에 존재하는 지 검사하는 기능
@@ -350,6 +362,44 @@ public class MemberController {
 			int result = mService.modifyMemberAccount(member);
 			if(result > 0) {
 				mv.setViewName("redirect:/member/mypageMemberView");
+			}else {
+				mv.addObject("msg", "회원 정보 수정 실패!");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// 배송지 수정
+	@RequestMapping(value="/member/changeAddress", method=RequestMethod.POST)
+	public ModelAndView changeAddress(
+			@ModelAttribute Member member
+			, ModelAndView mv) {
+		try {
+			int result = mService.modifyMemberAddress(member);
+			if(result > 0) {
+				mv.setViewName("redirect:/member/mypageMemberView");
+			}else {
+				mv.addObject("msg", "회원 정보 수정 실패!");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// 비밀번호 수정
+	@RequestMapping(value="/member/changePw", method=RequestMethod.POST)
+	public ModelAndView changePw(
+			@ModelAttribute Member member
+			, ModelAndView mv) {
+		try {
+			int result = mService.modifyMemberPw(member);
+			if(result > 0) {
+				mv.setViewName("redirect:/member/loginView");
 			}else {
 				mv.addObject("msg", "회원 정보 수정 실패!");
 				mv.setViewName("common/errorPage");

@@ -34,7 +34,7 @@
 		</insert>
 		
 		<select id="selectLoginOne" resultMap="memberResultMap">
-		SELECT * FROM MEMBER_TABLE
+		SELECT MEMBER_ID FROM MEMBER_TABLE
 		 WHERE MEMBER_ID = #{memberId } AND MEMBER_PW = #{memberPw }
 		</select>
 		
@@ -72,11 +72,27 @@
 			WHERE MEMBER_ID = #{memberId }
 		</update>
 		
+		<update id="updateMemberPw" parameterType="Member">
+			UPDATE MEMBER_TABLE
+			SET MEMBER_PW = #{memberPw }
+			WHERE MEMBER_ID = #{memberId }
+		</update>
+		
 		<update id="updateMemberAccount" parameterType="Member">
 			UPDATE MEMBER_TABLE
 			SET MEMBER_ACCOUNT_NAME = #{memberAccountName },
 			MEMBER_ACCOUNT_BANK = #{memberAccountBank },
 			MEMBER_ACCOUNT_NUMBER = #{memberAccountNumber }
+			WHERE MEMBER_ID = #{memberId }
+		</update>
+		
+		<update id="updateMemberAddress" parameterType="Member">
+			UPDATE MEMBER_TABLE
+			SET MEMBER_NAME = #{memberName },
+			MEMBER_ZIP = #{memberZip },
+			MEMBER_PHONE = #{memberPhone },
+			MEMBER_ADDRESS1 = #{memberAddress1 },
+			MEMBER_ADDRESS2 = #{memberAddress2 }
 			WHERE MEMBER_ID = #{memberId }
 		</update>
 		

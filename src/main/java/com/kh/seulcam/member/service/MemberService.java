@@ -36,4 +36,10 @@ public interface MemberService {
 	
 	// 환불 계좌 수정
 	public int modifyMemberAccount(Member member);
+	
+	// 배송지 수정
+	public int modifyMemberAddress(Member member);
+	
+	// 비밀번호 수정
+	public int modifyMemberPw(Member member);
 }

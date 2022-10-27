@@ -14,7 +14,7 @@
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
-
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -65,7 +65,7 @@
                         </ul>
                     </div>
 
-                    <div class="social-login">
+                    <div class="social-login" onclick="kakaoLogin();">
                         <a class="kakao-login">
                             <img src="/resources/images/kakao_login.png">
                         </a>
@@ -79,5 +79,7 @@
         </section>
     </div>
     <script src="/resources/js/member/pwInputCommon.js"></script>
+    <script src="/resources/js/member/kakaoLogin.js"></script>
+    
 </body>
 </html>

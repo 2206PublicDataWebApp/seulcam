@@ -43,7 +43,7 @@
                                 <img class="camera" src="/resources/images/camera.png">
                             </span>
                         </label>
-                        <input type="file" name="profileImage" id="profileImage">
+                        <input type="file" name="profileImage" id="profileImage" accept="image/*">
                     </div>
                     <a class="nickname-change" href="/member/nicknameChangeView"">
                         <p class="nickname">
@@ -120,7 +120,7 @@
 
     <footer>
         <div class="footer-wrapper">
-            <a class="go-main"href="/"><b>메인으로</b></a>
+            <a class="go-main" href="/"><b>메인으로</b></a>
             <button onclick="location.href='/member/logout'">
                 <span>${sessionScope.loginUser.memberId }</span>
                 <b>로그아웃</b>
