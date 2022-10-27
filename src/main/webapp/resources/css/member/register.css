@@ -178,16 +178,15 @@ section {
 
 .join-button-wrapper {
     margin-top: 40px;
-    cursor: pointer;
 }
 
 .join-button {
     height: 50px;
     width: 100%;
-    border-color: #0078ff;
+    border-color: #f3f3f3;
     border-radius: 4px;
-    background-color: #0078ff;
-    color: #fff;
+    background-color: #f3f3f3;
+    color: #b3b3b3;
     padding: 14px 16px 15px;
     font-weight: 700;
     cursor: default;

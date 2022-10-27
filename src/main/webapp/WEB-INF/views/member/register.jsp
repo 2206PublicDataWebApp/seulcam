@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/css/member/register.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
+    <link rel="stylesheet" href="/resources/css/memberCommon.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <title>회원가입</title>
@@ -45,9 +46,11 @@
 	                            <span class="label-essential"></span>
 	                        </label>
 	                        <div class="join-input-wrapper">
-	                            <input class="join-input-input" type="text" name="memberId" placeholder="영문, 숫자 5-11자" maxlength="11">
+	                            <input class="join-input-input" type="text" name="memberId" id="memberId" placeholder="영문, 숫자 5-11자" maxlength="11" autocomplete="off">
 	                        </div>
-	                        <p class="id-check"></p>
+	                        <p class="id ok">해당하는 아이디가 존재하지 않습니다.</p>
+	                        <p class="id error">해당하는 아이디가 존재합니다.</p>
+	                        <p class="idreg error">영문과 숫자로 5자 이상으로 입력해주세요.</p>
 	                    </div>
 	
 	                    <div class="join-input">
@@ -56,17 +59,20 @@
 	                            <span class="label-essential"></span>
 	                        </label>
 	                        <div class="join-input-wrapper">
-	                            <input class="join-input-input" type="password" name="memberPw" placeholder="숫자, 영문, 특수문자 조합 최소 8자" maxlength="30">
+	                            <input class="join-input-input" type="password" id="memberPw" name="memberPw" placeholder="숫자, 영문, 특수문자 조합 최소 8자" maxlength="30">
 	                            <button type="button" class="password-eye"></button>
 	                        </div>
-	                        <p class="pwd-check"></p>
+	                        <p class="passwordregex ok">비밀번호가 적절합니다.</p>
+            				<p class="passwordregex error">비밀번호는 영문/숫자/특수문자를 포함하여 8~16자로 입력해야합니다.</p>
 	                    </div>
 	
 	                    <div class="join-input">
 	                        <div class="join-input-wrapper">
-	                            <input class="join-input-input" type="password" id="memberPwdCheck" placeholder="비밀번호 재입력" maxlength="30">
+	                            <input class="join-input-input" type="password" id="memberPwCheck" placeholder="비밀번호 재입력" maxlength="30">
 	                            <button type="button" class="password-eye active"></button>
 	                        </div>
+	                        <p class="passwordCheck ok">비밀번호가 일치합니다.</p>
+            				<p class="passwordCheck error">비밀번호가 일치하지 않습니다.</p>
 	                    </div>
 	
 	                    <div class="join-input">
@@ -75,8 +81,11 @@
 	                            <span class="label-essential"></span>
 	                        </label>
 	                        <div class="join-input-wrapper">
-	                            <input class="join-input-input" type="text" name="memberNickname">
+	                            <input class="join-input-input" type="text" id="memberNickname" name="memberNickname" autocomplete="off">
 	                        </div>
+	                        <p class="nickname ok">해당하는 닉네임이 존재하지 않습니다.</p>
+            				<p class="nickname error">해당하는 닉네임이 존재합니다.</p>
+            				<p class="nickname regerror">영문 및 숫자로 입력해주세요.</p>
 	                    </div>
 	
 	                    <div class="join-input">
@@ -85,10 +94,11 @@
 	                            <span class="label-essential"></span>
 	                        </label>
 	                        <div class="join-input-wrapper">
-	                            <input class="join-input-input" type="email" name="memberEmail">
+	                            <input class="join-input-input" type="email" name="memberEmail" id="memberEmail" autocomplete="off">
 	                        </div>
 	                    </div>
-	                    <p class="email-check"></p>
+	                    <p class="emailregex ok">이메일이 유효합니다.</p>
+            			<p class="emailregex error">유효한 이메일 주소를 입력해주세요.</p>
 	                    <p class="email-text">계정 분실 시 본인인증 정보로 활용됩니다.</p>
 	
 	                    <div class="join-input">
@@ -96,13 +106,13 @@
 	                            초대 추천인 아이디
 	                        </label>
 	                        <div class="join-input-wrapper">
-	                            <input class="join-input-input" type="text" name="memberRecommend" maxlength="11">
+	                            <input class="join-input-input" type="text" name="memberRecommend" maxlength="11" autocomplete="off">
 	                        </div>
 	                    </div>
 	                </div>
 	
 	                <div class="join-button-wrapper">
-	                    <button type="submit" class="join-button">
+	                    <button type="submit" class="join-button" disabled>
 	                        가입하기
 	                    </button>
 	                </div>
@@ -115,6 +125,6 @@
             
         </section>
     </div>
-    <script src="/resources/js/register.js"></script>
+    <script src="/resources/js/member/register.js"></script>
 </body>
 </html>

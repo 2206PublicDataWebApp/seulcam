@@ -1,7 +1,6 @@
     $(function() { 
         $(".password.ok").hide();
         $(".password.error").hide();
-        $(".newpassword.error").hide();
         $(".passwordregex.ok").hide();
 	    $(".passwordregex.error").hide();
 	    $(".passwordCheck.ok").hide();
