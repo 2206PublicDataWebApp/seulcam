@@ -39,4 +39,10 @@ public interface MemberStore {
 	
 	//환불 계좌 정보 바꾸기
 	public int updateMemberAccount(SqlSession session, Member member);
+	
+	//환불 계좌 정보 바꾸기
+	public int updateMemberAddress(SqlSession session, Member member);
+	
+	// 비밀번호 바꾸기
+	public int updateMemberPw(SqlSession session, Member member);
 }

@@ -29,7 +29,7 @@
             </div>
             <div class="box-form">
                 <label>카테고리</label>
-                <select class="selectBox" placeholder="카테고리를 선택해주세요" name="category">
+                <select class="selectBox" placeholder="카테고리를 선택해주세요" name="category" >
 						<option value="텐트">텐트</option>
 						<option value="타프">타프</option>
 						<option value="테이블">테이블</option>
@@ -108,6 +108,7 @@
 
 
 <script>
+
 function goBack() {
 	  window.history.back();
 	}

@@ -152,7 +152,7 @@ public class ProductAdminController {
 		
 		
 	}
-	
+	//전체 상품리스트
 	@RequestMapping(value="/admin/productList", method=RequestMethod.GET)
 	public ModelAndView findAllProduct(ModelAndView mv) {
 		List<Product> pList = pService.getTotalProduct();
@@ -160,5 +160,23 @@ public class ProductAdminController {
 			mv.addObject("pList", pList);
 		}
 		return mv;
+	}
+	
+	@RequestMapping(value="/admin/productDetail", method=RequestMethod.GET)
+	public ModelAndView productDetailAdmin(ModelAndView mv
+			,@RequestParam("productNo") Integer productNo) {
+		List<HashMap>sNameList = pService.getTotalStoreName();
+		Product product =pService.getProductByNo(productNo);
+		List<Detail> dList=pService.printAllDetailInfo(productNo);
+		mv.addObject("dList", dList);
+		if(!sNameList.isEmpty()&&product!=null) {
+			mv.addObject("sNameList", sNameList);
+			mv.addObject("product", product);
+		}else {
+			mv.setViewName("common/errorPage");
+		}
+	
+		return mv;
+		
 	}
 }

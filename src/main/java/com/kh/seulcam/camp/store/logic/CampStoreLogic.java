@@ -28,7 +28,7 @@ public class CampStoreLogic implements CampStore{
 	}
 
 	@Override
-	public Camp selectCampDetail(SqlSession session, String contentId) {
+	public Camp selectCampDetail(SqlSession session, int contentId) {
 		Camp camp = session.selectOne("CampMapper.selectCampDetail",contentId);
 		return camp;
 	}
@@ -40,7 +40,7 @@ public class CampStoreLogic implements CampStore{
 	}
 
 	@Override
-	public List<CampReview> selectCampReview(SqlSession session, String contentId) {
+	public List<CampReview> selectCampReview(SqlSession session, int contentId) {
 		List<CampReview> rList = session.selectList("CampMapper.selectCampReview",contentId);
 //		System.out.println(rList);
 		return rList;
@@ -77,11 +77,40 @@ public class CampStoreLogic implements CampStore{
     }
 
     @Override
-    public int updateCampRegistAvi(SqlSessionTemplate session, int contentId, int confirm) {
+    public int updateCampRegistAvi(SqlSession session, int contentId, int confirm) {
         HashMap<String, Object> paramMap = new HashMap<String, Object>();
         paramMap.put("contentId", contentId);
         paramMap.put("confirm",confirm);
         int result = session.update("CampAdminMapper.updateCampRegistAvi",paramMap);
+        return result;
+    }
+
+    @Override
+    public List<CampSite> selectSiteList(SqlSession session, int contentId) {
+        List<CampSite> stList = session.selectList("CampAdminMapper.selectSiteList",contentId);
+        return stList;
+    }
+
+    @Override
+    public int deleteSite(SqlSession session, int siteNo) {
+        int result = session.delete("CampAdminMapper.deleteSite",siteNo);
+        return result;
+    }
+
+    @Override
+    public CampSite selectSite(SqlSession session, int siteNo) {
+        CampSite campSite = session.selectOne("CampAdminMapper.selectSite",siteNo);
+        return campSite;
+    }
+
+    @Override
+    public int updateSite(SqlSession session, CampSite campSite) {
+        int result;
+        if(campSite.getSiteThumbnailName() == null || campSite.getSiteThumbnailName() =="") {
+            result = session.update("CampAdminMapper.updateSiteNoImg",campSite);
+        }else {
+            result = session.update("CampAdminMapper.updateSite",campSite);
+        }
         return result;
     }
 

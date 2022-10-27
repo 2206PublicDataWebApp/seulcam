@@ -33,7 +33,7 @@
 				<c:forEach items="${pList }" var="product" varStatus="i">
 					<tr>
 						<td>${product.productNo }</td>
-						<td><a href="#">${product.productName }</a></td>
+						<td><a href="/admin/productDetail?productNo=${product.productNo}">${product.productName }</a></td>
 						<td>${product.brandName }</td>
 						<td>${product.category }</td>
 						<td>${product.productPrice }</td>

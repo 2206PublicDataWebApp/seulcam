@@ -40,4 +40,9 @@ public interface ProductService {
 
 	public String findProductName(int productNo);
 
+	public int modifyProductReview(Review newReview);
+
+	public int removeReview(Integer reviewNo);
+
+
 }

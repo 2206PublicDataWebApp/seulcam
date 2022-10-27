@@ -39,4 +39,24 @@
   	<select id="selectOneReview" resultMap="reviewResultMap">
   		SELECT* FROM PRODUCT_REVIEW_TBL WHERE REVIEW_NO =#{reviewNo}
   	</select>
+  	<update id="updateProductReview">
+  		UPDATE PRODUCT_REVIEW_TBL SET
+  		REVIEW_GRADE=#{reviewGrade},
+  		REVIEW_TITLE=#{reviewTitle},
+  		REVIEW_CONTENTS=#{reviewContents},
+  		REVIEW_FILE_NAME1=#{reviewFileName1},
+  		REVIEW_FILE_PATH1=#{reviewFilePath1},
+  		REVIEW_FILE_RENAME1=#{reviewFileRename1},
+  		REVIEW_FILE_NAME2=#{reviewFileName2},
+  		REVIEW_FILE_PATH2=#{reviewFilePath2},
+  		REVIEW_FILE_RENAME2=#{reviewFileRename2},
+  		REVIEW_FILE_NAME3=#{reviewFileName3},
+  		REVIEW_FILE_PATH3=#{reviewFilePath3},
+  		REVIEW_FILE_RENAME3=#{reviewFileRename3},
+  		UPLOAD_DATE=DEFAULT
+  		WHERE REVIEW_NO=#{reviewNo}
+  	</update>
+  	<delete id="deleteReview">
+  		DELETE FROM PRODUCT_REVIEW_TBL WHERE REVIEW_NO=#{reviewNo}
+  	</delete>
 </mapper>

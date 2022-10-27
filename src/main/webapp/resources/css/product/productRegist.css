@@ -31,12 +31,13 @@ div.box-textarea > textarea{
     box-sizing: border-box;
     display: inline;
     float: left;
-    margin-left: 10px;
+
 }
 .box-img-upload{
     width: 115px;
   height: 131px;
-
+margin-right:10px;
+margin-bottom:10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,9 +46,11 @@ div.box-textarea > textarea{
   font-weight: 500;
   font-size: 20px;
   cursor: pointer;
-  float: left;
   background-color:rgb(232, 230, 230);
   
+}
+div.rightForm > div.box-form{
+	height:350px;
 }
 .drop-zone__prompt{
     color: darkgrey;
@@ -55,6 +58,17 @@ div.box-textarea > textarea{
 }
 .drop-zone__input {
   display: none;
+}
+input[type=button]{
+	margin-left:80px;
+	margin-right:3px;
+	background-color:#ffffff;
+	border:none;
+	cursor:pointer;
+	
+}
+body > form > section > div.rightForm > div:nth-child(1) > div:nth-child(3) > input{
+	margin-left: 170px;
 }
 
 .drop-zone__thumb {

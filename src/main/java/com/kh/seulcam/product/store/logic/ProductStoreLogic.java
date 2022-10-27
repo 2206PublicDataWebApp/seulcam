@@ -94,4 +94,18 @@ public class ProductStoreLogic implements ProductStore {
 		return productName;
 	}
 
+	@Override
+	public int updateProductReview(SqlSession session, Review newReview) {
+		int result = session.update("ProductReviewMapper.updateProductReview", newReview);
+		return result;
+	}
+
+	@Override
+	public int deleteReview(SqlSession session, Integer reviewNo) {
+		int result = session.delete("ProductReviewMapper.deleteReview",reviewNo);
+		return result;
+	}
+
+	
+
 }

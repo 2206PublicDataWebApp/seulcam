@@ -29,7 +29,9 @@
 <body>
  <section class="review" >
  <form action="/product/reviewModify" enctype="multipart/form-data" method="post"> 
-
+ 
+ <input type="hidden" value=${review.reviewNo } name="reviewNo" id="reviewNo">  
+ <input type="hidden" value=${productNo } name="productNo" id="productNo">  
  <input type="hidden" value=${review.reviewGrade } name="reviewGrade" id="reviewGrade">  
 	 	<div class="range">
 	        <span class="number" id="gradeNumber">0</span>
@@ -75,9 +77,9 @@
         </div>
         <div class="box-form">
             <label>내용</label>
-            <input type="text" class="g-inputbox-medium textarea-title"name="reviewTitle" value="${review.reviewTitle }">
+            <input type="text" class="g-inputbox-medium textarea-title" name="reviewTitle" value="${review.reviewTitle }">
             <div class="box-textarea">
-                <textarea name="reviewContents" >"${review.reviewContents }"</textarea>
+                <textarea name="reviewContents" >${review.reviewContents }</textarea>
             </div>
         </div>
 <%--          
@@ -140,7 +142,6 @@
 				</div>
 			</div>
 		<p class="guide" >
-			
 			<input type="button" class="img-delete-bt" value="삭제">
 			<input type="button" class="img-delete-bt" value="삭제">
 			<input type="button" class="img-delete-bt" value="삭제">
@@ -164,10 +165,25 @@
 <!-- <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> --> 
 </footer>
 <script>
-$(".img-delete-bt").eq(1).click(function(){
-	
-	alert("취소!");
-});
+	if(${review.reviewFileName1 !=null}){
+		$(".img-delete-bt").eq(0).click(function(){
+			$('#upload-box-form > div:nth-child(1)').empty();
+			$('#upload-box-form > div:nth-child(1)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
+			
+		});
+	}
+	if(${review.reviewFileName2 !=null}){
+		$(".img-delete-bt").eq(1).click(function(){
+			$('#upload-box-form > div:nth-child(2)').empty();
+			$('#upload-box-form > div:nth-child(2)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
+		});
+	}
+	if(${review.reviewFileName3 !=null}){
+		$(".img-delete-bt").eq(2).click(function(){
+			$('#upload-box-form > div:nth-child(3)').empty();
+			$('#upload-box-form > div:nth-child(3)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
+		});
+	}
 
 
 

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
 	<title>슬기로운 캠핑 생활</title>
+	<link rel="stylesheet" href="/resources/css/pageMove.css">
 	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 </head>
@@ -15,5 +16,7 @@
 	
 	<!-- 푸터 -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+	
+	<script src="/resources/js/pageMove.js"></script>
 </body>
 </html>

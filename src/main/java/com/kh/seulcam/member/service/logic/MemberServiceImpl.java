@@ -83,4 +83,16 @@ public class MemberServiceImpl implements MemberService {
 		int result = mStore.updateMemberAccount(session, member);
 		return result;
 	}
+	
+	@Override
+	public int modifyMemberAddress(Member member) {
+		int result = mStore.updateMemberAddress(session, member);
+		return result;
+	}
+	
+	@Override
+	public int modifyMemberPw(Member member) {
+		int result = mStore.updateMemberPw(session, member);
+		return result;
+	}
 }

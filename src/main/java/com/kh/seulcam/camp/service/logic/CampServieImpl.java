@@ -39,7 +39,7 @@ public class CampServieImpl implements CampServie{
 	
 	//상세 출력
 	@Override
-	public Camp printCampDetail(String contentId) {
+	public Camp printCampDetail(int contentId) {
 		Camp camp = cStore.selectCampDetail(session , contentId);
 		return camp;
 	}
@@ -53,7 +53,7 @@ public class CampServieImpl implements CampServie{
 	
 	//리뷰 출력
 	@Override
-	public List<CampReview> campReviewList(String contentId) {
+	public List<CampReview> campReviewList(int contentId) {
 		List<CampReview> rList = cStore.selectCampReview(session,contentId);
 		return rList;
 	}
@@ -97,6 +97,33 @@ public class CampServieImpl implements CampServie{
     @Override
     public int campRegistAviModify(int contentId, int confirm) {
         int result = cStore.updateCampRegistAvi(session,contentId,confirm);
+        return result;
+    }
+    
+    // site 목록 출력
+    @Override
+    public List<CampSite> printSiteList(int contentId) {
+        List<CampSite> stList = cStore.selectSiteList(session, contentId);
+        return stList;
+    }
+    
+    // site 삭제
+    @Override
+    public int removeSite(int siteNo) {
+        int result = cStore.deleteSite(session,siteNo);
+        return result;
+    }
+    
+    // site 정보 출력
+    @Override
+    public CampSite printSite(int siteNo) {
+        CampSite campSite = cStore.selectSite(session,siteNo);
+        return campSite;
+    }
+    // site 수정
+    @Override
+    public int modifySite(CampSite campSite) {
+        int result = cStore.updateSite(session,campSite);
         return result;
     }
 

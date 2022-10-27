@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/resources/css/fonts.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
     <div class="body-wrapper">
@@ -30,7 +32,7 @@
                     </h2>
 
                     <div class="home-layout">
-                        <button class="go-home">
+                        <button class="go-home" onclick="location.href='/';">
                             <img src="/resources/images/home.png">
                         </button>
                     </div>
@@ -39,6 +41,8 @@
         </div>
 
         <section>
+        <form action="/member/changeAddress" method="post">
+        <input type="hidden" name="memberId" value="${loginUser.memberId }">
             <div class="section-wrapper">
                 <div class="join-input">
                     <label for="memberName">
@@ -46,7 +50,7 @@
                         <span class="label-essential"></span>
                     </label>
                     <div class="join-input-wrapper">
-                        <input class="join-input-input" type="text" id="memberName" placeholder="수령인">
+                        <input class="join-input-input" type="text" id="memberName" name="memberName" placeholder="수령인" value="${member.memberName }">
                     </div>
                 </div>
 
@@ -56,7 +60,7 @@
                         <span class="label-essential"></span>
                     </label>
                     <div class="join-input-wrapper">
-                        <input class="join-input-input" type="text" id="memberPhone" placeholder="-를 빼고 입력해주세요.">
+                        <input class="join-input-input" type="text" id="memberPhone" name="memberPhone" placeholder="-를 빼고 입력해주세요." value="${member.memberPhone }">
                     </div>
                 </div>
 
@@ -66,14 +70,14 @@
                         <span class="label-essential"></span>
                     </label>
                     <div class="address-input">
-                        <input type="text" class="zipcode" placeholder="우편번호">
-                        <button type="button" class="find-address">주소찾기</button>
+                        <input type="text" class="zipcode" id="memberZip" placeholder="우편번호" name="memberZip" value="${member.memberZip }" readonly>
+                        <button type="button" class="find-address" onclick="addrSearch()">주소찾기</button>
                     </div>
                     <div class="join-input-wrapper addr">
-                        <input class="join-input-input" type="text" id="address1" placeholder="주소">
+                        <input class="join-input-input" type="text" id="address1" placeholder="주소" name="memberAddress1" value="${member.memberAddress1 }" readonly>
                     </div>
                     <div class="join-input-wrapper addr">
-                        <input class="join-input-input" type="text" id="address2" placeholder="상세 주소">
+                        <input class="join-input-input" type="text" id="address2" placeholder="상세 주소" name="memberAddress2" value="${member.memberAddress2 }">
                     </div>
                 </div>
 
@@ -82,11 +86,14 @@
 
         <footer>
             <div class="footer-wrapper">
-                <button type="button" class="submit-button" >
+                <button type="submit" class="submit-button" >
                 등록
                 </button>
             </div>
         </footer>
+        </form>
     </div>
+    
+    <script src="/resources/js/member/addressChange.js"></script>
 </body>
 </html>

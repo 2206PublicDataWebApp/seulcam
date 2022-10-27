@@ -124,6 +124,7 @@ body > section.detail_menu label.ac-label{
 }
 .ac-label:after, .ac-input:checked + .ac-label:after {
     content: "+";
+   
   position: absolute;
   display: block;
   right: 0;
@@ -158,6 +159,7 @@ body > section.detail_menu label.ac-label{
 .ac-input:checked ~ .ac-text, .ac-sub .ac-input:checked ~ .ac-sub-text { 
   opacity: 1;
   height: auto;
+  width:100%;
 }
 .ac-sub .ac-label {
   background: none;
@@ -174,6 +176,7 @@ body > section.detail_menu label.ac-label{
 .ac-sub .ac-label:after, .ac-sub .ac-input:checked + .ac-label:after {
   left: 0;
   background: none;
+  padding-top: 20px;
 }
 
 .ac-sub .ac-input:checked + label, .ac-sub .ac-label:hover {
@@ -240,4 +243,20 @@ img{
 
 #review_title > li> article.ac-text{
 	border-bottom:1px solid gray;
+}
+
+.review-thumbNail{
+	position:relative;
+	height:60px;
+	width:50px;
+	float:left;
+	margin-left:20px;
+}
+#reviewTitle{
+	height:70px;
+}
+.review_title_text{
+	width:60%;
+	float:left;
+	margin-left:20px;
 }
