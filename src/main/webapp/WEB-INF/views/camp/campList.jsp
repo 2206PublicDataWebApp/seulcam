@@ -213,8 +213,9 @@ select {
 
 		// 리스트 생성 function
 		function urlLoad(){
-			
-			$(".word_area").html("<h5 id='searchResult'>"+ city +" "+ category+" "+search+" 검색결과</h5> ")
+			if(listUrl != "/camp/campListScroll.kh"){
+				$(".word_area").html("<h5 id='searchResult'>"+ city +" "+ category+" "+search+" 검색결과</h5> ")
+				}
 			$.ajax({
 								url : listUrl,
 								type : "GET",
@@ -244,13 +245,13 @@ select {
 										$("#list_area").append(str);
 									}else{
 										$("#list_area").html(str);
+										if(data.length == 0){
+											var sr = "<b> [0개]</b>";
+										}else{
+											var sr = "<b> ["+data[0].blogCount+"개]</b>";
+										}
+										$("#searchResult").append(sr);
 									}
-									if(data.length == 0){
-										var sr = "<b> [0개]</b>";
-									}else{
-										var sr = "<b> ["+data[0].blogCount+"개]</b>";
-									}
-									$("#searchResult").append(sr);
 									page++
 								},
 								error : function(request, status, error){

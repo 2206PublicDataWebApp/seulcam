@@ -40,6 +40,9 @@
 						<form action="/campAdmin/campAdminMain.kh" method="get">
 							<div align="right">
 								<div style="display: inline-block;">
+									<a href="/campAdmin/campRegistAviCon.kh?contentId=${camp.contentId}" class="btn btn-secondary">예약가능여부 변경</a>
+								</div>
+								<div style="display: inline-block;">
 									<a href="/campAdmin/campAdminSiteRegist.kh?contentId=${camp.contentId}" class="btn btn-secondary">캠핑장 사이트 등록하기</a>
 								</div>
 							</div>
@@ -59,7 +62,8 @@
 				</tr>
 				<c:if test="${!empty stList }">
 					<c:forEach items="${stList }" var="campSiteList" varStatus="i">
-						<tr align="center">
+						<tr align="center" >
+							<!-- style="text-decoration: line-through;" -->
 							<td>${i.count }</td>
 							<td>${campSiteList.campId}</td>
 							<td><a

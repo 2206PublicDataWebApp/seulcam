@@ -18,6 +18,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -272,6 +273,36 @@ public class CampAdminController {
         }
         
         
+        return mv;
+    }
+    
+    // 캠핑장 예약가능여부 컨트롤
+    @RequestMapping(value = "/campAdmin/campRegistAviCon.kh", method = RequestMethod.GET)
+    public ModelAndView campRegistAviCon(
+            @RequestParam(value="contentId", required = false) int contentId,
+            HttpServletRequest request,
+            ModelAndView mv) {
+        try {
+            int result = cService.printSiteListCount(contentId);
+            if(result == 0) {
+                request.setAttribute("msg", "사이트를 먼저 등록해주세요.");
+                request.setAttribute("url", "/campAdmin/campAdminSite.kh?contentId="+contentId);
+                mv.setViewName("common/alert");
+                return mv;
+            }
+            Camp camp= cService.printCampDetail(contentId);
+            if(camp.getRegistAvi().equals("Y")) {
+                int confirm = 0;
+                int update = cService.campRegistAviModify(contentId,confirm);
+            }else {
+                int confirm = 1;
+                int update = cService.campRegistAviModify(contentId,confirm);
+            }
+            mv.setViewName("redirect:/campAdmin/campAdminSite.kh?contentId="+contentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mv.addObject("msg", "정보 수정 실패").setViewName("common/errorPage");
+        }
         return mv;
     }
 

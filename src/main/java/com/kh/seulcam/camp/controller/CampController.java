@@ -17,6 +17,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,7 @@ import com.google.gson.Gson;
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.domain.CampReview;
+import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.service.CampServie;
 
 @Controller
@@ -222,5 +224,25 @@ public class CampController {
 		
 		
 		return null;
+	}
+	
+	//캠핑장 사이트 상세페이지
+	@RequestMapping(value="/camp/campSiteDetail.kh" , method = RequestMethod.GET)
+	public ModelAndView campSiteDetail(
+	        @RequestParam(value="contentId", required = false) int contentId,
+	        ModelAndView mv) {
+	    try {
+	        Camp camp= cService.printCampDetail(contentId);
+	        List<CampSite> stList = cService.printSiteList(contentId);
+	        
+	        
+	        mv.addObject("camp",camp);
+	        mv.addObject("stList",stList);
+	        mv.setViewName("camp/campSiteDetail");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+	    
+	    return mv;
 	}
 }
