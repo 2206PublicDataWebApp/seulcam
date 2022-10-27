@@ -177,7 +177,7 @@ public class ProductController {
 		int result = pService.registerProductReview(review);
 		if(result>0) {
 			
-			return "redirect:/product/productDetail?productNo="+productNo;
+			return "redirect:/product/reviewList?productNo="+productNo;
 		}else {
 			return "errorPage";
 		}
@@ -186,7 +186,9 @@ public class ProductController {
 	//리뷰수정 화면
 	@RequestMapping(value="/product/reviewModify", produces="application/json;charset=utf-8", method=RequestMethod.GET)
 	public ModelAndView reviewModifyForm(ModelAndView mv
-			,@RequestParam("reviewNo") Integer reviewNo) {
+			,@RequestParam("reviewNo") Integer reviewNo
+			
+			) {
 		Review review = pService.getOneReview(reviewNo);
 		System.out.println(review.getProductNo());
 		String productName = pService.findProductName(review.getProductNo());
@@ -198,7 +200,80 @@ public class ProductController {
 	}
 	//리뷰수정하기
 	@RequestMapping(value="/product/reviewModify", produces="application/json;charset=utf-8", method=RequestMethod.POST)
-	public ModelAndView reviewModify(ModelAndView mv) {
+	public ModelAndView reviewModify(ModelAndView mv
+			,@RequestParam("reviewNo") Integer reviewNo
+			,@RequestParam(value="myFile", required=false) List<MultipartFile> mfList
+			,@ModelAttribute Review newReview
+			,HttpServletRequest request
+			,@RequestParam ("productNo")Integer productNo
+			) {
+		//수정전 리뷰 꺼내오기
+		Review review = pService.getOneReview(reviewNo);
+		
+		//폴더에 파일 일단 삭제
+		if(review.getReviewFilePath1()!=null) {
+			File delFile = new File(review.getReviewFilePath1());
+			delFile.delete();
+		}
+		if(review.getReviewFilePath2()!=null) {
+			File delFile = new File(review.getReviewFilePath2());
+			delFile.delete();
+		}
+		if(review.getReviewFilePath3()!=null) {
+			File delFile = new File(review.getReviewFilePath3());
+			delFile.delete();
+		}
+		//수정파일 다시 업로드
+		try {
+			String root=request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root+"\\puploadFiles";
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			for(int i=0; i<mfList.size(); i++) {			
+				
+				String reviewFileName=mfList.get(i).getOriginalFilename();
+				String reviewFileRename =sdf.format(new Date(System.currentTimeMillis()))+"review"+i+"."
+						+reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
+				if(!reviewFileName.equals("")) {
+					File file = new File(savePath);
+						if(!file.exists()) {
+							file.mkdir();
+						}
+						mfList.get(i).transferTo(new File(savePath+"\\"+reviewFileRename));
+						String reviewFilePath=savePath+"\\"+reviewFileRename;
+						switch (i) {
+						case 0:
+							newReview.setReviewFileName1(reviewFileName);
+							newReview.setReviewFilePath1(reviewFilePath);
+							newReview.setReviewFileRename1(reviewFileRename);
+							break;
+						case 1:
+							newReview.setReviewFileName2(reviewFileName);
+							newReview.setReviewFilePath2(reviewFilePath);
+							newReview.setReviewFileRename2(reviewFileRename);
+							break;
+						case 2:
+							newReview.setReviewFileName3(reviewFileName);
+							newReview.setReviewFilePath3(reviewFilePath);
+							newReview.setReviewFileRename3(reviewFileRename);
+							break;
+						}
+					}
+				} 
+				}catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		System.out.println(newReview.toString());
+		int result = pService.modifyProductReview(newReview);
+		if (result>0) {
+			mv.setViewName("redirect:/product/productDetail?productNo="+productNo);
+		}else {
+			mv.setViewName("errorPage");
+		}
+		
 		return mv;
 		
 	}
@@ -216,6 +291,20 @@ public class ProductController {
 			return gson.toJson(rList);
 		}
 		return null;
+		
+	}
+	//리뷰삭제
+	@ResponseBody
+	@RequestMapping(value="/product/reviewDelete", method=RequestMethod.GET)
+	public String reviewDelete(
+			@RequestParam("reviewNo") Integer reviewNo
+			) {
+		int result = pService.removeReview(reviewNo);
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
 		
 	}
 	

@@ -154,7 +154,7 @@
 
 			<article class="ac-text">
 
-				<ol class="ac-sub" id="review_title">
+				<ol class="ac-sub" id="review_title_all">
 
 				</ol>
 				
@@ -278,7 +278,7 @@ function reviewRegist(){
 	 var productNo="${product.productNo}";
 	 if(${loginUser!=null}){
 		 var loginUser ="${loginUser}";
-		 console.log(loginUser);
+		 
 	 }else{
 		 var loginUser ="";
 	 }
@@ -291,49 +291,83 @@ function reviewRegist(){
 				 },
 			 type:"get",
 			 success : function(rList){
-				 $("#review_title").html("");				
+				 $("#review_title_all").html("");				
 				 var strDOM="<div id='no_review'>등록된 상품평이 없습니다.</div>";
 				 if(rList != null){
 					 var strDOM="";
 					 for(var i in rList){
-						var rUrl="../resources/puploadFiles/";
-						strDOM+='<li>';
-					 	strDOM+='<input class="ac-input" id="review-'+i+'" name="review-'+i+'" type="checkbox"/>';
-					 	strDOM+='<label class="ac-label" name="reviewTitle" id="reviewTitle" for="review-'+i+'">';
-					 	strDOM+= rList[i].memberId+'님의 상품후기</label>';
-					 	strDOM+='<article class="ac-text"><div class="ac-sub">';
-					 	strDOM += '<div class="image_panel">';
-					 	if(rList[i].reviewFileRename1!=null){
-				        	strDOM +='<img src='+rUrl+rList[i].reviewFileRename1 +'>';
-					 	}
-					 	if(rList[i].reviewFileRename2!=null){
-				        strDOM +='<img src='+rUrl+rList[i].reviewFileRename2 +'>';
-					 	}
-					 	if(rList[i].reviewFileRename3!=null){
-				        	strDOM +='<img src='+rUrl+rList[i].reviewFileRename3 +'>';
-					 	}
-					 	strDOM+='</div>';
-					 	strDOM+= '<p>'+rList[i].reviewTitle+'</p>';
-					 	strDOM+= '<p>'+rList[i].reviewContents+'</p>';
-					 	if(rList[i].memberId=="${loginUser.memberId}"){
-					 	strDOM+='</div><div><a href="/product/reviewModify?reviewNo='+rList[i].reviewNo;				 		
-					 	strDOM+='&memberId=${loginUser.memberId}" style="float: left;">수정</a> <a href="#" style="float: right;">삭제</a></div></article>';
-					 	}
-					 	strDOM+='</li>';
-					 	
+								var rUrl="../resources/puploadFiles/";
+								strDOM+='<li>';
+							 	strDOM+='<input class="ac-input" id="review-'+i+'" name="review-'+i+'" type="checkbox"/>';
+							 	strDOM+='<label class="ac-label" name="reviewTitle" id="reviewTitle" for="review-'+i+'">';
+							 	if(rList[i].reviewFileRename1!=null){
+								 	strDOM+= '<img src='+rUrl+rList[i].reviewFileRename1+' class="review-thumbNail">';
+							 	}
+							 	strDOM+='<div class="review_title_text"><span>';
+							 	if(rList[i].reviewFileRename1!=null){
+								 	strDOM+=rList[i].memberId+'님의 포토 상품후기</span><br><br><span>'+rList[i].reviewTitle+'</span></div>';
+							 	}else{
+								 	strDOM+=rList[i].memberId+'님의 상품후기</span><br><br><span>'+rList[i].reviewTitle+'</span></div>';
+							 	}
+							 	strDOM +='</label>';
+							 	strDOM+='<article class="ac-text"><div class="ac-sub">';
+							 	strDOM += '<div class="image_panel">';
+							 	if(rList[i].reviewFileRename1!=null){
+						        	strDOM +='<img src='+rUrl+rList[i].reviewFileRename1 +'>';
+							 	}
+							 	if(rList[i].reviewFileRename2!=null){
+						        strDOM +='<img src='+rUrl+rList[i].reviewFileRename2 +'>';
+							 	}
+							 	if(rList[i].reviewFileRename3!=null){
+						        	strDOM +='<img src='+rUrl+rList[i].reviewFileRename3 +'>';
+							 	}
+							 	strDOM+='</div>';
+							 	strDOM+= '<p>'+rList[i].reviewTitle+'</p>';
+							 	strDOM+= '<p>'+rList[i].reviewContents+'</p>';
+							 	if(rList[i].memberId=="${loginUser.memberId}"){
+								 	strDOM+='</div><div><a href="/product/reviewModify?reviewNo='+rList[i].reviewNo;				 		
+								 	strDOM+='&memberId=${loginUser.memberId}" style="float: left;">수정</a>';
+								 	strDOM+='<a href="javascript:void(0)"style="float:right;" onclick="reviewDelete('+rList[i].reviewNo+')">삭제</a></div></article>';
+									 }
+							 strDOM+='</li>';
+							 
+	
+					 		 	
 					 }
 				
-					$("#review_title").append(strDOM);
+					$("#review_title_all").append(strDOM);
 				} 
 			 },
 			 error : function(){
-				 console.log("에러");
+				 console.log("리스트불러오기 실패");
 			 }
 			 
 		 });
 	 }
 	 
  });
+ 
+	function reviewDelete(reviewNo){
+		console.log(reviewNo);
+ 		if(confirm("리뷰 삭제하시겠습니까?")){
+	 		 $.ajax({
+	 			 url: "/product/reviewDelete",
+	 			 data: {"reviewNo":reviewNo},
+	 			 type:"get",
+	 			 success:function(data){
+	 				if(data=="success"){
+	 					alert("리뷰가 삭제되었습니다.");
+	 					$("input:checkbox[id='ac-4']").prop("checked", false);
+					}else{
+						alert("리뷰 삭제 실패!");
+					}
+	 			 }, error : function(){
+	 				alert("ajax 통신 오류! 관리자에게 문의하세요!!");
+				 }
+	 			 
+	 		 });
+ 		}
+	};
  
  $("#ac-2").change(function(){
 	 var brandName = '${product.brandName}';
@@ -543,7 +577,15 @@ function reviewRegist(){
     
  });    
     
- 
+ //리뷰삭제 ajax
+function deviewDelete(){
+	var productNo="${product.productNo}";
+	 $.ajax({
+		 
+	 });
+ };
+	 
+
     
     
  

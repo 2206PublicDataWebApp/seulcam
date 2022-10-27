@@ -42,4 +42,9 @@ public interface ProductStore {
 
 	public String selectProductName(SqlSession session, int productNo);
 
+	public int updateProductReview(SqlSession session, Review newReview);
+
+	public int deleteReview(SqlSession session, Integer reviewNo);
+
+
 }

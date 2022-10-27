@@ -71,7 +71,7 @@ label {
 
 </style>
 <body>
-	<form action="/campAdmin/campSiteInsert.kh" method="post">
+	<form action="/campAdmin/campSiteInsert.kh" enctype="multipart/form-data" method="post">
 		<div class="container">
 			<div class="table-responsive">
 				<h1 style="margin-top: 20px;">캠핑장 사이트 등록</h1>

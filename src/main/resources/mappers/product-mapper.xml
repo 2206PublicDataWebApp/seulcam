@@ -55,5 +55,5 @@
   	<select id="selectProductName" resultType="String">
   		SELECT PRODUCT_NAME FROM PRODUCT_TBL WHERE PRODUCT_NO=#{productNo}
   	</select>
-  	
+  
 </mapper>

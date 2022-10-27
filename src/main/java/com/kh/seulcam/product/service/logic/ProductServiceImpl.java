@@ -101,4 +101,18 @@ public class ProductServiceImpl implements ProductService{
 		return productName;
 	}
 
+	@Override
+	public int modifyProductReview(Review newReview) {
+		int result = pStore.updateProductReview(session, newReview);
+		return result;
+	}
+
+	@Override
+	public int removeReview(Integer reviewNo) {
+		int result = pStore.deleteReview(session, reviewNo);
+		return result;
+	}
+
+	
+
 }
