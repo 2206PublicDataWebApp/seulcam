@@ -1,5 +1,6 @@
 package com.kh.seulcam.order.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.seulcam.cart.domain.Cart;
 import com.kh.seulcam.cart.service.CartService;
 import com.kh.seulcam.member.domain.Member;
+import com.kh.seulcam.order.domain.Order;
+import com.kh.seulcam.order.domain.OrderProduct;
 import com.kh.seulcam.order.service.OrderService;
+import com.kh.seulcam.product.domain.Product;
 
 import oracle.net.aso.i;
 
@@ -40,6 +44,28 @@ public class OrderController {
 			,HttpSession session) {
 		Member memberId = (Member)session.getAttribute("loginUser");
 		Member member = oService.printMemberInfo(memberId);
+		List<OrderProduct>oList = oService.printProductInfo(memberId);
+		System.out.println(oList);
+		
+		if(!oList.isEmpty()) {
+			List<Product>pList = new ArrayList(); 
+			 for(int i=0;i<oList.size();i++) { 
+				 int productNo=oList.get(i).getProductNo();
+				 
+				 List<Product>ppList= oService.printAllProduct(productNo);
+				pList.addAll(ppList);
+				 	
+			  }
+			 int totalPrice=0;
+			 for(int i=0;i<pList.size();i++) {
+				 int price=pList.get(i).getProductPrice()*oList.get(i).getOrderCount();
+				 totalPrice+=price;
+				 
+			 }
+		mv.addObject("totalPrice",totalPrice);
+		mv.addObject("pList",pList);
+		}
+		mv.addObject("oList",oList);
 		mv.addObject("member",member);
 		mv.setViewName("order/orderDetail");
 		return mv;
@@ -61,6 +87,21 @@ public class OrderController {
 		int result = oService.changeAddress(member);
 		return"success";
 		
+	}
+	
+	//주문성공
+	@ResponseBody
+	@RequestMapping(value="/order/payment/complete", method=RequestMethod.POST)
+	public String orderComplete(
+			@ModelAttribute Order order
+			) {
+		int result = oService.conpleteOrder(order);
+		if(result>0) {
+		return"success";
+		}else {
+		return"fail";
+			
+		}
 	}
 
 

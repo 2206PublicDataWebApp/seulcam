@@ -41,9 +41,7 @@
    <resultMap  type="Order" id="orderResultMap">
  
   <id property="orderNo" 	column="ORDER_NUMBER"/>
-  		<result property="productNo" 	column="PRODUCT_NO"/>
   		<result property="memberId" 	column="MEMBER_ID"/>
-  		<result property="orderCount" 	column="ORDER_COUNT"/>
   		<result property="memberName" 	column="ORDER_NAME"/>
   		<result property="memberPhone" 	column="ORDER_PHONE"/>
   		<result property="orderMessage" 	column="ORDER_MESSAGE"/>
@@ -57,18 +55,68 @@
   		
   </resultMap>
   
-  <!-- <insert id="insertProduct">
-  INSERT INTO ORDER_TBL
+  <insert id="insertOrder">
+  INSERT INTO ORDER_TBL 
+  VALUES(SEQ_ORDER.NEXTVAL,#{memberId}, #{memberName}, #{memberPhone}, NULL,
+   #{orderAddressPost},#{orderAddress1},#{orderAddress2},
+        DEFAULT,DEFAULT,DEFAULT,DEFAULT)
   </insert>
-  <insert id="insertPlan" parameterType="list">
- 	INSERT INTO PLAN_TBL
+  
+<!--  <insert id="insertProduct">
+  INSERT INTO ORDER_TBL
+  </insert> -->
+
+<!--   <insert id="insertProduct" parameterType="list">
+ 	INSERT INTO ORDER_TBL
 	SELECT SEQ_ORDER.NEXTVAL AS ORDER_NUMBER, A.*
 	FROM ( 
- 	<foreach collection="orderList" item="item" separator="UNION ALL" >
+ 	<foreach collection="orders" item="item" separator="UNION ALL" >
  	SELECT	
- 	#{item.boardNo} AS PLANNER_NO ,#{item.day} AS PLAN_DAY,#{item.y} AS Y,#{item.x} AS X,#{item.address} AS ADDRESS ,#{item.memo} AS MEMO FROM DUAL
+ 	#{item.productNo} AS PRODUCT_NO ,#{item.memberId} AS MEMBER_ID,#{item.orderCount} AS ORDER_COUNT,#{item.memberName} AS ORDER_NAME,#{item.memberPhone} AS ORDER_PHONE,
+ 	#{item.orderMessage} AS ORDER_MESSAGE, #{item.orderAddressPost} AS ORDER_POST,#{item.orderAddress1} AS ORDER_ADDRESS1,#{item.orderAddress2} AS ORDER_ADDRESS2,#{item.payStatus} AS PAY_STATUS, #{item.dirivaryStatus} AS DILIVERY_STATUS,#{item.cancleStatus} AS CANCLE_STATUS,#{item.refundStatus} AS REFUND_STATUS
+ 	  FROM DUAL
+ 	</foreach>)A
+  </insert>  -->
+ <resultMap  type="OrderProduct" id="orderProductResultMap"> 
+  <id property="orderProductNo" 	column="ORDER_PRODUCT_NUMBER"/>
+  		<result property="productNo" 	column="PRODUCT_NO"/>
+  		<result property="memberId" 	column="MEMBER_ID"/>
+  		<result property="orderCount" 	column="ORDER_COUNT"/>
+  		<result property="orderNo" 	column="ORDER_NUMBER"/>
+  		<result property="orderStatus" 	column="ORDER_STATUS"/>
+  		
+  </resultMap>
+      <insert id="insertProduct" parameterType="list">
+ 	INSERT INTO ORDER_PRODUCT_TBL
+	SELECT SEQ_ORDER_PRODUCTNO.NEXTVAL AS ORDER_NUMBER, A.*
+	FROM ( 
+ 	<foreach collection="orders" item="item" separator="UNION ALL" >
+ 	SELECT	
+ 	#{item.productNo} AS PRODUCT_NO ,#{item.memberId} AS MEMBER_ID,#{item.orderCount} AS ORDER_COUNT,
+ 	#{item.orderNo} AS ORDER_NUMBER,#{item.orderStatus} AS ORDER_STATUS
+ 	  FROM DUAL
  	</foreach>)A
   </insert> 
+  <select id="selectProductInfo" resultMap="orderProductResultMap">
+  SELECT * FROM ORDER_PRODUCT_TBL WHERE MEMBER_ID=#{memberId} AND ORDER_STATUS IS NULL AND ORDER_NUMBER ='0'
+  </select>
+  
+  
+  
+  
+ <!-- 
+ 
+ #{item.productNo} AS PRODUCT_NO ,#{item.memberId} AS MEMBER_ID,#{item.orderCount} AS ORDER_COUNT,NULL AS ORDER_NAME,NULL AS ORDER_PHONE,
+ 	NULL AS ORDER_MESSAGE, NULL AS ORDER_POST,NULL AS ORDER_ADDRESS1,NULL AS ORDER_ADDRESS2,
+ 	DEFAULT AS PAY_STATUS, DEFAULT AS DILIVERY_STATUS, DEFAULT AS CANCLE_STATUS, DEFAULT AS REFUND_STATUS
+ 	  FROM DUAL
+ 	  
+ 	SELECT	
+ 	#{item.productNo} AS PRODUCT_NO ,#{item.memberId} AS MEMBER_ID,#{item.orderCount} AS ORDER_COUNT,#{item.memberName} AS ORDER_NAME,#{item.memberPhone} AS ORDER_PHONE,
+ 	#{item.orderMessage} AS ORDER_MESSAGE, #{item.orderAddressPost} AS ORDER_POST,#{item.orderAddress1} AS ORDER_ADDRESS1,#{item.orderAddress2} AS ORDER_ADDRESS2,
+ 	DEFAULT AS PAY_STATUS, DEFAULT AS DILIVERY_STATUS, DEFAULT AS CANCLE_STATUS, DEFAULT AS REFUND_STATUS
+ 	  FROM DUAL
+ 
   <insert id="insertPlan" parameterType="list">
  	INSERT INTO PLAN_TBL
 	SELECT SEQ_PLANNO.NEXTVAL AS PLAN_NO, A.*
@@ -77,5 +125,5 @@
  	SELECT	
  	#{item.boardNo} AS PLANNER_NO ,#{item.day} AS PLAN_DAY,#{item.y} AS Y,#{item.x} AS X,#{item.address} AS ADDRESS ,#{item.memo} AS MEMO FROM DUAL
  	</foreach>)A
-  </insert>  -->
+  </insert>   -->
   </mapper>

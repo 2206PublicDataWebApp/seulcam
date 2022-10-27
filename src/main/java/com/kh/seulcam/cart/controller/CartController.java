@@ -52,8 +52,8 @@ public class CartController {
 			 totalPrice+=price;
 			 }
 			mv.addObject("totalPrice",totalPrice);
-			mv.addObject("memberId",memberId);
 			mv.addObject("count",count);
+			mv.addObject("memberId",memberId);
 			mv.addObject("pList",pList);
 			mv.addObject("cList",cList);
 		}
@@ -90,21 +90,8 @@ public class CartController {
 		}
 	}
 
-	/*
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping(value="/cart/order.kh",method=RequestMethod.POST) public
-	 * String cartOrder(
-	 * 
-	 * @RequestParam(value="memberId")String memberId,
-	 * 
-	 * @RequestParam(value="productNoList[]") List<String>productNoList ) {
-	 * for(String product : productNoList) { System.out.println(product); }
-	 * System.out.println(memberId);
-	 * 
-	 * 
-	 * return"success"; }
-	 */
+
+	//주문하기로 넘겨주기
 	@RequestMapping(value="/cart/order.kh",method=RequestMethod.POST)
 	public ModelAndView cartOrder(
 			ModelAndView mv
@@ -112,7 +99,7 @@ public class CartController {
 			) {
 		int result = cService.orderProduct(order);
 		
-		mv.setViewName("order/ordr");
+		mv.setViewName("redirect:/order/order.kh");
 		return mv;
 		
 		}

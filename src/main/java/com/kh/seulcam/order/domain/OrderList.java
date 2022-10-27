@@ -3,13 +3,13 @@ package com.kh.seulcam.order.domain;
 import java.util.List;
 
 public class OrderList {
-	private List<Order> orders;
+	private List<OrderProduct> orders;
 
-	public List<Order> getOrders() {
+	public List<OrderProduct> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(List<OrderProduct> orders) {
 		this.orders = orders;
 	}
 
