@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -192,12 +193,21 @@
                     <div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>${camp.induty}</small></div>
                     <h3>${camp.facltNm}</h3>
                     <p>${camp.lineIntro}</p>
-                    <a href="${camp.homepage}" target='_blank'>
-                            <svg class="iconh" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-                                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-                              </svg>
-                    </a>
+                    <div style="height: 100%; overflow:auto; ">
+                        <div style="width: 50%; float: left;">
+                            <a href="${camp.homepage}" target='_blank'>
+                                    <svg class="iconh" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                                        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                                        </svg>
+                            </a>
+                        </div>
+                        <div align = "center" style=" width: 50%; float: left;">
+                            <c:if test="${camp.registAvi == 'Y'}"> 
+                                <a href="/camp/campSiteDetail.kh?contentId=${camp.contentId}" class="btn btn-outline-success">예약하러가기</a>
+                            </c:if>
+                        </div>
+                    </div>
                     <hr>
                 </div>
                 <div class="info_detail">
@@ -221,13 +231,13 @@
                         </tr>
                     </table>
                     <hr>
-                    <h4>소개</h4>
+                    <h4>캠핑장 소개</h4>
                     <div class="intro">
-                        ${camp.intro}
+                        <p style="color: #767676;">${camp.intro}</p>
                     </div>
                     <hr>
                 </div>
-                <div class="blog_area">
+                <div class="blog_area row">
                     <h4>블로그 후기</h4>
                 </div>
                 <div class="moreBlog"onclick="blogMore()">
@@ -265,6 +275,10 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=2i99b6lxe8&submodules=geocoder"></script>    
     <script>
+        function asdf(){
+            console.log(0)
+
+        }
         var page = 1;
         //블로그 출력용 함수
         function blogLoad(){
@@ -286,8 +300,8 @@
                             var str = "";
                             for (var i = 0; i < data.documents.length; i++) {
                             str += "<a href='"+data.documents[i].url+"' target='_blank'><div class='row blog' style='margin: 10px;'>"
-                            str += "<div class='col-md-4'  style='height: 120px; width: 185px; background: url("+data.documents[i].thumbnail+") no-repeat center center #343a40; background-size: 100%;'></div>"
-                            str += "<div class='col-md-8 blog_body' style='overflow: hidden; height: 130px;'><h6><b>"+data.documents[i].title+"</b></h6><div class='text-right tt' stlyle='padding-bottom: 0.25rem;'><small class='text-muted'>작성일 : "+data.documents[i].datetime.substr(0,10)+" | 블로그 : "+data.documents[i].blogname+"</small></div>"
+                            str += "<div class='col-4'  style='height: 120px; width: 165px; background: url("+data.documents[i].thumbnail+") no-repeat center center #343a40; background-size: 100%;'></div>"
+                            str += "<div class='col-8 blog_body' style='overflow: hidden; height: 130px;'><h6><b>"+data.documents[i].title+"</b></h6><div class='text-right tt' stlyle='padding-bottom: 0.25rem;'><small class='text-muted'>작성일 : "+data.documents[i].datetime.substr(0,10)+" | 블로그 : "+data.documents[i].blogname+"</small></div>"
                             str += "<p>"+data.documents[i].contents+"</p></div></div></a>"
                             }
                             $(".blog_area").append(str)
