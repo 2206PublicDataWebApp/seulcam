@@ -9,9 +9,39 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>장바구니</title>
+	<link rel="stylesheet" href="/resources/css/fonts.css">
+	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+    <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <style>
+body {
+        font-size: 14px;
+       /*  color: #000; */
+    }
+    header {
+        position: fixed;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        height: 50px;
+        background-color: rgb(255, 255, 255);
+        z-index: 200;
+        max-width: 600px;
+        margin: 0 auto; 
+    }
+
+.wrap{
+ 		max-width: 600px;
+        margin: 0 auto; 
+        background-color: white;
+        min-height: 100vh;
+}
+.contents{
+padding-top: 50px;
+}
+
+
 .title {
 	display: flex;
 	-webkit-box-align: center;
@@ -25,19 +55,19 @@
 
 .click_table {
 	width: 100%;
-	border: 1px solid #444444;
+	border-bottom:solid 3px lightgray;
 }
 
 .list_table {
 	width: 100%;
-	border: 1px solid #444444;
+	border-bottom:solid 3px lightgray;
 	text-align: center;
 }
 
 .price_table {
 	width: 100%;
 	height: 120px;
-	border: 1px solid #444444;
+	border-bottom:solid 3px lightgray;
 	text-align: center;
 }
 
@@ -128,6 +158,8 @@ width:30%
 		<div class="head">
 			<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 		</div>
+		<div class="contents">
+		
 		<div class="title">
 			<h2 class="common_layout">장바구니</h2>
 
@@ -202,7 +234,7 @@ width:30%
 									
 									<td><input type="checkbox"  name="cartbox" onclick="checkSelectAll()" />
 									<input id="productNo" type="hidden" value= "${product.productNo }"/></td>
-									<td><img class="p-img" src="//image.msscdn.net/images/goods_img/20220906/2774157/2774157_1_160.jpg" alt="윅(WICK) ACID 워싱 볼캡-차콜"></td>
+									<td><img class="p-img" alt="상품이미지" src="/resources/puploadFiles/${product.mainFileRename}" ></td>
 									<td class="info-middle">
 									<ul>
 									<li style="font-weight: bold;" id="p-product">${product.productName }</li>
@@ -217,7 +249,7 @@ width:30%
 										<button class="delete" id="one-delete" onclick="deleteOne(${cart.cartNo })">X</button>
 									
 									</li>
-									<li style="float:right" id="count">
+									<li style="float:right" id="count" >
 										<div class="count-wrap _count" >
 											<input type="hidden" class="no" value="${cart.productNo }" />
 											<button type="button" class="minus" >-</button>
@@ -240,7 +272,7 @@ width:30%
 				<table class="price_table">
 					<tr>
 						<td align="right">결제할 상품</td>
-						<td align="right">총<span id="p-count"></span> ${count }개
+						<td align="right">총 <span id="c-count">0</span>개
 						</td>
 
 					</tr>
@@ -262,6 +294,7 @@ width:30%
 			</form>
 			
 
+			</div>
 		</div>
 	</div>
 
@@ -276,7 +309,7 @@ width:30%
 	
 	function checkSelectAll()  {
 		  // 전체 체크박스
-		  var checkboxes 
+		  const checkboxes 
 		    =$('input[name="cartbox"]');
 		  // 선택된 체크박스
 		  const checked 
@@ -286,11 +319,12 @@ width:30%
 		  const selectAll 
 		    = $('input[name="cart_selectAll"]');
 		  $("#p-count").html(checked.length);
+		  $("#c-count").html(checked.length);
 		
-		  if(checkboxes.length == checked.length)  {
-		    selectAll.checked = true;
+		  if(checkboxes.length === checked.length)  {
+			  selectAll.checked = true;
 		  }else {
-		    selectAll.checked = false;
+			  selectAll.checked = false;
 		  }
 		}
 
@@ -298,6 +332,7 @@ width:30%
 		  const checkboxes 
 		     = document.getElementsByName('cartbox');
 		   $("#p-count").html($('input[name="cartbox"]').length); 
+		   $("#c-count").html($('input[name="cartbox"]').length); 
 		  checkboxes.forEach((checkbox) => {
 		    checkbox.checked = selectAll.checked
 		  
@@ -457,7 +492,7 @@ width:30%
 		if(checked.length>0){
 			checked.each(function(i){
 			count=checked.parent().parent().eq(i).children().eq(3).children().children('#count').children().children("#p-count").val();
-			productNo=checked.parent().children('#productNo').val();
+			productNo=checked.parent().eq(i).children('#productNo').val();
 			alert(count);
 			alert(productNo);
 			var input = ("<input type='text'name='orders[" + orderNumber + "].productNo' value='"+productNo+"'/>")
@@ -467,7 +502,7 @@ width:30%
 			orderNumber += 1;
 			$(".order-form").append(input);
 			
-		$(".order_form").submit();
+		$(".order-form").submit();
 		
 			})
 		}

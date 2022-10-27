@@ -3,9 +3,7 @@ package com.kh.seulcam.order.domain;
 public class Order {
 	
 	private int orderNo;
-	private int productNo;
 	private String memberId;
-	private int orderCount;
 	private String memberName;
 	private String memberPhone;
 	private String orderMessage;
@@ -16,32 +14,17 @@ public class Order {
 	private String dirivaryStatus;
 	private String cancleStatus;
 	private String refundStatus;
-	
-
-	
 	public int getOrderNo() {
 		return orderNo;
 	}
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
-	public int getProductNo() {
-		return productNo;
-	}
-	public void setProductNo(int productNo) {
-		this.productNo = productNo;
-	}
 	public String getMemberId() {
 		return memberId;
 	}
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
-	}
-	public int getorderCount() {
-		return orderCount;
-	}
-	public void setorderCount(int orderCount) {
-		this.orderCount = orderCount;
 	}
 	public String getMemberName() {
 		return memberName;
@@ -105,13 +88,18 @@ public class Order {
 	}
 	@Override
 	public String toString() {
-		return "Order [orderNo=" + orderNo + ", productNo=" + productNo + ", memberId=" + memberId + ", orderCount="
-				+ orderCount + ", memberName=" + memberName + ", memberPhone=" + memberPhone + ", orderMessage="
-				+ orderMessage + ", orderAddressPost=" + orderAddressPost + ", orderAddress1=" + orderAddress1
-				+ ", orderAddress2=" + orderAddress2 + ", payStatus=" + payStatus + ", dirivaryStatus=" + dirivaryStatus
-				+ ", cancleStatus=" + cancleStatus + ", refundStatus=" + refundStatus + "]";
+		return "Order [orderNo=" + orderNo + ", memberId=" + memberId + ", memberName=" + memberName + ", memberPhone="
+				+ memberPhone + ", orderMessage=" + orderMessage + ", orderAddressPost=" + orderAddressPost
+				+ ", orderAddress1=" + orderAddress1 + ", orderAddress2=" + orderAddress2 + ", payStatus=" + payStatus
+				+ ", dirivaryStatus=" + dirivaryStatus + ", cancleStatus=" + cancleStatus + ", refundStatus="
+				+ refundStatus + "]";
 	}
 	
+	
+	
+	
+	
+
 	
 	
 	

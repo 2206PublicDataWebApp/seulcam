@@ -7,8 +7,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>주문완료</title>
+<link rel="stylesheet" href="/resources/css/fonts.css">
+	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+    <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 </head>
 <style>
+body {
+        font-size: 14px;
+       /*  color: #000; */
+    }
+    header {
+        position: fixed;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        height: 50px;
+        background-color: rgb(255, 255, 255);
+        z-index: 200;
+        max-width: 600px;
+        margin: 0 auto; 
+    }
+
+.wrap{
+ 		max-width: 600px;
+        margin: 0 auto; 
+        background-color: white;
+        min-height: 100vh;
+}
+.contents{
+padding-top: 50px;
+}
 .title {
 	display: flex;
 	-webkit-box-align: center;
@@ -60,6 +88,7 @@
 		<div class="head">
 			<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 		</div>
+		<div class="contents">
 		<div class="title">
 			<h2 class="state">주문완료</h2><h2 class="">되었습니다.</h2>
 		</div>
@@ -96,6 +125,7 @@
 		</div>
 		
 
+	</div>
 	</div>
 	</div>
 	
