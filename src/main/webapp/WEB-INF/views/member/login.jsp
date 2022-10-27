@@ -14,7 +14,7 @@
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
-
+	<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js" integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL" crossorigin="anonymous"></script>
 </head>
 <body>
     <!-- Header -->
@@ -79,5 +79,7 @@
         </section>
     </div>
     <script src="/resources/js/member/pwInputCommon.js"></script>
+    <script src="/resources/js/member/kakaoLogin.js"></script>
+    
 </body>
 </html>

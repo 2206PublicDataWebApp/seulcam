@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalabel=no">
     <title>비밀번호 변경</title>
     <link rel="stylesheet" href="/resources/css/member/passwordChange.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
@@ -37,10 +37,11 @@
 
         <!-- content -->
         <section>
+        <form action="/member/changePw" method="post">
         <input type="hidden" id="memberId" name="memberId" value="${loginUser.memberId }">
             <div class="join-input">
-                <div class="join-input-wrapper" class="curPw">
-                    <input class="join-input-input" type="password" name="memberPw" id="memberPw" placeholder="기존 비밀번호" maxlength="16">
+                <div class="join-input-wrapper curPw">
+                    <input class="join-input-input" type="password"  id="memberPw" placeholder="기존 비밀번호" maxlength="16">
                     <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             </div>
@@ -48,23 +49,26 @@
            	<p class="password error">비밀번호가 일치하지 않습니다.</p>
 
             <div class="join-input">
-                <div class="join-input-wrapper">
-                    <input class="join-input-input" type="password" id="newMemberPw" placeholder="새 비밀번호" maxlength="16">
+                <div class="join-input-wrapper newPw">
+                    <input class="join-input-input" type="password" id="newMemberPw" name="memberPw" placeholder="새 비밀번호" maxlength="16" disabled>
                     <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             </div>
-    		<p class="newpassword error">8 ~ 16자 영문, 숫자, 특수문자를 최소 한가지씩 조합해주세요.</p>
+    		<p class="passwordregex ok">비밀번호가 적절합니다.</p>
+            <p class="passwordregex error">비밀번호는 영문/숫자/특수문자를 포함하여 8~16자로 입력해야합니다.</p>
             <div class="join-input">
-                <div class="join-input-wrapper">
-                    <input class="join-input-input" type="password" id="newMemberPwCheck" placeholder="새 비밀번호 확인" maxlength="16">
+                <div class="join-input-wrapper newPwCheck">
+                    <input class="join-input-input" type="password" id="newMemberPwCheck" placeholder="새 비밀번호 확인" maxlength="16" disabled>
                     <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             </div>
+            <p class="passwordCheck ok">비밀번호가 일치합니다.</p>
+            <p class="passwordCheck error">비밀번호가 일치하지 않습니다.</p>
         </section>
 
         <footer>
             <div class="footer-wrapper">
-                <button type="button" class="submit-button" disabled>
+                <button type="submit" class="submit-button" disabled>
                 비밀번호 변경
                 </button>
             </div>

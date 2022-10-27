@@ -75,4 +75,16 @@ public class MemberStoreLogic implements MemberStore{
 		int result = session.update("MemberMapper.updateMemberAccount", member);
 		return result;
 	}
+	
+	@Override
+	public int updateMemberAddress(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updateMemberAddress", member);
+		return result;
+	}
+	
+	@Override
+	public int updateMemberPw(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updateMemberPw", member);
+		return result;
+	}
 }
