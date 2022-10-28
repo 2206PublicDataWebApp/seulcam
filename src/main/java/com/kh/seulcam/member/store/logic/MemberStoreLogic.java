@@ -23,6 +23,13 @@ public class MemberStoreLogic implements MemberStore{
 	}
 	
 	@Override
+	public Member selectKakaoLoginMember(SqlSession session, String memberEmail) {
+		Member mOne 
+		= session.selectOne("MemberMapper.selectKakaoLoginOne", memberEmail);
+		return mOne;
+	}
+	
+	@Override
 	public int countByEmail(SqlSession session, String memberEmail) {
 		int result = session.selectOne("MemberMapper.selectOneByEmail", memberEmail);
 		return result;
@@ -85,6 +92,12 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public int updateMemberPw(SqlSession session, Member member) {
 		int result = session.update("MemberMapper.updateMemberPw", member);
+		return result;
+	}
+	
+	@Override
+	public int updateMemberProfile(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updateMemberProfile", member);
 		return result;
 	}
 }

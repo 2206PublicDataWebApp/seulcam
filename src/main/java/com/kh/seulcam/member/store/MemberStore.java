@@ -13,6 +13,9 @@ public interface MemberStore {
 	// 로그인
 	public Member selectLoginMember(SqlSession session, Member member);
 	
+	// 카카오 로그인
+	public Member selectKakaoLoginMember(SqlSession session, String memberEmail);
+	
 	// selectOneByEmail
 	public int countByEmail(SqlSession session, String memberEmail);
 	
@@ -45,4 +48,7 @@ public interface MemberStore {
 	
 	// 비밀번호 바꾸기
 	public int updateMemberPw(SqlSession session, Member member);
+	
+	// 프로필 사진 바꾸기
+	public int updateMemberProfile(SqlSession session, Member member);
 }

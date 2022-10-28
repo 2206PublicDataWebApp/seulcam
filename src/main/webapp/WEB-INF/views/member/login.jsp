@@ -56,7 +56,7 @@
                     <button type="submit" class="login-button">로그인</button>
 
                     <div class="member-util">
-                        <input class="autologin" type="checkbox" id="autologin" name="useCookie" value="1">
+                        <input class="autologin" type="checkbox" id="autologin" name="rememberMe">
                         <label for="autologin" id="labelAutologin">로그인 유지</label>
 
                         <ul class="util-list">
@@ -65,7 +65,7 @@
                         </ul>
                     </div>
 
-                    <div class="social-login" onclick="kakaoLogin();">
+                    <div class="social-login" onclick='kakaoLogin()'>
                         <a class="kakao-login">
                             <img src="/resources/images/kakao_login.png">
                         </a>
@@ -76,6 +76,10 @@
             <div class="register">
                 <p class="register-text">아직 계정이 없다면? <a href="/member/registerView">회원가입</a> </p>
             </div>
+            <form action="/member/kakaoLogin" id="kakaoForm" method="post" hidden>
+           		<input type="hidden" name="memberEmail" id="kakaoemail" />
+            </form>
+            
         </section>
     </div>
     <script src="/resources/js/member/pwInputCommon.js"></script>

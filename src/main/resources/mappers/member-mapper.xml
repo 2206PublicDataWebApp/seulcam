@@ -35,7 +35,12 @@
 		
 		<select id="selectLoginOne" resultMap="memberResultMap">
 		SELECT MEMBER_ID FROM MEMBER_TABLE
-		 WHERE MEMBER_ID = #{memberId } AND MEMBER_PW = #{memberPw }
+		WHERE MEMBER_ID = #{memberId } AND MEMBER_PW = #{memberPw }
+		</select>
+		
+		<select id="selectKakaoLoginOne" resultMap="memberResultMap">
+		SELECT MEMBER_ID FROM MEMBER_TABLE
+		WHERE MEMBER_EMAIL = #{memberEmail }
 		</select>
 		
 		<select id="selectOneByEmail" resultType="_int">
@@ -93,6 +98,14 @@
 			MEMBER_PHONE = #{memberPhone },
 			MEMBER_ADDRESS1 = #{memberAddress1 },
 			MEMBER_ADDRESS2 = #{memberAddress2 }
+			WHERE MEMBER_ID = #{memberId }
+		</update>
+		
+		<update id="updateMemberProfile" >
+			UPDATE MEMBER_TABLE
+			SET MEMBER_IMAGE = #{memberImage },
+			MEMBER_FILENAME = #{memberFilename },
+			MEMBER_FILERNAME = #{memberFilername }
 			WHERE MEMBER_ID = #{memberId }
 		</update>
 		

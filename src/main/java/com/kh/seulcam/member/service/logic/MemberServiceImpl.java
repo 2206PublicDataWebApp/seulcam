@@ -31,6 +31,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public Member kakaologinMember(String memberEmail) {
+		Member mOne 
+		= mStore.selectKakaoLoginMember(session, memberEmail);
+		return mOne;
+	}
+	
+	@Override
 	public int checkOneEmail(String memberEmail) {
 		int result = mStore.countByEmail(session, memberEmail);
 		return result;
@@ -93,6 +100,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int modifyMemberPw(Member member) {
 		int result = mStore.updateMemberPw(session, member);
+		return result;
+	}
+	
+	@Override
+	public int registerProfile(Member member) {
+		int result = mStore.updateMemberProfile(session, member);
 		return result;
 	}
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="/resources/css/member/mypage.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+    <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
     <div class="body-wrapper">
@@ -37,13 +39,17 @@
                     <div class="profile-box">
                         <label class="profileImage" for="profileImage">
                             <div class="profile">
-                                <img class="profile-default" src="https://image.msscdn.net/mfile_s01/_simbols/_basic/c.png"> 
+                            	<c:if test="${member.memberFilername==null}"><img class="profile-default" src="https://image.msscdn.net/mfile_s01/_simbols/_basic/c.png"></c:if>
+                                <c:if test="${member.memberFilername!=null}"><img class="profile-default" src="/resources/profileImageFiles/${member.memberFilername }"></c:if>
                             </div>
                             <span class="camera-box">
                                 <img class="camera" src="/resources/images/camera.png">
                             </span>
                         </label>
+                        <form action="/member/profileImage" id="profileImageForm" method="post" enctype="multipart/form-data" hidden>
+                        <input type="hidden" name="memberId" value="${loginUser.memberId }">
                         <input type="file" name="profileImage" id="profileImage" accept="image/*">
+                        </form>
                     </div>
                     <a class="nickname-change" href="/member/nicknameChangeView"">
                         <p class="nickname">
@@ -129,6 +135,6 @@
     </footer>
 
 </div>
-
+<script src="/resources/js/member/profile.js"></script>
 </body>
 </html>

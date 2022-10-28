@@ -30,7 +30,7 @@ a {
 }
 
 h2 {
-    font-size: 16px;
+    font-size: 15px;
 }
 
 h3 {
@@ -214,4 +214,5 @@ footer {
     font-size: 16px;
     justify-content: center;
     align-items: center;
+    cursor: default;
 }
