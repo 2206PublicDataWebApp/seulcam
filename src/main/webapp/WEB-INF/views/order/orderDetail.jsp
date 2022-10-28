@@ -327,15 +327,17 @@ width:100%;
 			amount : $("#total-price").text(),
 			memberPhone : $("#memberPhone").text(),
 			usePoint : $("#point").val(),
+			getPoint : Math.ceil($("#total-price").text()/100*3),
 			orderAddressPost : $("#post").text(),
 			orderAddress1 : $("#address1").text(),
 			orderAddress2 : $("#address2").text(),
-			totalPrice : $("#total-price").text()
+			payPrice : $("#total-price").text(),
+			productPrice : $("#product_price").text()
 				
 		}
 		//console.log(data);
-		//paymentComplete(data);
-		paymentCard(data);
+		paymentComplete(data);//결제 완료후
+		//결제 연결paymentCard(data);
 	}
 	function createOrderNum(){
 		const date = new Date();
@@ -391,21 +393,18 @@ function paymentComplete(data){
 		url:"/order/payment/complete",
 		method:"POST",
 		data:data,
-		success:function(data){
-			if(data =="success"){
+		success:function(orderNo){
 				alert("주문 성공");
+				let url="/order/finish.kh?orderNo="+orderNo+"";
+				location.replace(url);
 				
-			}else{
-				alert("등록 실패");
-				
-			}
 		},
 		error:function(){
 			alert("ajax 통신 오류! 관리자에게 문의해 주세요!");
 		}
 		
 	})
-		
+
 	/* 
 	.done(function(result){
 		messageSend();

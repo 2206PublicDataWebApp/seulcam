@@ -41,42 +41,41 @@
    <resultMap  type="Order" id="orderResultMap">
  
   <id property="orderNo" 	column="ORDER_NUMBER"/>
-  		<result property="memberId" 	column="MEMBER_ID"/>
-  		<result property="memberName" 	column="ORDER_NAME"/>
-  		<result property="memberPhone" 	column="ORDER_PHONE"/>
-  		<result property="orderMessage" 	column="ORDER_MESSAGE"/>
+  		<result property="memberId" 			column="MEMBER_ID"/>
+  		<result property="memberName" 			column="ORDER_NAME"/>
+  		<result property="memberPhone" 			column="ORDER_PHONE"/>
+  		<result property="orderMessage" 		column="ORDER_MESSAGE"/>
   		<result property="orderAddressPost" 	column="ORDER_POST"/>
-  		<result property="orderAddress1" 	column="ORDER_ADDRESS1"/>
-  		<result property="orderAddress2" 	column="ORDER_ADDRESS2"/>
-  		<result property="payStatus" 	column="PAY_STATUS"/>
-  		<result property="dirivaryStatus" 	column="DILIVERY_STATUS"/>
-  		<result property="cancleStatus" 	column="CANCLE_STATUS"/>
-  		<result property="refundStatus" 	column="REFUND_STATUS"/>
+  		<result property="orderAddress1" 		column="ORDER_ADDRESS1"/>
+  		<result property="orderAddress2" 		column="ORDER_ADDRESS2"/>
+  		<result property="orderDate" 			column="ORDER_DATE"/>
+  		<result property="payStatus" 			column="PAY_STATUS"/>
+  		<result property="dirivaryStatus" 		column="DILIVERY_STATUS"/>
+  		<result property="cancleStatus" 		column="CANCLE_STATUS"/>
+  		<result property="refundStatus" 		column="REFUND_STATUS"/>
   		
   </resultMap>
   
-  <insert id="insertOrder">
+  <insert id="insertOrder" useGeneratedKeys="true" keyColumn="ORDER_NUMBER"  keyProperty="orderNo">
   INSERT INTO ORDER_TBL 
   VALUES(SEQ_ORDER.NEXTVAL,#{memberId}, #{memberName}, #{memberPhone}, NULL,
    #{orderAddressPost},#{orderAddress1},#{orderAddress2},
-        DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+        DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
   </insert>
   
-<!--  <insert id="insertProduct">
-  INSERT INTO ORDER_TBL
-  </insert> -->
+  <select id="selectPrintOrder" resultMap="orderResultMap">
+  SELECT * FROM ORDER_TBL
+  WHERE ORDER_NUMBER=#{orderNo}
+  </select>
+  
+  <update id="updateCompleteAddress">
+  UPDATE ORDER_TBL
+  SET ORDER_POST=#{orderAddressPost},ORDER_ADDRESS1=#{orderAddress1},ORDER_ADDRESS2=#{orderAddress2}
+  WHERE ORDER_NUMBER=#{orderNo}
+  </update>
+  
+  
 
-<!--   <insert id="insertProduct" parameterType="list">
- 	INSERT INTO ORDER_TBL
-	SELECT SEQ_ORDER.NEXTVAL AS ORDER_NUMBER, A.*
-	FROM ( 
- 	<foreach collection="orders" item="item" separator="UNION ALL" >
- 	SELECT	
- 	#{item.productNo} AS PRODUCT_NO ,#{item.memberId} AS MEMBER_ID,#{item.orderCount} AS ORDER_COUNT,#{item.memberName} AS ORDER_NAME,#{item.memberPhone} AS ORDER_PHONE,
- 	#{item.orderMessage} AS ORDER_MESSAGE, #{item.orderAddressPost} AS ORDER_POST,#{item.orderAddress1} AS ORDER_ADDRESS1,#{item.orderAddress2} AS ORDER_ADDRESS2,#{item.payStatus} AS PAY_STATUS, #{item.dirivaryStatus} AS DILIVERY_STATUS,#{item.cancleStatus} AS CANCLE_STATUS,#{item.refundStatus} AS REFUND_STATUS
- 	  FROM DUAL
- 	</foreach>)A
-  </insert>  -->
  <resultMap  type="OrderProduct" id="orderProductResultMap"> 
   <id property="orderProductNo" 	column="ORDER_PRODUCT_NUMBER"/>
   		<result property="productNo" 	column="PRODUCT_NO"/>
@@ -101,29 +100,36 @@
   SELECT * FROM ORDER_PRODUCT_TBL WHERE MEMBER_ID=#{memberId} AND ORDER_STATUS IS NULL AND ORDER_NUMBER ='0'
   </select>
   
+  <select id="selectProduct" resultMap="orderProductResultMap">
+   SELECT * FROM ORDER_PRODUCT_TBL WHERE ORDER_NUMBER=#{orderNo}
+  </select>
+  
+ <update id="updateOrderProduct">
+  UPDATE ORDER_PRODUCT_TBL
+  SET ORDER_NUMBER=#{orderNo}, ORDER_STATUS='Y' WHERE MEMBER_ID=#{memberId} AND ORDER_STATUS IS NULL AND ORDER_NUMBER ='0'
+  </update>
   
   
+  <insert id="insertPay">
+  INSERT INTO PAY_TBL
+  VALUES(SEQ_PAYNO.NEXTVAL, #{orderNo},#{memberId},DEFAULT,#{payPrice},#{productPrice},#{usePoint},#{getPoint},DEFAULT)
+  </insert>
   
- <!-- 
+  <resultMap  type="OrderPay" id="orderPayResultMap"> 
+  <id property="payNo" 	column="PAY_NO"/>
+  		<result property="orderNo" 			column="ORDER_NO"/>
+  		<result property="memberId" 		column="MEMBER_ID"/>
+  		<result property="payDate" 			column="PAY_DATE"/>
+  		<result property="payPrice" 		column="PAY_PRICE"/>
+  		<result property="productPrice" 	column="PRODUCT_PRICE"/>
+  		<result property="usePoint" 		column="USE_POINT"/>
+  		<result property="getPoint" 		column="GET_POINT"/>
+  		<result property="payStatus" 		column="PAY_STATUS"/>
+  		
+  </resultMap>
+  
+  <select id="selectPrintPay" resultMap="orderPayResultMap">
+  SELECT * FROM PAY_TBL WHERE ORDER_NO=#{orderNo}
+  </select>
  
- #{item.productNo} AS PRODUCT_NO ,#{item.memberId} AS MEMBER_ID,#{item.orderCount} AS ORDER_COUNT,NULL AS ORDER_NAME,NULL AS ORDER_PHONE,
- 	NULL AS ORDER_MESSAGE, NULL AS ORDER_POST,NULL AS ORDER_ADDRESS1,NULL AS ORDER_ADDRESS2,
- 	DEFAULT AS PAY_STATUS, DEFAULT AS DILIVERY_STATUS, DEFAULT AS CANCLE_STATUS, DEFAULT AS REFUND_STATUS
- 	  FROM DUAL
- 	  
- 	SELECT	
- 	#{item.productNo} AS PRODUCT_NO ,#{item.memberId} AS MEMBER_ID,#{item.orderCount} AS ORDER_COUNT,#{item.memberName} AS ORDER_NAME,#{item.memberPhone} AS ORDER_PHONE,
- 	#{item.orderMessage} AS ORDER_MESSAGE, #{item.orderAddressPost} AS ORDER_POST,#{item.orderAddress1} AS ORDER_ADDRESS1,#{item.orderAddress2} AS ORDER_ADDRESS2,
- 	DEFAULT AS PAY_STATUS, DEFAULT AS DILIVERY_STATUS, DEFAULT AS CANCLE_STATUS, DEFAULT AS REFUND_STATUS
- 	  FROM DUAL
- 
-  <insert id="insertPlan" parameterType="list">
- 	INSERT INTO PLAN_TBL
-	SELECT SEQ_PLANNO.NEXTVAL AS PLAN_NO, A.*
-	FROM ( 
- 	<foreach collection="planList" item="item" separator="UNION ALL" >
- 	SELECT	
- 	#{item.boardNo} AS PLANNER_NO ,#{item.day} AS PLAN_DAY,#{item.y} AS Y,#{item.x} AS X,#{item.address} AS ADDRESS ,#{item.memo} AS MEMO FROM DUAL
- 	</foreach>)A
-  </insert>   -->
   </mapper>
