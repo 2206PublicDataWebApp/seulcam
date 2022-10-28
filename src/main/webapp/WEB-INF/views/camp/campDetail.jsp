@@ -450,7 +450,7 @@
                 for(var i = 0; i<data.length ; i++){
                     str += "<div class='reviewList' id='reviewList-"+data[i].campReviewNo+"'><div id='"+data[i].campReviewNo+"'><div class='review_contents'><span class='starx' style='position: relative;font-size: 1.5rem;color: #ddd;'>★★★★★";
                     str += "<span style='width: "+data[i].campReviewStar*10+"%; position: absolute; left: 0; color: red;overflow: hidden; pointer-events: none;'>★★★★★</span></span>"
-                    str += "<p>"+data[i].campReviewContents+"</p></div><div class='review_info'><div style='height: 50%;text-align: right;font-size: large;'>"
+                    str += "<p style='font-size : 15px;'>"+data[i].campReviewContents+"</p></div><div class='review_info'><div style='height: 50%;text-align: right;font-size: large;'>"
                     if(data[i].memberId == "${sessionScope.loginUser.memberId}"){
                         str += "<a><i class='bi bi-pencil-square' style='visibility: initial;' onclick='reviewModify(\""+data[i].campReviewContents+"\","+data[i].campReviewNo+",\""+data[i].memberNickname+"\","+data[i].campReviewStar+")'></i></a>"
                         str += "<a><i class='bi bi-trash-fill' style='visibility: initial;' onclick='reviewDelete("+data[i].campReviewNo+",\""+data[i].memberId+"\")'></i></a>"
