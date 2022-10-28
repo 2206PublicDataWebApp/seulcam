@@ -33,7 +33,7 @@
 				<h1>${product.productName }</h1>
 				<p class="color">
 					${product.productColor } <span class="colorchip"
-						style="background-color:${product.productColor };">□</span>
+						style="background-color:${product.productColor };">　</span>
 				</p>
 				<span class="price"> <span id="product-price"
 					class="ProductPrice">${product.productPrice }</span> <input

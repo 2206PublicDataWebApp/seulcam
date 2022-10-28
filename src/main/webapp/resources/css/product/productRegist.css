@@ -1,5 +1,5 @@
 @charset "UTF-8";
-div.leftForm, div.rightForm{
+div.leftForm, #upload-box-form{
     width: 45%;
     margin: 20px;
     float: left;
@@ -24,13 +24,14 @@ body >form> section >div> div.box-form > input.g-inputbox-medium, .selectBox{
 }
 
 div.box-textarea > textarea{
-    width: 77%;
+    width: 70%;
     height: 131px;
     padding: 17px 11px;
     border: 1px solid #ccc;
     box-sizing: border-box;
     display: inline;
     float: left;
+    min-width:50px;
 
 }
 .box-img-upload{
@@ -46,11 +47,13 @@ margin-bottom:10px;
   font-weight: 500;
   font-size: 20px;
   cursor: pointer;
+  float:left;
   background-color:rgb(232, 230, 230);
   
 }
-div.rightForm > div.box-form{
-	height:350px;
+
+#upload-box-form > div.box-form{
+	overflow:auto;
 }
 .drop-zone__prompt{
     color: darkgrey;
@@ -65,9 +68,11 @@ input[type=button]{
 	background-color:#ffffff;
 	border:none;
 	cursor:pointer;
+	display:block;
 	
 }
-body > form > section > div.rightForm > div:nth-child(1) > div:nth-child(3) > input{
+#upload-box-form> div:nth-child(1) > div:nth-child(3) > input
+,#upload-box-form> div:nth-child(1) > input{
 	margin-left: 170px;
 }
 
@@ -79,6 +84,7 @@ body > form > section > div.rightForm > div:nth-child(1) > div:nth-child(3) > in
   background-color:honeydew;
   background-size: cover;
   position: relative;
+  background-size : contain;
 }
 
 .drop-zone__thumb::after {
@@ -108,4 +114,9 @@ button#submit, button#goBack{
     border: 0;
     cursor:pointer;
 }
-
+#plus_detail_form{
+	font-size:40px;
+	float:right;
+	margin-right:50px;
+	
+}

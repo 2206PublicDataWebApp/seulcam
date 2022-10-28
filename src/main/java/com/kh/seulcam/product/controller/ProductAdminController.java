@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.kh.seulcam.product.domain.Brand;
 import com.kh.seulcam.product.domain.Detail;
 import com.kh.seulcam.product.domain.Product;
+import com.kh.seulcam.product.domain.Review;
 import com.kh.seulcam.product.service.ProductService;
 
 @Controller
@@ -161,10 +162,12 @@ public class ProductAdminController {
 		}
 		return mv;
 	}
-	
+	//상품상세 + 수정화면
 	@RequestMapping(value="/admin/productDetail", method=RequestMethod.GET)
 	public ModelAndView productDetailAdmin(ModelAndView mv
-			,@RequestParam("productNo") Integer productNo) {
+			,@RequestParam("productNo") Integer productNo
+			
+			) {
 		List<HashMap>sNameList = pService.getTotalStoreName();
 		Product product =pService.getProductByNo(productNo);
 		List<Detail> dList=pService.printAllDetailInfo(productNo);
@@ -172,10 +175,121 @@ public class ProductAdminController {
 		if(!sNameList.isEmpty()&&product!=null) {
 			mv.addObject("sNameList", sNameList);
 			mv.addObject("product", product);
+			
 		}else {
 			mv.setViewName("common/errorPage");
 		}
 	
+		return mv;
+		
+	}
+	
+	@RequestMapping(value="/admin/productModify", method=RequestMethod.POST)
+	public ModelAndView productModify(ModelAndView mv
+			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
+			,@ModelAttribute Product product
+			,@ModelAttribute Detail detail
+			) {
+		System.out.println(detail.getdList().toString());
+		
+				//폴더에 파일 일단 삭제 + 수정전 객체 파일 리셋
+				if(product.getMainFileName()!=null) {
+					File delFile = new File(product.getMainFilePath());
+					delFile.delete();
+					product.setMainFileName(null);
+					product.setMainFilePath(null);
+					product.setMainFileRename(null);
+				}
+				if(detail.getdList().get(0).getDetailFileName()!=null) {
+					File delFile = new File(detail.getdList().get(0).getDetailFileRename());
+					delFile.delete();
+					detail.getdList().get(0).setDetailFileName(null);
+					detail.getdList().get(0).setDetailFilePath(null);
+					detail.getdList().get(0).setDetailFileRename(null);
+					
+				}
+				if(detail.getdList().get(1).getDetailFileName()!=null) {
+					File delFile = new File(detail.getdList().get(1).getDetailFileRename());
+					delFile.delete();
+					detail.getdList().get(1).setDetailFileName(null);
+					detail.getdList().get(1).setDetailFilePath(null);
+					detail.getdList().get(1).setDetailFileRename(null);
+					
+				}
+				System.out.println(product);
+				System.out.println(detail.getdList().toString());
+//				//수정파일 다시 업로드
+//				try {
+//					for(int i=0; i<mfList.size(); i++) {			
+//						String root=request.getSession().getServletContext().getRealPath("resources");
+//						String savePath = root+"\\puploadFiles";
+//						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+//						
+//						String reviewFileName=mfList.get(i).getOriginalFilename();
+//						String reviewFileRename =sdf.format(new Date(System.currentTimeMillis()))+"review"+i+"."
+//								+reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
+//						if(!reviewFileName.equals("")) {
+//							File file = new File(savePath);
+//								if(!file.exists()) {
+//									file.mkdir();
+//								}
+//								mfList.get(i).transferTo(new File(savePath+"\\"+reviewFileRename));
+//								String reviewFilePath=savePath+"\\"+reviewFileRename;
+//								switch (i) {
+//								case 0:
+//									review.setReviewFileName1(reviewFileName);
+//									review.setReviewFilePath1(reviewFilePath);
+//									review.setReviewFileRename1(reviewFileRename);
+//									break;
+//								case 1:
+//									review.setReviewFileName2(reviewFileName);
+//									review.setReviewFilePath2(reviewFilePath);
+//									review.setReviewFileRename2(reviewFileRename);
+//									break;
+//								case 2:
+//									review.setReviewFileName3(reviewFileName);
+//									review.setReviewFilePath3(reviewFilePath);
+//									review.setReviewFileRename3(reviewFileRename);
+//									break;
+//								}
+//							}else {
+//								switch (i) {
+//								case 0:
+//									review.setReviewFileName1(befReview.getReviewFileName1());
+//									review.setReviewFilePath1(befReview.getReviewFilePath1());
+//									review.setReviewFileRename1(befReview.getReviewFileRename1());
+//									break;
+//								case 1:
+//									review.setReviewFileName2(befReview.getReviewFileName2());
+//									review.setReviewFilePath2(befReview.getReviewFilePath2());
+//									review.setReviewFileRename2(befReview.getReviewFileRename2());
+//									break;
+//								case 2:
+//									review.setReviewFileName3(befReview.getReviewFileName3());
+//									review.setReviewFilePath3(befReview.getReviewFilePath3());
+//									review.setReviewFileRename3(befReview.getReviewFileRename3());
+//									break;
+//								}
+//								
+//							}
+//						} 
+//						}catch (IllegalStateException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//				System.out.println(review.toString());
+//				int result = pService.modifyProductReview(review);
+//				if (result>0) {
+//					mv.setViewName("redirect:/product/productDetail?productNo="+productNo);
+//				}else {
+//					mv.setViewName("errorPage");
+//				}
+		mv.setViewName("redirect:/admin/productList");
+		
+		
 		return mv;
 		
 	}

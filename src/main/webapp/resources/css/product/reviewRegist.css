@@ -119,6 +119,7 @@ body > section > form>div.box-form > div > textarea{
   background-color:honeydew;
   background-size: cover;
   position: relative;
+   background-size : contain;
 }
 
 .drop-zone__thumb::after {

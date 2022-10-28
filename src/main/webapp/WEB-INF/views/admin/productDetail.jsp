@@ -24,7 +24,7 @@
             </div>
             <div class="box-form">
                 <label>브랜드</label>
-                <select class="selectBox" placeholder="" name="brandName" id="brand_selectBox">
+                <select class="selectBox"  name="brandName" id="brand_selectBox">
                     <c:forEach items="${sNameList }" var="brandName" varStatus="i">
                    		 <option value="${brandName.brandName }">${brandName.brandName }</option>
                     </c:forEach>
@@ -32,7 +32,7 @@
             </div>
             <div class="box-form">
                 <label>카테고리</label>
-                <select class="selectBox" placeholder="" name="category" id="category_selectBox">
+                <select class="selectBox" name="category" id="category_selectBox">
 						<option value="텐트">텐트</option>
 						<option value="타프">타프</option>
 						<option value="테이블">테이블</option>
@@ -72,7 +72,7 @@
             </div>
         </div>
         
-        <div class="rightForm">
+        <div id="upload-box-form">
             <div class="box-form">
                 <label>메인사진</label>
                 <div class="box-img-upload" style="width: 200px; height: 260px;">
@@ -88,47 +88,47 @@
 			<div><input type="button" class="img-delete-bt" value="삭제"></div>
             </div>
            
-           
-            <div class="box-form">
-                <label>상세 사진1</label>
-                <div class="box-img-upload">
-                    <c:if test="${dList[0].detailFileName eq null }">
-			            <span class="drop-zone__prompt" >+</span>
-			          </c:if>
-                    <input type="file" name="dList[0].detailFileNameMPF" class="drop-zone__input" >
-                    <c:if test="${dList[0].detailFileName ne null }">
-			             		<div class="drop-zone__thumb" data-label="${dList[0].detailFileRename }" 
-						             style="background-image:url('../resources/puploadFiles/${dList[0].detailFileRename}')"></div>
-			          </c:if>
-                </div>
-                <div><input type="button" class="img-delete-bt" value="삭제"></div><br>
-                <div class="box-textarea">
-                    <textarea placeholder="상세설명을 입력해주세요." name="dList[0].detailContents"></textarea>
-                </div>
-           </div>
-           
-            <div class="box-form">
-                <p><label>상세 사진1</label></p>
-                <div class="box-img-upload">
-                    <c:if test="${dList[1].detailFileName eq null }">
-			            <span class="drop-zone__prompt" >+</span>
-			          </c:if>
-                    <input type="file" name="dList[0].detailFileNameMPF" class="drop-zone__input" >
-                    <c:if test="${dList[1].detailFileName ne null }">
-			             		<div class="drop-zone__thumb" data-label="${dList[1].detailFileRename }" 
-						             style="background-image:url('../resources/puploadFiles/${dList[1].detailFileRename}')"></div>
-			          </c:if>
-                </div>
-                <div><input type="button" class="img-delete-bt" value="삭제"></div><br>
-                <div class="box-textarea">
-                    <textarea placeholder="상세설명을 입력해주세요." name="dList[0].detailContents"></textarea>
-                </div>
-            </div>
+          
+	            <div class="box-form">
+	            <label>상세 사진</label>
+                	<div class="box-img-upload">
+	                	<c:if test="${dList[0].detailFileName eq null }">
+		                    <span class="drop-zone__prompt">+</span>
+	                    </c:if>
+	                    <input type="file" name="dList[0].detailFileNameMPF" class="drop-zone__input" >
+	                    <c:if test="${dList[0].detailFileName ne null }">
+	                		 <div class="drop-zone__thumb" data-label="${dList[0].detailFileRename }" style="background-image:url('../resources/puploadFiles/${dList[0].detailFileRename}')"></div>
+           				</c:if>
+	                </div>
+	                <div class="box-textarea">
+	                    <textarea placeholder="상세설명을 입력해주세요." name="dList[0].detailContents">${dList[0].detailContents }</textarea>
+	                </div>
+	           </div>
+               <div><input type="button" class="img-delete-bt" value="삭제"></div><br>
+               
+   	           <div class="box-form">
+	                <div class="box-img-upload">
+	                	<c:if test="${dList[1].detailFileName eq null }">
+	                   		 <span class="drop-zone__prompt">+</span>
+                  		  </c:if>
+		                     <input type="file" name="dList[1].detailFileNameMPF" class="drop-zone__input" >
+	                    <c:if test="${dList[1].detailFileName ne null }">
+		                    <div class="drop-zone__thumb" data-label="${dList[1].detailFileRename }" 
+										             style="background-image:url('../resources/puploadFiles/${dList[1].detailFileRename}')"></div>
+           				</c:if>
+	                </div>
+	                <div class="box-textarea">
+	                    <textarea placeholder="상세설명을 입력해주세요." name="dList[1].detailContents">${dList[1].detailContents}</textarea>
+	                </div>
+	           </div>
+               <div><input type="button" class="img-delete-bt" value="삭제"></div>
+	           
+          
             
         </div>
      
         <div style="float:left;width: 100%;">
-	        <button id="goBack" onclick="goBack()" style="float:left">뒤로가기</button>
+	        <button type="button" id="goBack" onclick="goBack()" style="float:left">뒤로가기</button>
 	        <button id="submit">수정하기</button>
         </div>
     </section>
@@ -140,6 +140,31 @@
 //불러온값에 따라 셀렉트박스 미리 선택
 $("#category_selectBox").val('${product.category}').prop("selected", true);
 $("#brand_selectBox").val('${product.brandName}').prop("selected", true);
+
+
+if(${product.mainFileName!=null}){
+	$(".img-delete-bt").eq(0).click(function(){
+		$('#upload-box-form > div:nth-child(1)').empty();
+		$('#upload-box-form > div:nth-child(1)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
+		$('#upload-box-form > div:nth-child(1)').append('<input type="hidden" name="mainFileName" value="del">');
+	});
+}
+if(${dList[0].detailFileName !=null}){
+	$(".img-delete-bt").eq(1).click(function(){
+		$('#upload-box-form > div:nth-child(2)').empty();
+		$('#upload-box-form > div:nth-child(2)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
+		$('#upload-box-form > div:nth-child(2)').append('<input type="hidden" name="dList[0].detailFileName" value="del">');
+	});
+}
+if(${dList[1].detailFileName !=null}){
+	$(".img-delete-bt").eq(2).click(function(){
+		$('#upload-box-form > div:nth-child(3)').empty();
+		$('#upload-box-form > div:nth-child(3)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
+		$('#upload-box-form > div:nth-child(2)').append('<input type="hidden" name="dList[1].detailFileName" value="del">');
+	});
+}
+ 
+
 
 function goBack() {
 	  window.history.back();

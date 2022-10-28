@@ -65,42 +65,50 @@
             </div>
         </div>
         
-        <div class="rightForm">
+        <div id="upload-box-form">
             <div class="box-form">
                 <label>메인사진</label>
                 <div class="box-img-upload" style="width: 200px; height: 260px;">
                     <span class="drop-zone__prompt">+</span>
                     <input type="file" name="uploadFile" class="drop-zone__input">
                 </div>
+                <input type="button" class="img-delete-bt" value="삭제"><br>
 
             </div>
            
+          
+	            <div class="box-form">
+	            <label>상세 사진</label>
+                	<div class="box-img-upload">
+	                    <span class="drop-zone__prompt">+</span>
+	                    <input type="file" name="dList[0].detailFileNameMPF" class="drop-zone__input" >
+	                </div>
+	                <div class="box-textarea">
+	                    <textarea placeholder="상세설명을 입력해주세요." name="dList[0].detailContents"></textarea>
+	                </div>
+	           </div>
+               <div><input type="button" class="img-delete-bt" value="삭제"></div><br>
+               
+   	           <div class="box-form">
+	                <div class="box-img-upload">
+	                    <span class="drop-zone__prompt">+</span>
+	                    <input type="file" name="dList[1].detailFileNameMPF" class="drop-zone__input" >
+	                </div>
+	                <div class="box-textarea">
+	                    <textarea placeholder="상세설명을 입력해주세요." name="dList[1].detailContents"></textarea>
+	                </div>
+	           </div>
+               <div><input type="button" class="img-delete-bt" value="삭제"></div>
+	           
+	           
+        
+        
            
-            <div class="box-form">
-                <p><label>상세 사진1</label></p>
-                <div class="box-img-upload">
-                    <span class="drop-zone__prompt">+</span>
-                    <input type="file" name="dList[0].detailFileNameMPF" class="drop-zone__input" >
-                </div>
-                <div class="box-textarea">
-                    <textarea placeholder="상세설명을 입력해주세요." name="dList[0].detailContents"></textarea>
-                </div>
-           </div>
            
-            <div class="box-form">
-                <label>상세 사진2</label>
-                    <div class="box-img-upload">
-                        <span class="drop-zone__prompt">+</span>
-                        <input type="file" name="dList[1].detailFileNameMPF" class="drop-zone__input">
-                    </div>    
-                    <div class="box-textarea">
-                        <textarea placeholder="상세설명을 입력해주세요." name="dList[1].detailContents"></textarea>
-                    </div>
-            </div>
         </div>
      
         <div style="float:left;width: 100%;">
-	        <button id="goBack" onclick="goBack()" style="float:left">뒤로가기</button>
+	        <button type="button" id="goBack" onclick="goBack()" style="float:left">뒤로가기</button>
 	        <button id="submit">등록하기</button>
         </div>
     </section>
@@ -108,9 +116,26 @@
 
 
 <script>
+if($(".drop-zone__thumb")){
+	
+	console.log($(".drop-zone__thumb"));
+}
+
+$(".img-delete-bt").eq(0).click(function(){
+	$('#upload-box-form > div:nth-child(1)>div').empty();
+	$('#upload-box-form > div:nth-child(1)>div').prepend('<span class="drop-zone__prompt" >+</span>');
+});
+$(".img-delete-bt").eq(1).click(function(){
+	$('#upload-box-form > div:nth-child(2)> div.box-img-upload').empty();
+	$('#upload-box-form > div:nth-child(2)> div.box-img-upload').prepend('<span class="drop-zone__prompt" >+</span>');
+});
+$(".img-delete-bt").eq(2).click(function(){
+	$('#upload-box-form > div:nth-child(3)> div.box-img-upload').empty();
+	$('#upload-box-form > div:nth-child(3)> div.box-img-upload').prepend('<span class="drop-zone__prompt" >+</span>');
+});
 
 function goBack() {
-	  window.history.back();
+	  location.href="/admin/productList";
 	}
 
 	    document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {

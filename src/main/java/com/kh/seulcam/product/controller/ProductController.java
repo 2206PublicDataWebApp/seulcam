@@ -121,7 +121,7 @@ public class ProductController {
 	}
 	//리뷰등록
 	@RequestMapping(value="/product/reviewRegister", method=RequestMethod.POST)
-	public String reviewRegister(ModelAndView mv
+	public ModelAndView reviewRegister(ModelAndView mv
 			,@ModelAttribute Review review
 			, HttpSession session
 			,@RequestParam(value="myFile", required=false) List<MultipartFile> mfList
@@ -177,10 +177,11 @@ public class ProductController {
 		int result = pService.registerProductReview(review);
 		if(result>0) {
 			
-			return "redirect:/product/reviewList?productNo="+productNo;
+			mv.setViewName("redirect:/product/productDetail?productNo="+productNo);
 		}else {
-			return "errorPage";
+			mv.setViewName("errorPage");
 		}
+		return mv;
 	
 	}
 	//리뷰수정 화면
@@ -203,32 +204,41 @@ public class ProductController {
 	public ModelAndView reviewModify(ModelAndView mv
 			,@RequestParam("reviewNo") Integer reviewNo
 			,@RequestParam(value="myFile", required=false) List<MultipartFile> mfList
-			,@ModelAttribute Review newReview
+			,@ModelAttribute Review review
 			,HttpServletRequest request
 			,@RequestParam ("productNo")Integer productNo
 			) {
-		//수정전 리뷰 꺼내오기
-		Review review = pService.getOneReview(reviewNo);
 		
-		//폴더에 파일 일단 삭제
-		if(review.getReviewFilePath1()!=null) {
-			File delFile = new File(review.getReviewFilePath1());
+		//수정전 리뷰 꺼내오기
+		Review befReview = pService.getOneReview(reviewNo);
+		//폴더에 파일 일단 삭제 + 수정전 객체 파일 리셋
+		if(review.getReviewFileName1()!=null) {
+			File delFile = new File(befReview.getReviewFilePath1());
 			delFile.delete();
+			befReview.setReviewFileName1(null);
+			befReview.setReviewFilePath1(null);
+			befReview.setReviewFileRename1(null);
 		}
-		if(review.getReviewFilePath2()!=null) {
-			File delFile = new File(review.getReviewFilePath2());
+		if(review.getReviewFileName2()!=null) {
+			File delFile = new File(befReview.getReviewFilePath2());
 			delFile.delete();
+			befReview.setReviewFileName2(null);
+			befReview.setReviewFilePath2(null);
+			befReview.setReviewFileRename2(null);
 		}
-		if(review.getReviewFilePath3()!=null) {
-			File delFile = new File(review.getReviewFilePath3());
+		if(review.getReviewFileName3()!=null) {
+			File delFile = new File(befReview.getReviewFilePath3());
 			delFile.delete();
+			befReview.setReviewFileName3(null);
+			befReview.setReviewFilePath3(null);
+			befReview.setReviewFileRename3(null);
 		}
 		//수정파일 다시 업로드
 		try {
-			String root=request.getSession().getServletContext().getRealPath("resources");
-			String savePath = root+"\\puploadFiles";
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 			for(int i=0; i<mfList.size(); i++) {			
+				String root=request.getSession().getServletContext().getRealPath("resources");
+				String savePath = root+"\\puploadFiles";
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 				
 				String reviewFileName=mfList.get(i).getOriginalFilename();
 				String reviewFileRename =sdf.format(new Date(System.currentTimeMillis()))+"review"+i+"."
@@ -242,21 +252,40 @@ public class ProductController {
 						String reviewFilePath=savePath+"\\"+reviewFileRename;
 						switch (i) {
 						case 0:
-							newReview.setReviewFileName1(reviewFileName);
-							newReview.setReviewFilePath1(reviewFilePath);
-							newReview.setReviewFileRename1(reviewFileRename);
+							review.setReviewFileName1(reviewFileName);
+							review.setReviewFilePath1(reviewFilePath);
+							review.setReviewFileRename1(reviewFileRename);
 							break;
 						case 1:
-							newReview.setReviewFileName2(reviewFileName);
-							newReview.setReviewFilePath2(reviewFilePath);
-							newReview.setReviewFileRename2(reviewFileRename);
+							review.setReviewFileName2(reviewFileName);
+							review.setReviewFilePath2(reviewFilePath);
+							review.setReviewFileRename2(reviewFileRename);
 							break;
 						case 2:
-							newReview.setReviewFileName3(reviewFileName);
-							newReview.setReviewFilePath3(reviewFilePath);
-							newReview.setReviewFileRename3(reviewFileRename);
+							review.setReviewFileName3(reviewFileName);
+							review.setReviewFilePath3(reviewFilePath);
+							review.setReviewFileRename3(reviewFileRename);
 							break;
 						}
+					}else {
+						switch (i) {
+						case 0:
+							review.setReviewFileName1(befReview.getReviewFileName1());
+							review.setReviewFilePath1(befReview.getReviewFilePath1());
+							review.setReviewFileRename1(befReview.getReviewFileRename1());
+							break;
+						case 1:
+							review.setReviewFileName2(befReview.getReviewFileName2());
+							review.setReviewFilePath2(befReview.getReviewFilePath2());
+							review.setReviewFileRename2(befReview.getReviewFileRename2());
+							break;
+						case 2:
+							review.setReviewFileName3(befReview.getReviewFileName3());
+							review.setReviewFilePath3(befReview.getReviewFilePath3());
+							review.setReviewFileRename3(befReview.getReviewFileRename3());
+							break;
+						}
+						
 					}
 				} 
 				}catch (IllegalStateException e) {
@@ -266,8 +295,8 @@ public class ProductController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		System.out.println(newReview.toString());
-		int result = pService.modifyProductReview(newReview);
+		System.out.println(review.toString());
+		int result = pService.modifyProductReview(review);
 		if (result>0) {
 			mv.setViewName("redirect:/product/productDetail?productNo="+productNo);
 		}else {
