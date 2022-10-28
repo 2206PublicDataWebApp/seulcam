@@ -10,6 +10,7 @@ public class Order {
 	private String orderAddressPost;
 	private String orderAddress1;
 	private String orderAddress2;
+	private String orderDate;
 	private String payStatus;
 	private String dirivaryStatus;
 	private String cancleStatus;
@@ -62,6 +63,12 @@ public class Order {
 	public void setOrderAddress2(String orderAddress2) {
 		this.orderAddress2 = orderAddress2;
 	}
+	public String getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
 	public String getPayStatus() {
 		return payStatus;
 	}
@@ -90,10 +97,11 @@ public class Order {
 	public String toString() {
 		return "Order [orderNo=" + orderNo + ", memberId=" + memberId + ", memberName=" + memberName + ", memberPhone="
 				+ memberPhone + ", orderMessage=" + orderMessage + ", orderAddressPost=" + orderAddressPost
-				+ ", orderAddress1=" + orderAddress1 + ", orderAddress2=" + orderAddress2 + ", payStatus=" + payStatus
-				+ ", dirivaryStatus=" + dirivaryStatus + ", cancleStatus=" + cancleStatus + ", refundStatus="
-				+ refundStatus + "]";
+				+ ", orderAddress1=" + orderAddress1 + ", orderAddress2=" + orderAddress2 + ", orderDate=" + orderDate
+				+ ", payStatus=" + payStatus + ", dirivaryStatus=" + dirivaryStatus + ", cancleStatus=" + cancleStatus
+				+ ", refundStatus=" + refundStatus + "]";
 	}
+	
 	
 	
 	
