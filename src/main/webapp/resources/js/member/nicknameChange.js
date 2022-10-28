@@ -1,5 +1,5 @@
 $(function() { 
-	var regNickname= /^[a-zA-z0-9]{1,15}$/;
+	var regNickname= /^[a-zA-z0-9가-힣]{1,15}$/;
     $(".nickname.ok").hide();
     $(".nickname.error").hide();
     $(".nickname.regerror").hide();

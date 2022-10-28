@@ -180,24 +180,45 @@ header > h1 {
 }
 
 
-.autologin {
+#autologin {
     display: none;
 }
 
+#autologin:checked + label::before {
+	background-color: #0078ff;
+	border: 1px solid #0078ff;
+}
+
+#autologin:checked + label::after {
+	position: absolute;
+	content: '';
+	top: 20px;
+	left: 7px;
+	width: 4px;
+	height: 8px;
+	border-right: 2px solid #fff;
+	border-bottom: 2px solid #fff;
+	transform: rotate(45deg);
+	display: block;
+}
+
 #labelAutologin {
-    padding-left: 26px;
+    padding-left: 24px;
     font-size: 14px;
+    cursor: pointer;
 }
 
 #labelAutologin::before {
     position: absolute;
     display: block;
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
     border: 1px solid #ccc;
     border-radius: 100%;
     background-color: #f1f1f1;
     content: '';
+    top: 17px;
+    cursor: pointer;
 }
 
 .util-list {
@@ -255,6 +276,7 @@ header > h1 {
     height: 45px;
     background-color: #fee500;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .register {

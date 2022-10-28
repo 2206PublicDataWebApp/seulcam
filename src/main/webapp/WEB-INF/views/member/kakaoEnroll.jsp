@@ -85,7 +85,7 @@
 	                        </div>
 	                        <p class="nickname ok">해당하는 닉네임이 존재하지 않습니다.</p>
             				<p class="nickname error">해당하는 닉네임이 존재합니다.</p>
-            				<p class="nickname regerror">한글, 영문 및 숫자로 입력해주세요.</p>
+            				<p class="nickname regerror">영문 및 숫자로 입력해주세요.</p>
 	                    </div>
 	
 	                    <div class="join-input">
@@ -94,7 +94,7 @@
 	                            <span class="label-essential"></span>
 	                        </label>
 	                        <div class="join-input-wrapper">
-	                            <input class="join-input-input" type="email" name="memberEmail" id="memberEmail" autocomplete="off">
+	                            <input class="join-input-input pass" type="email" name="memberEmail" id="memberEmail" value = "${ memberEmail}" autocomplete="off" readonly>
 	                        </div>
 	                    </div>
 	                    <p class="emailregex ok">이메일이 유효합니다.</p>

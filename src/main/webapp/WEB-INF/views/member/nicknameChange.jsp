@@ -41,7 +41,7 @@
 	                <input type="text" class="nickname-change" id="memberNickname" name="memberNickname" placeholder="닉네임 입력(최대 15자)" maxlength="15" autocomplete="off">
 	                <p class="nickname ok">해당하는 닉네임이 존재하지 않습니다.</p>
             		<p class="nickname error">해당하는 닉네임이 존재합니다.</p>
-            		<p class="nickname regerror">영문 및 숫자로 입력해주세요.</p>
+            		<p class="nickname regerror">한글, 영문 및 숫자로 입력해주세요.</p>
 	                <p class="current-nickname">현재 닉네임 : ${member.memberNickname }</p>
 	                <ul>
 	                    <li>길이는 최대 15자 이내</li>

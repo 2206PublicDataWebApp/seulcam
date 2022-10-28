@@ -1,9 +1,14 @@
 package com.kh.seulcam.member.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.kh.seulcam.member.service.MemberService;
 import com.kh.seulcam.member.domain.Member;
@@ -263,11 +269,21 @@ public class MemberController {
 	public ModelAndView memberLogin(
 			@ModelAttribute Member member
 			, ModelAndView mv
-			, HttpServletRequest request) {
+			, Boolean rememberMe
+			, HttpServletRequest request
+			, HttpServletResponse response) {
 		try {
 			Member loginUser = mService.loginMember(member);
+			String memberId = loginUser.getMemberId();
 			if(loginUser != null) {
 				HttpSession session = request.getSession();
+				if(rememberMe == true) { // 로그인 유지에 체크 했을 때
+					//쿠키 등록하기
+					Cookie cookie = new Cookie("memberId", memberId);
+					cookie.setMaxAge(60*60*24*7); // 쿠키 수명 설정
+					cookie.setPath("/"); // 모든 경로에 적용
+					response.addCookie(cookie);
+				}
 				session.setAttribute("loginUser", loginUser);
 				mv.setViewName("redirect:/");
 			}else {
@@ -410,5 +426,62 @@ public class MemberController {
 		return mv;
 	}
 
+	// 카카오 로그인
+	@RequestMapping(value="/member/kakaoLogin", method=RequestMethod.POST)
+	public ModelAndView kakaoLogin(
+			@ModelAttribute Member member,
+			@RequestParam("memberEmail") String memberEmail
+			, ModelAndView mv
+			, HttpServletRequest request) {
+		int result = mService.checkOneEmail(memberEmail);
+		if(result == 0) {
+				mv.addObject("memberEmail", memberEmail);
+				mv.setViewName("member/kakaoEnroll");
+		} else {
+			Member loginUser = mService.kakaologinMember(memberEmail);
+			HttpSession session = request.getSession();
+			session.setAttribute("loginUser", loginUser);
+			mv.setViewName("redirect:/");
+		}
+
+		return mv;
+	}
+	
+	// 프로필 사진 등록
+	@RequestMapping(value="/member/profileImage", method=RequestMethod.POST)
+	public ModelAndView profileImage(
+			ModelAndView mv
+			, @ModelAttribute Member member
+			, @RequestParam(value="profileImage", required=false) MultipartFile uploadFile
+			,HttpServletRequest request) {
+		
+		try {
+			String memberFilename = uploadFile.getOriginalFilename();
+			if(!memberFilename.equals("")) {
+				String root = request.getSession().getServletContext().getRealPath("resources");
+				String savePath = root + "\\profileImageFiles";
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String memberFilername 
+				= sdf.format(new Date(System.currentTimeMillis()))+"."
+						+memberFilename.substring(memberFilename.lastIndexOf(".")+1);
+				File file = new File(savePath);
+				if(!file.exists()) {
+					file.mkdir();
+				}
+				uploadFile.transferTo(new File(savePath+"\\"+memberFilername));
+				String memberImage = savePath+"\\"+memberFilername;
+				member.setMemberFilename(memberFilename);
+				member.setMemberFilername(memberFilername);
+				member.setMemberImage(memberImage);
+			}
+			int result = mService.registerProfile(member);
+			mv.setViewName("redirect:/member/myPageView");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
 
 }

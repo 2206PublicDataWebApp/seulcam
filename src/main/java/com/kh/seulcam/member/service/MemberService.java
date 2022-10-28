@@ -10,6 +10,9 @@ public interface MemberService {
 	// 로그인
 	public Member loginMember(Member member);
 	
+	// 카카오 로그인
+	public Member kakaologinMember(String memberEmail);
+	
 	// 이메일로 회원 존재하는 지 리턴
 	public int checkOneEmail(String memberEmail);
 	
@@ -42,4 +45,7 @@ public interface MemberService {
 	
 	// 비밀번호 수정
 	public int modifyMemberPw(Member member);
+
+	// 프로필 이미지 수정
+	public int registerProfile(Member member);
 }
