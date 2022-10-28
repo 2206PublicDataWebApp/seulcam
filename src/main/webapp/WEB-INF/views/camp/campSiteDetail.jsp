@@ -67,9 +67,12 @@ header {
 	}
 .infoTitle {
 	font-weight: bold;
-	color: rgb(39, 174, 96);
+	color: green;
 	width: 100px;
 	padding: 5px;
+}
+.itModal {
+	color: darkslategray;
 }
 .container {
 	/* padding: 20px; */
@@ -115,12 +118,15 @@ div{
 .siteInfo {
 	position: relative;
     margin: auto;
+	margin-bottom: 8px;
+	margin-left: 3px;
+    margin-right: 3px;
     box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 25%);
     background-color: #fff;
     cursor: pointer;
 }
 .siteList_area{
-	background-color: #F5F5F5;
+	/* background-color: #F5F5F5; */
 	display: block;
 }
 .siteList{
@@ -131,14 +137,26 @@ div{
     width: 120px;
     height: 122px;
 }
-span {
+.registY {
     position: absolute;
     bottom: 4px;
-    left: 4px;
+    left: 6px;
     font-size: 10px;
     padding: 2px 8px;
     border-radius: 10px;
     background-color: #F6B67B;
+	z-index: 3;
+    color: #fff;
+}
+.registN {
+	position: absolute;
+    bottom: 4px;
+    left: 6px;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background-color: #E86F52 ;
+	z-index: 3;
     color: #fff;
 }
 *, ::after, ::before {
@@ -159,6 +177,7 @@ span {
 	position: relative;
 	width: 180%;
     padding: 8px;
+
 }
 .siteRegist {
 	width: 100%;
@@ -168,6 +187,139 @@ span {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+}
+
+.site-disabled {
+	pointer-events: none;
+}
+
+.site-disabled:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.75);
+    z-index: 2;
+}
+/* section calendar */
+
+.sec_cal {
+    width: 360px;
+    margin: 0 auto;
+    font-family: "NotoSansR";
+}
+
+.sec_cal .cal_nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 78px;
+}
+
+.sec_cal .cal_nav .year-month {
+    width: 300px;
+    text-align: center;
+    line-height: 1;
+}
+
+.sec_cal .cal_nav .nav {
+    display: flex;
+    border: 1px solid #333333;
+    border-radius: 5px;
+}
+
+.sec_cal .cal_nav .go-prev,
+.sec_cal .cal_nav .go-next {
+    display: block;
+    width: 50px;
+    height: 78px;
+    font-size: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sec_cal .cal_nav .go-prev::before,
+.sec_cal .cal_nav .go-next::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #000;
+    border-width: 3px 3px 0 0;
+    transition: border 0.1s;
+}
+
+.sec_cal .cal_nav .go-prev:hover::before,
+.sec_cal .cal_nav .go-next:hover::before {
+    border-color: #ed2a61;
+}
+
+.sec_cal .cal_nav .go-prev::before {
+    transform: rotate(-135deg);
+}
+
+.sec_cal .cal_nav .go-next::before {
+    transform: rotate(45deg);
+}
+
+.sec_cal .cal_wrap {
+    padding-top: 40px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.sec_cal .cal_wrap .days {
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sec_cal .cal_wrap::after {
+    top: 368px;
+}
+
+
+.sec_cal .cal_wrap .day {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 7);
+    text-align: left;
+    color: #000;
+    font-size: 12px;
+    text-align: center;
+    border-radius:5px
+}
+.current.today {font-weight: bold;}
+
+.noContact {
+	background-color: rgb(242 242 242);
+}
+
+.sec_cal .cal_wrap .dates {
+    display: flex;
+    flex-flow: wrap;
+    height: 290px;
+}
+
+.sec_cal .cal_wrap .day:nth-child(7n -1) {
+    color: #3c6ffa;
+}
+
+.sec_cal .cal_wrap .day:nth-child(7n) {
+    color: #ed2a61;
+}
+
+.sec_cal .cal_wrap .day.disable {
+    color: #ddd;
+}
+.selectDate{
+	background-color: #E86F52;
+	color: #fff;
 }
 
 </style>
@@ -196,6 +348,27 @@ span {
 						<hr>
 				</div>
 				<div class="calendar_area">
+					<h4>달력</h4>
+					<div class="sec_cal">
+						<div class="cal_nav">
+						  <a href="javascript:;" class="nav-btn go-prev">prev</a>
+						  <div class="year-month"></div>
+						  <a href="javascript:;" class="nav-btn go-next">next</a>
+						</div>
+						<div class="cal_wrap">
+						  <div class="days">
+							<div class="day">MON</div>
+							<div class="day">TUE</div>
+							<div class="day">WED</div>
+							<div class="day">THU</div>
+							<div class="day">FRI</div>
+							<div class="day">SAT</div>
+							<div class="day">SUN</div>
+						  </div>
+						  <div class="dates"></div>
+						</div>
+					  </div>
+					  <button onclick="kk()">test</button>
 					<hr>
 				</div>
 				<div class="intro_area">
@@ -207,26 +380,34 @@ span {
 						더보기
 					</div>
 					<hr>
+					<h4>예약 가능 사이트</h4>
 				</div>
 				<div class="siteList_area">
-					<h4>예약 가능 사이트</h4>
 					<div class="siteList">
-						<div class="siteInfo row">
-							<div class="col-4" style="padding-left: 0;">
-								<img class="simg" style="width: 100%; height: 100%; object-fit: cover;" src="https://campingagains3.s3.ap-northeast-2.amazonaws.com/medium_2021_12_26_12_15_24_34875d31d7.png" alt="">
-									<span>예약가능</span>
+						<div class='siteInfo row'>
+							<div class='col-4' style='padding-left: 0;' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal()'>
+								<img class='simg' style='width: 100%; height: 100%; object-fit: cover;' src='https://campingagains3.s3.ap-northeast-2.amazonaws.com/medium_2021_12_26_12_15_24_34875d31d7.png' alt=''>
+									<span class='registY'>예약가능</span>
 								</img>
+							</div></a>
+							<div class='col-8' style='padding-left: 0;' >
+								<div class='row' style='padding: 0px; padding-top : 5px' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal()'>
+									<h5>${camp.facltNm}</h5>
+								</div>
+								<div class='row' style='padding-right: 0;' >
+									<div class='col-8' style='padding-right: 0;' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal()'>
+										<p style='color: #767676;'>데크30x30</p>
+										<p style='color: #767676;'>기준인원 2명 / 최대인원 5명</p>
+										</div>
+										<div class='col-4' style='display: flex; flex-direction: column-reverse; padding-right: 0;'>
+											<a href='/camp/campSiteDetail.kh?contentId=${camp.contentId}' style='margin: 5px;' class='btn btn-outline-success btn-sm'>예약</a>
+											<p style='font-size: 8pt; margin: 0; color: green;'>남은자리 6개</p>
+											<p style='font-size: 13pt; margin: 0;'>50000원~</p>
+										</div>
+									</div>
 							</div>
-							<div class="col-5" style="padding: 0px; padding-top : 5px">
-								<h5>${camp.facltNm}</h5>
-									<p>데크30x30</p>
-									<p>기준인원 2명 / 최대인원 5명</p>
-							</div>
-							<div class="col-3" style="padding-right: 0;">
-								dfdf
-							</div>
-
 						</div>
+						
 						<!-- <div class="siteInfo d-flex">
 							<div class="siteImg">
 								<div class="simg" src="https://campingagains3.s3.ap-northeast-2.amazonaws.com/medium_2021_12_26_12_15_24_34875d31d7.png" alt="">
@@ -253,15 +434,6 @@ span {
 					<hr>
 				</div>
 
-
-
-				<!-- Button trigger modal -->
-				<a data-bs-toggle="modal"
-					data-bs-target="#exampleModal" onclick="modal()">Launch demo modal</a>
-					<a data-bs-toggle="modal"
-					data-bs-target="#exampleModal">Launch demo modal</a>
-					<a data-bs-toggle="modal"
-					data-bs-target="#exampleModal">Launch demo modal</a>
 				<!-- Modal -->
 				<div class="modal fade" id="exampleModal" tabindex="-1"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -273,10 +445,18 @@ span {
 								<button type="button" class="btn-close" data-bs-dismiss="modal"
 									aria-label="Close"></button>
 							</div>
-							<div class="modal-body">sdfsdfsdf</div>
-							<div class="modal-footer">
+							<div class="modal-body">
+								<div class="siteImg-area" style="width: 80%; height: 200px; margin-bottom: 10px;" align="center">
+									
+								</div>
+								<div class="siteInfoDetail">
+									
+								</div>
+
+							</div>
+							<div class="modal-footer" style="padding: 10px;">
 								<button type="button" class="btn btn-secondary"
-									data-bs-dismiss="modal">Close</button>
+									data-bs-dismiss="modal">닫기</button>
 							</div>
 						</div>
 					</div>
@@ -294,6 +474,7 @@ span {
 		// myInput.focus()
 		// })
 		var moreNum = 0;
+		var contentId = ${camp.contentId};
 		function moreIntro(){
 			if(moreNum == 0){
 				$(".intro").css({height: 'auto' , overflow: 'auto'});
@@ -306,9 +487,237 @@ span {
 				moreNum = 0;
 			}
 		}
-		function modal(){
-			$("#exampleModalLabel").html("가즈아");
+		function siteLoad(){
+			$.ajax({
+				url : "/camp/campSiteListView.kh",
+				type : "get",
+				data : {
+					"contentId" : contentId
+				},
+				success : function(data){
+					var str = "";
+					for(var i = 0; i<data.length ; i++){
+						str += "<div class='siteInfo row'>"
+						str +=	"<div class='col-4' style='padding-left: 0;' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal("+data[i].siteNo+")'>"
+						str +=	"<img class='simg' style='width: 100%; height: 100%; object-fit: cover;' src='/resources/ruploadFiles/"+data[i].siteThumbnailRename+"' alt=''>"
+						str +=	"<span class='registY'>예약가능</span></img></div>"			
+						str += "<div class='col-8' style='padding-left: 0;' ><div class='row' style='padding: 0px; padding-top : 5px' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal("+data[i].siteNo+")'>"			
+						str += "<h5>"+data[i].siteName+"</h5></div><div class='row' style='padding-right: 0;' ><div class='col-8' style='padding-right: 0;' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal("+data[i].siteNo+")'>"
+						str += "<p style='color: #767676;'>"+data[i].siteChar+"</p><p style='color: #767676;'>기준인원 "+data[i].standardPeople+"명 / 최대인원 "+data[i].maxPeople+"명</p></div>"		
+						str += "<div class='col-4' style='display: flex; flex-direction: column-reverse; padding-right: 0;'>"			
+						str += "<a href='#' style='margin: 5px;' class='btn btn-outline-success btn-sm'>예약</a><p style='font-size: 8pt; margin: 0; color: green;'>남은자리 "+data[i].siteCount+"개</p>"			
+						str += "<p style='font-size: 12pt; margin: 0;'>"+data[i].sitePrice.toLocaleString('ko-KR')+"원~</p></div></div></div></div>"		
+					}
+					$(".siteList").html(str);
+						
+				},
+				error : function(request, status, error){
+                    console.log("code: " + request.status)
+                    console.log("message: " + request.responseText)
+                    console.log("error: " + error);
+                }
+
+			})
 		}
+
+		$(document).ready(function() {
+			siteLoad();
+    	})
+
+
+		function modal(siteNo){
+			console.log(siteNo)
+			$.ajax({
+				url : "/camp/campSiteDetailView.kh",
+				type : "get",
+				data : {
+					"siteNo" : siteNo
+				},
+				success : function(data){
+					$("#exampleModalLabel").html("<b>"+data.siteName+" 사이트 상세 정보</b>");
+					$(".siteImg-area").html('<img class="img-thumbnail" style="width: 100%; height: 100% ;object-fit: cover;" src="/resources/ruploadFiles/'+data.siteThumbnailRename+'" alt="">')
+					var str=""
+					str += "<table><tr><td class='infoTitle itModal'>특징</td><td>"+data.siteChar+"</td></tr>"
+					str += 	"<tr><td class='infoTitle itModal'>정보</td><td>"+data.siteInfo+"</td></tr>"
+					str += 	"<tr><td class='infoTitle itModal'>소개</td><td>"+data.siteIntro+"</td></tr>"
+					str += 	"<tr><td class='infoTitle itModal'>사이트가격</td><td>"+data.sitePrice.toLocaleString('ko-KR')+"원~</td></tr>"
+					str += 	"<tr><td class='infoTitle itModal'>사이트갯수</td><td>"+data.siteCount+"개</td></tr>"
+					str += 	"<tr><td class='infoTitle itModal'>인원정보</td><td>기준인원 "+data.standardPeople+"명 / 최대인원 "+data.maxPeople+"명</td></tr>"
+					str += 	"<tr><td class='infoTitle itModal'>추가인원가격</td><td>1인당 "+data.excessCharge.toLocaleString('ko-KR')+"원</td></tr>"
+					str += 	"<tr><td class='infoTitle itModal'>입/퇴실시간</td><td>입실 "+data.inTime+"시 / 퇴실 "+data.outTime+"</td></tr></table>"
+					$(".siteInfoDetail").html(str);
+
+				},
+				error : function(request, status, error){
+                    console.log("code: " + request.status)
+                    console.log("message: " + request.responseText)
+                    console.log("error: " + error);
+                }
+			})
+		}
+
+		$(document).ready(function() {
+    calendarInit();
+	
+});
+/*
+    달력 렌더링 할 때 필요한 정보 목록 
+
+    현재 월(초기값 : 현재 시간)
+    금월 마지막일 날짜와 요일
+    전월 마지막일 날짜와 요일
+*/
+
+function kk(){
+	var date = new Date(); // 현재 날짜(로컬 기준) 가져오기
+    var utc = date.getTime() + (date.getTimezoneOffset() * 60 * 1000); // uct 표준시 도출
+    var kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
+    var today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
+	var thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    // 달력에서 표기하는 날짜 객체
+  
+    
+    var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
+    var currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
+    var currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
+
+	// 렌더링을 위한 데이터 정리
+	currentYear = thisMonth.getFullYear();
+	currentMonth = thisMonth.getMonth();
+	currentDate = thisMonth.getDate();
+
+	// 이전 달의 마지막 날 날짜와 요일 구하기
+	var startDay = new Date(currentYear, currentMonth, 0);
+	var prevDate = startDay.getDate();
+	var prevDay = startDay.getDay();
+
+	// 이번 달의 마지막날 날짜와 요일 구하기
+	var endDay = new Date(currentYear, currentMonth + 1, 0);
+	var nextDate = endDay.getDate();
+	var nextDay = endDay.getDay();
+
+	console.log(prevDate, prevDay, nextDate, nextDay);
+
+
+	// 렌더링 html 요소 생성
+	calendar = document.querySelector('.dates')
+	calendar.innerHTML = '';
+
+	console.log(currentMonth)
+}
+var num = 0;
+function ff(date){
+	console.log($("#"+date+"").children().val())
+	$("#"+date+"").addClass("selectDate");
+	num++;
+	if(num>3){
+		element.classList.remove("selectDate")
+
+	}
+}
+
+function calendarInit() {
+
+    // 날짜 정보 가져오기
+    var date = new Date(); // 현재 날짜(로컬 기준) 가져오기
+    var utc = date.getTime() + (date.getTimezoneOffset() * 60 * 1000); // uct 표준시 도출
+    var kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
+    var today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
+  
+    var thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    // 달력에서 표기하는 날짜 객체
+  
+    
+    var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
+    var currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
+    var currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
+
+    // kst 기준 현재시간
+    // console.log(thisMonth);
+
+    // 캘린더 렌더링
+    renderCalender(thisMonth);
+
+    function renderCalender(thisMonth) {
+		console.log(thisMonth.getMonth())
+        // 렌더링을 위한 데이터 정리
+        currentYear = thisMonth.getFullYear();
+        currentMonth = thisMonth.getMonth();
+        currentDate = thisMonth.getDate();
+
+        // 이전 달의 마지막 날 날짜와 요일 구하기
+        var startDay = new Date(currentYear, currentMonth, 0);
+        var prevDate = startDay.getDate();
+        var prevDay = startDay.getDay();
+
+        // 이번 달의 마지막날 날짜와 요일 구하기
+        var endDay = new Date(currentYear, currentMonth + 1, 0);
+        var nextDate = endDay.getDate();
+        var nextDay = endDay.getDay();
+
+        // console.log(prevDate, prevDay, nextDate, nextDay);
+
+        // 현재 월 표기
+        $('.year-month').text(currentYear + '.' + (currentMonth + 1));
+
+        // 렌더링 html 요소 생성
+        calendar = document.querySelector('.dates')
+        calendar.innerHTML = '';
+        
+		const getFormatDate = (date) => {
+			var year = date.getFullYear()+"";
+			var month = (1 + date.getMonth())+"";
+			if(month < 10){
+				month = '0'+ month;
+			} //10미만일 시 앞에 0을 붙혀서 저장
+			var day = date.getDate();
+			if(day < 10){
+				day = '0'+day;
+			}
+			return year+month+day; // YYYYMMDD 형식으로 리턴
+			}
+        // 지난달
+        for (var i = prevDate - prevDay + 1; i <= prevDate; i++) {
+            calendar.innerHTML = calendar.innerHTML + '<div class="day prev disable">' + i + '</div>'
+        }
+        // 이번달
+        for (var i = 1; i <= nextDate; i++) {
+			var kh = new Date(currentYear,thisMonth.getMonth(),i)
+			if(thisMonth.getMonth() == today.getMonth() && i< today.getDate()){
+				calendar.innerHTML = calendar.innerHTML + '<div class="day current disable" id="'+getFormatDate(kh)+'">' + i + '</div>'
+			}else if(thisMonth.getMonth() < today.getMonth()){
+				calendar.innerHTML = calendar.innerHTML + '<div class="day current disable" id="'+getFormatDate(kh)+'">' + i + '</div>'
+			}else{
+				calendar.innerHTML = calendar.innerHTML + '<div class="day current" id="'+getFormatDate(kh)+'" onclick="ff('+getFormatDate(kh)+')"><input type="hidden" value='+getFormatDate(kh)+'>' + i + '</div>'
+			}
+        }
+        // 다음달
+        for (var i = 1; i <= (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
+            calendar.innerHTML = calendar.innerHTML + '<div class="day next disable">' + i + '</div>'
+        }
+
+        // 오늘 날짜 표기
+        if (today.getMonth() == currentMonth) {
+            todayDate = today.getDate();
+            var currentMonthDate = document.querySelectorAll('.dates .current');
+            currentMonthDate[todayDate -1].classList.add('today');
+        }
+		
+    }
+
+    // 이전달로 이동
+    $('.go-prev').on('click', function() {
+        thisMonth = new Date(currentYear, currentMonth - 1, 1);
+        renderCalender(thisMonth);
+    });
+
+    // 다음달로 이동
+    $('.go-next').on('click', function() {
+        thisMonth = new Date(currentYear, currentMonth + 1, 1);
+        renderCalender(thisMonth); 
+    });
+}
+
 
 	</script>
 

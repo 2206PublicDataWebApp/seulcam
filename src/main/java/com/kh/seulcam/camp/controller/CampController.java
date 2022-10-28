@@ -245,4 +245,35 @@ public class CampController {
 	    
 	    return mv;
 	}
+	
+	//캠핑장 사이트 리스트 출력
+	@ResponseBody
+	@RequestMapping(value="/camp/campSiteListView.kh", produces = "application/json;charset=utf-8",method= RequestMethod.GET)
+	public String campSiteListView(
+	        @RequestParam(value="contentId", required = false) int contentId,
+            ModelAndView mv) {
+	    try {
+	        List<CampSite> stList = cService.printSiteList(contentId);
+            
+	        return new Gson().toJson(stList);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+	    return null;
+	}
+	
+	//캠핑장 사이트 정보 출력
+	@ResponseBody
+    @RequestMapping(value="/camp/campSiteDetailView.kh", produces = "application/json;charset=utf-8",method= RequestMethod.GET)
+    public String campSiteDetailView(
+            @RequestParam(value="siteNo", required = false) int siteNo) {
+	    try {
+	        CampSite campSite = cService.printSite(siteNo);
+	        
+	        return new Gson().toJson(campSite);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+	    return null;
+	}
 }

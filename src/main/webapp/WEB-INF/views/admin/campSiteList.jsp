@@ -17,6 +17,17 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <!-- jQuery -->
 <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
+<style>
+	.infoTitle {
+	font-weight: bold;
+	color: darkslategray;
+	width: 100px;
+	padding: 5px;
+}
+.siteInfo {
+	pointer-events: all;
+}
+</style>
 </head>
 <body>
 <div class="container">
@@ -53,7 +64,8 @@
 					<th width="50">No.</th>
 					<th width="80">캠핑장ID</th>
 					<th width="100">캠핑장이름</th>
-					<th width="100">사이트명</th>
+					<th width="100">사이트명
+						(클릭)</th>
 					<th width="100">사이트가격</th>
 					<th width="100">기준/최대인원</th>
 					<th width="100">사이트갯수</th>
@@ -68,7 +80,7 @@
 							<td>${campSiteList.campId}</td>
 							<td><a
 								href="/camp/campDetail.kh?contentId=${campSiteList.campId}">${campSiteList.campName}</a></td>
-							<td>${campSiteList.siteName}</td>
+							<td><a class="siteInfo" data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal(${campSiteList.siteNo})'>${campSiteList.siteName}</a></td>
 							<td>${campSiteList.sitePrice}원</td>
 							<td>${campSiteList.standardPeople}명/${campSiteList.maxPeople}명</td>
 							<td>${campSiteList.siteCount}개</td>
@@ -89,8 +101,37 @@
 				<a href="/campAdmin/campAdminMain.kh" class="btn btn-secondary btn-sm">리스트관리메인</a>
 			</div>
 		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Modal
+						title</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="siteImg-area" style="width: 450px; height: 200px;" align="center">
+						
+					</div>
+					<div class="siteInfoDetail">
+						
+					</div>
+
+				</div>
+				<div class="modal-footer" style="padding: 10px;">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	</div>
 
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 	<script>
 		function deleteSite(siteNo,contentId){
 			if(confirm("정말 삭제하시겠습니까?")){
@@ -102,6 +143,38 @@
 		function modifySite(siteNo){
 			console.log(siteNo)
 			location.href = "/campAdmin/campSiteModifyView.kh?siteNo="+siteNo;
+		}
+
+		function modal(siteNo){
+			console.log(siteNo)
+			$.ajax({
+				url : "/camp/campSiteDetailView.kh",
+				type : "get",
+				data : {
+					"siteNo" : siteNo
+				},
+				success : function(data){
+					$("#exampleModalLabel").html("<b>"+data.siteName+" 사이트 상세 정보</b>");
+					$(".siteImg-area").html('<img class="img-thumbnail" style="width: 100%; height: 100% ;object-fit: cover;" src="/resources/ruploadFiles/'+data.siteThumbnailRename+'" alt="">')
+					var str=""
+					str += "<table><tr><td class='infoTitle'>특징</td><td>"+data.siteChar+"</td></tr>"
+					str += 	"<tr><td class='infoTitle'>정보</td><td>"+data.siteInfo+"</td></tr>"
+					str += 	"<tr><td class='infoTitle'>소개</td><td>"+data.siteIntro+"</td></tr>"
+					str += 	"<tr><td class='infoTitle'>사이트가격</td><td>"+data.sitePrice.toLocaleString('ko-KR')+"원~</td></tr>"
+					str += 	"<tr><td class='infoTitle'>사이트갯수</td><td>"+data.siteCount+"개</td></tr>"
+					str += 	"<tr><td class='infoTitle'>인원정보</td><td>기준인원 "+data.standardPeople+"명 / 최대인원 "+data.maxPeople+"명</td></tr>"
+					str += 	"<tr><td class='infoTitle'>추가인원가격</td><td>1인당 "+data.excessCharge.toLocaleString('ko-KR')+"원</td></tr>"
+					str += 	"<tr><td class='infoTitle'>입/퇴실시간</td><td>입실 "+data.inTime+"시 / 퇴실 "+data.outTime+"</td></tr>"
+					str += 	"<tr><td class='infoTitle'>등록일자</td><td>"+data.sCreateDate+"</td></tr></table>"
+					$(".siteInfoDetail").html(str);
+
+				},
+				error : function(request, status, error){
+                    console.log("code: " + request.status)
+                    console.log("message: " + request.responseText)
+                    console.log("error: " + error);
+                }
+			})
 		}
 
 	</script>
