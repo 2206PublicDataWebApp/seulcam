@@ -33,6 +33,7 @@
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"></mapper>
 		<mapper resource="mappers/camp-mapper.xml"></mapper>
+		<mapper resource="mappers/campBooking-mapper.xml"></mapper>
 		<mapper resource="mappers/product-mapper.xml"></mapper>
 		<mapper resource="mappers/basket-mapper.xml"></mapper>
 		<mapper resource="mappers/cart-mapper.xml"></mapper>
