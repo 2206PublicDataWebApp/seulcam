@@ -167,7 +167,7 @@ width:100%;
 			<table class="list_table">
 				<tr>
 					<td rowspan="4">
-					<img class="p-img" alt="상품이미지" src="/resources/puploadFiles/${product.mainFileRename}" ></td>
+					<img class="p-img" id="img${i.count }" alt="상품이미지" src="/resources/puploadFiles/${product.mainFileRename}" ></td>
 					<td id="order_product${i.count }"style="font-weight:bold">${product.productName }</td>
 					<td align="right">
 						
@@ -184,7 +184,9 @@ width:100%;
 					<td>가격</td>
 					<td><span id="order_price${i.count }" class="order_price" data-value="1000" >${product.productPrice }</span></td>
 				</tr>
+				
 			</table>
+				<input type="hidden" id="p-count"value="${!index.last }"/>
 						</c:if>
 						</c:forEach>
 						</c:forEach>
@@ -237,7 +239,7 @@ width:100%;
 		$div.append("<div><input type='text'id='cng-ad2' name='address2' class='post postcodify_details' placeholder='상세주소를 입력하세요'></div>");
 		$div.append("<div><button class='ch-btn' id='submit-address'onclick='change()'>변경</button><button class='ch-btn' onclick='displayform(this)'>취소</button></div>");
 		$div.append("</div>");
-		$("#adress2").append($div);
+		$("#address2").append($div);
 	}
 	
 	function popup(obj){
@@ -317,7 +319,8 @@ width:100%;
 	$("#total-price").html(totalProduct);
 	$("#total-button").html(totalProduct);
 	}
-	alert($("#total-price").text())
+	//alert($("#total-price").text())
+	
 	function orderPay(){
 		const data={
 			Num:createOrderNum(),
@@ -332,12 +335,15 @@ width:100%;
 			orderAddress1 : $("#address1").text(),
 			orderAddress2 : $("#address2").text(),
 			payPrice : $("#total-price").text(),
-			productPrice : $("#product_price").text()
+			productPrice : $("#product_price").text(),
+			orderMainFileRename : $('#img1').attr("src"),
+			orderMainProductName:$("#order_product1").text(),
+			point:$("#point").val()
 				
 		}
 		//console.log(data);
 		paymentComplete(data);//결제 완료후
-		//결제 연결paymentCard(data);
+		//paymentCard(data);//결제 화면
 	}
 	function createOrderNum(){
 		const date = new Date();

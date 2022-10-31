@@ -13,6 +13,7 @@ import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
 import com.kh.seulcam.order.service.OrderService;
 import com.kh.seulcam.order.store.OrderStore;
+import com.kh.seulcam.point.domain.Point;
 import com.kh.seulcam.product.domain.Product;
 
 @Service
@@ -95,6 +96,41 @@ public class OrderServiceImpl implements OrderService {
 		List<OrderProduct>pList = oStore.printCompleteProduct(session,orderNo);
 		return pList;
 	}
+
+	
+	//주문 완료 리스트 불러오기
+	@Override
+	public List<Order> printCompleteList(String memberId) {
+		List<Order>oList = oStore.printCompleteList(session,memberId);
+		return oList;
+	}
+
+	@Override
+	public List<OrderPay> printOrderPay(int orderNo) {
+		List<OrderPay>opList=oStore.printOrderPay(session,orderNo);
+		return opList;
+	}
+
+	@Override
+	public int registPoint(Point point) {
+		int result=oStore.registPoint(session,point);
+		return result;
+	}
+	
+	//관리자P 주문리스트 보여주기
+	@Override
+	public List<Order> printAllOrder() {
+		List<Order>oList=oStore.printAllOrder(session);
+		return oList;
+	}
+
+	//관리자 주문 상태 변경
+	@Override
+	public int cngDilivary(Order order) {
+		int result = oStore.cngDilivary(session,order);
+		return result;
+	}
+
 	
 	
 }

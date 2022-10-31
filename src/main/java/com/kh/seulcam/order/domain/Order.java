@@ -10,6 +10,8 @@ public class Order {
 	private String orderAddressPost;
 	private String orderAddress1;
 	private String orderAddress2;
+	private String orderMainProductName;
+	private String orderMainFileRename;
 	private String orderDate;
 	private String payStatus;
 	private String dirivaryStatus;
@@ -63,6 +65,18 @@ public class Order {
 	public void setOrderAddress2(String orderAddress2) {
 		this.orderAddress2 = orderAddress2;
 	}
+	public String getOrderMainProductName() {
+		return orderMainProductName;
+	}
+	public void setOrderMainProductName(String orderMainProductName) {
+		this.orderMainProductName = orderMainProductName;
+	}
+	public String getOrderMainFileRename() {
+		return orderMainFileRename;
+	}
+	public void setOrderMainFileRename(String orderMainFileRename) {
+		this.orderMainFileRename = orderMainFileRename;
+	}
 	public String getOrderDate() {
 		return orderDate;
 	}
@@ -97,17 +111,13 @@ public class Order {
 	public String toString() {
 		return "Order [orderNo=" + orderNo + ", memberId=" + memberId + ", memberName=" + memberName + ", memberPhone="
 				+ memberPhone + ", orderMessage=" + orderMessage + ", orderAddressPost=" + orderAddressPost
-				+ ", orderAddress1=" + orderAddress1 + ", orderAddress2=" + orderAddress2 + ", orderDate=" + orderDate
+				+ ", orderAddress1=" + orderAddress1 + ", orderAddress2=" + orderAddress2 + ", orderMainProductName="
+				+ orderMainProductName + ", orderMainFileRename=" + orderMainFileRename + ", orderDate=" + orderDate
 				+ ", payStatus=" + payStatus + ", dirivaryStatus=" + dirivaryStatus + ", cancleStatus=" + cancleStatus
 				+ ", refundStatus=" + refundStatus + "]";
 	}
 	
 	
-	
-	
-	
-	
-
 	
 	
 	

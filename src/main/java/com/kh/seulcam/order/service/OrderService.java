@@ -7,6 +7,7 @@ import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.order.domain.Order;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
+import com.kh.seulcam.point.domain.Point;
 import com.kh.seulcam.product.domain.Product;
 
 public interface OrderService {
@@ -32,6 +33,22 @@ public interface OrderService {
 	public int changeCompleteAddress(Order order);
 
 	public List<OrderProduct> printCompleteProduct(Integer orderNo);
+
+	public List<Order> printCompleteList(String memberId);
+
+	public List<OrderPay> printOrderPay(int orderNo);
+	//포인트
+	public int registPoint(Point point);
+	
+	//관리자
+	
+	//리스트 가져오기
+	public List<Order> printAllOrder();
+
+	//배송정보 변경
+	public int cngDilivary(Order order);
+
+	
 
 
 }

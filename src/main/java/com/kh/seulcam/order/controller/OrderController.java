@@ -21,158 +21,175 @@ import com.kh.seulcam.order.domain.Order;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
 import com.kh.seulcam.order.service.OrderService;
+import com.kh.seulcam.point.domain.Point;
 import com.kh.seulcam.product.domain.Product;
 
 import oracle.net.aso.i;
 
 @Controller
 public class OrderController {
-	
+
 	@Autowired
 	private OrderService oService;
-	
-	
-	//결제
-	@RequestMapping(value="/pay.kh", method=RequestMethod.GET)
+
+	// 결제
+	@RequestMapping(value = "/pay.kh", method = RequestMethod.GET)
 	public String showpay() {
 		return "order/pay";
 	}
-	
-	//주문
-	@RequestMapping(value="/order/order.kh", method=RequestMethod.GET)
-	public ModelAndView order(
-			ModelAndView mv
-			,HttpSession session) {
-		Member memberId = (Member)session.getAttribute("loginUser");
+
+	// 주문
+	@RequestMapping(value = "/order/order.kh", method = RequestMethod.GET)
+	public ModelAndView order(ModelAndView mv, HttpSession session) {
+		Member memberId = (Member) session.getAttribute("loginUser");
 		Member member = oService.printMemberInfo(memberId);
-		List<OrderProduct>oList = oService.printProductInfo(memberId);
+		List<OrderProduct> oList = oService.printProductInfo(memberId);
 		System.out.println(oList);
-		
-		if(!oList.isEmpty()) {
-			List<Product>pList = new ArrayList(); 
-			 for(int i=0;i<oList.size();i++) { 
-				 int productNo=oList.get(i).getProductNo();
-				 
-				 List<Product>ppList= oService.printAllProduct(productNo);
+
+		if (!oList.isEmpty()) {
+			List<Product> pList = new ArrayList();
+			for (int i = 0; i < oList.size(); i++) {
+				int productNo = oList.get(i).getProductNo();
+
+				List<Product> ppList = oService.printAllProduct(productNo);
 				pList.addAll(ppList);
-				 	
-			  }
-			 int totalPrice=0;
-			 for(int i=0;i<pList.size();i++) {
-				 int price=pList.get(i).getProductPrice()*oList.get(i).getOrderCount();
-				 totalPrice+=price;
-				 
-			 }
-		mv.addObject("totalPrice",totalPrice);
-		mv.addObject("pList",pList);
+
+			}
+			int totalPrice = 0;
+			for (int i = 0; i < pList.size(); i++) {
+				int price = pList.get(i).getProductPrice() * oList.get(i).getOrderCount();
+				totalPrice += price;
+
+			}
+			mv.addObject("totalPrice", totalPrice);
+			mv.addObject("pList", pList);
 		}
-		mv.addObject("oList",oList);
-		mv.addObject("member",member);
+		mv.addObject("oList", oList);
+		mv.addObject("member", member);
 		mv.setViewName("order/orderDetail");
 		return mv;
 	}
-	
-	
-	//주문 완료
-	@RequestMapping(value="/order/finish.kh", method=RequestMethod.GET)
-	public ModelAndView orderFinish(
-			ModelAndView mv,
-			@RequestParam("orderNo")Integer orderNo,
-			HttpSession session
-			) {
-		//Member memberId = (Member)session.getAttribute("loginUser");
+
+	// 주문 완료
+	@RequestMapping(value = "/order/finish.kh", method = RequestMethod.GET)
+	public ModelAndView orderFinish(ModelAndView mv, @RequestParam("orderNo") Integer orderNo, HttpSession session) {
+		// Member memberId = (Member)session.getAttribute("loginUser");
 		Order order = oService.printOrderInfo(orderNo);
 		OrderPay orderPay = oService.printOrderPayInfo(orderNo);
 
-		
-		mv.addObject("orderPay",orderPay);
-		mv.addObject("order",order);
-		 mv.setViewName("order/orderComplete");
-		return mv; 
+		mv.addObject("orderPay", orderPay);
+		mv.addObject("order", order);
+		mv.setViewName("order/orderComplete");
+		return mv;
 	}
-	
-	//주문 주소 변경
+
+	// 주문 주소 변경
 	@ResponseBody
-	@RequestMapping(value="/order/addressChange.kh",method=RequestMethod.POST)
-	public String addressChange(
-			@ModelAttribute Member member
-			) {
+	@RequestMapping(value = "/order/addressChange.kh", method = RequestMethod.POST)
+	public String addressChange(@ModelAttribute Member member) {
 		int result = oService.changeAddress(member);
-		return"success";
-		
+		return "success";
+
 	}
-	
-	//주문성공
+
+	// 주문성공
 	@ResponseBody
-	@RequestMapping(value="/order/payment/complete", method=RequestMethod.POST)
+	@RequestMapping(value = "/order/payment/complete", method = RequestMethod.POST)
 	public String orderComplete(
 			@ModelAttribute Order order,
-			@ModelAttribute OrderPay orderPay) {
+			@ModelAttribute OrderPay orderPay,
+			@ModelAttribute Point point
+			) {
 		int result = oService.conpleteOrder(order);
-		int orderNo=order.getOrderNo();
-		String memberId=order.getMemberId();
-		//주문상품에 주문번호 넣고 주문상태 Y로 바꾸는 코드
-		int result1=oService.registOrderNo(orderNo,memberId);
-		//결제테이블에 정보 넣기
+		int orderNo = order.getOrderNo();
+		String memberId = order.getMemberId();
+		// 주문상품에 주문번호 넣고 주문상태 Y로 바꾸는 코드
+		int result1 = oService.registOrderNo(orderNo, memberId);
+		// 결제테이블에 정보 넣기
 		orderPay.setOrderNo(orderNo);
-		int result2=oService.registOrderPrice(orderPay);
-		//포인트테이블에 정보 넣기
+		int result2 = oService.registOrderPrice(orderPay);
+		// 포인트테이블에 정보 넣기
+		int result3=oService.registPoint(point);
 
-		
 		return String.valueOf(orderNo);
 
-	
 	}
-	
-	
-	//주문성공 배송지 변경
+
+	// 주문성공 배송지 변경
 	@ResponseBody
-	@RequestMapping(value="/order/complete/addressChange.kh",method=RequestMethod.POST)
-	public String orderCompleteAddress(
-			@ModelAttribute Order order
-			) {
+	@RequestMapping(value = "/order/complete/addressChange.kh", method = RequestMethod.POST)
+	public String orderCompleteAddress(@ModelAttribute Order order) {
 		int result = oService.changeCompleteAddress(order);
-		
-		if(result>0) {
-			return"success";
-		}else {
+
+		if (result > 0) {
+			return "success";
+		} else {
 			return "error";
 		}
 	}
-	
-	//주문 상세 페이지
-	@RequestMapping(value="/order/complete/datail.kh",method=RequestMethod.GET)
-	public ModelAndView printCompleteDetail(
-			ModelAndView mv,
-			@RequestParam("orderNo")Integer orderNo
-			) {
-		Order order=oService.printOrderInfo(orderNo);
-		OrderPay orderPay=oService.printOrderPayInfo(orderNo);
-		List<OrderProduct>oList=oService.printCompleteProduct(orderNo);
-		
-		if(!oList.isEmpty()) {
-			List<Product>pList = new ArrayList(); 
-			 for(int i=0;i<oList.size();i++) { 
-				 int productNo=oList.get(i).getProductNo();
-				 
-				 List<Product>ppList= oService.printAllProduct(productNo);
+
+	// 주문 상세 페이지
+	@RequestMapping(value = "/order/complete/datail.kh", method = RequestMethod.GET)
+	public ModelAndView printCompleteDetail(ModelAndView mv, @RequestParam("orderNo") Integer orderNo) {
+		Order order = oService.printOrderInfo(orderNo);
+		OrderPay orderPay = oService.printOrderPayInfo(orderNo);
+		List<OrderProduct> oList = oService.printCompleteProduct(orderNo);
+
+		if (!oList.isEmpty()) {
+			List<Product> pList = new ArrayList();
+			for (int i = 0; i < oList.size(); i++) {
+				int productNo = oList.get(i).getProductNo();
+
+				List<Product> ppList = oService.printAllProduct(productNo);
 				pList.addAll(ppList);
-				 	
-			  }
-			 System.out.println(pList);
+
+			}
+			mv.addObject("pList", pList);
+			System.out.println(pList);
 		}
 		System.out.println(order);
 		System.out.println(orderPay);
 		System.out.println(oList);
-		mv.addObject("order",order);
-		mv.addObject("orderPay",orderPay);
-		mv.addObject("pList",oList);
-		
+		mv.addObject("order", order);
+		mv.addObject("oList", oList);
+		mv.addObject("orderPay", orderPay);
+
 		mv.setViewName("order/orderCompleteDetail");
-		
+
 		return mv;
 	}
-	
-	
-	
+
+	// 주문리스트
+	@RequestMapping(value = "/order/complete/list.kh", method = RequestMethod.GET)
+	public ModelAndView printCompleteList(ModelAndView mv, @RequestParam("memberId") String memberId) {
+		List<Order> oList = oService.printCompleteList(memberId);
+		if (!oList.isEmpty()) {
+			List<OrderPay> opList = new ArrayList();
+			for (int i = 0; i < oList.size(); i++) {
+				int orderNo = oList.get(i).getOrderNo();
+
+				List<OrderPay> opList1 = oService.printOrderPay(orderNo);
+				opList.addAll(opList1);
+			}
+			mv.addObject("opList", opList);
+			
+			/*
+			 * if (!opList.isEmpty()) { List<Product> pList = new ArrayList(); for (int i =
+			 * 0; i < oList.size(); i++) { int productNo = opList.get(i).getProductNo();
+			 * 
+			 * List<Product> ppList = oService.printAllProduct(productNo);
+			 * pList.addAll(ppList);
+			 * 
+			 * } mv.addObject("pList", pList);
+			 * 
+			 * }
+			 */
+		}
+
+		mv.addObject("oList", oList);
+		mv.setViewName("order/orderCompleteList");
+		return mv;
+
+	}
+
 }
