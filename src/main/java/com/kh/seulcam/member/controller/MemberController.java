@@ -277,7 +277,9 @@ public class MemberController {
 			String memberId = loginUser.getMemberId();
 			if(loginUser != null) {
 				HttpSession session = request.getSession();
-				if(rememberMe == true) { // 로그인 유지에 체크 했을 때
+				if(rememberMe == null) { 
+				} else {
+					// 로그인 유지에 체크 했을 때
 					//쿠키 등록하기
 					Cookie cookie = new Cookie("memberId", memberId);
 					cookie.setMaxAge(60*60*24*7); // 쿠키 수명 설정

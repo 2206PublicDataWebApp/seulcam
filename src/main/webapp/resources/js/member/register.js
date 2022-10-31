@@ -12,9 +12,6 @@ $(".nickname.regerror").hide();
 $(".emailregex.ok").hide();
 $(".emailregex.error").hide();
 
-
-
-
 $(function() { 
     $(".idreg.error").hide();
     $(".id.ok").hide();
@@ -32,6 +29,7 @@ $(function() {
                 url:"/member/memberIdCheck",
                 type:"get",
                 data:{"memberId" : memberId},
+                async:false,
                 success:function(result){
                     if(result != "0"){    // 해당하는 아이디가 존재하면,
                         $(".id.ok").hide();
@@ -118,6 +116,7 @@ $(function() {
             url:"/member/memberNicknameCheck",
             type:"get",
             data:{"memberNickname" : memberNickname},
+            async:false,
             success:function(result){
                 if(result != "0"){    // 해당하는 닉네임이 존재하면, 
                     $(".nickname.ok").hide();
@@ -126,7 +125,6 @@ $(function() {
                     $('#memberNickname').removeClass('pass');
     
                 }else{  // 해당하는 닉네임이 존재하지 않으면,
-
                     $(".nickname.ok").show();
                     $(".nickname.error").hide();
                     $(".nickname.regerror").hide();
