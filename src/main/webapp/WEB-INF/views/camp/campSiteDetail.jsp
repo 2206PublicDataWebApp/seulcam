@@ -326,7 +326,7 @@ div{
 .selectDate{
 	background-color: #E86F52;
 	/* pointer-events: none; */
-	color: #fff;
+	color: #fff !important;
 	
 }
 .calSelect {
@@ -403,11 +403,11 @@ div{
 				<!-- data-bs-toggle='modal' data-bs-target='calModal' -->
 				<!-- Modal cal -->
 				<div class="modal fade" id="calModal" tabindex="-1"
-					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					aria-labelledby="ModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h1 class="modal-title fs-5" id="exampleModalLabel">예약날짜</h1>
+								<h1 class="modal-title fs-5" id="ModalLabel">예약날짜</h1>
 								<button type="button" class="btn-close" data-bs-dismiss="modal"
 									aria-label="Close"></button>
 							</div>
@@ -524,7 +524,7 @@ div{
 						str += "<h5>"+data[i].siteName+"</h5></div><div class='row' style='padding-right: 0;' ><div class='col-8' style='padding-right: 0;' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal("+data[i].siteNo+")'>"
 						str += "<p style='color: #767676;'>"+data[i].siteChar+"</p><p style='color: #767676;'>기준인원 "+data[i].standardPeople+"명 / 최대인원 "+data[i].maxPeople+"명</p></div>"		
 						str += "<div class='col-4' style='display: flex; flex-direction: column-reverse; padding-right: 0;'>"			
-						str += "<a href='/campBooking/campBookingView.kh' style='margin: 5px;' class='btn btn-outline-success btn-sm'>예약</a><p style='font-size: 8pt; margin: 0; color: green;'>남은자리 "+data[i].siteCount+"개</p>"			
+						str += "<a onclick='moveBooking("+data[i].siteNo+")' style='margin: 5px;' class='btn btn-outline-success btn-sm'>예약</a><p style='font-size: 8pt; margin: 0; color: green;'>남은자리 "+data[i].siteCount+"개</p>"			
 						str += "<p style='font-size: 12pt; margin: 0;'>"+data[i].sitePrice.toLocaleString('ko-KR')+"원~</p></div></div></div></div>"		
 					}
 					$(".siteList").html(str);
@@ -537,6 +537,16 @@ div{
                 }
 
 			})
+		}
+
+		function moveBooking(siteNo){
+			var memberId = "${sessionScope.loginUser.memberId}";
+			// if( memberId == ""){
+			// 	alert("로그인을 해야 예약이 가능합니다.")
+			// }
+			location.href = "/campBooking/campBookingView.kh?siteNo="+siteNo+"&memberId="+memberId+"&contentId="+contentId+"&firstDayJs="+firstDay+"&lastDayJs="+lastDay+""
+			
+
 		}
 
 		// $(document).ready(function() {
