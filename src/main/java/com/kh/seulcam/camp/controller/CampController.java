@@ -5,6 +5,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.Period;
 import java.util.List;
 import java.util.Map;
 
@@ -94,7 +97,7 @@ public class CampController {
 			        mv.setViewName("camp/campDetail");
 			} catch (Exception e) {
 			    e.printStackTrace();
-			    mv.addObject("msg", "레시피조회 실패").setViewName("common/errorPage");
+			    mv.addObject("msg", "상세페이지 조회 실패").setViewName("common/errorPage");
 			}
 			return mv;
 		}
@@ -240,7 +243,8 @@ public class CampController {
 	        mv.addObject("stList",stList);
 	        mv.setViewName("camp/campSiteDetail");
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
+            mv.addObject("msg", "상세페이지 조회 실패").setViewName("common/errorPage");
         }
 	    
 	    return mv;
@@ -251,13 +255,25 @@ public class CampController {
 	@RequestMapping(value="/camp/campSiteListView.kh", produces = "application/json;charset=utf-8",method= RequestMethod.GET)
 	public String campSiteListView(
 	        @RequestParam(value="contentId", required = false) int contentId,
+	        @RequestParam(value="firstDayJs", required = false) String firstDayJs,
+	        @RequestParam(value="lastDayJs", required = false) String lastDayJs,
             ModelAndView mv) {
 	    try {
+	        // 날짜 String to sql.Date
+	        Date firstDay = Date.valueOf(firstDayJs);
+	        Date lastDay = Date.valueOf(lastDayJs);
+	        // 날짜사이 일수 구하기
+	        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	        String Day = (format.parse(lastDayJs).getTime() - format.parse(firstDayJs).getTime())/(24*60*60)/1000+"";
+//	        Period diff = Period.between(format.parse(firstDayJs),format.parse(lastDayJs));
+//	        System.out.println(firstDay + " : " + lastDay);
+	        System.out.println(Day);
 	        List<CampSite> stList = cService.printSiteList(contentId);
             
 	        return new Gson().toJson(stList);
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
+            mv.addObject("msg", "상세페이지 조회 실패").setViewName("common/errorPage");
         }
 	    return null;
 	}

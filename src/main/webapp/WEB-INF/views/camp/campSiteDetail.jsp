@@ -214,7 +214,7 @@ div{
     justify-content: center;
     align-items: center;
     font-weight: 700;
-    font-size: 48px;
+    font-size: 24px;
     line-height: 78px;
 }
 
@@ -234,7 +234,7 @@ div{
 .sec_cal .cal_nav .go-next {
     display: block;
     width: 50px;
-    height: 78px;
+    height: 35px;
     font-size: 0;
     display: flex;
     justify-content: center;
@@ -266,7 +266,7 @@ div{
 }
 
 .sec_cal .cal_wrap {
-    padding-top: 40px;
+    padding-top: 20px;
     position: relative;
     margin: 0 auto;
 }
@@ -281,7 +281,13 @@ div{
 .sec_cal .cal_wrap::after {
     top: 368px;
 }
-
+.current {
+	pointer-events: all;
+}
+.current:hover {
+	background-color: #fdc9bc;
+	
+}
 
 .sec_cal .cal_wrap .day {
     display:flex;
@@ -315,13 +321,30 @@ div{
 }
 
 .sec_cal .cal_wrap .day.disable {
-    color: #ddd;
+	color: #ddd;
 }
 .selectDate{
 	background-color: #E86F52;
-	color: #fff;
+	/* pointer-events: none; */
+	color: #fff !important;
+	
 }
-
+.calSelect {
+	display: flex;
+	justify-content: center;
+    flex-direction: column;
+	width: 100%; 
+	height: 40px; 
+	background-color: #f1f1f1; 
+	box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 25%);
+	border-radius: 10px;
+}
+.calSelect div{
+	float: left;
+	height: 100%;
+	width: 50%;
+	text-align: center;
+}
 </style>
 <body>
 	<!-- 헤더&메뉴바 -->
@@ -349,26 +372,14 @@ div{
 				</div>
 				<div class="calendar_area">
 					<h4>달력</h4>
-					<div class="sec_cal">
-						<div class="cal_nav">
-						  <a href="javascript:;" class="nav-btn go-prev">prev</a>
-						  <div class="year-month"></div>
-						  <a href="javascript:;" class="nav-btn go-next">next</a>
+					<div class="calSelect">
+						<a  data-bs-toggle='modal' data-bs-target='#calModal'><div>
+							<i class="bi bi-calendar-check"></i><span class="stDate"></span>
 						</div>
-						<div class="cal_wrap">
-						  <div class="days">
-							<div class="day">MON</div>
-							<div class="day">TUE</div>
-							<div class="day">WED</div>
-							<div class="day">THU</div>
-							<div class="day">FRI</div>
-							<div class="day">SAT</div>
-							<div class="day">SUN</div>
-						  </div>
-						  <div class="dates"></div>
-						</div>
-					  </div>
-					  <button onclick="kk()">test</button>
+						<div>
+							<i class="bi bi-calendar-check"></i><span class="edDate"></span>
+						</div></a>
+					</div>
 					<hr>
 				</div>
 				<div class="intro_area">
@@ -384,55 +395,61 @@ div{
 				</div>
 				<div class="siteList_area">
 					<div class="siteList">
-						<div class='siteInfo row'>
-							<div class='col-4' style='padding-left: 0;' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal()'>
-								<img class='simg' style='width: 100%; height: 100%; object-fit: cover;' src='https://campingagains3.s3.ap-northeast-2.amazonaws.com/medium_2021_12_26_12_15_24_34875d31d7.png' alt=''>
-									<span class='registY'>예약가능</span>
-								</img>
-							</div></a>
-							<div class='col-8' style='padding-left: 0;' >
-								<div class='row' style='padding: 0px; padding-top : 5px' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal()'>
-									<h5>${camp.facltNm}</h5>
-								</div>
-								<div class='row' style='padding-right: 0;' >
-									<div class='col-8' style='padding-right: 0;' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal()'>
-										<p style='color: #767676;'>데크30x30</p>
-										<p style='color: #767676;'>기준인원 2명 / 최대인원 5명</p>
-										</div>
-										<div class='col-4' style='display: flex; flex-direction: column-reverse; padding-right: 0;'>
-											<a href='/camp/campSiteDetail.kh?contentId=${camp.contentId}' style='margin: 5px;' class='btn btn-outline-success btn-sm'>예약</a>
-											<p style='font-size: 8pt; margin: 0; color: green;'>남은자리 6개</p>
-											<p style='font-size: 13pt; margin: 0;'>50000원~</p>
-										</div>
-									</div>
-							</div>
-						</div>
 						
-						<!-- <div class="siteInfo d-flex">
-							<div class="siteImg">
-								<div class="simg" src="https://campingagains3.s3.ap-northeast-2.amazonaws.com/medium_2021_12_26_12_15_24_34875d31d7.png" alt="">
-
-									<span>예약가능</span>
-								</div>
-							</div>
-							<div class="siteIntro">
-								<div class="siteIntro-header">
-									<h5>${camp.facltNm}</h5>
-									<p>데크30x30</p>
-									<p>기준인원 2명 / 최대인원 5명</p>
-								</div>
-								<div class="siteIntro-footer">
-								</div>
-							</div>
-							<div class="siteRegist d-flex">
-								df
-							</div>
-						</div> -->
-
 					</div>
 
 					<hr>
 				</div>
+				<!-- data-bs-toggle='modal' data-bs-target='calModal' -->
+				<!-- Modal cal -->
+				<div class="modal fade" id="calModal" tabindex="-1"
+					aria-labelledby="ModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="ModalLabel">예약날짜</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="calSelect">
+									<a><div>
+										<i class="bi bi-calendar-check"></i><span class="stDate"> 22년 10월 31일</span>
+									</div>
+									<div>
+										<i class="bi bi-calendar-check"></i><span class="edDate"> 22년 10월 31일</span>
+									</div></a>
+								</div>
+								<hr>
+								<div class="sec_cal">
+									<div class="cal_nav">
+									  <a href="javascript:;" class="nav-btn go-prev">prev</a>
+									  <div class="year-month"></div>
+									  <a href="javascript:;" class="nav-btn go-next">next</a>
+									</div>
+									<div class="cal_wrap">
+									  <div class="days">
+										<div class="day">MON</div>
+										<div class="day">TUE</div>
+										<div class="day">WED</div>
+										<div class="day">THU</div>
+										<div class="day">FRI</div>
+										<div class="day">SAT</div>
+										<div class="day">SUN</div>
+									  </div>
+									  <div class="dates"></div>
+									</div>
+								  </div>
+
+							</div>
+							<div class="modal-footer" style="padding: 10px;">
+								<button type="button" class="btn btn-secondary"
+									data-bs-dismiss="modal">선택</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 
 				<!-- Modal -->
 				<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -492,7 +509,9 @@ div{
 				url : "/camp/campSiteListView.kh",
 				type : "get",
 				data : {
-					"contentId" : contentId
+					"contentId" : contentId,
+					"firstDayJs" : firstDay,
+					"lastDayJs" : lastDay
 				},
 				success : function(data){
 					var str = "";
@@ -505,7 +524,7 @@ div{
 						str += "<h5>"+data[i].siteName+"</h5></div><div class='row' style='padding-right: 0;' ><div class='col-8' style='padding-right: 0;' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal("+data[i].siteNo+")'>"
 						str += "<p style='color: #767676;'>"+data[i].siteChar+"</p><p style='color: #767676;'>기준인원 "+data[i].standardPeople+"명 / 최대인원 "+data[i].maxPeople+"명</p></div>"		
 						str += "<div class='col-4' style='display: flex; flex-direction: column-reverse; padding-right: 0;'>"			
-						str += "<a href='#' style='margin: 5px;' class='btn btn-outline-success btn-sm'>예약</a><p style='font-size: 8pt; margin: 0; color: green;'>남은자리 "+data[i].siteCount+"개</p>"			
+						str += "<a onclick='moveBooking("+data[i].siteNo+")' style='margin: 5px;' class='btn btn-outline-success btn-sm'>예약</a><p style='font-size: 8pt; margin: 0; color: green;'>남은자리 "+data[i].siteCount+"개</p>"			
 						str += "<p style='font-size: 12pt; margin: 0;'>"+data[i].sitePrice.toLocaleString('ko-KR')+"원~</p></div></div></div></div>"		
 					}
 					$(".siteList").html(str);
@@ -520,13 +539,22 @@ div{
 			})
 		}
 
-		$(document).ready(function() {
-			siteLoad();
-    	})
+		function moveBooking(siteNo){
+			var memberId = "${sessionScope.loginUser.memberId}";
+			// if( memberId == ""){
+			// 	alert("로그인을 해야 예약이 가능합니다.")
+			// }
+			location.href = "/campBooking/campBookingView.kh?siteNo="+siteNo+"&memberId="+memberId+"&contentId="+contentId+"&firstDayJs="+firstDay+"&lastDayJs="+lastDay+""
+			
+
+		}
+
+		// $(document).ready(function() {
+		// 	siteLoad();
+    	// })
 
 
 		function modal(siteNo){
-			console.log(siteNo)
 			$.ajax({
 				url : "/camp/campSiteDetailView.kh",
 				type : "get",
@@ -556,19 +584,32 @@ div{
 			})
 		}
 
-		$(document).ready(function() {
-    calendarInit();
-	
+		/*
+		@@@@@달력시작@@@@@
+		달력 렌더링 할 때 필요한 정보 목록 
+		
+		현재 월(초기값 : 현재 시간)
+		금월 마지막일 날짜와 요일
+		전월 마지막일 날짜와 요일
+		*/
+var num = 0;
+var startDate="";
+var endDate="";
+var firstDay ="";
+var lastDay = "";
+
+//달력관련 load
+$(document).ready(function() {
+	readyDate()
+	num = 3;
+	var dd = new Date(startDate.substring(0,4),startDate.substring(4,6)-1,startDate.substring(6,8))
+	siteLoad();
+	inputDate();
+	calendarInit();
 });
-/*
-    달력 렌더링 할 때 필요한 정보 목록 
 
-    현재 월(초기값 : 현재 시간)
-    금월 마지막일 날짜와 요일
-    전월 마지막일 날짜와 요일
-*/
-
-function kk(){
+// 시작시 오늘날짜 표시
+function readyDate(){
 	var date = new Date(); // 현재 날짜(로컬 기준) 가져오기
     var utc = date.getTime() + (date.getTimezoneOffset() * 60 * 1000); // uct 표준시 도출
     var kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
@@ -580,42 +621,112 @@ function kk(){
     var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
     var currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
     var currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
-
 	// 렌더링을 위한 데이터 정리
 	currentYear = thisMonth.getFullYear();
 	currentMonth = thisMonth.getMonth();
 	currentDate = thisMonth.getDate();
 
-	// 이전 달의 마지막 날 날짜와 요일 구하기
-	var startDay = new Date(currentYear, currentMonth, 0);
-	var prevDate = startDay.getDate();
-	var prevDay = startDay.getDay();
-
-	// 이번 달의 마지막날 날짜와 요일 구하기
-	var endDay = new Date(currentYear, currentMonth + 1, 0);
-	var nextDate = endDay.getDate();
-	var nextDay = endDay.getDay();
-
-	console.log(prevDate, prevDay, nextDate, nextDay);
-
-
-	// 렌더링 html 요소 생성
-	calendar = document.querySelector('.dates')
-	calendar.innerHTML = '';
-
-	console.log(currentMonth)
+	
+	sd = new Date(currentYear,currentMonth,currentDate);
+	ed= new Date(currentYear,currentMonth,currentDate+1);
+	startDate = getFormatDate(sd);
+	endDate = getFormatDate(ed);
+	firstDay = getFormatDate2(startDate)+"";
+	lastDay = getFormatDate2(endDate)+"";
 }
-var num = 0;
-function ff(date){
-	console.log($("#"+date+"").children().val())
-	$("#"+date+"").addClass("selectDate");
-	num++;
-	if(num>3){
-		element.classList.remove("selectDate")
 
+//날짜 html 입력
+function inputDate(){
+	var sdd = startDate+"";
+	var edd = endDate+"";
+	var sd = " "+sdd.substring(2,4)+"년 "+sdd.substring(4,6)+"월 "+sdd.substring(6,8)+"일";
+	var ed = " "+edd.substring(2,4)+"년 "+edd.substring(4,6)+"월 "+edd.substring(6,8)+"일"
+	$(".stDate").html(sd);
+	$(".edDate").html(ed);
+}
+
+// 날짜 선택 변수 구현
+function clickDate(date){
+	if(num == 3){
+		$("#"+startDate+"").removeClass("selectDate");
+		$("#"+endDate+"").removeClass("selectDate");
+		endDate ="";
+		startDate = date;
+		$("#"+startDate+"").addClass("selectDate");	
+		num=1;
 	}
+	else if(num == 0){
+		startDate = date;
+		num=1;
+		$("#"+startDate+"").addClass("selectDate");
+	}
+	else if(num == 1){
+		endDate = date;
+		if(startDate > endDate && endDate != ""){
+			$("#"+startDate+"").removeClass("selectDate");
+			startDate = date;
+			endDate="";
+			$("#"+startDate+"").addClass("selectDate");
+		}else{
+			endDate = date;
+			num=3;
+			$("#"+endDate+"").addClass("selectDate");
+		}
+	}
+	firstDay = getFormatDate2(startDate);
+	if(endDate != ""){
+		lastDay = getFormatDate2(endDate);
+	}
+	inputDate();
 }
 
+//모달창 닫혔을시 기능
+$('#calModal').on('hidden.bs.modal', function () {
+	if(endDate ==""){
+		var sdd = startDate+""; 
+		var fillDate = new Date(sdd.substring(0,4),sdd.substring(4,6)-1,parseInt(sdd.substring(6,8))+1 )
+		// console.log(dd)
+		endDate =getFormatDate(fillDate);
+		lastDay = getFormatDate2(endDate);
+		num =3;
+		inputDate();
+		calendarInit();
+		siteLoad();
+	}
+})
+function campBooking(){
+
+}
+
+// 날짜 포맷
+const getFormatDate = (date) => {
+			var year = date.getFullYear()+"";
+			var month = (1 + date.getMonth())+"";
+			if(month < 10){
+				month = '0'+ month;
+			} //10미만일 시 앞에 0을 붙혀서 저장
+			var day = date.getDate();
+			if(day < 10){
+				day = '0'+day;
+			}
+			return year+month+day; // YYYYMMDD 형식으로 리턴
+			}
+const getFormatDate2 = (date) => {
+	// var fillDate = new Date(sdd.substring(0,4),sdd.substring(4,6)-1,parseInt(sdd.substring(6,8))+1 )
+	date = date+"";
+var year = date.substring(0,4)+"";
+var month = date.substring(4,6);
+if(month < 10){
+				month = '0'+ month;
+			} //10미만일 시 앞에 0을 붙혀서 저장
+var day = parseInt(date.substring(6,8));
+if(day < 10){
+				day = '0'+day;
+			}
+return year+"-"+month+"-"+day; // YYYY-MM-DD 형식으로 리턴
+}
+
+			//달력 생성
 function calendarInit() {
 
     // 날짜 정보 가져오기
@@ -639,7 +750,6 @@ function calendarInit() {
     renderCalender(thisMonth);
 
     function renderCalender(thisMonth) {
-		console.log(thisMonth.getMonth())
         // 렌더링을 위한 데이터 정리
         currentYear = thisMonth.getFullYear();
         currentMonth = thisMonth.getMonth();
@@ -664,31 +774,20 @@ function calendarInit() {
         calendar = document.querySelector('.dates')
         calendar.innerHTML = '';
         
-		const getFormatDate = (date) => {
-			var year = date.getFullYear()+"";
-			var month = (1 + date.getMonth())+"";
-			if(month < 10){
-				month = '0'+ month;
-			} //10미만일 시 앞에 0을 붙혀서 저장
-			var day = date.getDate();
-			if(day < 10){
-				day = '0'+day;
-			}
-			return year+month+day; // YYYYMMDD 형식으로 리턴
-			}
+		
         // 지난달
         for (var i = prevDate - prevDay + 1; i <= prevDate; i++) {
             calendar.innerHTML = calendar.innerHTML + '<div class="day prev disable">' + i + '</div>'
         }
         // 이번달
         for (var i = 1; i <= nextDate; i++) {
-			var kh = new Date(currentYear,thisMonth.getMonth(),i)
+			var kh = new Date(currentYear,currentMonth,i)
 			if(thisMonth.getMonth() == today.getMonth() && i< today.getDate()){
 				calendar.innerHTML = calendar.innerHTML + '<div class="day current disable" id="'+getFormatDate(kh)+'">' + i + '</div>'
-			}else if(thisMonth.getMonth() < today.getMonth()){
+			}else if(thisMonth.getMonth() < today.getMonth() && currentYear <= today.getFullYear){
 				calendar.innerHTML = calendar.innerHTML + '<div class="day current disable" id="'+getFormatDate(kh)+'">' + i + '</div>'
 			}else{
-				calendar.innerHTML = calendar.innerHTML + '<div class="day current" id="'+getFormatDate(kh)+'" onclick="ff('+getFormatDate(kh)+')"><input type="hidden" value='+getFormatDate(kh)+'>' + i + '</div>'
+				calendar.innerHTML = calendar.innerHTML + '<div class="day current" id="'+getFormatDate(kh)+'" onclick="clickDate('+getFormatDate(kh)+')"><input type="hidden" value="'+kh+'">' + i + '</div>'
 			}
         }
         // 다음달
@@ -702,6 +801,14 @@ function calendarInit() {
             var currentMonthDate = document.querySelectorAll('.dates .current');
             currentMonthDate[todayDate -1].classList.add('today');
         }
+
+		// 선택된 날짜 표시
+		if(startDate != ""){
+			$("#"+startDate+"").addClass("selectDate");
+		}
+		if(endDate != ""){
+			$("#"+endDate+"").addClass("selectDate");
+		}
 		
     }
 
