@@ -56,7 +56,7 @@
                     <button type="submit" class="login-button">로그인</button>
 
                     <div class="member-util">
-                        <input class="autologin" type="checkbox" id="autologin" name="rememberMe">
+                        <input class="autologin" type="checkbox" id="autologin" name="rememberMe" value="true">
                         <label for="autologin" id="labelAutologin">로그인 유지</label>
 
                         <ul class="util-list">
@@ -84,6 +84,5 @@
     </div>
     <script src="/resources/js/member/pwInputCommon.js"></script>
     <script src="/resources/js/member/kakaoLogin.js"></script>
-    
 </body>
 </html>

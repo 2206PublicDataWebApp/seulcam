@@ -34,7 +34,7 @@
 		</insert>
 		
 		<select id="selectLoginOne" resultMap="memberResultMap">
-		SELECT MEMBER_ID FROM MEMBER_TABLE
+		SELECT MEMBER_ID, MEMBER_NICKNAME FROM MEMBER_TABLE
 		WHERE MEMBER_ID = #{memberId } AND MEMBER_PW = #{memberPw }
 		</select>
 		
