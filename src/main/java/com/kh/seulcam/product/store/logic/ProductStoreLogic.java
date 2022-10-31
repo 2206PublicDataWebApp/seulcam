@@ -46,12 +46,16 @@ public class ProductStoreLogic implements ProductStore {
 		return result;
 	}
 
+
 	@Override
-	public List<Product> selectNewArrivalList(SqlSession session) {
-		List<Product> pList = session.selectList("ProductMapper.selectNewArrivalList");
+	public List<Product> selectAllProductByArrayDf(SqlSession session, String arrayCd) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("arrayCd", arrayCd);
+		 List<Product> pList = session.selectList("ProductMapper.selectAllProductByArrayDf", paramMap);
 		return pList;
 	}
-
+	
+	
 	@Override
 	public Product selectProductByNo(SqlSession session, Integer productNo) {
 		Product product = session.selectOne("ProductMapper.selectProductByNo", productNo);
@@ -105,6 +109,24 @@ public class ProductStoreLogic implements ProductStore {
 		int result = session.delete("ProductReviewMapper.deleteReview",reviewNo);
 		return result;
 	}
+
+	@Override
+	public List<Product> selectProductByKeyword(SqlSession session, String keyword) {
+		List<Product> pList = session.selectList("ProductMapper.selectProductByKeyword", keyword);
+		return pList;
+	}
+
+	@Override
+	public List<Product> selectProductByBrand(SqlSession session, String brandName, String sortCd) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("brandName", brandName);
+		paramMap.put("sortCd", sortCd);
+		
+		List<Product> pList = session.selectList("ProductMapper.selectProductByBrand", paramMap);
+		
+		return pList;
+	}
+
 
 	
 

@@ -15,7 +15,7 @@
                 <i class="icon"></i>
             </button>
             <ul class="icon-list">
-                <li><a href="#"><i class="search-icon"></i></a></li>
+                <li><a href="/product/search"><i class="search-icon"></i></a></li>
                 <li><a href="/cart/cart.kh"><i class="cart-icon"></i></a></li>
                 <li>
 	                <c:if test="${sessionScope.loginUser eq null}">
@@ -40,8 +40,16 @@
                 <a class="newarrival" href="/product/newArrivalList"><b>NEW ARRIVAL</b></a>
             </li>
 
-            <li>
-                <a href="#"><b>브랜드</b></a>
+             <li class="main-menu">
+                <a>브랜드</a>
+                <div class="content">
+                    <ul class="sub-menu">
+                        <li><a href="/product/brandCategory?brandName="><b>전체 보기</b></a></li>
+						<c:forEach var="brandName" items="${sNameList}" varStatus="i">
+							 <li><a href="/product/brandCategory?brandName=${brandName.brandName }">${brandName.brandName }</a></li>
+						</c:forEach>
+                    </ul>
+                </div>
             </li>
 
             <li class="main-menu">

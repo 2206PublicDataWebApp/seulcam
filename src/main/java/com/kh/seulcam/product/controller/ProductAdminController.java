@@ -36,6 +36,8 @@ public class ProductAdminController {
 	@Autowired
 	private ProductService pService ;
 	
+	
+
 	//브랜드등록 폼
 	@RequestMapping(value="/admin/brandRegistView", method=RequestMethod.GET)
 	public String brandRegisterView(Model model) {

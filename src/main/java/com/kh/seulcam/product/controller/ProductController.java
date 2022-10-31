@@ -52,21 +52,30 @@ public class ProductController {
 	private static final HttpsURLConnection HttpsURLConnection = null;
 	@Autowired
 	private ProductService pService ;
-
-	@RequestMapping(value="/product/top20List", method=RequestMethod.GET)
-	public String top20ListView(Model model) {
-		return "product/top20List";
+	
+	//top20리스트
+	@RequestMapping(value="/product/top20List", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public ModelAndView top20ListView(ModelAndView mv) {
+		String arrayCd="topSale";
+		List<Product> pList = pService.getProductListByArrayDf(arrayCd);
+		
+		mv.addObject("pList", pList);
+	
+		return mv;
 	}
 	
-	
+	//newArrival 리스트
 	@RequestMapping(value="/product/newArrivalList", produces="application/json;charset=utf-8",method=RequestMethod.GET)
 	public ModelAndView newArrivalListView(Model model, ModelAndView mv) {
-		List<Product> pList = pService.getNewArrivalList();
+		String arrayCd="newArrival";
+		List<Product> pList = pService.getProductListByArrayDf(arrayCd);
+		
 		mv.addObject("pList", pList);
 		
 		return mv;
 	}
 	
+
 	
 	@RequestMapping(value="/product/productDetail", method=RequestMethod.GET)
 	public ModelAndView detailView(Model model
@@ -395,20 +404,70 @@ public class ProductController {
 //				e.printStackTrace();
 //			}
 //			
-			
-			
-			
-			
-			
-			
-		
-
-	            
+     
 		return null;
 		
 	            
 	}
 	
-
+	
+	//상품검색
+	@RequestMapping(value="/product/search", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public ModelAndView search(
+			ModelAndView mv
+			,@RequestParam(value="keyword", required=false) String keyword
+			) {
+		List<Product> pList = null;
+		int searchCt=0;
+		if(keyword!=null) {
+			System.out.println("============================="+keyword);
+			pList = pService.findProductByKeyword(keyword);
+			searchCt=pList.size();
+		}
+		mv.addObject("pList", pList);
+		mv.addObject("searchCt", searchCt);
+		mv.setViewName("product/search");
+		return mv;
+	}
+	
+	
+	//브랜드별 상품리스트
+	@RequestMapping(value="/product/brandCategory", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public ModelAndView brandCategory(
+			ModelAndView mv
+			,@RequestParam(value="brandName", required=false) String brandName
+			,@RequestParam(value="sortCd", required=false) String sortCdRecive
+			) {
+		String sortCd = (sortCdRecive==null) ? "none" : sortCdRecive;
+		List<Product> pList = null;
+		int searchCt=0;
+		
+		System.out.println("============================="+brandName);
+		pList = pService.findProductByBrand(brandName,sortCd);
+		searchCt=pList.size();
+		
+			
+			
+		mv.addObject("brandName", brandName);
+		
+			mv.addObject("pList", pList);
+		
+		mv.addObject("searchCt", searchCt);
+		mv.setViewName("product/brandCategory");
+		return mv;
+	}
+	@RequestMapping(value="/product/brandCategorySort", method=RequestMethod.GET)
+	public String brandCategorySort(ModelAndView mv
+			,@RequestParam(value="brandName", required=false) String brandName
+			,@RequestParam(value="sortCd", required=false) String sortCd) {
+		List<Product> pList = pService.findProductByBrand(brandName,sortCd);
+		if(!pList.isEmpty()) {
+			Gson gson = new GsonBuilder().create();
+			return gson.toJson(pList);
+		}
+		
+		return null;
+		
+	}
 	
 }

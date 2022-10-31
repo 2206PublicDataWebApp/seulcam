@@ -43,8 +43,19 @@
   		INSERT INTO DETAIL_TBL
   		VALUES(#{productNo},#{detailFileName},#{detailFilePath},#{detailFileRename},#{detailContents})
   	</insert>
-  	<select id="selectNewArrivalList" resultMap="productResultMap">
-  		SELECT*FROM(SELECT*FROM PRODUCT_TBL ORDER BY UPDATE_DATE DESC) WHERE  <![CDATA[ROWNUM<=20 ]]>
+  	<select id="selectAllProductByArrayDf" parameterType="String" resultMap="productResultMap">
+		<choose >
+			<when test="arrayCd.toString() =='newArrival'">
+				SELECT*FROM(SELECT*FROM PRODUCT_TBL ORDER BY UPDATE_DATE DESC) WHERE  <![CDATA[ROWNUM<=20 ]]>
+			</when>
+			<when test="arrayCd.toString() =='topSale'">
+				SELECT*FROM(SELECT*FROM PRODUCT_TBL ORDER BY SALE_COUNT DESC) WHERE  <![CDATA[ROWNUM<=20 ]]>
+			</when>
+			<otherwise>
+				SELECT * FROM PRODUCT_TBL
+			</otherwise>
+		</choose>
+		
   	</select>
   	<select id="selectProductByNo" resultMap="productResultMap">
   		SELECT*FROM PRODUCT_TBL WHERE PRODUCT_NO=#{productNo}
@@ -54,6 +65,30 @@
   	</select>
   	<select id="selectProductName" resultType="String">
   		SELECT PRODUCT_NAME FROM PRODUCT_TBL WHERE PRODUCT_NO=#{productNo}
+  	</select>
+  	<select id="selectProductByKeyword" resultMap="productResultMap">
+  		SELECT * FROM PRODUCT_TBL 
+  		<where>
+  			PRODUCT_NAME LIKE '%'||#{keyword}||'%' 
+  			OR CATEGORY LIKE '%'||#{keyword}||'%' 
+  			OR PRODUCT_COLOR LIKE '%'||#{keyword}||'%' 
+  			OR BRAND_NAME LIKE '%'||#{keyword}||'%'
+  		</where>
+  	</select>
+  	<select id="selectProductByBrand" resultMap="productResultMap">
+  		SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE FROM PRODUCT_TBL WHERE BRAND_NAME=#{brandName}OR BRAND_NAME LIKE '%'||#{brandName}||'%'
+  			<if test="sortCd.toString()=='new'">
+  			ORDER BY UPDATE_DATE DESC
+  			</if>		
+  			<if test="sortCd.toString()=='highPrice'">
+  			ORDER BY PRODUCT_PRICE DESC
+  			</if>		
+  			<if test="sortCd.toString()=='rowPrice'">
+  			ORDER BY PRODUCT_PRICE
+  			</if>		
+  			<if test="sortCd.toString()=='sale'">
+  			ORDER BY SALE_COUNT DESC
+  			</if>		
   	</select>
   
 </mapper>

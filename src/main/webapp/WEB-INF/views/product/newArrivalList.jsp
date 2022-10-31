@@ -10,8 +10,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>상품Top20</title>
 </head>
-<link rel="stylesheet" href="/resources/css/product/top20List.css">
+<link rel="stylesheet" href="/resources/css/product/shopingList.css">
 <link rel="stylesheet" href="/resources/css/fonts.css">
+<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+<link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <section class="top20 shop">

@@ -53,9 +53,10 @@ public class ProductServiceImpl implements ProductService{
 		return result;
 	}
 
+
 	@Override
-	public List<Product> getNewArrivalList() {
-		List<Product> pList = pStore.selectNewArrivalList(session);
+	public List<Product> getProductListByArrayDf(String arrayCd) {
+		 List<Product> pList = pStore.selectAllProductByArrayDf(session, arrayCd);
 		return pList;
 	}
 
@@ -112,6 +113,19 @@ public class ProductServiceImpl implements ProductService{
 		int result = pStore.deleteReview(session, reviewNo);
 		return result;
 	}
+
+	@Override
+	public List<Product> findProductByKeyword(String keyword) {
+		List<Product> pList = pStore.selectProductByKeyword(session, keyword);
+		return pList;
+	}
+
+	@Override
+	public List<Product> findProductByBrand(String brandName, String sortCd) {
+		List<Product> pList=pStore.selectProductByBrand(session, brandName, sortCd);
+		return pList;
+	}
+
 
 	
 

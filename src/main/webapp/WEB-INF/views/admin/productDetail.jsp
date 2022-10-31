@@ -52,23 +52,23 @@
             </div>
             <div class="box-form">
                 <label>가격</label>
-                <input type="text" class="g-inputbox-medium textarea-title" name="productPrice" value=${product.productPrice } >
+                <input type="text" class="g-inputbox-medium textarea-title" name="productPrice" value="${product.productPrice }" >
             </div>
              <div class="box-form">
                 <label>색상</label>
-                <input type="text" class="g-inputbox-medium textarea-title" placeholder="${product.productColor }" name="productColor" value="" >
+                <input type="text" class="g-inputbox-medium textarea-title" name="productColor" value="${product.productColor }" >
             </div>
             <div class="box-form">
                 <label>재고</label>
-                <input type="text" class="g-inputbox-medium textarea-title" placeholder="${product.productStock }"name="productStock" value="" >
+                <input type="text" class="g-inputbox-medium textarea-title"  name="productStock" value="${product.productStock }">
             </div>
             <div class="box-form">
                 <label>소재</label>
-                <input type="text" class="g-inputbox-medium textarea-title" placeholder="${product.productMaterial }"name="productMaterial" value="" >
+                <input type="text" class="g-inputbox-medium textarea-title" name="productMaterial" value="${product.productMaterial }" >
             </div>
              <div class="box-form">
                 <label>판매량</label>
-                <input type="text" class="g-inputbox-medium textarea-title" placeholder="${product.saleCount }"name="updateDate" value=""  readonly>
+                <input type="text" class="g-inputbox-medium textarea-title" name="updateDate" value="${product.saleCount }" readonly>
             </div>
         </div>
         

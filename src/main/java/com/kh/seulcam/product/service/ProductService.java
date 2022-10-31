@@ -24,7 +24,8 @@ public interface ProductService {
 
 	public int registerProductDetail(Detail detail);
 
-	public List<Product> getNewArrivalList();
+	public List<Product> getProductListByArrayDf(String arrayCd);
+
 
 	public Product getProductByNo(Integer productNo);
 
@@ -43,6 +44,11 @@ public interface ProductService {
 	public int modifyProductReview(Review newReview);
 
 	public int removeReview(Integer reviewNo);
+
+	public List<Product> findProductByKeyword(String keyword);
+
+	public List<Product> findProductByBrand(String brandName, String sortCd);
+
 
 
 }

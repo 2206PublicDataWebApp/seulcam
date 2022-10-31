@@ -26,7 +26,7 @@ public interface ProductStore {
 
 	public int insertProductDetail(SqlSession session, Detail detail);
 
-	public List<Product> selectNewArrivalList(SqlSession session);
+	public List<Product> selectAllProductByArrayDf(SqlSession session, String arrayCd);
 
 	public Product selectProductByNo(SqlSession session, Integer productNo);
 
@@ -45,6 +45,11 @@ public interface ProductStore {
 	public int updateProductReview(SqlSession session, Review newReview);
 
 	public int deleteReview(SqlSession session, Integer reviewNo);
+
+	public List<Product> selectProductByKeyword(SqlSession session, String keyword);
+
+	public List<Product> selectProductByBrand(SqlSession session, String brandName, String sortCd);
+
 
 
 }
