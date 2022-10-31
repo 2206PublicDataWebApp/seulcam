@@ -9,6 +9,7 @@ import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.order.domain.Order;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
+import com.kh.seulcam.point.domain.Point;
 import com.kh.seulcam.product.domain.Product;
 
 public interface OrderStore {
@@ -34,6 +35,20 @@ public interface OrderStore {
 	public int changeCompleteAddress(SqlSession session, Order order);
 
 	public List<OrderProduct> printCompleteProduct(SqlSession session, Integer orderNo);
+
+	public List<Order> printCompleteList(SqlSession session, String memberId);
+
+	public List<OrderPay> printOrderPay(SqlSession session, int orderNo);
+	
+	//포인트 테이블에 저장(사용포인트)
+	public int registPoint(SqlSession session, Point point);
+	
+	//관리자 주문 불러오기
+	public List<Order> printAllOrder(SqlSession session);
+
+	//관리자 배송 정보 변경
+	public int cngDilivary(SqlSession session, Order order);
+
 
 
 }

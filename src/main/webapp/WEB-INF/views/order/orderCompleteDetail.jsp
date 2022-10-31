@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +9,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>주문 상세</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/resources/css/fonts.css">
 	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico"
 		type="image/x-icon">
@@ -55,9 +56,28 @@ font-size:20px;
 	width:100%;
 	border-bottom:solid 3px lightgray;
 }
+.title{
+ height:50px;
+}
 .right{
 	float:right;
 }
+.p-img{
+width:100px;
+height:100px;
+}
+.list_table {
+	width: 100%;
+	border-bottom:solid 3px lightgray;
+	text-align: center;
+}
+.totlaPrice{
+	color:orange;
+}
+ .btnn{
+text-align:center;
+}
+
 </style>
 
 
@@ -75,9 +95,9 @@ font-size:20px;
 		<span id="orderDate" class="right">${order.orderDate }</span>
 		</div>
 		
-		<div class="bold" class="line">구매 확정</div>
+		<div class="bold line title">${order.dirivaryStatus }</div>
 		
-		<div class="line">
+		<div >
 		<c:forEach items="${oList}" var="order" varStatus="i">
 		<c:forEach items="${pList}" var="product" varStatus="p">
 		<c:if test="${order.productNo eq product.productNo }">
@@ -134,12 +154,12 @@ font-size:20px;
 		</div>
 		
 		<div>
-		<span>총 결제 금액</span>
-		<span class="right">${orderPay.payPrice }원</span>
+		<span class="bold">총 결제 금액</span>
+		<span class="right totlaPrice">${orderPay.payPrice }원</span>
 		</div>
 		
-		<div>
-		<button>주문 내역 리스트 보기</button>
+		<div class="btnn">
+		<button type="button" class="btn btn-dark" onclick="location.href='/order/complete/list.kh?memberId=${order.memberId}'" >주문 내역 리스트 보기</button>
 		</div>
 		
 		</div>

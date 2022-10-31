@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace= "PointMapper">
+   <resultMap  type="Point" id="pointResultMap">
+ 
+  <id property="pointNo" 	column="POINT_NO"/>
+  		<result property="memberId" 	column="MEMBER_ID"/>
+  		<result property="pointDate" 	column="POINT_DATE"/>
+  		<result property="point" 	column="POINT"/>
+  		<result property="pointType" 	column="POINT_TYPE"/>
+  </resultMap>
+  <insert id="insertPoint">
+  INSERT INTO POINT_TBL
+  VALUES(SEQ_POINTNO.NEXTVAL,#{memberId},DEFAULT,#{point},'포인트사용')
+  </insert>
+  
+  <select id="selectPrintPointList" resultMap="pointResultMap">
+  SELECT *FROM POINT_TBL
+  WHERE MEMBER_ID=#{memberId}
+  </select>
+  
+  
+  </mapper>

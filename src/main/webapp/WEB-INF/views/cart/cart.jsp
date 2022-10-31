@@ -409,6 +409,13 @@ width:30%
 		})
 		
 	}
+	var checked =$('input[name="cartbox"]:checked');
+	if(checked.length>0){
+	checked.each(function(i){
+	price=checked.parent().parent().eq(i).children().eq(3).children().children('#p-price').text();
+	alert(price);
+	})}
+	
 /* 	$("#orderCart").click(function(){
 		 var productArr=new Array();
 		var countArr=new Array();

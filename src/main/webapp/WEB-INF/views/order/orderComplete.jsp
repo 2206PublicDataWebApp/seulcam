@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>주문완료</title>
-<link rel="stylesheet" href="/resources/css/fonts.css">
+	<link rel="stylesheet" href="/resources/css/fonts.css">
 	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 </head>
@@ -148,7 +148,7 @@ width:100%;
 		</div>
 		
 		<div>
-		<button class="go-button" style="border-left:solid 1px #fff">구매내역 보기</button><button class="go-button" onclick="location.href='/product/top20List'">쇼핑 홈 가기</button>
+		<button class="go-button" style="border-left:solid 1px #fff"onclick="location.href='/order/complete/list.kh?memberId=${order.memberId}'" >구매내역 보기</button><button class="go-button" onclick="location.href='/product/top20List'">쇼핑 홈 가기</button>
 		</div>
 		
 

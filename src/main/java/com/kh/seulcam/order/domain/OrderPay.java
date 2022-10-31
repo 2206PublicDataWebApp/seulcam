@@ -11,6 +11,9 @@ public class OrderPay {
 	private String usePoint;
 	private String getPoint;
 	private String payStatus;
+	private String payType;
+	
+	
 	public int getPayNo() {
 		return payNo;
 	}
@@ -65,11 +68,17 @@ public class OrderPay {
 	public void setPayStatus(String payStatus) {
 		this.payStatus = payStatus;
 	}
+	public String getPayType() {
+		return payType;
+	}
+	public void setPayType(String payType) {
+		this.payType = payType;
+	}
 	@Override
 	public String toString() {
 		return "OrderPay [payNo=" + payNo + ", orderNo=" + orderNo + ", memberId=" + memberId + ", payDate=" + payDate
 				+ ", payPrice=" + payPrice + ", productPrice=" + productPrice + ", usePoint=" + usePoint + ", getPoint="
-				+ getPoint + ", payStatus=" + payStatus + "]";
+				+ getPoint + ", payStatus=" + payStatus + ", payType=" + payType + "]";
 	}
 	
 	

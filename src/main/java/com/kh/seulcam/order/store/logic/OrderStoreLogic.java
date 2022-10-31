@@ -11,6 +11,7 @@ import com.kh.seulcam.order.domain.Order;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
 import com.kh.seulcam.order.store.OrderStore;
+import com.kh.seulcam.point.domain.Point;
 import com.kh.seulcam.product.domain.Product;
 
 @Repository
@@ -91,6 +92,37 @@ public class OrderStoreLogic implements OrderStore {
 	public List<OrderProduct> printCompleteProduct(SqlSession session, Integer orderNo) {
 		List<OrderProduct>pList = session.selectList("OrderMapper.selectProduct",orderNo);
 		return pList;
+	}
+
+	@Override
+	public List<Order> printCompleteList(SqlSession session, String memberId) {
+		List<Order>oList=session.selectList("OrderMapper.selectCompleteList",memberId);
+		return oList;
+	}
+
+	@Override
+	public List<OrderPay> printOrderPay(SqlSession session, int orderNo) {
+		List<OrderPay>opList=session.selectList("OrderMapper.selectPrintPay",orderNo);
+		return opList;
+	}
+
+	@Override
+	public List<Order> printAllOrder(SqlSession session) {
+		List<Order>oList = session.selectList("OrderMapper.selectAllOrder");
+		return oList;
+	}
+
+	@Override
+	public int cngDilivary(SqlSession session, Order order) {
+		int result=session.update("OrderMapper.updateDilivary",order);
+		return result;
+	}
+	
+	//포인트 테이블 저장
+	@Override
+	public int registPoint(SqlSession session, Point point) {
+		int result=session.insert("PointMapper.insertPoint",point);
+		return result;
 	}
 
 }

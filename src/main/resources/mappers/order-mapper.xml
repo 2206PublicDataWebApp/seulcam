@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace= "OrderMapper">
+  
   <resultMap  type="Member" id="memberResultMap">
  
   <id property="memberId" 	column="MEMBER_ID"/>
@@ -30,6 +31,10 @@
   SELECT * FROM MEMBER_TABLE WHERE MEMBER_ID=#{memberId}
   </select>
   
+  <select id="selectTotalPoint" resultMap="memberResultMap">
+   SELECT TOTAL_POINT FROM MEMBER_TABLE WHERE MEMBER_ID=#{memberId}
+  </select>
+  
   <update id="updateAddress" >
   UPDATE MEMBER_TABLE 
   SET MEMBER_ZIP=#{memberZip},
@@ -41,26 +46,28 @@
    <resultMap  type="Order" id="orderResultMap">
  
   <id property="orderNo" 	column="ORDER_NUMBER"/>
-  		<result property="memberId" 			column="MEMBER_ID"/>
-  		<result property="memberName" 			column="ORDER_NAME"/>
-  		<result property="memberPhone" 			column="ORDER_PHONE"/>
-  		<result property="orderMessage" 		column="ORDER_MESSAGE"/>
-  		<result property="orderAddressPost" 	column="ORDER_POST"/>
-  		<result property="orderAddress1" 		column="ORDER_ADDRESS1"/>
-  		<result property="orderAddress2" 		column="ORDER_ADDRESS2"/>
-  		<result property="orderDate" 			column="ORDER_DATE"/>
-  		<result property="payStatus" 			column="PAY_STATUS"/>
-  		<result property="dirivaryStatus" 		column="DILIVERY_STATUS"/>
-  		<result property="cancleStatus" 		column="CANCLE_STATUS"/>
-  		<result property="refundStatus" 		column="REFUND_STATUS"/>
+  		<result property="memberId" 				column="MEMBER_ID"/>
+  		<result property="memberName" 				column="ORDER_NAME"/>
+  		<result property="memberPhone" 				column="ORDER_PHONE"/>
+  		<result property="orderMessage" 			column="ORDER_MESSAGE"/>
+  		<result property="orderAddressPost" 		column="ORDER_POST"/>
+  		<result property="orderAddress1" 			column="ORDER_ADDRESS1"/>
+  		<result property="orderAddress2" 			column="ORDER_ADDRESS2"/>
+  		<result property="orderMainProductName" 	column="ORDER_MAIN_PRODUCT_NAME"/>
+  		<result property="orderMainFileRename" 		column="ORDER_MAIN_FILE_RENAME"/>
+  		<result property="orderDate" 				column="ORDER_DATE"/>
+  		<result property="payStatus" 				column="PAY_STATUS"/>
+  		<result property="dirivaryStatus" 			column="DILIVERY_STATUS"/>
+  		<result property="cancleStatus" 			column="CANCLE_STATUS"/>
+  		<result property="refundStatus" 			column="REFUND_STATUS"/>
   		
   </resultMap>
   
   <insert id="insertOrder" useGeneratedKeys="true" keyColumn="ORDER_NUMBER"  keyProperty="orderNo">
   INSERT INTO ORDER_TBL 
   VALUES(SEQ_ORDER.NEXTVAL,#{memberId}, #{memberName}, #{memberPhone}, NULL,
-   #{orderAddressPost},#{orderAddress1},#{orderAddress2},
-        DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+   #{orderAddressPost},#{orderAddress1},#{orderAddress2},#{orderMainProductName},
+   #{orderMainFileRename},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
   </insert>
   
   <select id="selectPrintOrder" resultMap="orderResultMap">
@@ -74,6 +81,21 @@
   WHERE ORDER_NUMBER=#{orderNo}
   </update>
   
+  <update id="updateDilivary">
+  UPDATE ORDER_TBL
+  SET DILIVERY_STATUS=#{dirivaryStatus}
+  WHERE ORDER_NUMBER=#{orderNo}
+  
+  </update>
+  
+  <select id="selectCompleteList" resultMap="orderResultMap">
+  SELECT * FROM ORDER_TBL
+  WHERE MEMBER_ID=#{memberId} ORDER BY ORDER_NUMBER DESC
+  </select>
+  
+  <select id="selectAllOrder" resultMap="orderResultMap">
+    SELECT * FROM ORDER_TBL ORDER BY ORDER_NUMBER DESC
+  </select>
   
 
  <resultMap  type="OrderProduct" id="orderProductResultMap"> 
@@ -110,11 +132,6 @@
   </update>
   
   
-  <insert id="insertPay">
-  INSERT INTO PAY_TBL
-  VALUES(SEQ_PAYNO.NEXTVAL, #{orderNo},#{memberId},DEFAULT,#{payPrice},#{productPrice},#{usePoint},#{getPoint},DEFAULT)
-  </insert>
-  
   <resultMap  type="OrderPay" id="orderPayResultMap"> 
   <id property="payNo" 	column="PAY_NO"/>
   		<result property="orderNo" 			column="ORDER_NO"/>
@@ -125,11 +142,17 @@
   		<result property="usePoint" 		column="USE_POINT"/>
   		<result property="getPoint" 		column="GET_POINT"/>
   		<result property="payStatus" 		column="PAY_STATUS"/>
+  		<result property="payType" 			column="PAY_TYPE"/>
   		
   </resultMap>
   
+  <insert id="insertPay">
+  INSERT INTO PAY_TBL
+  VALUES(SEQ_PAYNO.NEXTVAL, #{orderNo},#{memberId},DEFAULT,#{payPrice},#{productPrice},#{usePoint},#{getPoint},DEFAULT,DEFAULT)
+  </insert>
+  
   <select id="selectPrintPay" resultMap="orderPayResultMap">
-  SELECT * FROM PAY_TBL WHERE ORDER_NO=#{orderNo}
+  SELECT * FROM PAY_TBL WHERE ORDER_NO=#{orderNo} AND PAY_TYPE='P'
   </select>
  
   </mapper>
