@@ -38,15 +38,23 @@ public interface OrderService {
 
 	public List<OrderPay> printOrderPay(int orderNo);
 	//포인트
-	public int registPoint(Point point);
+	public int registUsePoint(Point point);
+
+	public int registGetPoint(String point, String memberId);
 	
 	//관리자
 	
-	//리스트 가져오기
+	//리스트 가져오기(관리자)
 	public List<Order> printAllOrder();
 
-	//배송정보 변경
+	//배송정보 변경(관리자)
 	public int cngDilivary(Order order);
+	
+	//구매확정으로 변경
+	public int updateDilivaryStatus(Integer orderNo);
+
+
+	
 
 	
 

@@ -167,24 +167,28 @@ header {
 											</ul>
 											</td>
 											
-											<c:if test="${order.dirivaryStatus eq '입금전'}">
+											<c:if test="${order.dirivaryStatus eq '입금확인'}">
 											<td colspan="3">
 											<!-- <span><button  style='float: right' class="btn btn-secondary btn-sm" >배송조회</button></span> -->
-											<span><button  style='float: right' class="btn btn-secondary btn-sm" >구매취소</button></span>
+											<span><button  style='float: right' class="btn btn-secondary btn-sm" onclick="cancleOrder(this)">구매취소</button>
+											<input type="hidden" id="orderNo" value="${order.orderNo }"/>
+											</span>
 											</td>
 											</c:if>
 											<c:if test="${order.dirivaryStatus eq '배송중'}">
 											<td colspan="3">
 											<span><button  style='float: right' class="btn btn-secondary btn-sm" >배송조회</button></span>
-											<span><a href="https://tracker.delivery/#/:carrier_id/:track_id" target="_blank">배송조회</a></span>
+											<!-- <span><a href="https://tracker.delivery/#/:carrier_id/:track_id" target="_blank">배송조회</a></span> -->
 											</td>
 											</c:if>
 											<c:if test="${order.dirivaryStatus eq '배송완료'}">
 											<td colspan="3">
 											<span><button  style='float: right' class="btn btn-secondary btn-sm" >배송조회</button></span>
-											<span><button  style='float: right' class="btn btn-secondary btn-sm" >구매확정</button></span>
-											<span><a href="https://tracker.delivery/#/:carrier_id/:track_id" target="_blank">배송조회</a></span>
-											<a href="https://tracker.delivery/#/kr.epost/1111111111111" target="_blank">배송조회</a>
+											<span><button  style='float: right' class="btn btn-secondary btn-sm" onclick="getPoint(this)">구매확정</button>
+												<input type="hidden" id="orderNo" value="${order.orderNo }"/>
+											</span>
+											<!-- <span><a href="https://tracker.delivery/#/:carrier_id/:track_id" target="_blank">배송조회</a></span>
+											<a href="https://tracker.delivery/#/kr.epost/1111111111111" target="_blank">배송조회</a> -->
 											</td>
 											</c:if>
 											<c:if test="${order.dirivaryStatus eq '구매확정'}">
@@ -193,16 +197,7 @@ header {
 											<span><button  style='float: right' class="btn btn-secondary btn-sm" >후기작성</button></span>
 											</td>
 											</c:if>
-											<%-- <td><button class="btn btn-secondary btn-sm"  onclick="location.href='/order/complete/datail.kh?orderNo=${order.orderNo}'">상세보기</button></td> --%>
 										</tr>
-										<%-- <c:if test="${order.dirivaryStatus eq '입금전'}">
-										<tr>
-										<td colspan="3"><button  style='float: right' class="btn btn-secondary btn-sm" >구매취소</button></td>
-										</tr>
-										</c:if> --%>
-										
-									<%--  </c:if>
-								</c:forEach> --%>
 							</c:if>
 						</c:forEach>
 					</c:forEach>
@@ -212,5 +207,41 @@ header {
 
 		</div>
 	</div>
+	
+	<script>
+	function getPoint(obj){
+		var orderNo=$(obj).parent().children("#orderNo").val();	
+
+		$.ajax({
+			url:"/order/GETPoint",
+			type:"post",
+			data:{"orderNo":orderNo},
+			success:function(data){
+				alert ("구매가 확정되었습니다.");
+				location.replace("/order/complete/list.kh");
+				
+			},
+			error:function(){
+				alert("ajax 통신 오류! 관리자에게 문의해 주세요!");
+			}
+		})
+		
+		
+	}
+	
+	function cancleOrder(obj){
+		var orderNo=$(obj).parent().children("#orderNo").val();	
+		$.ajax({
+			url:"/order/cancleOrder",
+			type:"post",
+			data:{"orderNo":orderNo},
+			success:function(data){
+				alert ("구매가 취소되었습니다");
+				location.replace("/order/complete/list.kh");
+				
+			}
+		})
+	}
+	</script>
 </body>
 </html>

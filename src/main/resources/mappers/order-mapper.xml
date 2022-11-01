@@ -42,6 +42,16 @@
   MEMBER_ADDRESS2=#{memberAddress2}
   WHERE MEMBER_ID=#{memberId}
   </update>
+   <update id="updateUsePoint">
+  UPDATE MEMBER_TABLE
+  SET TOTAL_POINT=TOTAL_POINT-To_Number(#{point})
+  WHERE MEMBER_ID=#{memberId}
+  </update>
+   <update id="updateGetPoint">
+  UPDATE MEMBER_TABLE
+  SET TOTAL_POINT=TOTAL_POINT+To_Number(#{point})
+  WHERE MEMBER_ID=#{memberId}
+  </update>
   
    <resultMap  type="Order" id="orderResultMap">
  
@@ -87,6 +97,14 @@
   WHERE ORDER_NUMBER=#{orderNo}
   
   </update>
+  
+  <update id="updateDilivaryStatus">
+    UPDATE ORDER_TBL
+  	SET DILIVERY_STATUS='구매확정'
+  	WHERE ORDER_NUMBER=#{orderNo}
+  </update>
+  
+ 
   
   <select id="selectCompleteList" resultMap="orderResultMap">
   SELECT * FROM ORDER_TBL

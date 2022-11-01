@@ -48,6 +48,10 @@ public interface OrderStore {
 
 	//관리자 배송 정보 변경
 	public int cngDilivary(SqlSession session, Order order);
+	//적립포인트 저장
+	public int registGetPoint(SqlSession session, String point, String memberId);
+	//구매확정으로 상태 변환
+	public int updateDilivaryStatus(SqlSession session, Integer orderNo);
 
 
 
