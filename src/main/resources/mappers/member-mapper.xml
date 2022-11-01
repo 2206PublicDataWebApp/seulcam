@@ -34,13 +34,17 @@
 		</insert>
 		
 		<select id="selectLoginOne" resultMap="memberResultMap">
-		SELECT MEMBER_ID, MEMBER_NICKNAME FROM MEMBER_TABLE
+		SELECT MEMBER_ID, MEMBER_NICKNAME,ADMIN_CHECK FROM MEMBER_TABLE
 		WHERE MEMBER_ID = #{memberId } AND MEMBER_PW = #{memberPw }
 		</select>
 		
 		<select id="selectKakaoLoginOne" resultMap="memberResultMap">
 		SELECT MEMBER_ID FROM MEMBER_TABLE
 		WHERE MEMBER_EMAIL = #{memberEmail }
+		</select>
+		
+		<select id="selectAllMember" resultMap="memberResultMap">
+		SELECT MEMBER_ID, MEMBER_NICKNAME, MEMBER_EMAIL, MEMBER_DATE, TOTAL_POINT FROM MEMBER_TABLE
 		</select>
 		
 		<select id="selectOneByEmail" resultType="_int">

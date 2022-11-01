@@ -51,4 +51,7 @@ public interface MemberStore {
 	
 	// 프로필 사진 바꾸기
 	public int updateMemberProfile(SqlSession session, Member member);
+	
+	// 멤버 전체 선택
+	public List<Member> selectMemberList(SqlSession session);
 }

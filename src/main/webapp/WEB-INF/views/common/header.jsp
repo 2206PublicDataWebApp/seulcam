@@ -22,8 +22,12 @@
 	                <a href="/member/loginView"><i class="member-icon"></i></a>
 	                </c:if>
 	                
-	                <c:if test="${not empty loginUser}">
+	                <c:if test="${loginUser.adminCheck == false}">
 	                <a href="/member/myPageView"><i class="member-icon"></i></a>
+	                </c:if>
+	                
+	                <c:if test="${loginUser.adminCheck == true }">
+	                <a href="/member/memberListView"><i class="member-icon"></i></a>
 	                </c:if>
                 </li>
             </ul>
