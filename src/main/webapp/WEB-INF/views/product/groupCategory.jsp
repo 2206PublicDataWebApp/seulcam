@@ -10,17 +10,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <title>브랜드별 상품</title>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="/resources/css/product/search.css">
 <link rel="stylesheet" href="/resources/css/fonts.css">
 <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 </head>
 <body>
 <article class="head">
 	<div id="sortCdDiv">
-			<form id="searchForm" name="" action="/product/groupCategory" enctype="multipart/form-data" method="get">
+			<form id="searchForm" name="" action="/product/groupCategory?cate_no=${cate_no }" enctype="multipart/form-data" method="get">
 			<input type="hidden" name="cate_no" value="${cate_no }">
 				<select name="sortCd" id="sortCd" onchange="this.form.submit()">
 					<option>전체</option>

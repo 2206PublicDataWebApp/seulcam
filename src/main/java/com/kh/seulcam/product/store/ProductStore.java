@@ -52,6 +52,8 @@ public interface ProductStore {
 
 	public List<Product> selectProductByCetegory(SqlSession session, String cate_no, String sortCd);
 
+	public List<Review> selectReviewBymemberId(SqlSession session, String memberId);
+
 
 
 }

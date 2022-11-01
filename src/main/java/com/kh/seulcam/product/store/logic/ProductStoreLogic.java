@@ -138,6 +138,12 @@ public class ProductStoreLogic implements ProductStore {
 		return pList;
 	}
 
+	@Override
+	public List<Review> selectReviewBymemberId(SqlSession session, String memberId) {
+		List<Review> rList = session.selectList("ProductReviewMapper.selectReviewBymemberId", memberId);
+		return rList;
+	}
+
 
 	
 

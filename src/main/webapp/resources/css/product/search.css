@@ -189,4 +189,8 @@ article.head > #sortCdDiv >form >select{
 	border-left: 1px solid black;
 	border-bottom: 1px solid black;
 }
+#category{
+	padding-left:10px;
+	padding-top:5px;
+}
 

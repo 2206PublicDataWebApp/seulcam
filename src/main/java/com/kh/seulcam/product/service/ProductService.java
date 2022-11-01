@@ -50,6 +50,8 @@ public interface ProductService {
 
 	public List<Product> findProductByCategory(String cate_no, String sortCd);
 
+	public List<Review> getReviewByMemberId(String memberId);
+
 
 
 }

@@ -96,7 +96,7 @@
                     </li>
 
                     <li class="list-item">
-                        <a class="item-link" href="#">상품 후기 조회</a>
+                        <a class="item-link" href="/product/myReviewList">상품 후기 조회</a>
                     </li>
                 </ul>
             </div>

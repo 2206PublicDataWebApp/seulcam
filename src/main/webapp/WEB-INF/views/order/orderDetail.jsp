@@ -342,8 +342,8 @@ width:100%;
 				
 		}
 		//console.log(data);
-		paymentComplete(data);//결제 완료후
-		//paymentCard(data);//결제 화면
+		//paymentComplete(data);//결제 완료후
+		paymentCard(data);//결제 화면
 	}
 	function createOrderNum(){
 		const date = new Date();

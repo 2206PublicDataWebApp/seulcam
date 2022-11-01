@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -315,7 +316,7 @@ public class ProductController {
 		return mv;
 		
 	}
-	//리뷰리스트출력
+	//리뷰리스트출력-상품상세페이지
 	@ResponseBody
 	@RequestMapping(value="/product/reviewList", produces="application/json;charset=utf-8", method=RequestMethod.GET)
 	public String reviewListView(
@@ -331,6 +332,30 @@ public class ProductController {
 		return null;
 		
 	}
+	//나의 리뷰리스트 출력-마이페이지
+	
+	@RequestMapping(value="/product/myReviewList", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public ModelAndView myReviewList(
+			ModelAndView mv
+			,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Member member = (Member)session.getAttribute("loginUser");
+		String memberId = member.getMemberId();
+		
+		List<Review> rList = pService.getReviewByMemberId(memberId);
+		List<Product> rpList = new ArrayList<Product>();
+		for(int i=0; i<rList.size(); i++) {
+			System.out.println(rList.get(i).getProductNo());
+			Product product = pService.getProductByNo(rList.get(i).getProductNo());
+			rpList.add(product);
+		}
+		mv.addObject("rpList", rpList);
+		mv.addObject("rList", rList);
+		return mv;
+		
+	}
+	
+	
 	//리뷰삭제
 	@ResponseBody
 	@RequestMapping(value="/product/reviewDelete", method=RequestMethod.GET)
@@ -436,22 +461,19 @@ public class ProductController {
 	public ModelAndView brandCategory(
 			ModelAndView mv
 			,@RequestParam(value="sortCd", required=false) String sortCdReceive
-			,@RequestParam(value="brandName", required=false) String brandName
+			,@RequestParam(value="brandName", required=false) String brandNameTemp
 			,HttpSession session
 			) {
-		if(brandName!=null) {
-			session.setAttribute("brandName", brandName);
-		}else {
-			brandName=(String) session.getAttribute("brandName");
-		}
-		System.out.println("================"+brandName);
+
+		System.out.println("================"+brandNameTemp);
 		String sortCd = (sortCdReceive==null) ? "none" : sortCdReceive;
-		List<Product> pList =pService.findProductByBrand(brandName,sortCd);
+		List<Product> pList =pService.findProductByBrand(brandNameTemp,sortCd);
 		int searchCt=0;
 		searchCt=pList.size();
+		mv.addObject("brandNameTemp", brandNameTemp);
 		mv.addObject("pList", pList);
 		mv.addObject("searchCt", searchCt);
-		session.removeAttribute("brandName");
+//		session.removeAttribute("brandName");
 		mv.setViewName("product/brandCategory");
 		return mv;
 	}
@@ -464,13 +486,18 @@ public class ProductController {
 			,@RequestParam(value="cate_no", required=false) String cate_no
 			,HttpSession session
 			) {
+		if(cate_no!=null) {
+			session.setAttribute("cate_no", cate_no);
+		}else {
+			cate_no=(String) session.getAttribute("cate_no");
+		}
 		String sortCd = (sortCdReceive==null) ? "none" : sortCdReceive;
 		List<Product> pList =pService.findProductByCategory(cate_no,sortCd);
 		int searchCt=0;
 		searchCt=pList.size();
 		mv.addObject("pList", pList);
 		mv.addObject("searchCt", searchCt);
-//		session.removeAttribute("brandName");
+//		session.removeAttribute("cate_no");
 		mv.setViewName("product/groupCategory");
 		return mv;
 	}

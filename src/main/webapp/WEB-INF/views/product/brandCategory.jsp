@@ -10,18 +10,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <title>브랜드별 상품</title>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="/resources/css/product/search.css">
 <link rel="stylesheet" href="/resources/css/fonts.css">
 <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
 </head>
 <body>
 <article class="head">
 	<div id="sortCdDiv">
 			<form id="searchForm" name="" action="/product/brandCategory" enctype="multipart/form-data">
-			<input type="hidden" name="brandName" value="${brandName }">
+			<input type="hidden" name="brandName" value="${brandNameTemp }">
 				<select name="sortCd" id="sortCd" onchange="this.form.submit()">
 					<option>전체</option>
 					<option value="new" <c:if test="${sortCd eq 'new' }">selected</c:if>>최신순</option>
@@ -31,9 +31,10 @@
 				</select>
 			</form>
 	</div>
-	<div>
-	<span>브랜드 > ${brandName }</span>
-	
+	<div id="category">
+
+		<span>브랜드 > ${brandNameTemp }</span>
+
 	</div>
 </article>
 	 <article class="list">

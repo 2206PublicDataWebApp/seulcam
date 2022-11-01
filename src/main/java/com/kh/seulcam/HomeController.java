@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,9 @@ public class HomeController {
 	private ProductService pService ;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model,HttpSession session) {
 		List<HashMap> sNameList=pService.getTotalStoreName();
+		session.setAttribute("sNameList", sNameList);
 		if(!sNameList.isEmpty()) {
 			model.addAttribute("sNameList", sNameList);
 		}

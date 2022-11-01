@@ -132,6 +132,12 @@ public class ProductServiceImpl implements ProductService{
 		return pList;
 	}
 
+	@Override
+	public List<Review> getReviewByMemberId(String memberId) {
+		List<Review> rList = pStore.selectReviewBymemberId(session, memberId);
+		return rList;
+	}
+
 
 	
 

@@ -36,6 +36,9 @@
   	<select id="selectReviewByProductNo" resultMap="reviewResultMap">
   		SELECT * FROM PRODUCT_REVIEW_TBL WHERE PRODUCT_NO=#{productNo}
   	</select>
+  	<select id="selectReviewBymemberId" resultMap="reviewResultMap">
+  		SELECT * FROM PRODUCT_REVIEW_TBL WHERE MEMBER_ID=#{memberId}
+  	</select>
   	<select id="selectOneReview" resultMap="reviewResultMap">
   		SELECT* FROM PRODUCT_REVIEW_TBL WHERE REVIEW_NO =#{reviewNo}
   	</select>
