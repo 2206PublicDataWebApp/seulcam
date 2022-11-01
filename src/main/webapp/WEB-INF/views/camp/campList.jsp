@@ -13,116 +13,12 @@
 	<link rel="stylesheet" href="/resources/css/camp/switch.css">
 	<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="/resources/css/fonts.css">
+	<link rel="stylesheet" href="/resources/css/camp/campList.css">
 	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
-		<!-- jQuery -->
-		<script src="../../../resources/js/jquery-3.6.1.min.js"></script>
+	<!-- jQuery -->
+	<script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 	</head>
-	<style>
-		/* 헤더 - 바디 css */
-body {
-	font-size: 14px;
-	color: #000;
-	background-color: #f1f1f1;
-}
-header {
-	position: fixed;
-	left: 0px;
-	right: 0px;
-	top: 0px;
-	height: 50px;
-	background-color: rgb(255, 255, 255);
-	z-index: 200;
-	max-width: 400px;
-	margin: 0 auto; 
-}
-.header-wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	max-width: 385px;
-	margin: 0 auto;
-	height: 50px;
-	position: relative;
-}
-.body-wrapper {
-	max-width: 400px;
-    margin: 0 auto; 
-    background-color: white;
-    min-height: 100vh;
-}
-/* 컨텐츠 css */
-
-.campListMain {
-	padding-top: 50px;
-}
-.search_area {
-	padding: 15px;
-	padding-top: 50px;
-	padding-bottom: 15%;
-	margin: auto;
-	min-height: 200px;
-	font-size: 16px;
-	border-bottom: 10px solid rgb(243, 243, 243);
-	
-}
-.search_area h2{
-	
-	padding-bottom: 15px;
-	text-align: center;
-}
-.search_area p{
-	font-size: 20px;
-	padding: 5px;
-
-}
-select {
-    font-size: 1.1rem;
-    padding: 2px 5px;
-	width: 100%;
-}
-.searchCity {
-	margin: auto;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	width: 100%;
-	max-width: 600px;
-}
-.switch_area {
-	margin: auto;
-	max-width: 600px;
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-.input-group{
-	margin: auto;
-	max-width: 600px;
-}
-.list_area {
-	margin: auto;
-	max-width: 600px;
-}
-.switch_area #switchName {
-	margin: auto;
-	font-size: 20px;
-	padding: 5px;
-}
-.switch_area #switch {
-	margin: auto;
-	float: right;
-}
-.camp_List {
-	padding-bottom: 15px;
-	border-bottom: solid rgb(243, 243, 243) 10px;
-}
-.tt {
-	margin: 5px;
-}
-.word_area {
-	padding: 15px;
-}
-
-</style>
 <body>
 	<!-- 헤더&메뉴바 -->
 	<header>
@@ -238,8 +134,8 @@ select {
 									}else{
 										str += "<div style='height: 225px; background: url("+data[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
 									}	
-										str += "<div class='card-body 'style='padding-top: 0.75rem;'><div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>"+data[i].induty+"</small></div>"
-										str += "<a href='/camp/campDetail.kh?contentId="+data[i].contentId+"' data-id='"+data[i].contentId+"'><h5 class='card-title tt'>"+data[i].facltNm+"</h5><p class='card-text tt'>"+data[i].addr1+"</p></a></div><hr>좋아요 : 0</div>"
+										str += "<div class='card-body 'style='padding-top: 8px;'><div class='text-right tt' stlyle='padding: 0px 12px;'><small class='text-muted'>"+data[i].induty+"</small></div>"
+										str += "<a href='/camp/campDetail.kh?contentId="+data[i].contentId+"' data-id='"+data[i].contentId+"'><h5 class='card-title tt'>"+data[i].facltNm+"</h5><p class='card-text tt'>"+data[i].addr1+"</p></a></div><b>좋아요 : 0</b></div><hr>"
 									}
 									if(listUrl == "/camp/campListScroll.kh"){
 										$("#list_area").append(str);
@@ -340,10 +236,6 @@ select {
 				urlLoad();
 			}
 		}
-
-
-
-		
 	</script>
 </body>
 </html>

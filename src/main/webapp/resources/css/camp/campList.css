@@ -1,0 +1,129 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+h2 {
+	padding: 20px 0;
+}
+
+h5 {
+	margin-bottom: 0px;
+}
+
+hr {
+	margin: 16px 0;
+}
+
+p {
+	margin-bottom: 4px;
+}
+/* 헤더 - 바디 css */
+body {
+	font-size: 14px;
+	color: #000;
+}
+header {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	height: 50px;
+	background-color: rgb(255, 255, 255);
+	z-index: 200;
+	margin: 0 auto; 
+}
+.header-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 385px;
+	margin: 0 auto;
+	height: 50px;
+	position: relative;
+}
+.body-wrapper {
+	max-width: 770px;
+    margin: 0 auto; 
+    background-color: white;
+    min-height: 100vh;
+
+}
+/* 컨텐츠 css */
+
+.campListMain {
+	padding-top: 25px;
+	max-width: 770px;
+	margin: 0 auto;
+}
+
+.search_area {
+	padding-top: 50px;
+	padding-bottom: 10px;
+	margin: auto;
+	min-height: 200px;
+	font-size: 16px;
+	border-bottom: 20px solid rgb(243, 243, 243);
+}
+
+.search_area h2{
+	
+	padding-bottom: 15px;
+	text-align: center;
+}
+.search_area p{
+	font-size: 20px;
+}
+select {
+    font-size: 1.1rem;
+    padding: 2px 5px;
+	width: 100%;
+}
+.searchCity {
+	margin: auto;
+	padding-bottom: 10px;
+	width: 100%;
+}
+.switch_area {
+	padding-bottom: 10px;
+}
+.input-group{
+	margin: auto;
+}
+.list_area {
+	margin: auto;
+}
+.switch_area #switchName {
+	margin: auto;
+	font-size: 20px;
+}
+.switch_area #switch {
+	margin: auto;
+	float: right;
+}
+.camp_List {
+	padding-bottom: 8px;
+}
+.tt {
+	margin: 5px 0px;
+}
+.word_area {
+	padding-top: 10px;
+}
+
+.blog_Picture {
+	padding-left: 15px;
+}
+
+.card-body {
+	padding: 0;
+}
+
+.card-text:last-child {
+	margin-bottom: 5px;
+}
+
+#searchResult {
+	font-size: 15px;
+}

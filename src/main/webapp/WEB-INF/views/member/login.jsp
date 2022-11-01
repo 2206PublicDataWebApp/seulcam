@@ -50,9 +50,10 @@
                         <div class="password-input-wrapper">
                             <input class="login-input-pw" type="password" name="memberPw" id="memberPw" placeholder="비밀번호" maxlength="30">
                             <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
+                            
                         </div>
                     </div>
-
+					<input type="hidden" name="redirectURI" value="${redirectURI}"/>
                     <button type="submit" class="login-button">로그인</button>
 
                     <div class="member-util">
@@ -78,6 +79,7 @@
             </div>
             <form action="/member/kakaoLogin" id="kakaoForm" method="post" hidden>
            		<input type="hidden" name="memberEmail" id="kakaoemail" />
+           		<input type="hidden" name="redirectURI" value="${redirectURI}"/>
             </form>
             
         </section>
