@@ -4,6 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace= "CampBookingMapper">
-  	
-  	
+  	<insert id="bookingInsert">
+  		INSERT INTO CAMP_BOOKING_TBL VALUES(SEQ_BOOKING_NO.NEXTVAL,#{memberId},#{siteNo},#{bookName},#{bookPhone},#{bookRequest},#{bookPeople},#{firstDay},#{lastDay},#{totalDay},#{bookIniPrice},#{bookExtra},#{bookUsePoint},#{bookGetPoint},#{bookTotalPrice},DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+  	</insert>
+  	<insert id="bStatusInsert">
+  		BEGIN
+		    FOR I IN 0..#{totalDay}
+		    LOOP
+		    INSERT INTO BOOKING_STATUS VALUES(SEQ_BOOKING_NO.CURRVAL,#{siteNo},#{memberId},TO_DATE(#{sBookDate},'YYYY-MM-DD')+I);
+		    END LOOP;
+		END;
+  	</insert>
 </mapper>

@@ -9,13 +9,17 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.service.CampServie;
+import com.kh.seulcam.campBooking.domain.BookingStatus;
+import com.kh.seulcam.campBooking.domain.CampBooking;
 import com.kh.seulcam.campBooking.service.CampBookingService;
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.member.service.MemberService;
@@ -82,6 +86,37 @@ public class CampBookingController {
         }
         
         return mv;
+    }
+    
+  //캠핑장 리스트 출력
+    @ResponseBody
+    @RequestMapping(value = "/campBooking/campBooking.kh", method = RequestMethod.POST )
+    public String campBookingRegist(
+            @ModelAttribute CampBooking cBooking) {
+        try {
+            System.out.println(cBooking);
+            int result = bService.campBookingRegist(cBooking);
+            int bsInsert=0;
+            BookingStatus bs = new BookingStatus();
+            bs.setMemberId(cBooking.getMemberId());
+            bs.setsBookDate(cBooking.getFirstDay());
+            bs.setSiteNo(cBooking.getSiteNo());
+            bs.setTotalDay(cBooking.getTotalDay()-1);
+            if(result == 1) {
+                bsInsert = bService.bookingStatus(bs);
+            }
+            System.out.println(bsInsert);
+            if(result ==1 && bsInsert == -1) {
+                return "success";
+            }else {
+                return "fail";
+            }
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return "error";
+        
     }
     
 }

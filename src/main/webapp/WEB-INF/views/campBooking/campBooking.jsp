@@ -65,7 +65,7 @@ header {
     }
 .infoTitle {
 	font-weight: bold;
-	color: green;
+	color: black;
 	width: 100px;
 	padding: 5px;
 }
@@ -107,7 +107,47 @@ header {
     text-align: center;
     display: block;
     width: 100%;}
+.peopleInfo{
+	margin: auto; 
+	padding: auto;
+	color: gray;
+	font-size: 14px;
+	font-weight: bold;
+}
+.btn-dark{
+	height: 31px;
+    width: 68px;
+}
+.pointInput{
+	height: 30px;
 
+}
+.nowPoint{
+	color: blue;
+}
+.bookBtn{
+	
+	/* position: fixed; */
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+}
+.btn_foot{
+	position: fixed;
+    bottom: 5px;
+    left: 50%;
+    z-index: 11;
+    background: #fff;
+	/* height: 75px; */
+    width: 100%;
+    max-width: 600px;
+    transform: translateX(-50%);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 </style>
 <body>
 <!-- 헤더&메뉴바 -->
@@ -117,7 +157,8 @@ header {
 
 	<!-- 컨텐츠 -->
 	<div class="body-wrapper">
-		<div class="container">
+		<div class="container" >
+			<form action="" method="post">
 		<div class="detailMain">
 			<div class="site_info">
 				<div class='text-right tt' stlyle='padding-bottom: 0.75rem; color: black;'><b>예약상품정보</b></div>
@@ -135,6 +176,8 @@ header {
 						<tr>
 							<td class="infoTitle">숙박기간</td>
 							<td>${firstDay} ~ ${lastDay} <b>(${countDay}박)</b></td>
+							<input type="hidden" name="firstDay" id="firstDay" value="${firstDay}">
+							<input type="hidden" name="lastDay" id="lastDay" value="${lastDay}">
 						</tr>
 						<tr>
 							<td class="infoTitle">기준인원</td>
@@ -145,7 +188,7 @@ header {
 						</tr>
 					</table>
 					<div style="text-align: right;">
-						<h5 style="padding-right: 20px;">1박 <b id="sitePrice">45,000원</b></h5>
+						<h5 style="padding-right: 20px;">1박 <span class="sitePrice"></span></h5>
 
 					</div>
 				<hr>
@@ -157,19 +200,19 @@ header {
 						<h6 style="margin: auto; padding: auto;">이름 <span style="color: red;">(필수)</span></h6>
 					</div>
 					<div class="col-8">
-						<input type="text" class="form-control" name="" value="${mOne.memberName}" placeholder="이름을 입력해주세요" required>
+						<input type="text" class="form-control" name="bookName" id="bookName" value="${mOne.memberName}" placeholder="이름을 입력해주세요" required>
 					</div>
 					<div class="col-4">
 						<h6 style="margin: auto; padding: auto;">연락처 <span style="color: red;">(필수)</span></h6>
 					</div>
 					<div class="col-8">
-						<input type="text" class="form-control" name="" value="${mOne.memberPhone}" placeholder="-를 빼고 입력해주세요." required>
+						<input type="tel" class="form-control" name="bookPhone" id="bookPhone" value="${mOne.memberPhone}" placeholder="-를 빼고 입력해주세요." required>
 					</div>
 					<div class="col-4">
 						<h6 style="margin: auto; padding: auto;">요청사항</h6>
 					</div>
 					<div class="col-8">
-						<textarea class="form-control" name="" id="" cols="30" rows="3"></textarea>
+						<textarea class="form-control" name="bookRequest" id="bookRequest" cols="30" rows="3" placeholder="요청사항을 입력해주세요."></textarea>
 					</div>
 				</div>
 				<h5><b>전체 인원 정보</b></h5>
@@ -180,50 +223,190 @@ header {
 					<div class="col-8" style="text-align: left;">
 						<div class="count-wrap _count">
 							<button type="button" class="minus">-</button>
-							<input type="text" class="inp" value="1" />
+							<input type="text" name="bookPeople" id="bookPeople" class="inp" value="1" />
 							<button type="button" class="plus">+</button>
 						</div>
 					</div>
 					<hr>
 					<div class="col-4">
-						<h6 style="margin: auto; padding: auto;">기준인원</h6>
+						<p class="peopleInfo" >기준인원</p>
 					</div>
 					<div class="col-8 text-end" style="text-align: left;">
 						<h7 style="margin: auto; padding-right: 15px;">${campSite.standardPeople}명</h7>
 					</div>
 					<div class="col-4">
-						<h6 style="margin: auto; padding: auto;">최대인원</h6>
+						<p class="peopleInfo">최대인원</p>
 					</div>
 					<div class="col-8 text-end" style="text-align: left;">
 						<h7 style="margin: auto; padding-right: 15px;">${campSite.maxPeople}명</h7>
 					</div>
 					<div class="col-4">
-						<h6 style="margin: auto; padding: auto;">인원당 추가금액</h6>
+						<p class="peopleInfo">인원당 추가금액</p>
 					</div>
 					<div class="col-8 text-end" style="text-align: left;">
 						<h7 style="margin: auto; padding-right: 15px;" id="excessCharge">${campSite.excessCharge}원</h7>
 					</div>
 					<div class="col-4">
-						<h6 style="margin: auto; padding: auto;">인원추가요금</h6>
+						<p class="peopleInfo">인원추가요금</p>
 					</div>
 					<div class="col-8 text-end" style="text-align: left;">
-						<h7 style="margin: auto; padding-right: 15px;"><b id="peopleMoney"></b></h7>
+						<h7 style="margin: auto; padding-right: 15px;"><b class="peopleMoney"></b></h7>
+					</div>
+					<hr>
+				</div>
+				<h5><b>포인트 할인</b></h5>
+				<div class="input_info row">
+					<div class="col-3">
+						<h6>포인트</h6>
+					</div>
+					<div class="col-9 text-end" style="text-align: left;">
+						<input type="number" class="pointInput" name="" value="" id="pointInput" placeholder=""><button type="button" onclick="pointCancle()" class="btn btn-dark btn-sm">사용취소</button>
+						<p align="center" class="nowPoint">사용가능 포인트 <span id="available-point">${mOne.totalPoint}</span>원</p>
+					</div>
+					<hr>
+				</div>
+				<h5><b>결제 상세</b></h5>
+				<div class="input_info row">
+					<div class="col-4">
+						<p class="peopleInfo">숙박요금</p>
+					</div>
+					<div class="col-8 text-end" style="text-align: left;">
+						<h7 style="margin: auto; padding-right: 15px;" class="totalSitePrice">10000원</h7>
+						<p style="margin: auto; padding-right: 15px; font-size: 12px">${countDay}박 x <span class="sitePrice"></span></p>
+					</div>
+					<div class="col-4">
+						<p class="peopleInfo">인원추가요금</p>
+					</div>
+					<div class="col-8 text-end" style="text-align: left;">
+						<h7 style="margin: auto; padding-right: 15px;" ><span class="peopleMoney"></span></h7>
+					</div>
+					<div class="col-4">
+						<p class="peopleInfo">포인트할인</p>
+					</div>
+					<div class="col-8 text-end" style="text-align: left;">
+						<h7 style="margin: auto; padding-right: 15px;">-<span id="bookUsePoint">0</span>원</h7>
+					</div>
+					<div class="col-4">
+						<p class="peopleInfo">포인트적립</p>
+					</div>
+					<div class="col-8 text-end" style="text-align: left;">
+						<h7 style="margin: auto; padding-right: 15px;" id="bookGetPoint"></h7>
+						<p style="margin: auto; padding-right: 15px; font-size: 12px;">최종금액 3% 적립</p>
+					</div>
+					<div class="col-4">
+						<p class="peopleInfo" style="color: black;">최종금액</p>
+					</div>
+					<div class="col-8 text-end" style="text-align: left;">
+						<h7 style="margin: auto; padding-right: 15px;"><b class="totalPrice"></b></h7>
 					</div>
 				</div>
-
 			</div>
 
 		</div>
+	</form>
+	<div class="btn_foot">
+		<button onclick="bookPay()" class="btn btn-dark bookBtn"><span class="totalPrice"></span> 예약하기</button>
+
+	</div>
 		<br><br><br><br><br><br><br><br>
 	</div>
 	</div>
 <script>sitePrice
 	var sitePrice = ${campSite.sitePrice};
+	var totalSitePrice = ${campSite.sitePrice}*${countDay};
 	var excessCharge = ${campSite.excessCharge};
-	$("#sitePrice").html(sitePrice.toLocaleString('ko-KR')+"원")
+	var point = ${mOne.totalPoint};
+	var extraTotal = 0;
+	var bookUsePoint = 0;
+	var totalPrice = totalSitePrice + extraTotal - bookUsePoint;
+	var bookGetPoint = Math.ceil(totalPrice/100*3);
+
+	$("#bookGetPoint").html(bookGetPoint.toLocaleString('ko-KR') + "원")
+	$(".totalPrice").html(totalPrice.toLocaleString('ko-KR') + "원");
+	$(".totalSitePrice").html(totalSitePrice.toLocaleString('ko-KR')+"원")
+	$(".sitePrice").html(sitePrice.toLocaleString('ko-KR')+"원")
 	$("#excessCharge").html("기준인원 초과 1인당 "+ excessCharge.toLocaleString('ko-KR')+"원")
-	$("#peopleMoney").html("0원");
+	$(".peopleMoney").html("0원");
 	$(".inp").val(${campSite.standardPeople});
+
+	function check(){
+		console.log("캠핑장가격 : "+ totalSitePrice +",추가금액: "+extraTotal+",사용포인트 : "+bookUsePoint+",최종금액 : "+totalPrice+",적립포인트 : "+bookGetPoint)
+		console.log($("#bookPeople").val())
+	}
+	function bookPay(){
+		const data={
+			"memberId":"${mOne.memberId}",
+			"siteNo":${campSite.siteNo},
+			"bookName":$("#bookName").val(),
+			"bookPhone":$("#bookPhone").val(),
+			"bookRequest":$("#bookRequest").val(),
+			"bookPeople":$("#bookPeople").val(),
+			"firstDay":$("#firstDay").val(),
+			"lastDay":$("#lastDay").val(),
+			"totalDay":${countDay},
+			"bookIniPrice":totalSitePrice,
+			"bookExtra":extraTotal,
+			"bookUsePoint":bookUsePoint,
+			"bookGetPoint":bookGetPoint,
+			"bookTotalPrice":totalPrice
+		}
+		$.ajax({
+			url : "/campBooking/campBooking.kh",
+			type : "post",
+			data : data,
+			success: function(result){
+				if(result == "success"){
+					alert("성공");
+					location.href="/camp/campSiteDetail.kh?contentId=${campSite.siteNo}"
+				}else if(result == "fail"){
+					alert("실패")
+					ocation.href="/camp/campSiteDetail.kh?contentId=${campSite.siteNo}"
+				}else{
+					alert("에러")
+				}
+			},
+			error : function(request, status, error){
+                    console.log("code: " + request.status)
+                    console.log("message: " + request.responseText)
+                    console.log("error: " + error);
+                }
+		})
+	}
+	function priceUpdate(){
+		totalPrice = totalSitePrice + extraTotal - bookUsePoint;
+		bookGetPoint = Math.ceil(totalPrice/100*3);
+		$("#bookUsePoint").html(parseInt(bookUsePoint).toLocaleString('ko-KR'))
+		$(".totalPrice").html(totalPrice.toLocaleString('ko-KR') + "원");
+		$("#bookGetPoint").html(bookGetPoint.toLocaleString('ko-KR') + "원");
+	}
+	//포인트 키업 
+	$("#pointInput").keyup(function(){
+	$("#available-point").html("${member.totalPoint}");
+	bookUsePoint= $("#pointInput").val();
+	if(parseInt(bookUsePoint)>parseInt(point)){
+		alert ("보유 포인트를 초과하였습니다.");
+		pointCancle();
+		
+	}else if(bookUsePoint == ""){
+		pointCancle();
+	}
+	else{
+		$("#point-price").html('-'+point+'원');
+		$("#available-point").html(point-bookUsePoint);
+		priceUpdate()
+	}
+	})
+
+	function pointCancle(){
+		bookUsePoint=0;
+		$("#pointInput").val("");
+		$("#available-point").html("${mOne.totalPoint}");
+		$("#bookUsePoint").html('0');
+		priceUpdate()
+	
+	}
+
+	//인원수 업다운
     $('._count :button').on({
 		'click' : function(e){
 			e.preventDefault();
@@ -258,11 +441,14 @@ header {
         e.preventDefault();
     	var now = $(".inp").val();
 		var standardPeople = ${campSite.standardPeople};
-		var total = (excessCharge*(now-standardPeople)).toLocaleString('ko-KR');
         if(now > standardPeople){
-			$("#peopleMoney").html(total+"원");
+			extraTotal = (excessCharge*(now-standardPeople));
+			$(".peopleMoney").html(extraTotal.toLocaleString('ko-KR')+"원");
+			priceUpdate()
 		}else{
-			$("#peopleMoney").html("0원");
+			extraTotal = 0;
+			$(".peopleMoney").html("0원");
+			priceUpdate()
 		}
     });
     	
@@ -271,11 +457,14 @@ header {
         e.preventDefault();
     	var now = $(".inp").val();
 		var standardPeople = ${campSite.standardPeople};
-		var total = (excessCharge*(now-standardPeople)).toLocaleString('ko-KR');
         if(now > standardPeople){
-			$("#peopleMoney").html(total+"원");
+			extraTotal = (excessCharge*(now-standardPeople));
+			$(".peopleMoney").html(extraTotal.toLocaleString('ko-KR')+"원");
+			priceUpdate()
 		}else{
-			$("#peopleMoney").html("0원");
+			extraTotal = 0;
+			$(".peopleMoney").html("0원");
+			priceUpdate()
 		}
     });
 </script>
