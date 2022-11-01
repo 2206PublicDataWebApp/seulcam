@@ -5,6 +5,7 @@
   <!-- 나는 마이바티스다 라는 선언 -->
 <configuration>
 	<settings>
+		
 		<setting name="jdbcTypeForNull" value="NULL"/>
 		<!-- 만약에 null 데이터가 전달되었으면 빈칸이 아닌 NULL로 인식하도록 설정 -->
 	</settings>

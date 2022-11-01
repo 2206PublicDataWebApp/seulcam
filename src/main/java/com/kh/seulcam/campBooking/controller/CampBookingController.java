@@ -23,6 +23,8 @@ import com.kh.seulcam.campBooking.domain.CampBooking;
 import com.kh.seulcam.campBooking.service.CampBookingService;
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.member.service.MemberService;
+import com.kh.seulcam.order.service.OrderService;
+import com.kh.seulcam.point.domain.Point;
 
 @Controller
 public class CampBookingController {
@@ -34,6 +36,9 @@ public class CampBookingController {
     
     @Autowired
     private MemberService mService;
+    
+    @Autowired
+    private OrderService oService;
     
  // 캠핑장 예약 페이지
     @RequestMapping(value = "/campBooking/campBookingView.kh", method = RequestMethod.GET)
@@ -88,14 +93,31 @@ public class CampBookingController {
         return mv;
     }
     
-  //캠핑장 리스트 출력
+  //캠핑장 예약
     @ResponseBody
     @RequestMapping(value = "/campBooking/campBooking.kh", method = RequestMethod.POST )
     public String campBookingRegist(
             @ModelAttribute CampBooking cBooking) {
         try {
             System.out.println(cBooking);
+            //잔여좌석 없으면 예약안되도록
+            
+            // 예약저장
             int result = bService.campBookingRegist(cBooking);
+            
+            // 포인트 차감 / 적립
+            Point pointUse = new Point();
+            pointUse.setMemberId(cBooking.getMemberId());
+            pointUse.setPoint(cBooking.getBookUsePoint()+"");
+            int result2 = oService.registUsePoint(pointUse);
+            //포인트 / 적립
+            Point pointAdd = new Point();
+            pointAdd.setMemberId(cBooking.getMemberId());
+            pointAdd.setPoint(cBooking.getBookGetPoint()+"");
+            int result3 = oService.registGetPoint(pointAdd.getPoint(),pointAdd.getMemberId());
+            
+            
+            // 예약 현황 저장
             int bsInsert=0;
             BookingStatus bs = new BookingStatus();
             bs.setMemberId(cBooking.getMemberId());
@@ -113,10 +135,25 @@ public class CampBookingController {
             }
             
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
         return "error";
         
     }
     
+    
+  //캠핑장 예약 조회
+    @ResponseBody
+    @RequestMapping(value = "/campBooking/campBookingCheck.kh", method = RequestMethod.POST )
+    public String campBookingCheck() {
+        try {
+            
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
 }

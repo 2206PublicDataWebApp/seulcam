@@ -15,4 +15,12 @@
 		    END LOOP;
 		END;
   	</insert>
+  	<select id="selectBookCount" resultType="string">
+  		SELECT 
+  		MIN((SELECT SITE_COUNT FROM CAMP_SITE_TBL WHERE SITE_NO = #{siteNo})-COUNT(*)) 
+  		FROM BOOKING_STATUS 
+  		WHERE SITE_NO = #{siteNo}
+  		AND S_BOOK_DATE BETWEEN #{firstDay} AND (TO_DATE(#{lastDay} ,'YYYY-MM-DD')-1)
+  		GROUP BY S_BOOK_DATE
+  	</select>
 </mapper>

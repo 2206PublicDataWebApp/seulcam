@@ -130,15 +130,15 @@ header {
 	/* position: fixed; */
 	bottom: 0;
 	width: 100%;
-	height: 100%;
+	height: 37px;
 }
 .btn_foot{
 	position: fixed;
-    bottom: 5px;
+    bottom: 0;
     left: 50%;
     z-index: 11;
     background: #fff;
-	/* height: 75px; */
+	height: 40px;
     width: 100%;
     max-width: 600px;
     transform: translateX(-50%);
@@ -147,6 +147,16 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+input:focus{
+	outline: none !important;
+	box-shadow: none;
+}
+
+.form-control:focus{
+	outline: none !important;
+	box-shadow: none;
+	border: 1px solid #ced4da;;
 }
 </style>
 <body>
@@ -158,7 +168,6 @@ input::-webkit-inner-spin-button {
 	<!-- 컨텐츠 -->
 	<div class="body-wrapper">
 		<div class="container" >
-			<form action="" method="post">
 		<div class="detailMain">
 			<div class="site_info">
 				<div class='text-right tt' stlyle='padding-bottom: 0.75rem; color: black;'><b>예약상품정보</b></div>
@@ -261,7 +270,7 @@ input::-webkit-inner-spin-button {
 					</div>
 					<div class="col-9 text-end" style="text-align: left;">
 						<input type="number" class="pointInput" name="" value="" id="pointInput" placeholder=""><button type="button" onclick="pointCancle()" class="btn btn-dark btn-sm">사용취소</button>
-						<p align="center" class="nowPoint">사용가능 포인트 <span id="available-point">${mOne.totalPoint}</span>원</p>
+						<p align="right" class="nowPoint">사용가능 포인트 <span id="available-point">${mOne.totalPoint}</span>원</p>
 					</div>
 					<hr>
 				</div>
@@ -303,12 +312,13 @@ input::-webkit-inner-spin-button {
 			</div>
 
 		</div>
-	</form>
+		<br><br>
+
 	<div class="btn_foot">
 		<button onclick="bookPay()" class="btn btn-dark bookBtn"><span class="totalPrice"></span> 예약하기</button>
 
 	</div>
-		<br><br><br><br><br><br><br><br>
+		
 	</div>
 	</div>
 <script>sitePrice
@@ -357,10 +367,10 @@ input::-webkit-inner-spin-button {
 			success: function(result){
 				if(result == "success"){
 					alert("성공");
-					location.href="/camp/campSiteDetail.kh?contentId=${campSite.siteNo}"
+					location.href="/camp/campSiteDetail.kh?contentId="+${campSite.siteNo}
 				}else if(result == "fail"){
-					alert("실패")
-					ocation.href="/camp/campSiteDetail.kh?contentId=${campSite.siteNo}"
+					alert("예약현황 데이터 저장 오류")
+					ocation.href="/camp/campSiteDetail.kh?contentId="+${campSite.siteNo}
 				}else{
 					alert("에러")
 				}
@@ -388,6 +398,9 @@ input::-webkit-inner-spin-button {
 		pointCancle();
 		
 	}else if(bookUsePoint == ""){
+		pointCancle();
+	}else if(bookUsePoint>totalPrice){
+		alert ("결제 금액을 초과할 수 없습니다.");
 		pointCancle();
 	}
 	else{
