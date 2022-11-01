@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.seulcam.campBooking.domain.BookingStatus;
 import com.kh.seulcam.campBooking.domain.CampBooking;
+import com.kh.seulcam.campBooking.domain.bookingStatusSearch;
 import com.kh.seulcam.campBooking.service.CampBookingService;
 import com.kh.seulcam.campBooking.store.CampBookingStore;
 
@@ -27,6 +28,12 @@ public class CampBookingServiceImpl implements CampBookingService{
     public int bookingStatus(BookingStatus bs) {
         int bsInsert = bStore.bStatusInsert(session,bs);
         return bsInsert;
+    }
+
+    @Override
+    public String bookingCount(bookingStatusSearch bss) {
+        String result = bStore.selectBookCount(session,bss);
+        return result;
     }
 
 }

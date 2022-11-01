@@ -370,8 +370,20 @@ div{
 						</table>
 						<hr>
 				</div>
+				
+				<div class="intro_area">
+					<h4>캠핑장 소개</h4>
+					<div class="intro">
+						<c:if test='${camp.intro == ""}'><h4>아직 등록된 소개가 없어요!</h4></c:if><c:if test='${camp.intro != ""}'>${camp.intro}</c:if>
+					</div>
+					<div class="moreIntro" onclick="moreIntro()">
+						더보기
+					</div>
+					<hr>
+					
+				</div>
 				<div class="calendar_area">
-					<h4>달력</h4>
+					<h4>예약 일자 선택</h4>
 					<div class="calSelect">
 						<a  data-bs-toggle='modal' data-bs-target='#calModal'><div>
 							<i class="bi bi-calendar-check"></i><span class="stDate"></span>
@@ -379,16 +391,6 @@ div{
 						<div>
 							<i class="bi bi-calendar-check"></i><span class="edDate"></span>
 						</div></a>
-					</div>
-					<hr>
-				</div>
-				<div class="intro_area">
-					<h4>캠핑장 소개</h4>
-					<div class="intro">
-						${camp.intro}
-					</div>
-					<div class="moreIntro" onclick="moreIntro()">
-						더보기
 					</div>
 					<hr>
 					<h4>예약 가능 사이트</h4>
@@ -516,10 +518,18 @@ div{
 				success : function(data){
 					var str = "";
 					for(var i = 0; i<data.length ; i++){
-						str += "<div class='siteInfo row'>"
+						if(data[i].siteCount < 1){
+							str += "<div class='siteInfo row site-disabled'>"
+						}else{
+							str += "<div class='siteInfo row'>"
+						}
 						str +=	"<div class='col-4' style='padding-left: 0;' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal("+data[i].siteNo+")'>"
 						str +=	"<img class='simg' style='width: 100%; height: 100%; object-fit: cover;' src='/resources/ruploadFiles/"+data[i].siteThumbnailRename+"' alt=''>"
-						str +=	"<span class='registY'>예약가능</span></img></div>"			
+						if(data[i].siteCount < 1){
+							str +=	"<span class='registN'>예약불가</span></img></div>"	
+						}else{
+							str +=	"<span class='registY'>예약가능</span></img></div>"	
+						}
 						str += "<div class='col-8' style='padding-left: 0;' ><div class='row' style='padding: 0px; padding-top : 5px' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal("+data[i].siteNo+")'>"			
 						str += "<h5>"+data[i].siteName+"</h5></div><div class='row' style='padding-right: 0;' ><div class='col-8' style='padding-right: 0;' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal("+data[i].siteNo+")'>"
 						str += "<p style='color: #767676;'>"+data[i].siteChar+"</p><p style='color: #767676;'>기준인원 "+data[i].standardPeople+"명 / 최대인원 "+data[i].maxPeople+"명</p></div>"		
@@ -693,6 +703,7 @@ $('#calModal').on('hidden.bs.modal', function () {
 		calendarInit();
 		siteLoad();
 	}
+	siteLoad();
 })
 function campBooking(){
 

@@ -35,12 +35,16 @@ import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.service.CampServie;
+import com.kh.seulcam.campBooking.domain.bookingStatusSearch;
+import com.kh.seulcam.campBooking.service.CampBookingService;
 
 @Controller
 public class CampController {
 	
 	@Autowired
 	private CampServie cService;
+	@Autowired
+    private CampBookingService bService;
 	
 	// 캠핑장 리스트 메인
 	@RequestMapping(value = "/camp/campList.kh", method = RequestMethod.GET)
@@ -255,21 +259,32 @@ public class CampController {
 	@RequestMapping(value="/camp/campSiteListView.kh", produces = "application/json;charset=utf-8",method= RequestMethod.GET)
 	public String campSiteListView(
 	        @RequestParam(value="contentId", required = false) int contentId,
-	        @RequestParam(value="firstDayJs", required = false) String firstDayJs,
-	        @RequestParam(value="lastDayJs", required = false) String lastDayJs,
+	        @RequestParam(value="firstDayJs", required = false) String firstDay,
+	        @RequestParam(value="lastDayJs", required = false) String lastDay,
             ModelAndView mv) {
 	    try {
 	        // 날짜 String to sql.Date
-	        Date firstDay = Date.valueOf(firstDayJs);
-	        Date lastDay = Date.valueOf(lastDayJs);
+//	        Date firstDay = Date.valueOf(firstDayJs);
+//	        Date lastDay = Date.valueOf(lastDayJs);
 	        // 날짜사이 일수 구하기
-	        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-	        String Day = (format.parse(lastDayJs).getTime() - format.parse(firstDayJs).getTime())/(24*60*60)/1000+"";
+//	        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//	        String Day = (format.parse(lastDayJs).getTime() - format.parse(firstDayJs).getTime())/(24*60*60)/1000+"";
 //	        Period diff = Period.between(format.parse(firstDayJs),format.parse(lastDayJs));
 //	        System.out.println(firstDay + " : " + lastDay);
-	        System.out.println(Day);
+	        //캠핑장 데이터 출력
 	        List<CampSite> stList = cService.printSiteList(contentId);
-            
+	        
+	        // 캠핑장 잔여 갯수 카운트
+	        for(int i = 0 ; i<stList.size();i++) {
+	            bookingStatusSearch bss = new bookingStatusSearch();
+	            bss.setFirstDay(firstDay);
+	            bss.setLastDay(lastDay);
+	            bss.setSiteNo(stList.get(i).getSiteNo());
+	            String result = bService.bookingCount(bss);
+	            if(result != null) {
+	                stList.get(i).setSiteCount(Integer.parseInt(result));
+	            }
+	        }
 	        return new Gson().toJson(stList);
         } catch (Exception e) {
             e.printStackTrace();

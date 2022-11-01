@@ -8,7 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0 user-scalable=no">
-<title>캠핑장 예약</title>
+<title>캠핑장 예약확인</title>
 <link rel="stylesheet" href="/resources/css/camp/switch.css">
 <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="/resources/css/fonts.css">
