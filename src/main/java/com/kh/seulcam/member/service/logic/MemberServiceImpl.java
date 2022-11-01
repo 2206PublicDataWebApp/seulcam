@@ -108,4 +108,10 @@ public class MemberServiceImpl implements MemberService {
 		int result = mStore.updateMemberProfile(session, member);
 		return result;
 	}
+	
+	@Override
+	public List<Member> printAllMember() {
+		List<Member> mList = mStore.selectMemberList(session);
+		return mList;
+	}
 }

@@ -48,4 +48,7 @@ public interface MemberService {
 
 	// 프로필 이미지 수정
 	public int registerProfile(Member member);
+	
+	// 회원 전체 조회
+	public List<Member> printAllMember();
 }

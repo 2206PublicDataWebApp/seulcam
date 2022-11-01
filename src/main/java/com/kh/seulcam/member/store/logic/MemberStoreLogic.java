@@ -100,4 +100,10 @@ public class MemberStoreLogic implements MemberStore{
 		int result = session.update("MemberMapper.updateMemberProfile", member);
 		return result;
 	}
+	
+	@Override
+	public List<Member> selectMemberList(SqlSession session) {
+		List<Member> mList = session.selectList("MemberMapper.selectAllMember");
+		return mList;
+	}
 }

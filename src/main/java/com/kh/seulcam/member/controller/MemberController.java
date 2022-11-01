@@ -449,6 +449,29 @@ public class MemberController {
 		return mv;
 	}
 	
+	// 멤버 관리자 페이지 열기
+	@RequestMapping(value="/member/memberListView",method = RequestMethod.GET)
+	public ModelAndView memberList(HttpSession session
+			, HttpServletRequest request
+			, ModelAndView mv) {
+		try {
+
+			HttpSession receive = request.getSession();
+			List<Member> mList = mService.printAllMember();
+			Member member = (Member)receive.getAttribute("loginUser");
+			String memberId = member.getMemberId();
+			Member mOne = mService.printOneById(memberId);
+			mv.addObject("member", mOne);
+			mv.addObject("mList",mList);
+			mv.setViewName("admin/memberList");
+		}catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+	
 	// 프로필 사진 등록
 	@RequestMapping(value="/member/profileImage", method=RequestMethod.POST)
 	public ModelAndView profileImage(

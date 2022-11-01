@@ -52,6 +52,7 @@ li {
     visibility: visible;
     transform: translateX(0);
     transition: 0.3s;
+    z-index: 999;
 }
 
 .content {
