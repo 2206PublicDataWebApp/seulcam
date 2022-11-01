@@ -37,8 +37,12 @@ public class MemberController {
 		/* 로그인 관련 */
 	// 비로그인 상태일 때 로그인 창으로 이동
 	@RequestMapping(value="/member/loginView", method=RequestMethod.GET)
-	public String memberJoinView(Model model) {
-		return "member/login";
+	public ModelAndView memberJoinView(ModelAndView mv,HttpServletRequest request) {
+		String referer = request.getHeader("Referer");
+		request.getSession().setAttribute("redirectURI", referer);
+		mv.addObject("referer", referer);
+		mv.setViewName("member/login");	
+		return mv;
 	}
 	
 	// 아이디 찾기 창으로 이동
@@ -271,7 +275,8 @@ public class MemberController {
 			, ModelAndView mv
 			, Boolean rememberMe
 			, HttpServletRequest request
-			, HttpServletResponse response) {
+			, HttpServletResponse response
+			,@RequestParam("redirectURI") String redirectURI) {
 		try {
 			Member loginUser = mService.loginMember(member);
 			String memberId = loginUser.getMemberId();
@@ -287,7 +292,7 @@ public class MemberController {
 					response.addCookie(cookie);
 				}
 				session.setAttribute("loginUser", loginUser);
-				mv.setViewName("redirect:/");
+				mv.setViewName("redirect:" + redirectURI );
 			}else {
 				mv.addObject("msg", "회원정보를 찾을 수 없습니다.");
 				mv.setViewName("common/errorPage");
@@ -434,7 +439,8 @@ public class MemberController {
 			@ModelAttribute Member member,
 			@RequestParam("memberEmail") String memberEmail
 			, ModelAndView mv
-			, HttpServletRequest request) {
+			, HttpServletRequest request
+			,@RequestParam("redirectURI") String redirectURI) {
 		int result = mService.checkOneEmail(memberEmail);
 		if(result == 0) {
 				mv.addObject("memberEmail", memberEmail);
@@ -443,7 +449,7 @@ public class MemberController {
 			Member loginUser = mService.kakaologinMember(memberEmail);
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
-			mv.setViewName("redirect:/");
+			mv.setViewName("redirect:" + redirectURI );
 		}
 
 		return mv;
