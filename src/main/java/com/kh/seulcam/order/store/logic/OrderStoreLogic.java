@@ -118,10 +118,29 @@ public class OrderStoreLogic implements OrderStore {
 		return result;
 	}
 	
-	//포인트 테이블 저장
+	//포인트 테이블 저장//맴버테이블에 반영
 	@Override
 	public int registPoint(SqlSession session, Point point) {
-		int result=session.insert("PointMapper.insertPoint",point);
+		int result=session.insert("PointMapper.insertUsePoint",point);
+		int result1=session.insert("OrderMapper.updateUsePoint",point);
+		return result;
+	}
+
+	@Override
+	public int registGetPoint(SqlSession session, String point, String memberId) {
+		HashMap<String,String>paramMap=new HashMap<String,String>();
+		  paramMap.put("point",point );
+		  paramMap.put("memberId",memberId);
+		int result=session.insert("PointMapper.insertGetPoint",paramMap);
+		int result1=session.insert("OrderMapper.updateGetPoint",paramMap);
+		
+		return result;
+	}
+
+	@Override
+	public int updateDilivaryStatus(SqlSession session, Integer orderNo) {
+		int result=session.update("OrderMapper.updateDilivaryStatus",orderNo);
+		
 		return result;
 	}
 

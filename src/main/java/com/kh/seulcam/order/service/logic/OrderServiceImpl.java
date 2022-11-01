@@ -112,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int registPoint(Point point) {
+	public int registUsePoint(Point point) {
 		int result=oStore.registPoint(session,point);
 		return result;
 	}
@@ -128,6 +128,19 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int cngDilivary(Order order) {
 		int result = oStore.cngDilivary(session,order);
+		return result;
+	}
+
+	//구매확정->포인트 얻기/맴버에도 반영
+	@Override
+	public int registGetPoint(String point, String memberId) {
+		int result=oStore.registGetPoint(session,point,memberId);
+		return result;
+	}
+
+	@Override
+	public int updateDilivaryStatus(Integer orderNo) {
+		int result=oStore.updateDilivaryStatus(session,orderNo);
 		return result;
 	}
 

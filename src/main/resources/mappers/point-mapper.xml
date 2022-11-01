@@ -11,9 +11,13 @@
   		<result property="point" 	column="POINT"/>
   		<result property="pointType" 	column="POINT_TYPE"/>
   </resultMap>
-  <insert id="insertPoint">
+  <insert id="insertUsePoint">
   INSERT INTO POINT_TBL
   VALUES(SEQ_POINTNO.NEXTVAL,#{memberId},DEFAULT,#{point},'포인트사용')
+  </insert>
+  <insert id="insertGetPoint">
+  INSERT INTO POINT_TBL
+  VALUES(SEQ_POINTNO.NEXTVAL,#{memberId},DEFAULT,#{point},'구매확정 적립')
   </insert>
   
   <select id="selectPrintPointList" resultMap="pointResultMap">

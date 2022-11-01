@@ -97,6 +97,8 @@ header {
 		</thead>
 		<tbody>
 		<c:forEach items="${pList}" var="point" varStatus="i">
+		
+		<tr>
 		<td>${point.pointDate }</td>
 		<td>${point.pointType }</td>
 		<c:if test="${point.pointType eq '포인트사용' }">
@@ -105,7 +107,7 @@ header {
 		<c:if test="${point.pointType eq '구매확정적립' }">
 		<td style='color:blue;'>+${point.point }</td>
 		</c:if>
-
+		</tr>
 		</c:forEach>
 		</tbody>
 		</table>

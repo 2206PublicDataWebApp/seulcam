@@ -109,8 +109,9 @@ public class OrderController {
 		orderPay.setOrderNo(orderNo);
 		int result2 = oService.registOrderPrice(orderPay);
 		// 포인트테이블에 정보 넣기
-		int result3=oService.registPoint(point);
-
+		if(point.getPoint() != "") {
+		int result3=oService.registUsePoint(point);
+		}
 		return String.valueOf(orderNo);
 
 	}
@@ -161,7 +162,11 @@ public class OrderController {
 
 	// 주문리스트
 	@RequestMapping(value = "/order/complete/list.kh", method = RequestMethod.GET)
-	public ModelAndView printCompleteList(ModelAndView mv, @RequestParam("memberId") String memberId) {
+	public ModelAndView printCompleteList(ModelAndView mv, 
+/*			@RequestParam("memberId") String memberId*/	
+		HttpSession session) {
+		Member member = (Member) session.getAttribute("loginUser");
+		String memberId=member.getMemberId();
 		List<Order> oList = oService.printCompleteList(memberId);
 		if (!oList.isEmpty()) {
 			List<OrderPay> opList = new ArrayList();
@@ -192,4 +197,26 @@ public class OrderController {
 
 	}
 
+	//오더테이블 구매확정으로 바꾸고//맴버 포인트 바꾸고//포인트 적립
+	@ResponseBody
+	@RequestMapping(value = "/order/GETPoint", method = RequestMethod.POST)
+		public String getPoint(
+				@RequestParam("orderNo")Integer orderNo,
+				HttpSession session
+				) {
+		Member member = (Member) session.getAttribute("loginUser");
+		String memberId=member.getMemberId();
+		int result=oService.updateDilivaryStatus(orderNo);
+		System.out.println(orderNo);
+		OrderPay orderPay=oService.printOrderPayInfo(orderNo);
+		System.out.println(orderPay);
+		String point=orderPay.getGetPoint();
+		System.out.println(point);
+		
+		//포인트 테이블에 저장
+		int result1=oService.registGetPoint(point,memberId);
+		//맴버테이블에 반영
+		return"success";
+		
+	}
 }
