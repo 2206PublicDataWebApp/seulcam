@@ -174,7 +174,11 @@ article.list > ul > li > .label {
 article.head{
 	height:30px;
 	border-bottom:1px solid black;
+
 	
+}
+article.head>div#category>span{
+	line-height: 20px;
 }
 
 article.head > #sortCdDiv{
@@ -185,3 +189,4 @@ article.head > #sortCdDiv >form >select{
 	border-left: 1px solid black;
 	border-bottom: 1px solid black;
 }
+

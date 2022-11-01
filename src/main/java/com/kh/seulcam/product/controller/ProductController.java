@@ -435,39 +435,47 @@ public class ProductController {
 	@RequestMapping(value="/product/brandCategory", produces="application/json;charset=utf-8", method=RequestMethod.GET)
 	public ModelAndView brandCategory(
 			ModelAndView mv
+			,@RequestParam(value="sortCd", required=false) String sortCdReceive
 			,@RequestParam(value="brandName", required=false) String brandName
-			,@RequestParam(value="sortCd", required=false) String sortCdRecive
+			,HttpSession session
 			) {
-		String sortCd = (sortCdRecive==null) ? "none" : sortCdRecive;
-		List<Product> pList = null;
+		if(brandName!=null) {
+			session.setAttribute("brandName", brandName);
+		}else {
+			brandName=(String) session.getAttribute("brandName");
+		}
+		System.out.println("================"+brandName);
+		String sortCd = (sortCdReceive==null) ? "none" : sortCdReceive;
+		List<Product> pList =pService.findProductByBrand(brandName,sortCd);
 		int searchCt=0;
-		
-		System.out.println("============================="+brandName);
-		pList = pService.findProductByBrand(brandName,sortCd);
 		searchCt=pList.size();
-		
-			
-			
-		mv.addObject("brandName", brandName);
-		
-			mv.addObject("pList", pList);
-		
+		mv.addObject("pList", pList);
 		mv.addObject("searchCt", searchCt);
+		session.removeAttribute("brandName");
 		mv.setViewName("product/brandCategory");
 		return mv;
 	}
-	@RequestMapping(value="/product/brandCategorySort", method=RequestMethod.GET)
-	public String brandCategorySort(ModelAndView mv
-			,@RequestParam(value="brandName", required=false) String brandName
-			,@RequestParam(value="sortCd", required=false) String sortCd) {
-		List<Product> pList = pService.findProductByBrand(brandName,sortCd);
-		if(!pList.isEmpty()) {
-			Gson gson = new GsonBuilder().create();
-			return gson.toJson(pList);
-		}
-		
-		return null;
-		
+	
+	//카테고리별 상품리스트
+	@RequestMapping(value="/product/groupCategory", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public ModelAndView groupCategory(
+			ModelAndView mv
+			,@RequestParam(value="sortCd", required=false) String sortCdReceive
+			,@RequestParam(value="cate_no", required=false) String cate_no
+			,HttpSession session
+			) {
+		String sortCd = (sortCdReceive==null) ? "none" : sortCdReceive;
+		List<Product> pList =pService.findProductByCategory(cate_no,sortCd);
+		int searchCt=0;
+		searchCt=pList.size();
+		mv.addObject("pList", pList);
+		mv.addObject("searchCt", searchCt);
+//		session.removeAttribute("brandName");
+		mv.setViewName("product/groupCategory");
+		return mv;
 	}
 	
+	
+
+
 }

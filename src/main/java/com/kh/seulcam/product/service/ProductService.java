@@ -20,12 +20,11 @@ public interface ProductService {
 
 	public int registerProduct(Product product);
 
-	public List<Product> getTotalProduct();
+	public List<Product> getTotalProduct(String sortCd);
 
 	public int registerProductDetail(Detail detail);
 
 	public List<Product> getProductListByArrayDf(String arrayCd);
-
 
 	public Product getProductByNo(Integer productNo);
 
@@ -48,6 +47,8 @@ public interface ProductService {
 	public List<Product> findProductByKeyword(String keyword);
 
 	public List<Product> findProductByBrand(String brandName, String sortCd);
+
+	public List<Product> findProductByCategory(String cate_no, String sortCd);
 
 
 

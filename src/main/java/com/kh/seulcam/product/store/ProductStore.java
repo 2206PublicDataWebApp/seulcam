@@ -22,7 +22,7 @@ public interface ProductStore {
 
 	public int insertProduct(SqlSession session, Product product);
 
-	public List<Product> selectAllProduct(SqlSession session);
+	public List<Product> selectAllProduct(SqlSession session,String sortCd);
 
 	public int insertProductDetail(SqlSession session, Detail detail);
 
@@ -49,6 +49,8 @@ public interface ProductStore {
 	public List<Product> selectProductByKeyword(SqlSession session, String keyword);
 
 	public List<Product> selectProductByBrand(SqlSession session, String brandName, String sortCd);
+
+	public List<Product> selectProductByCetegory(SqlSession session, String cate_no, String sortCd);
 
 
 

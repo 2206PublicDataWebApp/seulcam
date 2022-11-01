@@ -35,8 +35,10 @@ public class ProductStoreLogic implements ProductStore {
 	}
 
 	@Override
-	public List<Product> selectAllProduct(SqlSession session) {
-		List<Product> pList=session.selectList("ProductMapper.selectAllProduct");
+	public List<Product> selectAllProduct(SqlSession session, String sortCd) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("sortCd", sortCd);
+		List<Product> pList=session.selectList("ProductMapper.selectAllProduct",paramMap);
 		return pList;
 	}
 
@@ -124,6 +126,15 @@ public class ProductStoreLogic implements ProductStore {
 		
 		List<Product> pList = session.selectList("ProductMapper.selectProductByBrand", paramMap);
 		
+		return pList;
+	}
+
+	@Override
+	public List<Product> selectProductByCetegory(SqlSession session, String cate_no, String sortCd) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("cate_no", cate_no);
+		paramMap.put("sortCd", sortCd);
+		List<Product> pList = session.selectList("ProductMapper.selectProductByCategory", paramMap);
 		return pList;
 	}
 

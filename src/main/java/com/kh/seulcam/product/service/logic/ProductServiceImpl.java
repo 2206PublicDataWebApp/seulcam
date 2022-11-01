@@ -42,8 +42,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<Product> getTotalProduct() {
-		List<Product> pList = pStore.selectAllProduct(session);
+	public List<Product> getTotalProduct(String sortCd) {
+		List<Product> pList = pStore.selectAllProduct(session, sortCd);
 		return pList;
 	}
 
@@ -123,6 +123,12 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<Product> findProductByBrand(String brandName, String sortCd) {
 		List<Product> pList=pStore.selectProductByBrand(session, brandName, sortCd);
+		return pList;
+	}
+
+	@Override
+	public List<Product> findProductByCategory(String cate_no, String sortCd) {
+		List<Product> pList=pStore.selectProductByCetegory(session, cate_no, sortCd);
 		return pList;
 	}
 

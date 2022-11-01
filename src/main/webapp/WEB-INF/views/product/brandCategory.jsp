@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable= no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>상품검색</title>
+<title>브랜드별 상품</title>
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="/resources/css/product/search.css">
 <link rel="stylesheet" href="/resources/css/fonts.css">
@@ -20,14 +20,16 @@
 <body>
 <article class="head">
 	<div id="sortCdDiv">
-
-			<select name="sortCd" id="sortCd" >
-				<option value="new" <c:if test="${sortCd eq 'new' }">selected</c:if>>최신순</option>
-				<option value="highPrice" <c:if test="${sortCd eq 'highPrice' }">selected</c:if>>높은가격순</option>
-				<option value="rowPrice" <c:if test="${sortCd eq 'rowPrice' }">selected</c:if>>낮은가격순</option>
-				<option value="sale" <c:if test="${sortCd eq 'sale' }">selected</c:if>>인기순</option>
-			</select>
-
+			<form id="searchForm" name="" action="/product/brandCategory" enctype="multipart/form-data">
+			<input type="hidden" name="brandName" value="${brandName }">
+				<select name="sortCd" id="sortCd" onchange="this.form.submit()">
+					<option>전체</option>
+					<option value="new" <c:if test="${sortCd eq 'new' }">selected</c:if>>최신순</option>
+					<option value="highPrice" <c:if test="${sortCd eq 'highPrice' }">selected</c:if>>높은가격순</option>
+					<option value="rowPrice" <c:if test="${sortCd eq 'rowPrice' }">selected</c:if>>낮은가격순</option>
+					<option value="sale" <c:if test="${sortCd eq 'sale' }">selected</c:if>>인기순</option>
+				</select>
+			</form>
 	</div>
 	<div>
 	<span>브랜드 > ${brandName }</span>
@@ -60,25 +62,9 @@
 <%-- <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> --%>
 </footer>
 <script>
-$("#sortCd").on("change", function(){
-	var sortCd=$("#sortCd").val();
-	var brandName=${brandName};
-	$.ajax({
-		url:"/product/brandCategorySort",
-		data:{"brandName":brandName,
-			"sortCd":sortCd},
-		type:"get",
-		success:function(pList){
-			alert("성공!");
-			$("#sort-list").html(pList);			
-			console.log(pList);
-		},
-		error:function(){
-			alert("검색실패!");
-		}
-	});
 
 	
-});
+
+
 </script>
 </html>

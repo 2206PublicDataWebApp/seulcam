@@ -158,7 +158,8 @@ public class ProductAdminController {
 	//전체 상품리스트
 	@RequestMapping(value="/admin/productList", method=RequestMethod.GET)
 	public ModelAndView findAllProduct(ModelAndView mv) {
-		List<Product> pList = pService.getTotalProduct();
+		String sortCd = "";
+		List<Product> pList = pService.getTotalProduct(sortCd);
 		if(!pList.isEmpty()) {
 			mv.addObject("pList", pList);
 		}

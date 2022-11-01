@@ -38,6 +38,18 @@
   	</insert>
   	<select id="selectAllProduct" resultMap="productResultMap">
   		SELECT * FROM PRODUCT_TBL
+  		<if test="sortCd.toString()=='new'">
+  			ORDER BY UPDATE_DATE DESC
+  			</if>		
+  			<if test="sortCd.toString()=='highPrice'">
+  			ORDER BY PRODUCT_PRICE DESC
+  			</if>		
+  			<if test="sortCd.toString()=='rowPrice'">
+  			ORDER BY PRODUCT_PRICE
+  			</if>		
+  			<if test="sortCd.toString()=='sale'">
+  			ORDER BY SALE_COUNT DESC
+  			</if>		
   	</select>
   	<insert id="insertProductDetail" parameterType="Detail">
   		INSERT INTO DETAIL_TBL
@@ -76,7 +88,91 @@
   		</where>
   	</select>
   	<select id="selectProductByBrand" resultMap="productResultMap">
-  		SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE FROM PRODUCT_TBL WHERE BRAND_NAME=#{brandName}OR BRAND_NAME LIKE '%'||#{brandName}||'%'
+  		
+  		SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE,BRAND_NAME, UPDATE_DATE FROM PRODUCT_TBL WHERE BRAND_NAME=#{brandName}OR BRAND_NAME LIKE '%'||#{brandName}||'%'
+  			<if test="sortCd.toString()=='new'">
+  			ORDER BY UPDATE_DATE DESC
+  			</if>		
+  			<if test="sortCd.toString()=='highPrice'">
+  			ORDER BY PRODUCT_PRICE DESC
+  			</if>		
+  			<if test="sortCd.toString()=='rowPrice'">
+  			ORDER BY PRODUCT_PRICE
+  			</if>		
+  			<if test="sortCd.toString()=='sale'">
+  			ORDER BY SALE_COUNT DESC
+  			</if>		
+  	</select>
+  	<select id="selectProductByCategory" resultMap="productResultMap">
+  		<choose>
+  			<when test='cate_no.toString=="1"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='텐트' OR CATEGORY='타프'
+  			</when>
+  			<when test='cate_no.toString=="2"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='텐트'
+  			</when>
+  			<when test='cate_no.toString=="3"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='타프'
+  			</when>
+  			<when test='cate_no.toString=="4"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='테이블' OR CATEGORY='체어'
+  			</when>
+  			<when test='cate_no.toString=="5"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='테이블'
+  			</when>
+  			<when test='cate_no.toString=="6"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='체어'
+  			</when>
+  			<when test='cate_no.toString=="7"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='침낭' OR CATEGORY='매트' OR CATEGORY='야전침대'
+  			</when>
+  			<when test='cate_no.toString=="8"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='침낭'
+  			</when>
+  			<when test='cate_no.toString=="9"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='매트'
+  			</when>
+  			<when test='cate_no.toString=="10"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='야전침대'
+  			</when>
+  			<when test='cate_no.toString=="11"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='코펠' OR CATEGORY='취사도구' OR CATEGORY='컵/머그컵'
+  			</when>
+  			<when test='cate_no.toString=="12"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='코펠'
+  			</when>
+  			<when test='cate_no.toString=="13"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='취사도구'
+  			</when>
+  			<when test='cate_no.toString=="14"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='컵/머그컵'
+  			</when>
+  			<when test='cate_no.toString=="15"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='스토브' OR CATEGORY='화로대' OR CATEGORY='난로'
+  			</when>
+  			<when test='cate_no.toString=="16"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='스토브'
+  			</when>
+  			<when test='cate_no.toString=="17"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='화로대'
+  			</when>
+  			<when test='cate_no.toString=="18"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='난로''
+  			</when>
+  			<when test='cate_no.toString=="19"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='전기용품' OR CATEGORY='기타소품'
+  			</when>
+  			<when test='cate_no.toString=="20"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='전기용품'
+  			</when>
+  			<when test='cate_no.toString=="21"'>
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL WHERE CATEGORY='기타소품'
+  			</when>
+  			<otherwise>
+  			
+  				SELECT PRODUCT_NO, MAIN_FILE_RENAME, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, CATEGORY, UPDATE_DATE FROM PRODUCT_TBL
+  			</otherwise>
+  		</choose>	
   			<if test="sortCd.toString()=='new'">
   			ORDER BY UPDATE_DATE DESC
   			</if>		
