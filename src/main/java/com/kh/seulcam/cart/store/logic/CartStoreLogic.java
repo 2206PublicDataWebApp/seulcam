@@ -1,5 +1,6 @@
 package com.kh.seulcam.cart.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -41,6 +42,17 @@ public class CartStoreLogic implements CartStore{
 	@Override
 	public int insertOrder(SqlSession session, OrderList order) {
 		int result = session.insert("OrderMapper.insertProduct",order);
+		return result;
+	}
+
+
+	@Override
+	public int deleteCheck(SqlSession session, String productNo, String memberId) {
+		 HashMap<String,String>paramMap=new HashMap<String,String>();
+		  paramMap.put("productNo",productNo );
+		  paramMap.put("memberId",memberId);
+		int result=session.delete("CartMapper.deleteCheck",paramMap);
+		
 		return result;
 	}
 	

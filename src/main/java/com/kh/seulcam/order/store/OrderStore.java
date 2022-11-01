@@ -52,6 +52,8 @@ public interface OrderStore {
 	public int registGetPoint(SqlSession session, String point, String memberId);
 	//구매확정으로 상태 변환
 	public int updateDilivaryStatus(SqlSession session, Integer orderNo);
+	//구매 취소 상태로 변환
+	public int changeOrderCancle(SqlSession session, String orderNo, String memberId);
 
 
 

@@ -32,11 +32,6 @@ public class OrderController {
 	@Autowired
 	private OrderService oService;
 
-	// 결제
-	@RequestMapping(value = "/pay.kh", method = RequestMethod.GET)
-	public String showpay() {
-		return "order/pay";
-	}
 
 	// 주문
 	@RequestMapping(value = "/order/order.kh", method = RequestMethod.GET)
@@ -219,4 +214,24 @@ public class OrderController {
 		return"success";
 		
 	}
+	
+	//구매 취소로 바꾸기
+	@ResponseBody
+	@RequestMapping(value="/order/cancleOrder",method=RequestMethod.POST)
+		public String calcleOrder(
+				@RequestParam("orderNo")String orderNo,
+				HttpSession session
+				) {
+		Member member = (Member) session.getAttribute("loginUser");
+		String memberId=member.getMemberId();
+		int result=oService.changeOrderCancle(orderNo,memberId);
+		
+		if(result>0) {
+		
+		return"success";
+		}else {
+			return "fail";
+		}
+	}
+
 }

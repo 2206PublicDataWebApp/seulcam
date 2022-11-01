@@ -7,6 +7,9 @@ public class Cart {
 	private String memberId;
 	private int cartCount;
 	
+	
+	
+	
 	public int getCartNo() {
 		return cartNo;
 	}

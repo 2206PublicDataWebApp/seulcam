@@ -104,8 +104,35 @@ public class CartController {
 		
 		}
 		
+	//체크박스 선택 지우기	
+	@ResponseBody
+	@RequestMapping(value="/cart/checkdelete",method=RequestMethod.POST)
+	public String cartDeleteCheck(
+			 @RequestParam(value="pNo[]") List<String>pNo, 
+			HttpSession session
+			/*@ModelAttribute(value="Cart")Cart cart*/
 		
-	
+			) {
+		Member member = (Member) session.getAttribute("loginUser");
+		String memberId=member.getMemberId();
+		int result=0;
+		for (int i = 0; i < pNo.size(); i++) {
+			
+			/*
+			 * cart.setProductNo(Integer.parseInt(productNo.get(i)));
+			 * cart.setMemberId(memberId);
+			 */
+			String productNo = pNo.get(i);
+		    System.out.println();
+		   result=cService.deleteCheck(productNo,memberId);
+		}
+		if(result>0) {
+		return "success";
+		}else {
+			return"error";
+		}
+		
+	}
 	
 	
 	

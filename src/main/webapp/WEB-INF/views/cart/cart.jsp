@@ -196,42 +196,7 @@ width:30%
 					<c:forEach items="${pList}" var="product" varStatus="p">
 						<c:if test="${cart.productNo eq product.productNo }">
 							<input id="cc" type="hidden" value= "${p.count }">
-							
-							<%-- <table class="list_table">
-
-								<tr>
-									<td rowspan="4">
-									<input type="checkbox" id="check_select" name="cartbox" onclick="checkSelectAll()" />
-									</td>
-									<td rowspan="4">
-									<img class="p-img" src="//image.msscdn.net/images/goods_img/20220906/2774157/2774157_1_160.jpg" alt="윅(WICK) ACID 워싱 볼캡-차콜"></td>
-									<td id="product-name"style="width:50% ; font-weight:bold">${product.productName }</td>
-									<td align="right">
-										<button class="delete" id="one-delete" onclick="deleteOne(${cart.cartNo })">X</button>
-									</td>
-								</tr>
-
-								<tr id="countt">
-									<td style="width:50%">수량</td>
-									<td style="width:50%" id="counttt">
-										<div class="count-wrap _count">
-											<input type="hidden" class="no" value="${cart.productNo }" />
-											<button type="button" class="minus" >-</button>
-											<input type="text" class="inp" id="p-count"value="${cart.cartCount }" />
-											<button type="button" class="plus" >+</button>
-										</div>
-									</td>
-									
-								</tr>
-								
-								<tr id="price">
-									<td style="width:50%">가격</td>
-									<td style="width:50%"><span id="p-price" data-value="${product.productPrice }">${product.productPrice }</span></td>
-								</tr>
-							</table> --%>
-							
 							<tr>
-									
 									<td><input type="checkbox"  name="cartbox" onclick="checkSelectAll()" />
 									<input id="productNo" type="hidden" value= "${product.productNo }"/></td>
 									<td><img class="p-img" alt="상품이미지" src="/resources/puploadFiles/${product.mainFileRename}" ></td>
@@ -253,11 +218,11 @@ width:30%
 										<div class="count-wrap _count" >
 											<input type="hidden" class="no" value="${cart.productNo }" />
 											<button type="button" class="minus" >-</button>
-											<input type="text" class="inp" id="p-count"value="${cart.cartCount }" />
+											<input type="text" class="inp p-count" id="p-count${i.count }" value="${cart.cartCount }" />
 											<button type="button" class="plus" >+</button>
 										</div>
 									</li>
-									<li id="p-price">${product.productPrice }</li>
+									<li id="p-price${i.count }" class="p-price">${product.productPrice }</li>
 									</ul>
 									</td>
 									
@@ -279,7 +244,7 @@ width:30%
 					<tr>
 						<td align="right">상품금액</td>
 						<td align="right">
-						<span id="totalPrice"> ${totalPrice }원 </span>
+						<span id="totalPrice"><span id="total-price">0</span></span> <span>원</span> </span>
 						</td>
 					</tr>
 				</table>
@@ -301,46 +266,89 @@ width:30%
 
 
 	<script type="text/javascript">
+	//수량별 상품가격
 	
-	var totalPrice=$("#price").data('value');
+	<c:forEach items="${cList}" var="cart" varStatus="i">
+	var productPrice=$("#p-count${i.count }.inp").val()*$("#p-price${i.count }").text();
+	$("#p-price${i.count }").html(productPrice);
+	</c:forEach>
+	//체크 전 체크한 갯수
 	
-	$("#totalPrice").html(totalPrice);
-
+	$("#p-count").html($('input[name="cartbox"]:checked').length); 
 	
 	function checkSelectAll()  {
 		  // 전체 체크박스
 		  const checkboxes 
 		    =$('input[name="cartbox"]');
 		  // 선택된 체크박스
-		  const checked 
+		  const checked
 		  =$('input[name="cartbox"]:checked');
 		  //$("#p-count").html(checked.length);
+		  
 		  // select all 체크박스
 		  const selectAll 
-		    = $('input[name="cart_selectAll"]');
+		    = document.querySelector('input[name="cart_selectAll"]');
+		 
 		  $("#p-count").html(checked.length);
 		  $("#c-count").html(checked.length);
 		
 		  if(checkboxes.length === checked.length)  {
-			  selectAll.checked = true;
+			 selectAll.checked = true;
+			 	  
+				  
 		  }else {
+			  //alert(checkboxes.length);
 			  selectAll.checked = false;
+		  }
+		  if(checked.length>0){
+			 	var totalPrice = 0;
+			 	checked.each(function(i){
+				price=checked.parent().parent().eq(i).children().eq(3).children().children('.p-price').text();
+				
+				totalPrice += parseInt(price);
+				$("#total-price").html(totalPrice);
+		  })
+		  
+		  }else{
+			  $("#total-price").html("0");
 		  }
 		}
 
 		function selectAll(selectAll)  {
+			if(selectAll.checked){			 
+			$("#p-count").html($('input[name="cartbox"]').length); 
+			$("#c-count").html($('input[name="cartbox"]').length);
 		  const checkboxes 
 		     = document.getElementsByName('cartbox');
-		   $("#p-count").html($('input[name="cartbox"]').length); 
-		   $("#c-count").html($('input[name="cartbox"]').length); 
 		  checkboxes.forEach((checkbox) => {
-		    checkbox.checked = selectAll.checked
+			    checkbox.checked = selectAll.checked	
+			   
+			    var totalPrice=0;
+				<c:forEach items="${cList}" var="cart" varStatus="i">
+				var productPrice${i.count}=$("#p-count${i.count }.inp").val()*$("#p-price${i.count }").text();
+				totalPrice+=productPrice${i.count}
+				 $("#total-price").html(totalPrice);
+				</c:forEach>
+			  })
+
+			}else{
+				const checkboxes 
+			     = document.getElementsByName('cartbox');
+				checkboxes.forEach((checkbox) => {
+				    checkbox.checked = selectAll.checked		  
+				  })
+		   $("#p-count").html($('input[name="cartbox"]:checked').length); 
+		   $("#c-count").html($('input[name="cartbox"]:checked').length); 
+		   $("#total-price").html("0");
 		  
+			}
+			
 		  
-		  })
+		 
 		}
-	
 		
+		
+	//수량 수정	
 	$('._count :button').on({
 	    'click' : function(e){
 	        e.preventDefault();
@@ -365,7 +373,7 @@ width:30%
 	            }
 	        }
 	        if(num != now){
-	        	alert(productNo);
+	        	//alert(productNo);
 	        	$.ajax({
 	        		url:"/cart/changeCount.kh",
 	        		type:"post",
@@ -374,6 +382,7 @@ width:30%
 	        			if(data =="success"){
 	        				$count.val(num);
 	        				alert("수정 되었습니다.");
+	        				location.replace("/cart/cart.kh");
 	        			}else{
 	        				alert("수정 실패");
 	        				
@@ -390,7 +399,7 @@ width:30%
 	    }
 	});
 	
-	
+	//한개씩 삭제
 	function deleteOne(cartNo){
 		$.ajax({
 			url:"/cart/deleteOne.kh",
@@ -399,6 +408,7 @@ width:30%
 			success:function(data){
 				if(data=="success"){
 					alert("삭제되었습니다.");
+					location.replace("/cart/cart.kh");
 				}else{
 					alert("삭제 실패");
 				}
@@ -409,12 +419,12 @@ width:30%
 		})
 		
 	}
-	var checked =$('input[name="cartbox"]:checked');
+	/* var checked =$('input[name="cartbox"]:checked');
 	if(checked.length>0){
 	checked.each(function(i){
 	price=checked.parent().parent().eq(i).children().eq(3).children().children('#p-price').text();
 	alert(price);
-	})}
+	})} */
 	
 /* 	$("#orderCart").click(function(){
 		 var productArr=new Array();
@@ -498,10 +508,10 @@ width:30%
 		let orderNumber = 0;
 		if(checked.length>0){
 			checked.each(function(i){
-			count=checked.parent().parent().eq(i).children().eq(3).children().children('#count').children().children("#p-count").val();
+			count=checked.parent().parent().eq(i).children().eq(3).children().children('#count').children().children(".p-count").val();
 			productNo=checked.parent().eq(i).children('#productNo').val();
-			alert(count);
-			alert(productNo);
+			//alert(count);
+			//alert(productNo);
 			var input = ("<input type='text'name='orders[" + orderNumber + "].productNo' value='"+productNo+"'/>")
 			input+=("<input type='text' name='orders[" + orderNumber + "].orderCount'value='"+count+"'/>")
 			input+=("<input type='text'name='orders[" + orderNumber + "].memberId' value='${memberId.memberId}'/>")
@@ -515,9 +525,37 @@ width:30%
 		}
 	})
 	
+	//체크박스 선택 삭제
 	function cart_delete(){
-		
-		
+		var checked =$('input[name="cartbox"]:checked');
+		var checkNoArr = []; 
+		if(checked.length>0){
+		checked.each(function(i){
+		productNo=checked.parent().eq(i).children('#productNo').val();
+		checkNoArr.push(productNo);
+			});
+	 	$.ajax({//맴버아이디//상품번호
+			 url:"/cart/checkdelete",
+			 type:"post",
+			 dataType:'json',
+			 data: {"pNo" : checkNoArr},
+			 
+			success:function(data){
+				if(data=="success"){
+					alert("성공.");
+					location.replace("/cart/cart.kh");
+				}else{
+					alert("실패");
+				}
+			},error:function(){
+				alert("ajax 통신 실패! 관리자에게 문의해 주세요!");
+				
+			}
+			 
+			}); 
+		//console.log(checkNoArr);
+		//console.log(checkNoArr);
+		}
 	}
 	</script>
 

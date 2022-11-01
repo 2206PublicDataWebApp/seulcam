@@ -104,6 +104,12 @@
   	WHERE ORDER_NUMBER=#{orderNo}
   </update>
   
+	<update id="updateOrderCancle">
+		UPDATE ORDER_TBL
+		SET DILIVERY_STATUS='구매취소',CANCLE_STATUS='Y'
+		WHERE ORDER_NUMBER=#{orderNo}
+	</update>
+  
  
   
   <select id="selectCompleteList" resultMap="orderResultMap">

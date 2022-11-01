@@ -21,4 +21,6 @@ public interface CartStore {
 
 	public int insertOrder(SqlSession session, OrderList order);
 
+	public int deleteCheck(SqlSession session, String productNo, String memberId);
+
 }

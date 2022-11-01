@@ -19,4 +19,6 @@ public interface CartService {
 
 	public int orderProduct(OrderList order);
 
+	public int deleteCheck(String productNo, String memberId);
+
 }

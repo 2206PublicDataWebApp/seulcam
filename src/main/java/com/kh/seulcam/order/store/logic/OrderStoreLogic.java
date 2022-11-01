@@ -144,4 +144,14 @@ public class OrderStoreLogic implements OrderStore {
 		return result;
 	}
 
+	@Override
+	public int changeOrderCancle(SqlSession session, String orderNo, String memberId) {
+		HashMap<String,String>paramMap=new HashMap<String,String>();
+		  paramMap.put("orderNo",orderNo );
+		  paramMap.put("memberId",memberId);
+		
+		int result=session.update("OrderMapper.updateOrderCancle",paramMap);
+		return result;
+	}
+
 }
