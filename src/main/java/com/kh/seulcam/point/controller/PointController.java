@@ -44,5 +44,4 @@ public class PointController {
 		
 	}
 	
-	//구매 확정시 포인트 적립(포인트 테이블/맴버테이블)
 }

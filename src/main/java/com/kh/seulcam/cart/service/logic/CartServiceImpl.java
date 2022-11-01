@@ -53,4 +53,14 @@ public class CartServiceImpl implements CartService {
 		return result;
 	}
 
+	//체크선택 삭제
+	@Override
+	public int deleteCheck(String productNo, String memberId) {
+			int result=cStore.deleteCheck(session,productNo,memberId);
+		
+		return result;
+	}
+
+	
+
 }

@@ -30,6 +30,9 @@
 		<delete id="deleteOne">
 			DELETE FROM CART_TBL WHERE CART_NUM=#{cartNo}
 		</delete>
+		  <delete id="deleteCheck">
+		  	DELETE FROM CART_TBL WHERE PRODUCT_NO=#{productNo} AND MEMBER_ID=#{memberId}
+		  </delete>
 		
 	<resultMap type="Product" id="productResultMap">
   		<id 	property="productNo" 		column="PRODUCT_NO"/>

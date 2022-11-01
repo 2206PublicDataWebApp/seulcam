@@ -148,6 +148,7 @@ width:100%;
 			<div id="post">${member.memberZip }</div>
 			<div id="address1">${member.memberAddress1 }</div>
 			<div id="address2">${member.memberAddress2 }</div>
+			<div id="addresscng"></div>
 			<select id="message">
 				<option  value="" disabled selected hidden>배송시 요청사항을 선택하세요</option>
 				<option>부재 시 경비실에 맡겨주세요</option>
@@ -239,7 +240,7 @@ width:100%;
 		$div.append("<div><input type='text'id='cng-ad2' name='address2' class='post postcodify_details' placeholder='상세주소를 입력하세요'></div>");
 		$div.append("<div><button class='ch-btn' id='submit-address'onclick='change()'>변경</button><button class='ch-btn' onclick='displayform(this)'>취소</button></div>");
 		$div.append("</div>");
-		$("#address2").append($div);
+		$("#addresscng").html($div);
 	}
 	
 	function popup(obj){
@@ -284,7 +285,7 @@ width:100%;
 	</c:forEach>
 	
 	//포인트
-	$("#point").on("blur",function(){
+	$("#point").on("keyup",function(){
 	$("#available-point").html("${member.totalPoint}");
 	
 	var point=$("#point").val();
@@ -342,8 +343,8 @@ width:100%;
 				
 		}
 		//console.log(data);
-		paymentComplete(data);//결제 완료후
-		//paymentCard(data);//결제 화면
+		//paymentComplete(data);//결제 완료후
+		paymentCard(data);//결제 화면
 	}
 	function createOrderNum(){
 		const date = new Date();
@@ -384,6 +385,8 @@ function paymentCard(data) {
 	         // 결제 성공 시 로직,
 		        data.impUid = rsp.imp_uid;
 		        data.merchant_uid = rsp.merchant_uid;
+		        
+		        
 		        paymentComplete(data);  
 				
 			} else {

@@ -53,6 +53,9 @@ public interface OrderService {
 	//구매확정으로 변경
 	public int updateDilivaryStatus(Integer orderNo);
 
+	//구매 취소로 변경
+	public int changeOrderCancle(String orderNo, String memberId);
+
 
 	
 

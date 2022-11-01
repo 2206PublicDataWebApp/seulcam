@@ -143,6 +143,12 @@ public class OrderServiceImpl implements OrderService {
 		int result=oStore.updateDilivaryStatus(session,orderNo);
 		return result;
 	}
+	//구매취소로 변경
+	@Override
+	public int changeOrderCancle(String orderNo, String memberId) {
+		int result=oStore.changeOrderCancle(session,orderNo,memberId);
+		return result;
+	}
 
 	
 	
