@@ -4,10 +4,33 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace= "CampBookingMapper">
-  	<insert id="bookingInsert">
+ 	<resultMap type="CampBooking" id="CampBookingResultMap">
+ 		<id property="bookingNo" 	column="BOOKING_NO"/>
+  		<result property="memberId" 				column="MEMBER_ID"/>
+  		<result property="siteNo" 				column="SITE_NO"/>
+  		<result property="bookName" 				column="BOOK_NAME"/>
+  		<result property="bookPhone" 				column="BOOK_PHONE"/>
+  		<result property="bookRequest" 				column="BOOK_REQUEST"/>
+  		<result property="bookPeople" 				column="BOOK_PEOPLE"/>
+  		<result property="firstDay" 				column="FIRST_DAY"/>
+  		<result property="lastDay" 				column="LAST_DAY"/>
+  		<result property="totalDay" 				column="TOTAL_DAY"/>
+  		<result property="bookIniPrice" 				column="BOOK_INI_PRICE"/>
+  		<result property="bookExtra" 				column="BOOK_EXTRA"/>
+  		<result property="bookUsePoint" 				column="BOOK_USE_POINT"/>
+  		<result property="bookGetPoint" 				column="BOOK_GET_POINT"/>
+  		<result property="bookTotalPrice" 				column="BOOK_TOTAL_PRICE"/>
+  		<result property="bookDate" 				column="BOOK_DATE"/>
+  		<result property="bookPayStatus" 				column="BOOK_PAY_STATUS"/>
+  		<result property="bookCancleStatus" 				column="BOOK_CANCLE_STATUS"/>
+  		<result property="bookRefundStatus" 				column="BOOK_REFUND_STATUS"/>
+ 	</resultMap>
+ 
+ 
+  	<insert id="bookingInsert" useGeneratedKeys="true" keyColumn="BOOKING_NO"  keyProperty="bookingNo">
   		INSERT INTO CAMP_BOOKING_TBL VALUES(SEQ_BOOKING_NO.NEXTVAL,#{memberId},#{siteNo},#{bookName},#{bookPhone},#{bookRequest},#{bookPeople},#{firstDay},#{lastDay},#{totalDay},#{bookIniPrice},#{bookExtra},#{bookUsePoint},#{bookGetPoint},#{bookTotalPrice},DEFAULT,DEFAULT,DEFAULT,DEFAULT)
   	</insert>
-  	<insert id="bStatusInsert">
+  	<insert id="bStatusInsert" >
   		BEGIN
 		    FOR I IN 0..#{totalDay}
 		    LOOP
@@ -22,5 +45,8 @@
   		WHERE SITE_NO = #{siteNo}
   		AND S_BOOK_DATE BETWEEN #{firstDay} AND (TO_DATE(#{lastDay} ,'YYYY-MM-DD')-1)
   		GROUP BY S_BOOK_DATE
+  	</select>
+  	<select id="selectBookinginfo" resultMap="CampBookingResultMap">
+  		SELECT * FROM CAMP_BOOKING_TBL WHERE BOOKING_NO = #{bookingNo}
   	</select>
 </mapper>
