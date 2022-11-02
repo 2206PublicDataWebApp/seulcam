@@ -54,6 +54,8 @@ public interface ProductStore {
 
 	public List<Review> selectReviewBymemberId(SqlSession session, String memberId);
 
+	public List<Review> selectAllReview(SqlSession session);
+
 
 
 }

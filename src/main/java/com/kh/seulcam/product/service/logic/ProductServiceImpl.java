@@ -138,6 +138,12 @@ public class ProductServiceImpl implements ProductService{
 		return rList;
 	}
 
+	@Override
+	public List<Review> getAllReview() {
+		List<Review> rList = pStore.selectAllReview(session);
+		return rList;
+	}
+
 
 	
 

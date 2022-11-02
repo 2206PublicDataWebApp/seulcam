@@ -14,7 +14,7 @@ label {
     width: 100%;
     
 }
-body >form> section >div> div.box-form > input.g-inputbox-medium, .selectBox{
+input.g-inputbox-medium, .selectBox{
     width: 100%;
     padding: 15px 9px 14px 10px;
  
@@ -48,7 +48,7 @@ margin-bottom:10px;
   font-size: 20px;
   cursor: pointer;
   float:left;
-  background-color:rgb(232, 230, 230);
+  background-color:#f8f9fc;
   
 }
 
@@ -99,24 +99,18 @@ input[type=button]{
   font-size: 12px;
   text-align: center;
 }
-button#submit, button#goBack{
-    height: 38px;
-    display: inline-block;
-    padding: 2.5px 8px;
-    border-radius: 4px;
-    background-color: #f3f3f3;
-    white-space: nowrap;
-    font-size: 14px;
-    margin-right: 11px;
-     margin-left:20px;
-    float: right;
-    margin-right: 75px;
-    border: 0;
-    cursor:pointer;
-}
+
 #plus_detail_form{
 	font-size:40px;
 	float:right;
 	margin-right:50px;
 	
+}
+#submit{
+	float:right;
+}
+
+input[readonly] {
+  background-color: #e2e2e2;
+  border:none;
 }

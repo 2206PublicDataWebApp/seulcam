@@ -144,6 +144,12 @@ public class ProductStoreLogic implements ProductStore {
 		return rList;
 	}
 
+	@Override
+	public List<Review> selectAllReview(SqlSession session) {
+		List<Review> rList = session.selectList("ProductReviewMapper.selectAllReview");
+		return rList;
+	}
+
 
 	
 

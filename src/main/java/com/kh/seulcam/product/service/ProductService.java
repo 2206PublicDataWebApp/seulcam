@@ -52,6 +52,8 @@ public interface ProductService {
 
 	public List<Review> getReviewByMemberId(String memberId);
 
+	public List<Review> getAllReview();
+
 
 
 }

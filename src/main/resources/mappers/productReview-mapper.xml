@@ -62,4 +62,7 @@
   	<delete id="deleteReview">
   		DELETE FROM PRODUCT_REVIEW_TBL WHERE REVIEW_NO=#{reviewNo}
   	</delete>
+  	<select id="selectAllReview" resultMap="reviewResultMap">
+  		SELECT * FROM PRODUCT_REVIEW_TBL
+  	</select>
 </mapper>

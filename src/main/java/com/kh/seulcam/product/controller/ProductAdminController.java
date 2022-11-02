@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.product.domain.Brand;
 import com.kh.seulcam.product.domain.Detail;
 import com.kh.seulcam.product.domain.Product;
@@ -296,4 +298,39 @@ public class ProductAdminController {
 		return mv;
 		
 	}
+	
+	
+	//전체리뷰리스트
+	
+	@RequestMapping(value="/admin/reviewList", method=RequestMethod.GET)
+	public ModelAndView allReviewList(ModelAndView mv) {
+		List<Review> rList = pService.getAllReview();
+		if(!rList.isEmpty()) {
+			mv.addObject("rList",rList);
+			
+		}else {
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+		
+	}
+	//리뷰선택삭제
+		@RequestMapping(value="/admin/reviewCheckDelete", method=RequestMethod.POST)
+		public String reviewDeleteCheck(
+				 @RequestParam(value="rNo[]") List<Integer>rNo
+				) {
+			System.out.println(rNo.toString());
+			int result=0;
+			for (int i = 0; i < rNo.size(); i++) {
+				int reviewNo = rNo.get(i);
+			   result=pService.removeReview(reviewNo);
+			}
+			if(result>0) {
+			return "success";
+			}else {
+				return"error";
+			}
+			
+		}
+
 }

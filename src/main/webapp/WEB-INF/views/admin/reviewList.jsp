@@ -45,19 +45,19 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item ">
+            <li class="nav-item">
                 <a class="nav-link" href="/member/memberListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>회원관리</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/admin/productList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품관리</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/admin/reviewList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품 리뷰 관리</span></a>
@@ -186,50 +186,48 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">전체 제품리스트</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">전체 상품리뷰</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>리뷰번호</th>
                                             <th>제품번호</th>
-                                            <th>제품이름</th>
-                                            <th>브랜드</th>
-                                            <th>분류</th>
-                                            <th>가격</th>
-                                            <th>소재</th>
-                                            <th>색상</th>
-                                            <th>재고</th>
-                                            <th>판매량</th>
-                                            <th>사진등록여부</th>
-                                            <th>등록일</th>
+                                            <th>작성자</th>
+                                            <th>리뷰점수</th>
+                                            <th>리뷰제목</th>
+                                            <th>사진첨부</th>
+                                            <th>작성일</th>
+                                            <th style="text-align:center">삭제</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${pList}" var="product" varStatus="i">
+                                        <c:forEach items="${rList}" var="review" varStatus="i">
                                         <tr>
-                                        	<td><a href="/admin/productDetail?productNo=${product.productNo }">${product.productNo}</a></td>
-                                        	<td>${product.productName}</td>
-                                        	<td>${product.brandName}</td>
-                                        	<td>${product.category}</td>
-                                        	<td>${product.productPrice}</td>
-                                        	<td>${product.productMaterial}</td>
-                                        	<td>${product.productColor}</td>
-                                        	<td>${product.productStock}</td>
-                                        	<td>${product.saleCount}</td>
-                                        	<c:if test="${product.mainFileName eq null }">
-                                        		<td>X</td>
-                                        	</c:if>
-                                        	<c:if test="${product.mainFileName ne null }">
+                                        	<td id="reviewNo" value="${review.reviewNo }"><a href="/admin/productDetail?productNo=${review.reviewNo }">${review.reviewNo}</a></td>
+                                        
+                                        	<td>${review.productNo}</td>
+                                        	<td>${review.memberId}</td>
+                                        	<td>${review.reviewGrade}</td>
+                                        	<td>${review.reviewTitle}</td>
+                                       
+                                        	<c:if test="${review.reviewFileName1 ne null or reviewFileRename2 ne null or reviewFileRename1 ne null}">
                                         		<td>O</td>
                                         	</c:if>
-                                        	<td>${product.updateDate}</td>
+                                        	<c:if test="${review.reviewFileName1 eq null and reviewFileRename2 eq null and reviewFileRename1 eq null }">
+                                        		<td>X</td>
+                                        	</c:if>
+                                        	<td>${review.uploadDate}</td>
+                                        	<td style="text-align:center"><input type="checkbox" class="delCheck" name="delCheck"></td>
                                         	
                                         </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
+	                                <input type="button" class="page-link" onclick="selectDel()"style="margin-left: 0px; float:right; color:red; display:inline;border-radius: 0.35rem;"value="선택삭제">
                             </div>
                         </div>
                     </div>
@@ -258,6 +256,40 @@
     <script src="/resources/js/datatables-demo.js"></script>
     <script src="/resources/js/jquery.dataTables.js"></script>
     <script src="/resources/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+		    function selectDel(){
+				var checked =$('input[name="delCheck"]:checked');
+				console.log(checked);
+				var checkNoArr = []; 
+				if(checked.length>0){
+					checked.each(function(i){
+						reviewtNo=checked.eq(i).siblings('#reviewtNo').val();
+						console.log(reviewNo);
+						checkNoArr.push(reviewtNo);
+					});
+				 	$.ajax({
+						 url:"/admin/reviewCheckDelete",
+						 type:"POST",
+						 dataType:'json',
+						 data: {"rNo" : checkNoArr},
+						 
+						success:function(data){
+							if(data=="success"){
+								alert("성공.");
+								location.replace("/admin/reviewList");
+							}else{
+								alert("실패");
+							}
+						},error:function(){
+							alert("ajax 통신 실패! 관리자에게 문의해 주세요!");
+							
+						}
+						 
+						}); 
+				}
+		    }
+    
+    </script>
 </body>
 
 </html>

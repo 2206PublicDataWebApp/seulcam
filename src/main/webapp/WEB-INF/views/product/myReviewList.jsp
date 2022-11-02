@@ -38,14 +38,16 @@
 								<p>상품후기</p>
 								<span>${review.uploadDate }</span>
 							</div>
-							<div class="review-product-information">
-								<div class="review-product-information_thumbnail">
-									<img src="../resources/puploadFiles/${rpList[i.index].mainFileRename}">
+							<a href="/product/productDetail?productNo=${rpList[i.index].productNo }">
+								<div class="review-product-information">
+									<div class="review-product-information_thumbnail">
+										<img src="../resources/puploadFiles/${rpList[i.index].mainFileRename}">
+									</div>
+									<div class="review-product-information-text">
+										<a href="/product/productDetail?productNo=${rpList[i.index].productNo }">${rpList[i.index].productName}</a>
+									</div>
 								</div>
-								<div class="review-product-information-text">
-									<a href="/product/productDetail?productNo=${rpList[i.index].productNo }">${rpList[i.index].productName}</a>
-								</div>
-							</div>
+							</a>
 							<div class="review-grade">
 								<span class="star">
 	                            ★★★★★
