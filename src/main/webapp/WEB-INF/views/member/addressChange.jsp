@@ -30,12 +30,6 @@
                     <h2>
                         배송지 관리
                     </h2>
-
-                    <div class="home-layout">
-                        <button class="go-home" onclick="location.href='/';">
-                            <img src="/resources/images/home.png">
-                        </button>
-                    </div>
                 </div>
             </header>
         </div>
@@ -60,7 +54,7 @@
                         <span class="label-essential"></span>
                     </label>
                     <div class="join-input-wrapper">
-                        <input class="join-input-input" type="text" id="memberPhone" name="memberPhone" placeholder="-를 빼고 입력해주세요." value="${member.memberPhone }">
+                        <input class="join-input-input" type="tel" id="memberPhone" name="memberPhone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" autocomplete="off" placeholder="-를 포함하여 입력해주세요." maxlength="13" value="${member.memberPhone }">
                     </div>
                 </div>
 

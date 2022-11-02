@@ -23,7 +23,7 @@
                 <div class="header-wrapper">
                     <ul class="icon-list">
                         <li><a href="/member/mypageMemberView"><i class="setting-icon"></i></a></li>
-                        <li><a href="#"><i class="cart-icon"></i></a></li>
+                        <li><a href="/cart/cart.kh"><i class="cart-icon"></i></a></li>
                     </ul>
                 </div>
             </header>
