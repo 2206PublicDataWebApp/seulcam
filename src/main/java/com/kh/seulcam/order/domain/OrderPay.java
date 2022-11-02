@@ -5,6 +5,8 @@ public class OrderPay {
 	private int payNo;
 	private int orderNo;
 	private String memberId;
+	private String impUid;
+	private String merchant_uid;
 	private String payDate;
 	private String payPrice;
 	private String productPrice;
@@ -12,8 +14,6 @@ public class OrderPay {
 	private String getPoint;
 	private String payStatus;
 	private String payType;
-	
-	
 	public int getPayNo() {
 		return payNo;
 	}
@@ -31,6 +31,18 @@ public class OrderPay {
 	}
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
+	}
+	public String getimpUid() {
+		return impUid;
+	}
+	public void setimpUid(String impUid) {
+		this.impUid = impUid;
+	}
+	public String getMerchant_uid() {
+		return merchant_uid;
+	}
+	public void setMerchant_uid(String merchant_uid) {
+		this.merchant_uid = merchant_uid;
 	}
 	public String getPayDate() {
 		return payDate;
@@ -76,12 +88,11 @@ public class OrderPay {
 	}
 	@Override
 	public String toString() {
-		return "OrderPay [payNo=" + payNo + ", orderNo=" + orderNo + ", memberId=" + memberId + ", payDate=" + payDate
-				+ ", payPrice=" + payPrice + ", productPrice=" + productPrice + ", usePoint=" + usePoint + ", getPoint="
-				+ getPoint + ", payStatus=" + payStatus + ", payType=" + payType + "]";
+		return "OrderPay [payNo=" + payNo + ", orderNo=" + orderNo + ", memberId=" + memberId + ", impUid=" + impUid
+				+ ", merchant_uid=" + merchant_uid + ", payDate=" + payDate + ", payPrice=" + payPrice
+				+ ", productPrice=" + productPrice + ", usePoint=" + usePoint + ", getPoint=" + getPoint
+				+ ", payStatus=" + payStatus + ", payType=" + payType + "]";
 	}
-	
-	
 	
 	
 }

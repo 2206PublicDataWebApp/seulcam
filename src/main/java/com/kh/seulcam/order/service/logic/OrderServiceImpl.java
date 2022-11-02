@@ -150,6 +150,13 @@ public class OrderServiceImpl implements OrderService {
 		return result;
 	}
 
+	//결제정보 가져오기(관리자)
+	@Override
+	public List<OrderPay> printAllPayInfo(int orderNo) {
+		List<OrderPay>opList=oStore.printAllPayInfo(session,orderNo);
+		return opList;
+	}
+
 	
 	
 }

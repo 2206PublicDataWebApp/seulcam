@@ -154,4 +154,11 @@ public class OrderStoreLogic implements OrderStore {
 		return result;
 	}
 
+	//결제정보 가져오기(관리자)
+	@Override
+	public List<OrderPay> printAllPayInfo(SqlSession session,int orderNo) {
+		List<OrderPay>opList=session.selectList("OrderMapper.selectPrintPay",orderNo);
+		return opList;
+	}
+
 }
