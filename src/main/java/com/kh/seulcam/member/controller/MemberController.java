@@ -1,6 +1,8 @@
 package com.kh.seulcam.member.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -276,30 +278,27 @@ public class MemberController {
 			, Boolean rememberMe
 			, HttpServletRequest request
 			, HttpServletResponse response
-			,@RequestParam("redirectURI") String redirectURI) {
+			,@RequestParam("redirectURI") String redirectURI) throws Exception {
 		try {
 			Member loginUser = mService.loginMember(member);
 			String memberId = loginUser.getMemberId();
-			if(loginUser != null) {
-				HttpSession session = request.getSession();
-				if(rememberMe == null) { 
-				} else {
-					// 로그인 유지에 체크 했을 때
-					//쿠키 등록하기
-					Cookie cookie = new Cookie("memberId", memberId);
-					cookie.setMaxAge(60*60*24*7); // 쿠키 수명 설정
-					cookie.setPath("/"); // 모든 경로에 적용
-					response.addCookie(cookie);
-				}
-				session.setAttribute("loginUser", loginUser);
-				mv.setViewName("redirect:" + redirectURI );
-			}else {
-				mv.addObject("msg", "회원정보를 찾을 수 없습니다.");
-				mv.setViewName("common/errorPage");
+			HttpSession session = request.getSession();
+			if(rememberMe == null) { 
+			} else {
+				// 로그인 유지에 체크 했을 때
+				//쿠키 등록하기
+				Cookie cookie = new Cookie("memberId", memberId);
+				cookie.setMaxAge(60*60*24*7); // 쿠키 수명 설정
+				cookie.setPath("/"); // 모든 경로에 적용
+				response.addCookie(cookie);
 			}
+			session.setAttribute("loginUser", loginUser);
+			mv.setViewName("redirect:" + redirectURI );
 		} catch (Exception e) {
-			mv.addObject("msg", e.toString());
-			mv.setViewName("common/errorPage");
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인 정보를 확인해주세요.'); history.go(-1);</script>");
+            out.flush(); 
 		}
 		return mv;
 	}
