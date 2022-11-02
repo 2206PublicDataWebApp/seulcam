@@ -15,4 +15,6 @@ public interface CampBookingStore {
 
     public String selectBookCount(SqlSession session, bookingStatusSearch bss);
 
+    public CampBooking selectBookinginfo(SqlSessionTemplate session, String bookingNo);
+
 }

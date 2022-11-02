@@ -29,4 +29,10 @@ public class CampBookingStoreLogic implements CampBookingStore{
         return result;
     }
 
+    @Override
+    public CampBooking selectBookinginfo(SqlSessionTemplate session, String bookingNo) {
+        CampBooking campBooking = session.selectOne("CampBookingMapper.selectBookinginfo",bookingNo);
+        return campBooking;
+    }
+
 }

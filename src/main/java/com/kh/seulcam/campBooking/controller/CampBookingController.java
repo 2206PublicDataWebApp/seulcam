@@ -20,6 +20,7 @@ import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.service.CampServie;
 import com.kh.seulcam.campBooking.domain.BookingStatus;
 import com.kh.seulcam.campBooking.domain.CampBooking;
+import com.kh.seulcam.campBooking.domain.bookingStatusSearch;
 import com.kh.seulcam.campBooking.service.CampBookingService;
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.member.service.MemberService;
@@ -97,20 +98,31 @@ public class CampBookingController {
     @ResponseBody
     @RequestMapping(value = "/campBooking/campBooking.kh", method = RequestMethod.POST )
     public String campBookingRegist(
+            HttpServletRequest request,
             @ModelAttribute CampBooking cBooking) {
         try {
             System.out.println(cBooking);
             //잔여좌석 없으면 예약안되도록
+            bookingStatusSearch bss = new bookingStatusSearch();
+            bss.setFirstDay(cBooking.getFirstDay());
+            bss.setLastDay(cBooking.getLastDay());
+            bss.setSiteNo(cBooking.getSiteNo());
+            String resultbss = bService.bookingCount(bss);
+            if(Integer.parseInt(resultbss) < 1) {
+                request.setAttribute("msg", "예약가능갯수가 없습니다.");
+                request.setAttribute("url", "/camp/campList.kh");
+                return "fail";
+            }
             
             // 예약저장
             int result = bService.campBookingRegist(cBooking);
-            
-            // 포인트 차감 / 적립
+            int bookingNo = cBooking.getBookingNo();
+            // 포인트 차감 
             Point pointUse = new Point();
             pointUse.setMemberId(cBooking.getMemberId());
             pointUse.setPoint(cBooking.getBookUsePoint()+"");
             int result2 = oService.registUsePoint(pointUse);
-            //포인트 / 적립
+            //포인트 적립
             Point pointAdd = new Point();
             pointAdd.setMemberId(cBooking.getMemberId());
             pointAdd.setPoint(cBooking.getBookGetPoint()+"");
@@ -128,12 +140,12 @@ public class CampBookingController {
                 bsInsert = bService.bookingStatus(bs);
             }
             System.out.println(bsInsert);
-            if(result ==1 && bsInsert == -1) {
-                return "success";
-            }else {
-                return "fail";
-            }
-            
+//            if(result ==1 && bsInsert == -1) {
+//                return "success";
+//            }else {
+//                return "fail";
+//            }
+            return bookingNo+"";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,5 +167,79 @@ public class CampBookingController {
         }
         
         return null;
+    }
+    
+  //캠핑장 예약 완료창
+    @ResponseBody
+    @RequestMapping(value = "/campBooking/campBookingComplete.kh", method = RequestMethod.GET )
+    public ModelAndView campBookingComplete(
+            @RequestParam(value="bookingNo", required = false) String bookingNo,
+            HttpServletRequest request,
+            ModelAndView mv,
+            HttpSession session) {
+        try {
+            CampBooking campBooking= bService.printBookingInfo(bookingNo);
+            CampSite campSite = cService.printSite(campBooking.getSiteNo());
+            if(session.getAttribute("loginUser") == null) {
+                request.setAttribute("msg", "정상적인 접근이 아닙니다.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }else{
+                Member member = (Member)session.getAttribute("loginUser");
+                String memberId = member.getMemberId();
+                if(!memberId.equals(campBooking.getMemberId())) {
+                    System.out.println("로그인정보와 다른 데이터 접근");
+                    request.setAttribute("msg", "정상적인 접근이 아닙니다.");
+                    request.setAttribute("url", "/");
+                    mv.setViewName("common/alert");
+                    return mv;
+                }
+            }
+            mv.addObject("campBooking",campBooking);
+            mv.addObject("campSite",campSite);
+            mv.setViewName("campBooking/campBookingComplete");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return mv;
+    }
+    
+    //캠핑장 예약확인 디테일
+    @ResponseBody
+    @RequestMapping(value = "/campBooking/campBookingDetail.kh", method = RequestMethod.GET )
+    public ModelAndView campBookingDetail(
+            @RequestParam(value="bookingNo", required = false) String bookingNo,
+            HttpServletRequest request,
+            ModelAndView mv,
+            HttpSession session) {
+        try {
+            CampBooking campBooking= bService.printBookingInfo(bookingNo);
+            CampSite campSite = cService.printSite(campBooking.getSiteNo());
+            if(session.getAttribute("loginUser") == null) {
+                request.setAttribute("msg", "정상적인 접근이 아닙니다.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }else{
+                Member member = (Member)session.getAttribute("loginUser");
+                String memberId = member.getMemberId();
+                if(!memberId.equals(campBooking.getMemberId())) {
+                    System.out.println("로그인정보와 다른 데이터 접근");
+                    request.setAttribute("msg", "정상적인 접근이 아닙니다.");
+                    request.setAttribute("url", "/");
+                    mv.setViewName("common/alert");
+                    return mv;
+                }
+            }
+            mv.addObject("campBooking",campBooking);
+            mv.addObject("campSite",campSite);
+            mv.setViewName("campBooking/campBookingDetail");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return mv;
     }
 }

@@ -158,6 +158,9 @@ input:focus{
 	box-shadow: none;
 	border: 1px solid #ced4da;;
 }
+hr {
+
+}
 </style>
 <body>
 <!-- 헤더&메뉴바 -->
@@ -300,7 +303,7 @@ input:focus{
 					</div>
 					<div class="col-8 text-end" style="text-align: left;">
 						<h7 style="margin: auto; padding-right: 15px;" id="bookGetPoint"></h7>
-						<p style="margin: auto; padding-right: 15px; font-size: 12px;">최종금액 3% 적립</p>
+						<p style="margin: auto; padding-right: 15px; font-size: 12px;">결제금액 3% 적립</p>
 					</div>
 					<div class="col-4">
 						<p class="peopleInfo" style="color: black;">최종금액</p>
@@ -339,10 +342,7 @@ input:focus{
 	$(".peopleMoney").html("0원");
 	$(".inp").val(${campSite.standardPeople});
 
-	function check(){
-		console.log("캠핑장가격 : "+ totalSitePrice +",추가금액: "+extraTotal+",사용포인트 : "+bookUsePoint+",최종금액 : "+totalPrice+",적립포인트 : "+bookGetPoint)
-		console.log($("#bookPeople").val())
-	}
+	
 	function bookPay(){
 		const data={
 			"memberId":"${mOne.memberId}",
@@ -358,21 +358,72 @@ input:focus{
 			"bookExtra":extraTotal,
 			"bookUsePoint":bookUsePoint,
 			"bookGetPoint":bookGetPoint,
-			"bookTotalPrice":totalPrice
+			"bookTotalPrice":totalPrice,
+			"payPrice":totalPrice,
+			"productPrice":totalSitePrice,
+			"usePoint":bookUsePoint,
+			"getPoint":bookGetPoint,
+			"payType":"C"
 		}
+		paymentCard(data)
+	}
+
+	function paymentCard(data) {
+		// 모바일로 결제시 이동페이지
+		const pathName = location.pathname;
+		const href = location.href;
+		const m_redirect = href.replaceAll(pathName, "");
+		
+		var IMP = window.IMP;
+		IMP.init("imp56144003"); 
+			
+		IMP.request_pay({ // param
+			pg: "html5_inicis",
+		  	pay_method: data.payMethod,
+		  	merchant_uid: data.Num,
+		  	name: data.name,
+		  	amount: "100",
+		   	buyer_email: "",
+		   	buyer_name: "",
+		  	buyer_tel: data.phone,
+		  	buyer_addr: data.deleveryAddress2 + " " + data.deleveryAddress3,
+		  	buyer_postcode: data.deleveryAddress1,
+		  	m_redirect_url: m_redirect, 
+	  	}, 
+		function (rsp) { // callback
+			if (rsp.success) {
+	         // 결제 성공 시 로직,
+		        data.impUid = rsp.imp_uid;
+		        data.merchant_uid = rsp.merchant_uid;
+		        
+		        
+		        bookingData(data);  
+				
+			} else {
+	          // 결제 실패 시 로직,
+				var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+			}
+		});
+	}
+
+	function bookingData(data){
 		$.ajax({
 			url : "/campBooking/campBooking.kh",
 			type : "post",
 			data : data,
-			success: function(result){
-				if(result == "success"){
-					alert("성공");
-					location.href="/camp/campSiteDetail.kh?contentId="+${campSite.siteNo}
-				}else if(result == "fail"){
-					alert("예약현황 데이터 저장 오류")
-					ocation.href="/camp/campSiteDetail.kh?contentId="+${campSite.siteNo}
+			success: function(bookingNo){
+				var contentId = ${campSite.campId};
+				if(bookingNo > 0){
+					alert("예약성공");
+					location.href="/campBooking/campBookingComplete.kh?bookingNo="+bookingNo;
+				}
+				else if(bookingNo == "fail"){
+					alert("예약현황 데이터 저장 오류");
+					location.href="/camp/campSiteDetail.kh?contentId="+contentId;
 				}else{
-					alert("에러")
+					alert("에러");
+					location.href="/camp/campSiteDetail.kh?contentId="+contentId;
 				}
 			},
 			error : function(request, status, error){

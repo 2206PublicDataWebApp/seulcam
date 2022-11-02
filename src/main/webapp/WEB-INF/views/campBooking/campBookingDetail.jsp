@@ -163,16 +163,12 @@ header {
 	<div class="body-wrapper">
 		<div class="container" >
 		<div class="detailMain">
-			<div class="comMessege">
-				<h6 style="margin: 0;"><b style="color: green;">캠핑장 예약이 완료</b> 되었습니다.</h6>
-			</div>
-			<hr>
 			<div class="site_info">
 				<div class='text-right tt' stlyle='padding-bottom: 0.75rem; color: black;'>
 					<b>예약상품정보</b>
 					<p style="margin: 0; font-size: 12px; color: gray;">예약번호 : No.${campBooking.bookingNo}</p>
 				</div>
-				<h4 style="padding-top: 5px;">${campSite.campName}</h4>
+				<a href="/camp/campDetail.kh?contentId=${campSite.campId}"><h4 style="padding-top: 5px;">${campSite.campName}</h4></a>
 				<div class="row" style="padding: 15px;">
 					<div class="site_img col-3">
 						<img class='simg' style='width: 100%; height: 100%; object-fit: cover;' src='/resources/ruploadFiles/${campSite.siteThumbnailRename}' alt=''>

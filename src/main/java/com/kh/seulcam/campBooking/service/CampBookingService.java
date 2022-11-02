@@ -12,4 +12,6 @@ public interface CampBookingService {
 
     public String bookingCount(bookingStatusSearch bss);
 
+    public CampBooking printBookingInfo(String bookingNo);
+
 }

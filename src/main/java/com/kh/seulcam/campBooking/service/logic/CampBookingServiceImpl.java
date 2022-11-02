@@ -36,4 +36,10 @@ public class CampBookingServiceImpl implements CampBookingService{
         return result;
     }
 
+    @Override
+    public CampBooking printBookingInfo(String bookingNo) {
+        CampBooking campBooking = bStore.selectBookinginfo(session,bookingNo);
+        return campBooking;
+    }
+
 }

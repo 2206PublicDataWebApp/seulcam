@@ -20,7 +20,6 @@
 		<typeAlias type="com.kh.seulcam.campBooking.domain.BookingStatus" alias="BookingStatus"/>
 		<typeAlias type="com.kh.seulcam.product.domain.Product" alias="Product"/>
 		<typeAlias type="com.kh.seulcam.product.domain.Brand" alias="Brand"/>
-		<typeAlias type="com.kh.seulcam.basket.domain.Basket" alias="Basket"/>
 		<typeAlias type="com.kh.seulcam.cart.domain.Cart" alias="Cart"/>
 		<typeAlias type="com.kh.seulcam.product.domain.Detail" alias="Detail"/>
 		<typeAlias type="com.kh.seulcam.product.domain.Review" alias="Review"/>
@@ -37,7 +36,6 @@
 		<mapper resource="mappers/camp-mapper.xml"></mapper>
 		<mapper resource="mappers/campBooking-mapper.xml"></mapper>
 		<mapper resource="mappers/product-mapper.xml"></mapper>
-		<mapper resource="mappers/basket-mapper.xml"></mapper>
 		<mapper resource="mappers/cart-mapper.xml"></mapper>
 		<mapper resource="mappers/campAdmin-mapper.xml"></mapper>
 		<mapper resource="mappers/order-mapper.xml"></mapper>
