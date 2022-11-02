@@ -62,7 +62,9 @@ onclick="location.href='/orderAdmin/list.kh'">
 			</thead>
 			<tbody>
 				<c:forEach items="${oList}" var="order" varStatus="i">
+				<c:forEach items="${opList}" var="pay" varStatus="i">
 				<c:if test="${order.cancleStatus eq'Y' }">
+				<c:if test="${order.orderNo eq pay.orderNo }">
 					<tr>
 						<td>${i.count}</td>
 						<td>${order.orderNo }</td>
@@ -73,7 +75,12 @@ onclick="location.href='/orderAdmin/list.kh'">
 						<td>${order.dirivaryStatus }</td>
 						<td>${order.cancleStatus }</td>
 						<c:if test="${order.refundStatus eq 'N' }">
-						<td><button  class="btn btn-secondary btn-sm">환불하기</button></td>
+						
+						<td>
+							<input type="text" class="impUid" 		value="${pay.impUid }"/>
+							<input type="text" class="merchant_uid" value="${pay.merchant_uid }"/>
+							<input type="text" class="payPrice"   	value="${pay.payPrice }"/>
+							<button  class="btn btn-secondary btn-sm" onclick="cancelPay(this)">환불하기</button></td>
 						</c:if>
 						<c:if test="${order.refundStatus eq 'Y' }">
 						<td>환불완료</td>
@@ -81,12 +88,50 @@ onclick="location.href='/orderAdmin/list.kh'">
 						
 					</tr>
 					</c:if>
+					</c:if>
+					</c:forEach>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
 
 
+<script>
+
+
+
+
+function cancelPay(obj){
+	const data={
+		impUid:$(obj).parent().children('.impUid').val(),	
+		merchant_uid:$(obj).parent().children('.merchant_uid').val(),
+	}
+	console.log(data);
+	
+	
+	
+	  $.ajax({
+	      url: "/payments/cancel", // 예: http://www.myservice.com/payments/cancel
+	      type: "POST",
+	      contentType: "application/json",
+	      data: JSON.stringify({
+	        merchant_uid: data.merchant_uid, // 예: ORD20180131-0000011
+	        cancel_request_amount: "100", // 환불금액
+	        reason: "테스트 결제 환불" // 환불사유
+	        /* "refund_holder": "홍길동", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+	        "refund_bank": "88" // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+	        "refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호 */
+	      }),
+	      dataType: "json"
+	    });
+	  
+	  
+  
+	   
+	  }
+
+
+</script>
 
 
 </body>

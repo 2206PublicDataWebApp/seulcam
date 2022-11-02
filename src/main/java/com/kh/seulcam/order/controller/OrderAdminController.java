@@ -1,8 +1,14 @@
 package com.kh.seulcam.order.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,13 +17,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.seulcam.order.domain.Order;
+import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.service.OrderService;
+import com.kh.seulcam.order.service.PaymentService;
 
 @Controller
 public class OrderAdminController {
 
 		@Autowired
 		private OrderService oService;
+		
+		@Autowired
+		private PaymentService paymentService;
 		
 		
 	//주문 보여주기
@@ -41,7 +52,16 @@ public class OrderAdminController {
 				ModelAndView mv
 				) {
 			List<Order>oList=oService.printAllOrder();
-			
+			if(!oList.isEmpty()) {
+				List<OrderPay>opList=new ArrayList();
+			for (int i = 0; i < oList.size(); i++) {
+				int orderNo = oList.get(i).getOrderNo();
+				List<OrderPay>opList1=oService.printAllPayInfo(orderNo);
+				opList.addAll(opList1);
+
+			}
+			mv.addObject("opList",opList);
+			}
 			
 			mv.addObject("oList",oList);
 			mv.setViewName("admin/orderCancleList");
@@ -53,6 +73,7 @@ public class OrderAdminController {
 	//주문상태 바꿔주기
 		@ResponseBody
 		@RequestMapping(value="/order/admin/cngDilivary",method=RequestMethod.POST)
+	
 		public String cngDilivary(
 				@ModelAttribute Order order
 				) {
@@ -64,7 +85,36 @@ public class OrderAdminController {
 				return"error";
 			}
 		}
-	
-	
+		
+		
+		//@PostMapping("/order/payment/complete")
+		@RequestMapping(value="/payments/cancel",method=RequestMethod.POST)
+		public ResponseEntity<String> paymentComplete(
+				HttpSession session,
+				OrderPay orderInfo,
+				long totalPrice) throws IOException {
+		 
+		
+		String token = paymentService.getToken();
+		System.out.println("토큰 : " + token);
+		
+		return new ResponseEntity<String>(HttpStatus.OK);
+
+		}
+		
+		/*@RequestMapping(value="/payments/cancel",method=RequestMethod.POST)
+		public ResponseEntity<String> orderCancle(OrderCancelDto orderCancelDto) throws IOException {
+			System.out.println(orderCancelDto.toString());
+		    if(!"".equals(orderCancelDto.getImpUid())) {
+		        String token = paymentService.getToken();
+		        int amount = paymentService.paymentInfo(orderCancelDto.getImpUid(), token);
+		        paymentService.payMentCancle(token, orderCancelDto.getImpUid(), amount, "관리자 취소");
+		    }
+			
+			adminService.orderCancel(orderCancelDto);
+
+			return ResponseEntity.ok().body("주문취소완료");
+		}*/
+
 
 }

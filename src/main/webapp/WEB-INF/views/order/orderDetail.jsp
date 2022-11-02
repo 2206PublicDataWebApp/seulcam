@@ -384,9 +384,13 @@ function paymentCard(data) {
 			if (rsp.success) {
 	         // 결제 성공 시 로직,
 		        data.impUid = rsp.imp_uid;
+	         //아임포트 고유 결제번호
+			//success가 false이고 사전 validation에 실패한 경우, imp_uid는 null일 수 있음
 		        data.merchant_uid = rsp.merchant_uid;
+		        //가맹점에서 생성/관리하는 고유 주문번호
+		        //이미 결제가 승인 된(status: paid) merchant_uid로는 재결제 불가
 		        
-		        
+		        console.log(data);
 		        paymentComplete(data);  
 				
 			} else {
@@ -396,6 +400,11 @@ function paymentCard(data) {
 			}
 		});
 	}
+	
+	
+	
+	
+	
 	
 function paymentComplete(data){
 	$.ajax({

@@ -160,6 +160,8 @@
   <id property="payNo" 	column="PAY_NO"/>
   		<result property="orderNo" 			column="ORDER_NO"/>
   		<result property="memberId" 		column="MEMBER_ID"/>
+  		<result property="impUid" 			column="IMP_UID"/>
+  		<result property="merchant_uid" 	column="MERCHANT_UID"/>
   		<result property="payDate" 			column="PAY_DATE"/>
   		<result property="payPrice" 		column="PAY_PRICE"/>
   		<result property="productPrice" 	column="PRODUCT_PRICE"/>
@@ -172,7 +174,7 @@
   
   <insert id="insertPay">
   INSERT INTO PAY_TBL
-  VALUES(SEQ_PAYNO.NEXTVAL, #{orderNo},#{memberId},DEFAULT,#{payPrice},#{productPrice},#{usePoint},#{getPoint},DEFAULT,DEFAULT)
+  VALUES(SEQ_PAYNO.NEXTVAL, #{orderNo},#{memberId},#{impUid},#{merchant_uid},DEFAULT,#{payPrice},#{productPrice},#{usePoint},#{getPoint},DEFAULT,#{payType})
   </insert>
   
   <select id="selectPrintPay" resultMap="orderPayResultMap">

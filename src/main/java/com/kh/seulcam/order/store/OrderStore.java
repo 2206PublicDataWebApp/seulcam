@@ -55,6 +55,9 @@ public interface OrderStore {
 	//구매 취소 상태로 변환
 	public int changeOrderCancle(SqlSession session, String orderNo, String memberId);
 
+	//결제정보 가져오기(관리자)
+	public List<OrderPay> printAllPayInfo(SqlSession session, int orderNo);
+
 
 
 }

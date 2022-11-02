@@ -21,6 +21,7 @@ import com.kh.seulcam.order.domain.Order;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
 import com.kh.seulcam.order.service.OrderService;
+import com.kh.seulcam.order.service.PaymentService;
 import com.kh.seulcam.point.domain.Point;
 import com.kh.seulcam.product.domain.Product;
 
@@ -31,6 +32,9 @@ public class OrderController {
 
 	@Autowired
 	private OrderService oService;
+	
+	
+
 
 
 	// 주문
@@ -102,6 +106,7 @@ public class OrderController {
 		int result1 = oService.registOrderNo(orderNo, memberId);
 		// 결제테이블에 정보 넣기
 		orderPay.setOrderNo(orderNo);
+		orderPay.setPayType("P");
 		int result2 = oService.registOrderPrice(orderPay);
 		// 포인트테이블에 정보 넣기
 		if(point.getPoint() != "") {

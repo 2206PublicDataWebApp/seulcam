@@ -56,6 +56,9 @@ public interface OrderService {
 	//구매 취소로 변경
 	public int changeOrderCancle(String orderNo, String memberId);
 
+	//결제 정보 가져오기(관리자)
+	public List<OrderPay> printAllPayInfo(int orderNo);
+
 
 	
 
