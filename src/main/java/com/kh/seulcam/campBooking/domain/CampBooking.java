@@ -2,6 +2,9 @@ package com.kh.seulcam.campBooking.domain;
 
 import java.sql.Date;
 
+import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.CampSite;
+
 public class CampBooking {
     private int bookingNo;
     private String memberId;
@@ -22,6 +25,8 @@ public class CampBooking {
     private String bookPayStatus;
     private String bookCancleStatus;
     private String bookRefundStatus;
+    private Camp camp;
+    private CampSite campSite;
     
     
     public CampBooking() {}
@@ -62,6 +67,26 @@ public class CampBooking {
                 + bookGetPoint + ", bookTotalPrice=" + bookTotalPrice + ", bookDate=" + bookDate + ", bookPayStatus="
                 + bookPayStatus + ", bookCancleStatus=" + bookCancleStatus + ", bookRefundStatus=" + bookRefundStatus
                 + "]";
+    }
+
+
+    public Camp getCamp() {
+        return camp;
+    }
+
+
+    public void setCamp(Camp camp) {
+        this.camp = camp;
+    }
+
+
+    public CampSite getCampSite() {
+        return campSite;
+    }
+
+
+    public void setCampSite(CampSite campSite) {
+        this.campSite = campSite;
     }
 
 

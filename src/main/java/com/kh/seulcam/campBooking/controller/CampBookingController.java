@@ -1,7 +1,9 @@
 package com.kh.seulcam.campBooking.controller;
 
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.service.CampServie;
 import com.kh.seulcam.campBooking.domain.BookingStatus;
@@ -24,6 +27,7 @@ import com.kh.seulcam.campBooking.domain.bookingStatusSearch;
 import com.kh.seulcam.campBooking.service.CampBookingService;
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.member.service.MemberService;
+import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.service.OrderService;
 import com.kh.seulcam.point.domain.Point;
 
@@ -99,6 +103,7 @@ public class CampBookingController {
     @RequestMapping(value = "/campBooking/campBooking.kh", method = RequestMethod.POST )
     public String campBookingRegist(
             HttpServletRequest request,
+            @ModelAttribute OrderPay orderPay,
             @ModelAttribute CampBooking cBooking) {
         try {
             System.out.println(cBooking);
@@ -117,6 +122,9 @@ public class CampBookingController {
             // 예약저장
             int result = bService.campBookingRegist(cBooking);
             int bookingNo = cBooking.getBookingNo();
+            // 결제테이블에 정보 넣기
+            orderPay.setOrderNo(bookingNo);
+            int result4 = oService.registOrderPrice(orderPay);
             // 포인트 차감 
             Point pointUse = new Point();
             pointUse.setMemberId(cBooking.getMemberId());
@@ -240,6 +248,35 @@ public class CampBookingController {
             e.printStackTrace();
         }
         
+        return mv;
+    }
+  //캠핑장 예약확인 디테일
+    @ResponseBody
+    @RequestMapping(value = "/campBooking/campBookingList.kh", method = RequestMethod.GET )
+    public ModelAndView campBookingList(
+            @RequestParam(value="bookingNo", required = false) String bookingNo,
+            HttpServletRequest request,
+            ModelAndView mv,
+            HttpSession session) {
+            NumberFormat numberFormat = NumberFormat.getInstance();
+
+        try {
+            Member member = (Member)session.getAttribute("loginUser");
+            String memberId = member.getMemberId();
+            List<CampBooking> cbList = bService.BooingListView(memberId);
+            for(int i = 0; i<cbList.size(); i++) {
+                String firstDay = cbList.get(i).getFirstDay().substring(0,10);
+                String lastDay = cbList.get(i).getLastDay().substring(0,10);
+                cbList.get(i).setFirstDay(firstDay);
+                cbList.get(i).setLastDay(lastDay);
+                
+            }
+            mv.addObject("cbList",cbList);
+            mv.setViewName("/campBooking/campBookingList");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    
         return mv;
     }
 }

@@ -1,5 +1,7 @@
 package com.kh.seulcam.campBooking.store;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -15,6 +17,8 @@ public interface CampBookingStore {
 
     public String selectBookCount(SqlSession session, bookingStatusSearch bss);
 
-    public CampBooking selectBookinginfo(SqlSessionTemplate session, String bookingNo);
+    public CampBooking selectBookinginfo(SqlSession session, String bookingNo);
+
+    public List<CampBooking> selectBookList(SqlSession session, String memberId);
 
 }

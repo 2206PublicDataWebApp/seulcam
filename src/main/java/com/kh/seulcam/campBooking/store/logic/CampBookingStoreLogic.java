@@ -1,5 +1,7 @@
 package com.kh.seulcam.campBooking.store.logic;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -30,9 +32,15 @@ public class CampBookingStoreLogic implements CampBookingStore{
     }
 
     @Override
-    public CampBooking selectBookinginfo(SqlSessionTemplate session, String bookingNo) {
+    public CampBooking selectBookinginfo(SqlSession session, String bookingNo) {
         CampBooking campBooking = session.selectOne("CampBookingMapper.selectBookinginfo",bookingNo);
         return campBooking;
+    }
+
+    @Override
+    public List<CampBooking> selectBookList(SqlSession session, String memberId) {
+        List<CampBooking> cbList = session.selectList("CampBookingMapper.selectBookList",memberId);
+        return cbList;
     }
 
 }
