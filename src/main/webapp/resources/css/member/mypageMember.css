@@ -124,7 +124,6 @@ header > h1 {
 /* Section */
 .section-wrapper {
     padding: 10px 15px 40px;
-    border-top: 10px solid rgb(245, 245, 245);
 }
 
 .user-info {

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/resources/css/fonts.css">
     <link rel="shortcut icon" href="resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="resources/images/faviconlogo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
@@ -46,7 +47,7 @@
                 </p>
                 <div class="join-input-wrapper">
                     <input class="join-input-input" type="password" id="memberPw" name="memberPw" placeholder="새 비밀번호" maxlength="30">
-                    <button type="button" class="password-eye"></button>
+                    <button type="button" class="password-eye" id="memberPwEye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             <p class="passwordregex ok">비밀번호가 적절합니다.</p>
             <p class="passwordregex error">비밀번호는 영문/숫자/특수문자를 포함하여 8~16자로 입력해야합니다.</p>
@@ -55,7 +56,7 @@
             <div class="join-input">
                 <div class="join-input-wrapper">
                     <input class="join-input-input" type="password" id="memberPwCheck" placeholder="새 비밀번호 확인" maxlength="30">
-                    <button type="button" class="password-eye active"></button>
+                    <button type="button" class="password-eye" id="memberPwCheckEye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             </div>
             <p class="passwordCheck ok">비밀번호가 일치합니다.</p>
@@ -72,5 +73,6 @@
     </div>
     </form>
     <script src="/resources/js/member/pwResult.js"></script>
+    <script src="/resources/js/member/registerPw.js"></script>
 </body>
 </html>

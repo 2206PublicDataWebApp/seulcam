@@ -30,12 +30,6 @@
                     <h2>
                         환불 계좌 관리
                     </h2>
-
-                    <div class="home-layout">
-                        <button class="go-home" onclick="location.href='/';">
-                            <img src="/resources/images/home.png">
-                        </button>
-                    </div>
                 </div>
             </header>
         </div>

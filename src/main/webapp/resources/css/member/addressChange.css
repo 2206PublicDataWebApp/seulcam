@@ -69,10 +69,6 @@ header > h1 {
     font-size: 0;
 }
 
-.logo {
-    width: 95px;
-    height: 40px;
-}
 
 .back-layout {
     display: flex;
@@ -95,26 +91,6 @@ header > h1 {
     height: 25px;
 }
 
-.home-layout {
-    display: flex;
-    position: absolute;
-    align-items: center;
-    top: 8px;
-    right: 5px;
-}
-
-.go-home {
-    display: inline-flex;
-    position: relative;
-    width: 40px;
-    height: 40px;
-    padding: 5px;
-}
-
-.go-home img {
-    width: 25px;
-    height: 25px;
-}
 
 /* Section */
 /* Main Section */
