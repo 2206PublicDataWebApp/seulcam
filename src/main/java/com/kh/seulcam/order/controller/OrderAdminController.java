@@ -13,13 +13,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.seulcam.order.domain.Order;
+import com.kh.seulcam.order.domain.OrderCancle;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.service.OrderService;
 import com.kh.seulcam.order.service.PaymentService;
+import com.kh.seulcam.point.domain.Point;
 
 @Controller
 public class OrderAdminController {
@@ -86,35 +89,64 @@ public class OrderAdminController {
 			}
 		}
 		
-		
-		//@PostMapping("/order/payment/complete")
+		//환불
 		@RequestMapping(value="/payments/cancel",method=RequestMethod.POST)
 		public ResponseEntity<String> paymentComplete(
 				HttpSession session,
-				OrderPay orderInfo,
-				long totalPrice) throws IOException {
-		 
-		
+				@ModelAttribute OrderPay orderPay
+				) throws IOException {
+		// System.out.println(orderPay.getimp_uid());
 		String token = paymentService.getToken();
-		System.out.println("토큰 : " + token);
+		//System.out.println("토큰 : " + token);
+		//int amount = paymentService.paymentInfo(orderInfo.getimpUid(), token);
+		int amount=100; 
+		paymentService.payMentCancle(token,orderPay.getimp_uid(), amount, "관리자 취소");
+		
+		
+		
+		//adminService.orderCancel(orderCancelDto);
+		
+		//return ResponseEntity.ok().body("주문취소완료");
+		
 		
 		return new ResponseEntity<String>(HttpStatus.OK);
 
 		}
 		
-		/*@RequestMapping(value="/payments/cancel",method=RequestMethod.POST)
-		public ResponseEntity<String> orderCancle(OrderCancelDto orderCancelDto) throws IOException {
-			System.out.println(orderCancelDto.toString());
-		    if(!"".equals(orderCancelDto.getImpUid())) {
-		        String token = paymentService.getToken();
-		        int amount = paymentService.paymentInfo(orderCancelDto.getImpUid(), token);
-		        paymentService.payMentCancle(token, orderCancelDto.getImpUid(), amount, "관리자 취소");
-		    }
+		//환불정보 저장하기//주문 테이블 환불 Y로 환불완료
+		//결제정보 가져오기 use포인트 뽑아서 넣고 
+		//포인트 다시 반납
+		@ResponseBody
+		@RequestMapping(value="/order/refund/complete",method=RequestMethod.POST)
+		public String registRefund(
+				@ModelAttribute OrderCancle orderCancle
+				) {
+			int orderNo=Integer.parseInt(orderCancle.getOrderNo());
+			OrderPay orderPay=oService.printOrderPayInfo(orderNo);
+			String point=orderCancle.getRefundPoint();
+			String memberId=orderCancle.getMemberId();
+			if(point!="") {
+				orderCancle.setRefundPoint(point);
+			int result2=oService.registRefundPoint(point, memberId);
+			}else {
+				point="0";
+				orderCancle.setRefundPoint(point);
+			int result2=oService.registRefundPoint(point, memberId);
+			}
+			orderCancle.setPayType("P");
+			//환불정보 저장
+			int result=oService.registRefund(orderCancle);
+			//주문테이블 상태 바꾸기
+			int result1=oService.changeStatus(orderCancle);
+			//포인트 테이블 넣어주기//맴버 포인트 더해주기
+		
+			int result2=oService.registRefundPoint(point, memberId);
 			
-			adminService.orderCancel(orderCancelDto);
-
-			return ResponseEntity.ok().body("주문취소완료");
-		}*/
+			
+			return"success";
+		}
+		
+		
 
 
 }

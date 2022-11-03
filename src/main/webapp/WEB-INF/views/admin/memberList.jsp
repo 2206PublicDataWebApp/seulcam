@@ -70,7 +70,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/orderAdmin/list.kh">
                     <i class="fas fa-fw fa-table"></i>
                     <span>주문관리</span></a>
             </li>

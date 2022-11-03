@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.seulcam.cart.domain.Cart;
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.order.domain.Order;
+import com.kh.seulcam.order.domain.OrderCancle;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
 import com.kh.seulcam.point.domain.Point;
@@ -58,6 +59,15 @@ public interface OrderService {
 
 	//결제 정보 가져오기(관리자)
 	public List<OrderPay> printAllPayInfo(int orderNo);
+
+	//결제 취소 정보 저장(관리자)
+	public int registRefund(OrderCancle orderCancle);
+    
+	//환불->주문테이블 상태 바꾸기(관리자)
+	public int changeStatus(OrderCancle orderCancle);
+
+	//환불->포인트 반환(관리자)
+	public int registRefundPoint(String point, String memberId);
 
 
 	

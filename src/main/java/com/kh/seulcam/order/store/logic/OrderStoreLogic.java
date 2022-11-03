@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.order.domain.Order;
+import com.kh.seulcam.order.domain.OrderCancle;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
 import com.kh.seulcam.order.store.OrderStore;
@@ -132,7 +133,7 @@ public class OrderStoreLogic implements OrderStore {
 		  paramMap.put("point",point );
 		  paramMap.put("memberId",memberId);
 		int result=session.insert("PointMapper.insertGetPoint",paramMap);
-		int result1=session.insert("OrderMapper.updateGetPoint",paramMap);
+		int result1=session.update("OrderMapper.updateGetPoint",paramMap);
 		
 		return result;
 	}
@@ -159,6 +160,29 @@ public class OrderStoreLogic implements OrderStore {
 	public List<OrderPay> printAllPayInfo(SqlSession session,int orderNo) {
 		List<OrderPay>opList=session.selectList("OrderMapper.selectPrintPay",orderNo);
 		return opList;
+	}
+
+	//결제 취소 정보 저장(관리자)
+	@Override
+	public int registRefund(SqlSession session,OrderCancle orderCancle) {
+		int result=session.insert("OrderMapper.InsertRefundInfo",orderCancle);
+		return result;
+	}
+	//환불->주문테이블 상태 바꾸기(관리자)
+	@Override
+	public int changeStatus(SqlSession session, OrderCancle orderCancle) {
+		int result=session.update("OrderMapper.UpdateRefundStatus",orderCancle);
+		return result;
+	}
+
+	@Override
+	public int registRefundPoint(SqlSession session, String point, String memberId) {
+		HashMap<String,String>paramMap=new HashMap<String,String>();
+		  paramMap.put("point",point );
+		  paramMap.put("memberId",memberId);
+		int result=session.insert("PointMapper.insertRefundPoint",paramMap);
+		int result1=session.update("OrderMapper.updateGetPoint",paramMap);
+		return 0;
 	}
 
 }

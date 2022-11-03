@@ -1,273 +1,176 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>장바구니</title>
-	<link rel="stylesheet" href="/resources/css/fonts.css">
-	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
-    <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
-<script src="../../../resources/js/jquery-3.6.1.min.js"></script>
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니</title>
+ <link rel="stylesheet" href="../../../resources/css/cart/cart.css">
+    <link rel="shortcut icon" href="/faviconlogo.ico" type="image/x-icon">
+    <link rel="icon" href="/faviconlogo.ico" type="image/x-icon">
+    <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 </head>
-<style>
-body {
-        font-size: 14px;
-       /*  color: #000; */
-    }
-    header {
-        position: fixed;
-        left: 0px;
-        right: 0px;
-        top: 0px;
-        height: 50px;
-        background-color: rgb(255, 255, 255);
-        z-index: 200;
-        max-width: 600px;
-        margin: 0 auto; 
-    }
-
-.wrap{
- 		max-width: 600px;
-        margin: 0 auto; 
-        background-color: white;
-        min-height: 100vh;
-}
-.contents{
-padding-top: 50px;
-}
-
-
-.title {
-	display: flex;
-	-webkit-box-align: center;
-	align-items: center;
-	-webkit-box-pack: center;
-	justify-content: center;
-	height: 50px;
-	position: relative;
-	font-size: 16px;
-}
-
-.click_table {
-	width: 100%;
-	border-bottom:solid 3px lightgray;
-}
-
-.list_table {
-	width: 100%;
-	border-bottom:solid 3px lightgray;
-	text-align: center;
-}
-
-.price_table {
-	width: 100%;
-	height: 120px;
-	border-bottom:solid 3px lightgray;
-	text-align: center;
-}
-
-.count-wrap {
-	position: relative;
-	padding: 0 38px;
-	border: 1px solid #ddd;
-	overflow: hidden;
-}
-
-.count-wrap>button {
-	border: 0;
-	background: #fff;
-	color: #000;
-	width: 38px;
-	height: 38px;
-	position: absolute;
-	top: 0;
-	font-size: 12px;
-}
-
-.count-wrap>button.minus {
-	left: 0;
-}
-
-.count-wrap>button.plus {
-	right: 0;
-}
-
-.count-wrap .inp {
-	border: 0;
-	height: 38px;
-	text-align: center;
-	display: block;
-	width: 100%;
-}
-
-.cart_delete {
-	border: none;
-	position: relative;
-	left: 10px;
-	top: 10px;
-	align: left;
-	valign: top;
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	opacity: .3;
-	font-size: 50;
-}
-
-.order {
-	background: #000;
-	color: #fff;
-	width: 100%;
-	height: 50px;
-	line-height: 30px;
-	font-size: 20px;
-}
-
-.delete {
-	border: none;
-	width: 50px;
-	height: 50px;
-	font-size: 40px;
-	display: inline-block;
-	opacity: .3;
-}
-
-.cart_button {
-	background: #000;
-	color: #fff;
-	width: 100px;
-}
-.p-img{
-width:100px;
-height:100px;
-}
-.info-middle{
-width:30%
-}
-</style>
-
 <body>
-
-	<div class="wrap">
-
-		<div class="head">
-			<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-		</div>
-		<div class="contents">
-		
-		<div class="title">
-			<h2 class="common_layout">장바구니</h2>
-
-		</div>
-		<div class="cart_wrap">
-
-
-			<table class="click_table">
-				<tr>
-					<td><input type="checkbox" id="check_all" name="cart_selectAll" onclick="selectAll(this)" /> <label>전체</label>
-						<span id="total_cart_cnt"><strong id="p-count"></strong>개</span>
-					</td>
-					<td align="right">
-						<button class="cart_button" onclick="cart_delete()">선택 삭제</button>
-					</td>
-				</tr>
-				<tr>
-					<td><label>물건을 더 추가하시겠습니까?</label></td>
-					<td align="right">
-						<button class="cart_button" onclick="location.href='/product/top20List'")>추가하기</button>
-					</td>
-				</tr>
-
-
-			</table>
-
-
-			<div class="cart_list">
-			<table class="list_table">
-			
-				<c:forEach items="${cList}" var="cart" varStatus="i">
+    <div class="body-wrapper">
+        <div id="header-block">
+            <header>
+                <div class="header-wrapper">
+                    <div class="back-layout">
+                        <button class="go-back">
+                            <img src="../../../resources/images/back_arrow.png">
+                        </button>
+                    </div>
+                    <h2>장바구니</h2>
+                </div>
+            </header>
+        </div>
+        <div class="cm-line"></div>
+        <section>
+            <div class="order-check">
+                <div class="check-bar">
+                    <input type="checkbox" name="cart_selectAll" id="check-all" class="check-all" onclick="selectAll(this)">
+                    <label for="check-all" class="check-label">전체 <b id="p-count"class="p-count"></b>개</label>
+                    <button class="delete-btn"onclick="cart_delete()">선택 삭제</button>
+                </div>
+            </div>
+            <%-- <div>
+            <!-- c:foreach 시작 -->
+            
+            <c:forEach items="${cList}" var="cart" varStatus="i">
 				<input id="cartNo" type="hidden" value=${cart.cartNo }>
 				<input id="memberId" type="hidden" value=${cart.memberId }>
 					<c:forEach items="${pList}" var="product" varStatus="p">
 						<c:if test="${cart.productNo eq product.productNo }">
 							<input id="cc" type="hidden" value= "${p.count }">
-							<tr>
-									<td><input type="checkbox"  name="cartbox" onclick="checkSelectAll()" />
-									<input id="productNo" type="hidden" value= "${product.productNo }"/></td>
-									<td><img class="p-img" alt="상품이미지" src="/resources/puploadFiles/${product.mainFileRename}" ></td>
+                                <div class="product-box">
+                                <div class="order-thumbnail">
+                                    <div class="thumbnail-box">
+                                        <input type="checkbox" name="cartbox" id="product${i.count }" class="check-all"onclick="checkSelectAll()">
+                                        <label for="product${i.count }" class="check-label"></label>
+                                        <a href="#" class="thumbnail-link">
+                                            <img class="thumbnail-image"src="/resources/puploadFiles/${product.mainFileRename}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-info">
+                                    <div class="product">
+                                        <div class="brand-info">
+                                            <div class="a-wrap">
+                                                <a href="#" class="brand-name">${product.brandName }</a>
+                                                <a href="#" class="product-name"id="p-product">${product.productName }</a>
+                                            </div>
+                                        </div>
+                                        <button class="x-button" onclick="deleteOne(${cart.cartNo })"></button>
+                                    </div>
+                                    <div class="option-value">
+                                        <span class="product-option">${product.productColor }</span>
+                                        <span class="product-price"><span id="p-price${i.count }"class="p-price">${product.productPrice }</span><span>원</span></span>
+                                    </div>
+                                    <div class="item-amount-wrap">
+                                        <div class="item-amount count-wrap _count"">
+                                            <input type="hidden" class="no" value="${cart.productNo }" />
+                                            <button class="amount-minus minus">-</button>
+                                            <input type="text" class="product-amount inp p-count" id="p-count${i.count }" value="${cart.cartCount }" />
+                                            <button class="amount-plus plus">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </c:if>
+					</c:forEach>
+				</c:forEach>
+				</div> --%>
+                            <!-- foreach 끝 -->
+              <table class="list_table">
+              <c:forEach items="${cList}" var="cart" varStatus="i">
+				<input id="cartNo" type="hidden" value=${cart.cartNo }>
+				<input id="memberId" type="hidden" value=${cart.memberId }>
+					<c:forEach items="${pList}" var="product" varStatus="p">
+						<c:if test="${cart.productNo eq product.productNo }">
+						<tr>
+									<td><input type="checkbox" name="cartbox" id="product${i.count }" class="check-all"onclick="checkSelectAll()">
+									<label for="product${i.count }" class="check-label"></label></td>
+									<td><input id="productNo" type="hidden" value= "${product.productNo }"/></td>
+									<td><a href="#" class="thumbnail-link">
+                                        <img class="thumbnail-image"src="/resources/puploadFiles/${product.mainFileRename}"/>
+                                        </a></td>
 									<td class="info-middle">
-									<ul>
-									<li style="font-weight: bold;" id="p-product">${product.productName }</li>
-									<li>수량</li>
-									<li>가격</li>
-									</ul>
-									</td>
-									<td>
-									<ul style="text-align:right;">
-									<li>
-									
-										<button class="delete" id="one-delete" onclick="deleteOne(${cart.cartNo })">X</button>
-									
-									</li>
-									<li style="float:right" id="count" >
-										<div class="count-wrap _count" >
-											<input type="hidden" class="no" value="${cart.productNo }" />
-											<button type="button" class="minus" >-</button>
-											<input type="text" class="inp p-count" id="p-count${i.count }" value="${cart.cartCount }" />
-											<button type="button" class="plus" >+</button>
-										</div>
-									</li>
-									<li id="p-price${i.count }" class="p-price">${product.productPrice }</li>
-									</ul>
+									<div class="product-info">
+                                    <div class="product">
+                                        <div class="brand-info">
+                                            <div class="a-wrap">
+                                                <a href="#" class="brand-name">${product.brandName }</a>
+                                                <a href="#" class="product-name"id="p-product">${product.productName }</a>
+                                            </div>
+                                        </div>
+                                        <button class="x-button" onclick="deleteOne(${cart.cartNo })"></button>
+                                    </div>
+                                    <div class="option-value">
+                                        <span class="product-option">${product.productColor }</span>
+                                        <span class="product-price"><span id="p-price${i.count }"class="p-price">${product.productPrice }</span><span>원</span></span>
+                                    </div>
+                                    <div class="item-amount-wrap">
+                                        <div class="item-amount count-wrap _count"">
+                                            <input type="hidden" class="no" value="${cart.productNo }" />
+                                            <button class="amount-minus minus">-</button>
+                                            <input type="text" class="product-amount inp p-count" id="p-count${i.count }" value="${cart.cartCount }" />
+                                            <button class="amount-plus plus">+</button>
+                                        </div>
+                                    </div>
+                                </div>
 									</td>
 									
 								</tr>
+						
+						
+						
 						</c:if>
-					</c:forEach>
-				</c:forEach>
-				</table>
-			</div>
+						</c:forEach>
+						</c:forEach>
+						</table>
+					
+                            
+                            
+                            
+                            
+                            
+                            
+                            <!-- 상품 끝 -->
+                            <div class="order-payment">
+                                <div class="order-title-wrap">
+                                    <h3 class="order-title">결제할 상품 <span class="order-title-count">총<span id="c-count"class="c-count">0</span>개</span></h3>
+                                </div>
+                                <div class="order-line"></div>
+                                <div class="order-cart-payment">
+                                    <span class="total-span">결제 금액</span>
+                                    <span class="total-price" id="totalPrice"><span id="total-price" class="total-price">0</span></span> <span>원</span></span>
 
-			<div class="price">
-				<table class="price_table">
-					<tr>
-						<td align="right">결제할 상품</td>
-						<td align="right">총 <span id="c-count">0</span>개
-						</td>
+                                </div>
+                            </div>
+                        </section>
 
-					</tr>
-					<tr>
-						<td align="right">상품금액</td>
-						<td align="right">
-						<span id="totalPrice"><span id="total-price">0</span></span> <span>원</span> </span>
-						</td>
-					</tr>
-				</table>
-
-			</div>
-			<div>
-				<button class="order" id="orderCart">주문하기</button>
-			</div>
-			
-			<form action="/cart/order.kh" method="post" class="order-form">
-			<%-- <input type="text" class="form-memberId" value="${memberId.memberId }"/> --%>
-			</form>
-			
-
-			</div>
-		</div>
-	</div>
+                        <!-- <footer> -->
+                            <div class="footer-wrapper">
+                                <button type="button" class="submit-button" id="orderCart">
+                                    <span class="footer-span1">총 <span id="c-count" class="c-count">0</span>개</span>
+                                    <span class="footer-span2"><span id="total-price" class="total-price">0</span><span>원 결제하기</span></span>
+                                </buttn>
+                            </div>
+                            <form action="/cart/order.kh" method="post" class="order-form">
+                            
+                            </form>
+                        <!-- </footer> -->
+                    </div>
 
 
-
-	<script type="text/javascript">
-	//수량별 상품가격
-	
+    <script>
+    
+   
+     //수량별 상품가격  
 	<c:forEach items="${cList}" var="cart" varStatus="i">
 	var productPrice=$("#p-count${i.count }.inp").val()*$("#p-price${i.count }").text();
 	$("#p-price${i.count }").html(productPrice);
@@ -289,10 +192,16 @@ width:30%
 		  const selectAll 
 		    = document.querySelector('input[name="cart_selectAll"]');
 		 
-		  $("#p-count").html(checked.length);
-		  $("#c-count").html(checked.length);
+		  $(".p-count").html(checked.length);
+		  $(".c-count").html(checked.length);
+		var pname=checked.parent().parent().children().children('.info-pName').val();
+		//var price=checked.parent().parent().parent().children('.info-cNo').val();
+		  //console.log(pname);
+		 //var ck=checked.attr('id');
+		//console.log(ck);
+		 
 		
-		  if(checkboxes.length === checked.length)  {
+		if(checkboxes.length === checked.length)  {
 			 selectAll.checked = true;
 			 	  
 				  
@@ -303,21 +212,22 @@ width:30%
 		  if(checked.length>0){
 			 	var totalPrice = 0;
 			 	checked.each(function(i){
+			 		console.log(i);
 				price=checked.parent().parent().eq(i).children().eq(3).children().children('.p-price').text();
 				
 				totalPrice += parseInt(price);
-				$("#total-price").html(totalPrice);
+				$(".total-price").html(totalPrice);
 		  })
 		  
 		  }else{
-			  $("#total-price").html("0");
+			  $(".total-price").html("0");
 		  }
 		}
 
 		function selectAll(selectAll)  {
 			if(selectAll.checked){			 
-			$("#p-count").html($('input[name="cartbox"]').length); 
-			$("#c-count").html($('input[name="cartbox"]').length);
+			$(".p-count").html($('input[name="cartbox"]').length); 
+			$(".c-count").html($('input[name="cartbox"]').length);
 		  const checkboxes 
 		     = document.getElementsByName('cartbox');
 		  checkboxes.forEach((checkbox) => {
@@ -327,7 +237,7 @@ width:30%
 				<c:forEach items="${cList}" var="cart" varStatus="i">
 				var productPrice${i.count}=$("#p-count${i.count }.inp").val()*$("#p-price${i.count }").text();
 				totalPrice+=productPrice${i.count}
-				 $("#total-price").html(totalPrice);
+				 $(".total-price").html(totalPrice);
 				</c:forEach>
 			  })
 
@@ -337,9 +247,9 @@ width:30%
 				checkboxes.forEach((checkbox) => {
 				    checkbox.checked = selectAll.checked		  
 				  })
-		   $("#p-count").html($('input[name="cartbox"]:checked').length); 
-		   $("#c-count").html($('input[name="cartbox"]:checked').length); 
-		   $("#total-price").html("0");
+		   $(".p-count").html($('input[name="cartbox"]:checked').length); 
+		   $(".c-count").html($('input[name="cartbox"]:checked').length); 
+		   $(".total-price").html("0");
 		  
 			}
 			
@@ -501,6 +411,7 @@ width:30%
 /* 		}
 	}) */
 	
+	//주문하기
 	$("#orderCart").on("click",function(){
 		var checked =$('input[name="cartbox"]:checked');
 		//var productNoArr=new Array();
@@ -537,7 +448,7 @@ width:30%
 	 	$.ajax({//맴버아이디//상품번호
 			 url:"/cart/checkdelete",
 			 type:"post",
-			 dataType:'json',
+			 dataType:'text',
 			 data: {"pNo" : checkNoArr},
 			 
 			success:function(data){
@@ -556,8 +467,10 @@ width:30%
 		//console.log(checkNoArr);
 		//console.log(checkNoArr);
 		}
-	}
-	</script>
+	} 
+
+
+    </script>
 
 </body>
 </html>

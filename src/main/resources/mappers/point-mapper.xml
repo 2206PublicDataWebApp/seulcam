@@ -13,11 +13,15 @@
   </resultMap>
   <insert id="insertUsePoint">
   INSERT INTO POINT_TBL
-  VALUES(SEQ_POINTNO.NEXTVAL,#{memberId},DEFAULT,#{point},'포인트사용')
+  VALUES(SEQ_POINTNO.NEXTVAL,#{memberId},DEFAULT,#{point},'포인트 사용')
   </insert>
   <insert id="insertGetPoint">
   INSERT INTO POINT_TBL
   VALUES(SEQ_POINTNO.NEXTVAL,#{memberId},DEFAULT,#{point},'구매확정 적립')
+  </insert>
+  <insert id="insertRefundPoint">
+  INSERT INTO POINT_TBL
+  VALUES(SEQ_POINTNO.NEXTVAL,#{memberId},DEFAULT,#{point},'환불완료 반환')
   </insert>
   
   <select id="selectPrintPointList" resultMap="pointResultMap">
