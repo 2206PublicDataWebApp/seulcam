@@ -21,6 +21,11 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <!-- jQuery -->
 <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
+<!-- 주문 -->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <style>
 
@@ -342,7 +347,7 @@ hr {
 	$(".peopleMoney").html("0원");
 	$(".inp").val(${campSite.standardPeople});
 
-	
+	//결제
 	function bookPay(){
 		const data={
 			"memberId":"${mOne.memberId}",
@@ -392,9 +397,13 @@ hr {
 	  	}, 
 		function (rsp) { // callback
 			if (rsp.success) {
-	         // 결제 성공 시 로직,
-		        data.impUid = rsp.imp_uid;
+				// 결제 성공 시 로직,
+				data.impUid = rsp.imp_uid;
+				//아임포트 고유 결제번호
+				//success가 false이고 사전 validation에 실패한 경우, imp_uid는 null일 수 있음
 		        data.merchant_uid = rsp.merchant_uid;
+		        //가맹점에서 생성/관리하는 고유 주문번호
+		        //이미 결제가 승인 된(status: paid) merchant_uid로는 재결제 불가
 		        
 		        
 		        bookingData(data);  
@@ -430,6 +439,7 @@ hr {
                     console.log("code: " + request.status)
                     console.log("message: " + request.responseText)
                     console.log("error: " + error);
+					alert("ajax 통신 오류! 관리자에게 문의해 주세요!");
                 }
 		})
 	}

@@ -105,7 +105,7 @@
                 <h3 class="shop-info">캠핑장</h3>
                 <ul class="info-list">
                     <li class="list-item">
-                        <a class="item-link" href="#">캠핑장 예약 조회</a>
+                        <a class="item-link" href="/campBooking/campBookingList.kh">캠핑장 예약 조회</a>
                     </li>
 
                     <li class="list-item">

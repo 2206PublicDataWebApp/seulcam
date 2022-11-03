@@ -1,5 +1,7 @@
 package com.kh.seulcam.campBooking.service.logic;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,12 @@ public class CampBookingServiceImpl implements CampBookingService{
     public CampBooking printBookingInfo(String bookingNo) {
         CampBooking campBooking = bStore.selectBookinginfo(session,bookingNo);
         return campBooking;
+    }
+
+    @Override
+    public List<CampBooking> BooingListView(String memberId) {
+        List<CampBooking> cbList = bStore.selectBookList(session,memberId);
+        return cbList;
     }
 
 }

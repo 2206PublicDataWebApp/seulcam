@@ -284,7 +284,7 @@ div::-webkit-scrollbar {
                                             </div>
                                             <div>
                                                 <label> 기준인원 <select name="standardPeople" id=""
-                                                    class="selectList form-select">
+                                                    class="form-control bg-light border-1 small">
                                                         <option value="">기준인원</option>
                                                         <option value="2">2인</option>
                                                         <option value="3">3인</option>
@@ -296,7 +296,7 @@ div::-webkit-scrollbar {
                                             </div>
                                             <div>
                                                 <label> 최대인원 <select name="maxPeople" id=""
-                                                    class="form-control bg-light border-0 small">
+                                                    class="form-control bg-light border-1 small">
                                                         <option value="">최대인원</option>
                                                         <option value="2">2인</option>
                                                         <option value="3">3인</option>
@@ -309,7 +309,7 @@ div::-webkit-scrollbar {
                                             </div>
                                             <div>
                                                 <label> 인원추가비용 <select name="excessCharge" id=""
-                                                    class="form-control bg-light border-0 small">
+                                                    class="form-control bg-light border-1 small">
                                                         <option value="">인원추가비용</option>
                                                         <option value="5000">5000원</option>
                                                         <option value="10000">10000원</option>
@@ -324,7 +324,7 @@ div::-webkit-scrollbar {
                         
                                             <div>
                                                 <label> 입실시간 <select name="inTime" id=""
-                                                    class="form-control bg-light border-0 small">
+                                                    class="form-control bg-light border-1 small">
                                                         <option value="">입실시간</option>
                                                         <option value="12">12시</option>
                                                         <option value="13">1시</option>
@@ -337,7 +337,7 @@ div::-webkit-scrollbar {
                                             </div>
                                             <div>
                                                 <label> 퇴실시간 <select name="outTime" id=""
-                                                    class="form-control bg-light border-0 small">
+                                                    class="form-control bg-light border-1 small">
                                                         <option value="">퇴실시간</option>
                                                         <option value="10">10시</option>
                                                         <option value="11">11시</option>
@@ -353,7 +353,7 @@ div::-webkit-scrollbar {
                                             </div>
                                             <div>
                                                 <label> 사이트갯수 <select name="siteCount" id=""
-                                                    class="form-control bg-light border-0 small">
+                                                    class="form-control bg-light border-1 small">
                                                         <option value="">사이트갯수</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
