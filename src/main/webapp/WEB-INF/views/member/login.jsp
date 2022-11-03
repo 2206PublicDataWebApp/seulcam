@@ -50,7 +50,6 @@
                         <div class="password-input-wrapper">
                             <input class="login-input-pw" type="password" name="memberPw" id="memberPw" placeholder="비밀번호" maxlength="30">
                             <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
-                            
                         </div>
                     </div>
 					<input type="hidden" name="redirectURI" value="${redirectURI}"/>
