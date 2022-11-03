@@ -26,6 +26,7 @@
 		<typeAlias type="com.kh.seulcam.order.domain.Order" alias="Order"/>
 		<typeAlias type="com.kh.seulcam.order.domain.OrderProduct" alias="OrderProduct"/>
 		<typeAlias type="com.kh.seulcam.order.domain.OrderPay" alias="OrderPay"/>
+		<typeAlias type="com.kh.seulcam.order.domain.OrderCancle" alias="OrderCancle"/>
 		<typeAlias type="com.kh.seulcam.point.domain.Point" alias="Point"/>
 
 		

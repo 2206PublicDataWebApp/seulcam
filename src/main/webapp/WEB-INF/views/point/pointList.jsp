@@ -101,11 +101,14 @@ header {
 		<tr>
 		<td>${point.pointDate }</td>
 		<td>${point.pointType }</td>
-		<c:if test="${point.pointType eq '포인트사용' }">
+		<c:if test="${point.pointType eq '포인트 사용' }">
 		<td style='color:red;'>-${point.point }</td>
 		</c:if>
-		<c:if test="${point.pointType eq '구매확정적립' }">
+		<c:if test="${point.pointType eq '구매확정 적립' }">
 		<td style='color:blue;'>+${point.point }</td>
+		</c:if>
+		<c:if test="${point.pointType eq '환불완료 반환' }">
+		<td style='color:yellow;'>+${point.point }</td>
 		</c:if>
 		</tr>
 		</c:forEach>

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.kh.seulcam.cart.domain.Cart;
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.order.domain.Order;
+import com.kh.seulcam.order.domain.OrderCancle;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
 import com.kh.seulcam.point.domain.Point;
@@ -57,6 +58,15 @@ public interface OrderStore {
 
 	//결제정보 가져오기(관리자)
 	public List<OrderPay> printAllPayInfo(SqlSession session, int orderNo);
+
+	//결제 취소 정보 저장(관리자)
+	public int registRefund(SqlSession session, OrderCancle orderCancle);
+
+	//환불->주문테이블 상태 바꾸기(관리자)
+	public int changeStatus(SqlSession session, OrderCancle orderCancle);
+
+	//환불->포인트 반납 적용하기(관리자)
+	public int registRefundPoint(SqlSession session, String point, String memberId);
 
 
 
