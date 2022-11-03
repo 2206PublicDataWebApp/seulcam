@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -315,7 +316,8 @@ public class ProductAdminController {
 		
 	}
 	//리뷰선택삭제
-		@RequestMapping(value="/admin/reviewCheckDelete", method=RequestMethod.POST)
+		@ResponseBody
+		@RequestMapping(value="/admin/reviewCheckDelete", produces="application/json;charset=utf-8", method=RequestMethod.POST)
 		public String reviewDeleteCheck(
 				 @RequestParam(value="rNo[]") List<Integer>rNo
 				) {
@@ -324,13 +326,48 @@ public class ProductAdminController {
 			for (int i = 0; i < rNo.size(); i++) {
 				int reviewNo = rNo.get(i);
 			   result=pService.removeReview(reviewNo);
+
 			}
+			System.out.println("======================="+result);
 			if(result>0) {
-			return "success";
+				return "success" ;
 			}else {
 				return"error";
 			}
 			
 		}
+		
+	//브랜드 스토어 리스트
+	@RequestMapping(value="/admin/brandList", method=RequestMethod.GET)
+	public ModelAndView allBrandList(ModelAndView mv) {
+		List<Brand> bList = pService.getAllBrand();
+		if(!bList.isEmpty()) {
+			mv.addObject("bList",bList);
+			
+		}else {
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+		
+	}
+	//스토어선택삭제
+	@ResponseBody
+	@RequestMapping(value="/admin/brandCheckDelete", produces="application/json;charset=utf-8", method=RequestMethod.POST)
+	public String brandDeleteCheck(
+			 @RequestParam(value="bName[]") List<Integer>bName
+			) {
+		System.out.println(bName.toString());
+		int result=0;
+		for (int i = 0; i < bName.size(); i++) {
+			int reviewNo = bName.get(i);
 
+		}
+		if(result>0) {
+			return "success" ;
+		}else {
+			return"error";
+		}
+		
+	}
+	
 }

@@ -2,11 +2,19 @@ package com.kh.seulcam.product.domain;
 
 public class Brand {
 	private String brandName;
+	private String storeName;
 	private int storeZipcode;
 	private String storeAddr;
 	private String storeAddrDetail;
 	
 	
+	
+	public String getStoreName() {
+		return storeName;
+	}
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
 	public String getBrandName() {
 		return brandName;
 	}
@@ -34,10 +42,9 @@ public class Brand {
 	}
 	@Override
 	public String toString() {
-		return "Brand [brandName=" + brandName + ", storeZipcode=" + storeZipcode
+		return "Brand [brandName=" + brandName + ", storeName=" + storeName + ", storeZipcode=" + storeZipcode
 				+ ", storeAddr=" + storeAddr + ", storeAddrDetail=" + storeAddrDetail + "]";
 	}
-	
-	
+
 	
 }

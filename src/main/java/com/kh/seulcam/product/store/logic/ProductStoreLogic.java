@@ -150,6 +150,12 @@ public class ProductStoreLogic implements ProductStore {
 		return rList;
 	}
 
+	@Override
+	public List<Brand> selectAllBrand(SqlSession session) {
+		List<Brand> bList = session.selectList("BrandMapper.selectAllBrand");
+		return bList;
+	}
+
 
 	
 

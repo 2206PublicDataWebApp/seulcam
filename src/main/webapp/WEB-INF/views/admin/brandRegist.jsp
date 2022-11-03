@@ -24,6 +24,10 @@
             <input type="checkbox" class="checkbox" id="my_checkbox" onclick="toggleTextbox(this)" name="storeCheck">
         </div>
         <div class="box-form">
+            <label>매장명</label>
+            <input type="text" class="g-inputbox-medium textarea-title" placeholder="내용을 입력해주세요." name="storeName" id="storeName" value=""  disabled>
+        </div>
+        <div class="box-form">
             <label>우편번호</label>						
 				<input type="text" id="storeZipcode" name="storeZipcode"  disabled>														
 				<button id="btnSearchAddressC" type="Button" onclick="findDaumPostcode()" value="우편번호 찾기">
@@ -51,19 +55,22 @@ function toggleTextbox(checkbox) {
 	  const textbox_elem1 = document.getElementById('storeZipcode');
 	  const textbox_elem2 = document.getElementById('storeAddr');
 	  const textbox_elem3 = document.getElementById('storeAddrDetail');
+	  const textbox_elem4 = document.getElementById('storeName');
 
 	  textbox_elem1.disabled = checkbox.checked ? false : true;
 	  textbox_elem2.disabled = checkbox.checked ? false : true;
 	  textbox_elem3.disabled = checkbox.checked ? false : true;
+	  textbox_elem4.disabled = checkbox.checked ? false : true;
 	  
 
 	  if(textbox_elem1.disabled) {
 	    textbox_elem1.value = null;
 	    textbox_elem2.value = null;
 	    textbox_elem3.value = null;
+	    textbox_elem4.value = null;
 
 	  }else {
-	    textbox_elem1.focus();
+	    textbox_elem4.focus();
 	  }
 	}
 

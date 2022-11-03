@@ -144,6 +144,12 @@ public class ProductServiceImpl implements ProductService{
 		return rList;
 	}
 
+	@Override
+	public List<Brand> getAllBrand() {
+		List<Brand> bList = pStore.selectAllBrand(session);
+		return bList;
+	}
+
 
 	
 

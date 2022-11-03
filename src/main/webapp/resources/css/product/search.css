@@ -54,7 +54,7 @@ p.record{
     padding-top: 50px;
 }
 
-* {
+*:not(b) {
     margin: 0;
     padding: 0;
     border: none;
