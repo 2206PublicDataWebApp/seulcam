@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -265,7 +266,7 @@ header {
 		<br><br>
 
 	<div class="btn_foot">
-		<button onclick="bookPay()" class="btn btn-dark bookBtn">예약내역보기</button>
+		<a href="/campBooking/campBookingList.kh" class="btn btn-dark bookBtn">예약내역보기</a>
 		<a href="/camp/campList.kh" class="btn btn-dark bookBtn">캠핑장 구경하러 가기</a>
 	</div>
 		

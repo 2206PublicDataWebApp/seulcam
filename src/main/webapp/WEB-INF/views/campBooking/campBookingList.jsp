@@ -439,7 +439,7 @@ footer {
             <div class="order-check">
                 <div class="check-bar">
                     <label for="check-all" >전체예약 <b>${cbList.size()}</b>개</label>
-                    <button class="delete-btn">선택 삭제</button>
+                    <button class="delete-btn">선택</button>
                 </div>
             </div>
             <c:forEach items="${cbList }" var="campBookingList" varStatus="i">
