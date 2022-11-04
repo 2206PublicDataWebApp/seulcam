@@ -22,6 +22,7 @@
 body {
 	font-size: 14px;
 	color: #000;
+	background-color: #f1f1f1;
 }
 
 header {
@@ -32,15 +33,15 @@ header {
 	height: 50px;
 	background-color: rgb(255, 255, 255);
 	z-index: 200;
-	max-width: 600px;
+	max-width: 768px;
 	margin: 0 auto;
 }
 
 .wrap {
-	max-width: 600px;
-	margin: 0 auto;
-	background-color: white;
-	min-height: 100vh;
+	 max-width: 768px;
+    margin: 0 auto; 
+    background-color: white;
+    min-height: 100vh;
 }
 
 .contents {

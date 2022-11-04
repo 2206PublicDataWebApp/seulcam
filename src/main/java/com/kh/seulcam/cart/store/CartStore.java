@@ -23,4 +23,7 @@ public interface CartStore {
 
 	public int deleteCheck(SqlSession session, String productNo, String memberId);
 
+	//장바구니 등록
+	public int registCart(SqlSession session, Cart cart);
+
 }

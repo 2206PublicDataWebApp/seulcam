@@ -19,7 +19,7 @@
             <header>
                 <div class="header-wrapper">
                     <div class="back-layout">
-                        <button class="go-back">
+                        <button class="go-back" onclick="history.back()">
                             <img src="../../../resources/images/back_arrow.png">
                         </button>
                     </div>
@@ -36,17 +36,20 @@
                     <button class="delete-btn"onclick="cart_delete()">선택 삭제</button>
                 </div>
             </div>
-            <%-- <div>
+            <div>
             <!-- c:foreach 시작 -->
-            
             <c:forEach items="${cList}" var="cart" varStatus="i">
 				<input id="cartNo" type="hidden" value=${cart.cartNo }>
 				<input id="memberId" type="hidden" value=${cart.memberId }>
 					<c:forEach items="${pList}" var="product" varStatus="p">
 						<c:if test="${cart.productNo eq product.productNo }">
-							<input id="cc" type="hidden" value= "${p.count }">
                                 <div class="product-box">
                                 <div class="order-thumbnail">
+                                	<div class="hidden-info">
+                                	  	<input type="hidden"  class="info-cNo" value= "${cart.cartNo }"/> 
+                                        <input type="hidden"  class="info-pNo" value= "${product.productNo }"/> 
+                                        <input type="hidden"  class="info-cCount" value= "${cart.cartCount }"/> 
+                                    </div>
                                     <div class="thumbnail-box">
                                         <input type="checkbox" name="cartbox" id="product${i.count }" class="check-all"onclick="checkSelectAll()">
                                         <label for="product${i.count }" class="check-label"></label>
@@ -79,66 +82,13 @@
                                     </div>
                                 </div>
                             </div>
-
                         </c:if>
 					</c:forEach>
 				</c:forEach>
-				</div> --%>
+				
+				</div>  
                             <!-- foreach 끝 -->
-              <table class="list_table">
-              <c:forEach items="${cList}" var="cart" varStatus="i">
-				<input id="cartNo" type="hidden" value=${cart.cartNo }>
-				<input id="memberId" type="hidden" value=${cart.memberId }>
-					<c:forEach items="${pList}" var="product" varStatus="p">
-						<c:if test="${cart.productNo eq product.productNo }">
-						<tr>
-									<td><input type="checkbox" name="cartbox" id="product${i.count }" class="check-all"onclick="checkSelectAll()">
-									<label for="product${i.count }" class="check-label"></label></td>
-									<td><input id="productNo" type="hidden" value= "${product.productNo }"/></td>
-									<td><a href="#" class="thumbnail-link">
-                                        <img class="thumbnail-image"src="/resources/puploadFiles/${product.mainFileRename}"/>
-                                        </a></td>
-									<td class="info-middle">
-									<div class="product-info">
-                                    <div class="product">
-                                        <div class="brand-info">
-                                            <div class="a-wrap">
-                                                <a href="#" class="brand-name">${product.brandName }</a>
-                                                <a href="#" class="product-name"id="p-product">${product.productName }</a>
-                                            </div>
-                                        </div>
-                                        <button class="x-button" onclick="deleteOne(${cart.cartNo })"></button>
-                                    </div>
-                                    <div class="option-value">
-                                        <span class="product-option">${product.productColor }</span>
-                                        <span class="product-price"><span id="p-price${i.count }"class="p-price">${product.productPrice }</span><span>원</span></span>
-                                    </div>
-                                    <div class="item-amount-wrap">
-                                        <div class="item-amount count-wrap _count"">
-                                            <input type="hidden" class="no" value="${cart.productNo }" />
-                                            <button class="amount-minus minus">-</button>
-                                            <input type="text" class="product-amount inp p-count" id="p-count${i.count }" value="${cart.cartCount }" />
-                                            <button class="amount-plus plus">+</button>
-                                        </div>
-                                    </div>
-                                </div>
-									</td>
-									
-								</tr>
-						
-						
-						
-						</c:if>
-						</c:forEach>
-						</c:forEach>
-						</table>
-					
-                            
-                            
-                            
-                            
-                            
-                            
+            
                             <!-- 상품 끝 -->
                             <div class="order-payment">
                                 <div class="order-title-wrap">
@@ -147,13 +97,13 @@
                                 <div class="order-line"></div>
                                 <div class="order-cart-payment">
                                     <span class="total-span">결제 금액</span>
-                                    <span class="total-price" id="totalPrice"><span id="total-price" class="total-price">0</span></span> <span>원</span></span>
+                                    <span class="totalPrice" ><span id="total-price" class="total-price">0</span><span class="totalPrice">원</span></span>
 
                                 </div>
                             </div>
                         </section>
 
-                        <!-- <footer> -->
+                  <!--    <footer>  -->
                             <div class="footer-wrapper">
                                 <button type="button" class="submit-button" id="orderCart">
                                     <span class="footer-span1">총 <span id="c-count" class="c-count">0</span>개</span>
@@ -163,7 +113,7 @@
                             <form action="/cart/order.kh" method="post" class="order-form">
                             
                             </form>
-                        <!-- </footer> -->
+                   <!--     </footer> -->
                     </div>
 
 
@@ -212,8 +162,7 @@
 		  if(checked.length>0){
 			 	var totalPrice = 0;
 			 	checked.each(function(i){
-			 		console.log(i);
-				price=checked.parent().parent().eq(i).children().eq(3).children().children('.p-price').text();
+				price=checked.parent().parent().eq(i).parent().children('.product-info').children('.option-value').children().children('.p-price').text();
 				
 				totalPrice += parseInt(price);
 				$(".total-price").html(totalPrice);
@@ -419,8 +368,8 @@
 		let orderNumber = 0;
 		if(checked.length>0){
 			checked.each(function(i){
-			count=checked.parent().parent().eq(i).children().eq(3).children().children('#count').children().children(".p-count").val();
-			productNo=checked.parent().eq(i).children('#productNo').val();
+			count=checked.parent().parent().eq(i).children().children('.info-cCount').val();
+			productNo=checked.parent().parent().eq(i).children().children('.info-pNo').val();
 			//alert(count);
 			//alert(productNo);
 			var input = ("<input type='text'name='orders[" + orderNumber + "].productNo' value='"+productNo+"'/>")
@@ -442,7 +391,7 @@
 		var checkNoArr = []; 
 		if(checked.length>0){
 		checked.each(function(i){
-		productNo=checked.parent().eq(i).children('#productNo').val();
+		productNo=checked.parent().parent().eq(i).children().children('.info-pNo').val();
 		checkNoArr.push(productNo);
 			});
 	 	$.ajax({//맴버아이디//상품번호
@@ -464,8 +413,6 @@
 			}
 			 
 			}); 
-		//console.log(checkNoArr);
-		//console.log(checkNoArr);
 		}
 	} 
 

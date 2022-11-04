@@ -303,8 +303,10 @@ width:30%
 		  if(checked.length>0){
 			 	var totalPrice = 0;
 			 	checked.each(function(i){
+			 		//console.log(i);
 				price=checked.parent().parent().eq(i).children().eq(3).children().children('.p-price').text();
-				
+				ck=checked.parent().parent().eq(i).html();
+				//console.log(ck);
 				totalPrice += parseInt(price);
 				$("#total-price").html(totalPrice);
 		  })

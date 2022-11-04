@@ -21,6 +21,7 @@
 body {
 	font-size: 14px;
 	color: #000;
+	background-color: #f1f1f1;
 }
 
 header {

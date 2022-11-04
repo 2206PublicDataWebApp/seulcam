@@ -178,6 +178,13 @@ public class OrderServiceImpl implements OrderService {
 		return result;
 	}
 
+	//상세페이지->주문 넘겨주기
+	@Override
+	public int orderProduct(OrderProduct orderProduct) {
+		int result=oStore.registOrderProduct(session,orderProduct);
+		return result;
+	}
+
 	
 	
 }

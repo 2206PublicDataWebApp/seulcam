@@ -3,6 +3,7 @@ package com.kh.seulcam.cart.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,6 +132,28 @@ public class CartController {
 		}else {
 			return"error";
 		}
+		
+	}
+	
+	//장바구니 담기
+	@ResponseBody
+	@RequestMapping(value="/product/cart",method=RequestMethod.POST)
+	public String getCart(
+			@ModelAttribute Cart cart,
+			HttpSession session
+			) {
+		Member member=(Member)session.getAttribute("loginUser");
+		String memberId=member.getMemberId();
+		if(memberId!=null) {
+			cart.setMemberId(memberId);
+		//장바구니 등록
+		int result=cService.registCart(cart);
+		}else {
+			return "error";
+		}
+		
+		
+		return "success";
 		
 	}
 	
