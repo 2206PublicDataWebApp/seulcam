@@ -22,7 +22,7 @@
   		SELECT*FROM BRAND_TBL
   	</select>
 	<select id="selectAllStoreName" resultMap="brandNameResultMap">
-  		SELECT BRAND_NAME FROM BRAND_TBL
+  		SELECT BRAND_NAME FROM BRAND_TBL GROUP BY BRAND_NAME
   	</select>
   	<select id="selectOneBrand" resultMap="brandResultMap">
   		SELECT * FROM BRAND_TBL WHERE BRAND_NAME=#{brandName}

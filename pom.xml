@@ -14,6 +14,12 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
+	<!-- 주소 위경도변환 지오코딩 -->
+			<dependency>
+				  <groupId>com.google.code.geocoder-java</groupId>
+				  <artifactId>geocoder-java</artifactId>
+				  <version>0.16</version>
+			</dependency>
 			
 	<!-- 결제 환불  VO, DTO와 같은 클래스에서 Getter 와 Setter를 자동으로 생성 -->
 			<dependency>

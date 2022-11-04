@@ -1,12 +1,15 @@
 package com.kh.seulcam.product.service.logic;
 
-import java.util.ArrayList;
+
+
 import java.util.HashMap;
 import java.util.List;
+
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import com.kh.seulcam.product.domain.Brand;
 import com.kh.seulcam.product.domain.Detail;
@@ -150,7 +153,5 @@ public class ProductServiceImpl implements ProductService{
 		return bList;
 	}
 
-
 	
-
 }

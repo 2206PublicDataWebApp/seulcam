@@ -2,7 +2,7 @@
 h1, h2, h3, h4, h5, span, small {
     vertical-align: top;
 }
-* {
+*:not(b)  {
     margin: 0;
     padding: 0;
     border: none;
@@ -77,12 +77,21 @@ section.shop.detail > article.order .buttons button {
     font-size: 12px;
     float: left;
     background-color: white;
+    cursor:pointer;
     
 
 }
 button {
     font-family: "Futura", "Noto Sans CJK KR", sans-serif;
+     cursor:pointer;
 }
+.findStore{
+	background-color:transparent;
+	 background-color: #0078ff;
+    color: #fff;
+    width:100px;
+}
+
 section.shop.detail > article.order .cont dl > dd .cont {
     overflow-y: auto;
     width: 100%;

@@ -1,5 +1,6 @@
 package com.kh.seulcam.product.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +56,5 @@ public interface ProductService {
 	public List<Review> getAllReview();
 
 	public List<Brand> getAllBrand();
-
-
 
 }

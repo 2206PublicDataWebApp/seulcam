@@ -1,5 +1,6 @@
 package com.kh.seulcam.product.controller;
 
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -8,8 +9,11 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +44,8 @@ import com.google.code.geocoder.model.GeocoderStatus;
 import com.google.code.geocoder.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.product.domain.Brand;
 import com.kh.seulcam.product.domain.Detail;
@@ -82,10 +88,10 @@ public class ProductController {
 	public ModelAndView detailView(Model model
 			,ModelAndView mv
 			,@RequestParam ("productNo") Integer productNo
-			
 			,HttpSession session) {
 	
 		Product product = pService.getProductByNo(productNo);
+		
 		Member member=null;
 		if(session.getAttribute("loginUser") != null) {
 			member =(Member)session.getAttribute("loginUser");
@@ -97,6 +103,8 @@ public class ProductController {
 		}
 		return mv;
 	}
+	
+	
 	//상품상세 ->상품상세ajax
 	@ResponseBody
 	@RequestMapping(value="/product/productDetailInfo", produces="application/json;charset=utf-8", method=RequestMethod.GET)
@@ -374,68 +382,111 @@ public class ProductController {
 	//브랜드별 매장정보 가져오기
 	@ResponseBody
 	@RequestMapping(value="/product/brandStore", produces="application/json;charset=utf-8", method=RequestMethod.GET)
-	public String storeMapView(
-			@RequestParam("brandName") String brandName
-			,HttpServletRequest req, HttpServletResponse response) throws IOException {
+	public String storeMapView(ModelAndView mv
+			,@RequestParam("brandName") String brandName
+			,HttpServletRequest req, HttpServletResponse response) {
 		List<Brand> bsList = pService.getbrandStore(brandName);
-//		for(int i=0; i<bsList.size();i++) {
-//			
-//			
-//			try {
-//				String addr=URLEncoder.encode(bsList.get(i).getStoreAddr(),"utf-8");
-//				String api ="https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="+addr;
-//				
-//				StringBuffer sb = new StringBuffer();
-//				URL url = new URL(api);
-//				HttpsURLConnection http=(HttpsURLConnection) url.openConnection();
-//				http.setRequestProperty("Content-Type", "application/json");
-//				http.setRequestProperty("X-NCP-APIGW-API-KEY-ID", "zj6zbz23cl");
-//				http.setRequestProperty("X-NCP-APIGW-API-KEY", "8M3TIgsO5a64vd8zz6otkUJ7ieZSipBkdD0mNcSh");
-//				http.setRequestMethod("GET");
-//				http.connect();
-//				
-//				InputStreamReader in = new InputStreamReader(http.getInputStream(),"utf-8");
-//				BufferedReader br = new BufferedReader(in);
-//				String line;
-//				while((line=br.readLine())!=null) {
-//					sb.append(line).append("\n");
-//					
-//				}
-//				JSONParser parser = new JSONParser();
-//				JSONObject jsonObject;
-//				JSONObject jsonObject2;
-//				JSONArray jsonArray;
-//				String x="";
-//				String y="";
-//				
-//				jsonObject = (JSONObject) parser.parse(sb.toString());
-//				jsonArray = (JSONArray) jsonObject.get(bsList.get(i).getStoreAddr());
-//				
-//					jsonObject2=(JSONObject) jsonArray.get(i);
-//					if(null!=jsonObject2.get("x")) {
-//						x=jsonObject2.get("x").toString();
-//					
-//					if(null!=jsonObject2.get("y")) {
-//						y=jsonObject2.get("y").toString();
-//					}
-//					
-//				}
-//				br.close();
-//				in.close();
-//				http.disconnect();
-//				System.out.println(x+":"+y);
-//			} catch (ParseException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-     
+		ArrayList<Float[]> coordsList =new ArrayList<Float[]>();
+		Float[] coords=null;
+			try {
+				for(int i = 0; i<bsList.size(); i++) {
+					String address = bsList.get(i).getStoreAddr();
+				coords = geoCoder(address);
+				coordsList.add(coords);
+				coordsList.get(i)[0]=coords[0];
+				coordsList.get(i)[1]=coords[1];
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    
+		
+
+		//System.out.println(coordsList.toString());
+		if(!coordsList.isEmpty()) {
+			mv.addObject("bsList", bsList);
+			mv.addObject("coordsList", coordsList);
+			Map<String,Object> hMap = new HashMap<String,Object>();
+			hMap.put("bsList",bsList);
+			hMap.put("coordsList",coordsList);
+			Gson gson = new Gson();
+			return gson.toJson(hMap);
+			
+			
+			
+		}
 		return null;
 		
 	            
 	}
-	
-	
+	//주소 ->위경도변환 
+	public Float[] geoCoder(String address)  throws IOException {
+		String addr = URLEncoder.encode(address,"utf-8");
+		String api = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="+addr;
+		StringBuffer sb = new StringBuffer();
+		
+		URL url=new URL(api);
+		HttpsURLConnection http = (HttpsURLConnection) url.openConnection();
+		http.setRequestProperty("Content-Type", "application/json");
+		http.setRequestProperty("X-NCP-APIGW-API-KEY-ID", "zj6zbz23cl");
+		http.setRequestProperty("X-NCP-APIGW-API-KEY", "8M3TIgsO5a64vd8zz6otkUJ7ieZSipBkdD0mNcSh");
+		http.setRequestMethod("GET");
+		http.connect();
+		
+		InputStreamReader in=new InputStreamReader(http.getInputStream(),"utf-8");
+		BufferedReader br = new BufferedReader(in);
+		 String line;
+         while ((line = br.readLine()) != null) {
+             sb.append(line).append("\n");
+         }
+
+
+
+         JSONParser parser = new JSONParser();
+         JSONObject jsonObject;
+         JSONObject jsonObject2;
+         JSONArray jsonArray;
+         String x = "";
+         String y = "";
+
+
+        // System.out.println("결과 >>>>>>>>>> : " + sb.toString());
+         try {
+			jsonObject = (JSONObject)parser.parse(sb.toString());
+			jsonArray = (JSONArray)jsonObject.get("addresses");
+			for(int i=0;i<jsonArray.size();i++){
+				jsonObject2 = (JSONObject) jsonArray.get(i);
+				if(null != jsonObject2.get("x")){
+					x = (String) jsonObject2.get("x").toString();
+				}
+				if(null != jsonObject2.get("y")){
+					y = (String) jsonObject2.get("y").toString();
+				}
+			}
+			
+			br.close();
+			in.close();
+			http.disconnect();
+			
+			//System.out.println("Latitude >> " + y + "Longitude >> " + x);
+			
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        float fx = Float.parseFloat(x);
+        float fy = Float.parseFloat(y);
+		Float[] coords = new Float[2];
+		coords[0]=fx;
+		coords[1]=fy;
+       
+		return coords;
+		
+	}
+
 	//상품검색
 	@RequestMapping(value="/product/search", produces="application/json;charset=utf-8", method=RequestMethod.GET)
 	public ModelAndView search(

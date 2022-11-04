@@ -84,8 +84,9 @@
 
 			<article class="ac-text">
 				<div class="ac-sub">
-					<div id="map" style="width: 100%; height: 400px;"></div>
-					<p id="store_addr">오프라인매장 지도 주소</p>
+					<div id="map" style="width: 100%; height: 400px;"></div><br><br>
+					<p><b>${product.brandName }</b></p><br>
+					<p id="store_addr"></p>
 					<div class="search" style="">
 			            <input id="address" type="hidden" value="">
 			        </div>
@@ -175,8 +176,12 @@
 
 	</section>
 
-
+<script src="/resources/js/product/cart-order.js"></script>
 <script>
+
+
+	
+	
 
 function reviewRegist(){
 	if(${loginUser == null}){
@@ -371,201 +376,36 @@ function reviewRegist(){
  
  $("#ac-2").change(function(){
 	 var brandName = '${product.brandName}';
+			 var fullAddr="";
+			 var map = new naver.maps.Map('map', {
+				    center: new naver.maps.LatLng(36.3504119, 127.3845475),
+				    zoom: 5
+				});
+
 	 if($("#ac-2").is(":checked")){
 		 $.ajax({
 			 url:"/product/brandStore",
 			 data:{"brandName":brandName},
 			 type:"get",
-			 
+			// dataType:"Object",
 			 success:function(data){
-				 var map = new naver.maps.Map("map", {
-					    center: new naver.maps.LatLng(37.3595316, 127.1052133),
-					    zoom: 15,
-					    mapTypeControl: true
-					});
-
-					var infoWindow = new naver.maps.InfoWindow({
-					    anchorSkew: true
-					});
-
-					map.setCursor('pointer');
-
-					function searchCoordinateToAddress(latlng) {
-
-					    infoWindow.close();
-
-					    naver.maps.Service.reverseGeocode({
-					        coords: latlng,
-					        orders: [
-					            naver.maps.Service.OrderType.ADDR,
-					            naver.maps.Service.OrderType.ROAD_ADDR
-					        ].join(',')
-					    }, function(status, response) {
-					        if (status === naver.maps.Service.Status.ERROR) {
-					            return alert('Something Wrong!');
-					        }
-
-					        var items = response.v2.results,
-					            address = '',
-					            htmlAddresses = [];
-
-					        for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
-					            item = items[i];
-					            address = makeAddress(item) || '';
-					            addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
-
-					            htmlAddresses.push((i+1) +'. '+ addrType +' '+ address);
-					        }
-
-					        infoWindow.setContent([
-					            '<div style="padding:10px;min-width:200px;line-height:150%;">',
-					            '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
-					            htmlAddresses.join('<br />'),
-					            '</div>'
-					        ].join('\n'));
-
-					        infoWindow.open(map, latlng);
-					    });
-					}
-
-					function searchAddressToCoordinate(address) {
-					    naver.maps.Service.geocode({
-					        query: address
-					    }, function(status, response) {
-					        if (status === naver.maps.Service.Status.ERROR) {
-					            return alert('Something Wrong!');
-					        }
-
-					        if (response.v2.meta.totalCount === 0) {
-					            return alert('totalCount' + response.v2.meta.totalCount);
-					        }
-
-					        var htmlAddresses = [],
-					            item = response.v2.addresses[0],
-					            point = new naver.maps.Point(item.x, item.y);
-
-					        if (item.roadAddress) {
-					            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
-					        }
-
-					        if (item.jibunAddress) {
-					            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
-					        }
-
-					        if (item.englishAddress) {
-					            htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
-					        }
-
-					        infoWindow.setContent([
-					            '<div style="padding:10px;min-width:200px;line-height:150%;">',
-					            '<h4 style="margin-top:5px;">검색 주소 : '+ address +'</h4><br />',
-					            htmlAddresses.join('<br />'),
-					            '</div>'
-					        ].join('\n'));
-
-					        map.setCenter(point);
-					        infoWindow.open(map, point);
-					    });
-					}
-
-					function initGeocoder() {
-					    map.addListener('click', function(e) {
-					        searchCoordinateToAddress(e.coord);
-					    });
-
-					    $('#address').on('keydown', function(e) {
-					        var keyCode = e.which;
-
-					        if (keyCode === 13) { // Enter Key
-					            searchAddressToCoordinate($('#address').val());
-					        }
-					    });
-
-					    $('#submit').on('click', function(e) {
-					        e.preventDefault();
-
-					        searchAddressToCoordinate($('#address').val());
-					    });
-
-					    searchAddressToCoordinate('정자동 178-1');
-					}
-
-					function makeAddress(item) {
-					    if (!item) {
-					        return;
-					    }
-
-					    var name = item.name,
-					        region = item.region,
-					        land = item.land,
-					        isRoadAddress = name === 'roadaddr';
-
-					    var sido = '', sigugun = '', dongmyun = '', ri = '', rest = '';
-
-					    if (hasArea(region.area1)) {
-					        sido = region.area1.name;
-					    }
-
-					    if (hasArea(region.area2)) {
-					        sigugun = region.area2.name;
-					    }
-
-					    if (hasArea(region.area3)) {
-					        dongmyun = region.area3.name;
-					    }
-
-					    if (hasArea(region.area4)) {
-					        ri = region.area4.name;
-					    }
-
-					    if (land) {
-					        if (hasData(land.number1)) {
-					            if (hasData(land.type) && land.type === '2') {
-					                rest += '산';
-					            }
-
-					            rest += land.number1;
-
-					            if (hasData(land.number2)) {
-					                rest += ('-' + land.number2);
-					            }
-					        }
-
-					        if (isRoadAddress === true) {
-					            if (checkLastString(dongmyun, '면')) {
-					                ri = land.name;
-					            } else {
-					                dongmyun = land.name;
-					                ri = '';
-					            }
-
-					            if (hasAddition(land.addition0)) {
-					                rest += ' ' + land.addition0.value;
-					            }
-					        }
-					    }
-
-					    return [sido, sigugun, dongmyun, ri, rest].join(' ');
-					}
-
-					function hasArea(area) {
-					    return !!(area && area.name && area.name !== '');
-					}
-
-					function hasData(data) {
-					    return !!(data && data !== '');
-					}
-
-					function checkLastString (word, lastString) {
-					    return new RegExp(lastString + '$').test(word);
-					}
-
-					function hasAddition (addition) {
-					    return !!(addition && addition.value);
-					}
-
-					naver.maps.onJSContentLoaded = initGeocoder;
+				 for(var i=0; i<data.bsList.length;i++){
+					 fullAddr+="<p><button type='button' onclick='findStore()' class='findStore'><b>"+data.bsList[i].storeName+"</b>";
+					 fullAddr+="</button>ㅤㅤ["+data.bsList[i].storeZipcode+"] ";
+					 fullAddr+=data.bsList[i].storeAddr;
+					 fullAddr+=data.bsList[i].storeAddrDetail+"</p><br>";
+					 
+				var marker = new naver.maps.Marker({
+				    position: new naver.maps.LatLng(data.coordsList[i][1], data.coordsList[i][0]),
+				    map: map 
+		
+				 });
+				 }
+				$("#store_addr").append(fullAddr);
+				
 			 },
+			 
+			 
 			 error : function(){
 				 console.log("에러");
 			 }
@@ -573,18 +413,9 @@ function reviewRegist(){
 		 
 		 
 	 }
-	 
-    
+
  });    
     
- //리뷰삭제 ajax
-function deviewDelete(){
-	var productNo="${product.productNo}";
-	 $.ajax({
-		 
-	 });
- };
-	 
 
     
     
