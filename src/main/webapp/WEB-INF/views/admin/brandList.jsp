@@ -57,13 +57,13 @@
                     <span>상품관리</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="/admin/reviewList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품 리뷰 관리</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/admin/brandList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>브랜드관리</span></a>
@@ -193,34 +193,24 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>리뷰번호</th>
-                                            <th>제품번호</th>
-                                            <th>작성자</th>
-                                            <th>리뷰점수</th>
-                                            <th>리뷰제목</th>
-                                            <th>사진첨부</th>
-                                            <th>작성일</th>
+                                            <th>브랜드명</th>
+                                            <th>매장명</th>
+                                            <th>매장주소</th>
                                             <th style="text-align:center">삭제</th>
                                             
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${rList}" var="review" varStatus="i">
+                                        <c:forEach items="${bList}" var="brand" varStatus="i">
                                         <tr>
-                                        	<td id="reviewNo"><a href="/admin/productDetail?productNo=${review.reviewNo }">${review.reviewNo}</a></td>
-                                        
-                                        	<td>${review.productNo}</td>
-                                        	<td>${review.memberId}</td>
-                                        	<td>${review.reviewGrade}</td>
-                                        	<td>${review.reviewTitle}</td>
-                                       
-                                        	<c:if test="${review.reviewFileName1 ne null or reviewFileRename2 ne null or reviewFileRename1 ne null}">
-                                        		<td>O</td>
+                                        	<td id="brandName"><a href="#">${brand.brandName }</a></td>
+                                        	<c:if test="${brand.storeAddr eq null }">
+                                        		<td colspan="2">스토어 미등록</td>>
                                         	</c:if>
-                                        	<c:if test="${review.reviewFileName1 eq null and reviewFileRename2 eq null and reviewFileRename1 eq null }">
-                                        		<td>X</td>
+                                        	<c:if test="${brand.storeAddr ne null }">
+                                        		<td>${brand.storeName }</td>
+                                        		<td>[${brand.storeZipcode }] ${brand.storeAddr } ${brand.storeAddrDetail }</td>
                                         	</c:if>
-                                        	<td>${review.uploadDate}</td>
                                         	<td style="text-align:center"><input type="checkbox" class="delCheck" name="delCheck"></td>
                                         	
                                         </tr>
@@ -264,20 +254,18 @@
 		var checkNoArr = []; 
 		if(checked.length>0){
 			checked.each(function(i){
-				reviewNo=checked.parent().eq(i).siblings('#reviewNo').children().text();
-				console.log(reviewNo);
-				checkNoArr.push(reviewNo);
-				console.log(checkNoArr)
+				brandName=checked.parent().eq(i).siblings('#brandName').children().text();
+				checkNoArr.push(brandName);
 			});
 		 	$.ajax({
-				 url:"/admin/reviewCheckDelete",
+				 url:"/admin/brandCheckDelete",
 				 type:"POST",
-				 data: {"rNo" : checkNoArr},
+				 data: {"bName" : checkNoArr},
 				dataType : 'text', 
 				success:function(data){
 					if(data=="success"){
 						alert("성공.");
-						location.replace("/admin/reviewList");
+						location.replace("/admin/brandList");
 					}else{
 						alert("실패");
 					}

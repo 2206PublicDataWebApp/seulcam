@@ -129,7 +129,14 @@
         </ul>
 
         <a href="/camp/campList.kh"><b>캠핑장 검색</b></a>
-        <a href="#"><b>로그인</b></a>
+        
+       <c:if test="${sessionScope.loginUser eq null}">
+	   		<a href="/member/loginView"><b>로그인</b></a>
+	   </c:if>
+	                
+	   <c:if test="${not empty loginUser }">
+	        <a href="/member/logout"><b>로그아웃</b></a>
+	   </c:if>
     </nav>
 
     <script src="/resources/js/menu.js"></script>

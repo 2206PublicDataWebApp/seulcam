@@ -56,6 +56,8 @@ public interface ProductStore {
 
 	public List<Review> selectAllReview(SqlSession session);
 
+	public List<Brand> selectAllBrand(SqlSession session);
+
 
 
 }

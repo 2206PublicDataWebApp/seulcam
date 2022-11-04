@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="/resources/css/memberCommon.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
     <title>회원가입</title>
-    <!--jquery cdn으로 가져오기-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="body-wrapper">
@@ -60,7 +60,7 @@
 	                        </label>
 	                        <div class="join-input-wrapper">
 	                            <input class="join-input-input" type="password" id="memberPw" name="memberPw" placeholder="숫자, 영문, 특수문자 조합 최소 8자" maxlength="30">
-	                            <button type="button" class="password-eye"></button>
+	                            <button type="button" class="password-eye" id="memberPwEye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
 	                        </div>
 	                        <p class="passwordregex ok">비밀번호가 적절합니다.</p>
             				<p class="passwordregex error">비밀번호는 영문/숫자/특수문자를 포함하여 8~16자로 입력해야합니다.</p>
@@ -69,7 +69,7 @@
 	                    <div class="join-input">
 	                        <div class="join-input-wrapper">
 	                            <input class="join-input-input" type="password" id="memberPwCheck" placeholder="비밀번호 재입력" maxlength="30">
-	                            <button type="button" class="password-eye active"></button>
+	                            <button type="button" class="password-eye" id="memberPwCheckEye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
 	                        </div>
 	                        <p class="passwordCheck ok">비밀번호가 일치합니다.</p>
             				<p class="passwordCheck error">비밀번호가 일치하지 않습니다.</p>
@@ -125,6 +125,7 @@
             
         </section>
     </div>
+    <script src="/resources/js/member/registerPw.js"></script>
     <script src="/resources/js/member/register.js"></script>
 </body>
 </html>

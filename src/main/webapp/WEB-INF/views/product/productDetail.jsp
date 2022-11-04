@@ -335,8 +335,8 @@ function reviewRegist(){
 					 		 	
 					 }
 				
+				}
 					$("#review_title_all").append(strDOM);
-				} 
 			 },
 			 error : function(){
 				 console.log("리스트불러오기 실패");

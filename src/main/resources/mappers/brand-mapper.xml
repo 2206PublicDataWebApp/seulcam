@@ -9,15 +9,19 @@
 	</resultMap>
 	<resultMap type="Brand" id="brandResultMap">
 		<id property="brandName"	column="BRAND_NAME"/>
+		<result property="storeName"		column="STORE_NAME"/>
 		<result property="storeZipcode"		column="STORE_ZIPCODE"/>
 		<result property="storeAddr"		column="STORE_ADDR"/>
-		<result property="storeAddrDetail"		column="STORE_ADDR_DETAIL"/>
+		<result property="storeAddrDetail"	column="STORE_ADDR_DETAIL"/>
 	</resultMap>
 		<insert id="insertBrand" parameterType="Brand">
   		INSERT INTO BRAND_TBL
-  		VALUES(#{brandName},#{storeZipcode},#{storeAddr},#{storeAddrDetail})
+  		VALUES(#{brandName},#{storeZipcode},#{storeAddr},#{storeAddrDetail},#{storeName})
   	</insert>
-		<select id="selectAllStoreName" resultMap="brandNameResultMap">
+	<select id="selectAllBrand" resultMap="brandResultMap">
+  		SELECT*FROM BRAND_TBL
+  	</select>
+	<select id="selectAllStoreName" resultMap="brandNameResultMap">
   		SELECT BRAND_NAME FROM BRAND_TBL
   	</select>
   	<select id="selectOneBrand" resultMap="brandResultMap">

@@ -383,7 +383,7 @@ function paymentCard(data) {
 		function (rsp) { // callback
 			if (rsp.success) {
 	         // 결제 성공 시 로직,
-		        data.impUid = rsp.imp_uid;
+		        data.imp_uid = rsp.imp_uid;
 	         //아임포트 고유 결제번호
 			//success가 false이고 사전 validation에 실패한 경우, imp_uid는 null일 수 있음
 		        data.merchant_uid = rsp.merchant_uid;
@@ -421,7 +421,7 @@ function paymentComplete(data){
 			alert("ajax 통신 오류! 관리자에게 문의해 주세요!");
 		}
 		
-	})
+	});
 
 	/* 
 	.done(function(result){

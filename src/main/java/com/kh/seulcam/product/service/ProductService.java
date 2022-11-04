@@ -54,6 +54,8 @@ public interface ProductService {
 
 	public List<Review> getAllReview();
 
+	public List<Brand> getAllBrand();
+
 
 
 }

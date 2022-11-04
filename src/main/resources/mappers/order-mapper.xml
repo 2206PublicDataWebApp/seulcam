@@ -160,7 +160,7 @@
   <id property="payNo" 	column="PAY_NO"/>
   		<result property="orderNo" 			column="ORDER_NO"/>
   		<result property="memberId" 		column="MEMBER_ID"/>
-  		<result property="impUid" 			column="IMP_UID"/>
+  		<result property="imp_uid" 			column="IMP_UID"/>
   		<result property="merchant_uid" 	column="MERCHANT_UID"/>
   		<result property="payDate" 			column="PAY_DATE"/>
   		<result property="payPrice" 		column="PAY_PRICE"/>
@@ -174,11 +174,40 @@
   
   <insert id="insertPay">
   INSERT INTO PAY_TBL
-  VALUES(SEQ_PAYNO.NEXTVAL, #{orderNo},#{memberId},#{impUid},#{merchant_uid},DEFAULT,#{payPrice},#{productPrice},#{usePoint},#{getPoint},DEFAULT,#{payType})
+  VALUES(SEQ_PAYNO.NEXTVAL, #{orderNo},#{memberId},#{imp_uid},#{merchant_uid},DEFAULT,#{payPrice},#{productPrice},#{usePoint},#{getPoint},DEFAULT,#{payType})
   </insert>
   
   <select id="selectPrintPay" resultMap="orderPayResultMap">
   SELECT * FROM PAY_TBL WHERE ORDER_NO=#{orderNo} AND PAY_TYPE='P'
   </select>
+  
+  
+    <resultMap  type="OrderCancle" id="orderCancleResultMap"> 
+  <id property="refundNo" 	column="REFUND_NO"/>
+  		<result property="orderNo" 			column="ORDER_NO"/>
+  		<result property="memberId" 		column="MEMBER_ID"/>
+  		<result property="imp_uid" 			column="IMP_UID"/>
+  		<result property="merchant_uid" 	column="MERCHANT_UID"/>
+  		<result property="refundDate" 		column="REFUND_DATE"/>
+  		<result property="refundPrice" 		column="REFUND_PRICE"/>
+  		<result property="refundPoint" 		column="REFUND_POINT"/>
+  		<result property="payType" 			column="PAY_TYPE"/>
+  		
+  </resultMap>
+  
+  
+  <insert id="InsertRefundInfo">
+  INSERT INTO REFUND_TBL
+  VALUES(SEQ_REFUNDNO.NEXTVAL,#{orderNo},#{memberId},#{imp_uid},#{merchant_uid},DEFAULT,#{refundPrice},#{refundPoint},#{payType})
+  </insert>
+ 
+  <update id="UpdateRefundStatus">
+  UPDATE ORDER_TBL
+  SET DILIVERY_STATUS='환불완료',REFUND_STATUS='Y'
+  WHERE ORDER_NUMBER=#{orderNo}
+  </update>
+  
+  
+  
  
   </mapper>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.order.domain.Order;
+import com.kh.seulcam.order.domain.OrderCancle;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
 import com.kh.seulcam.order.service.OrderService;
@@ -155,6 +156,26 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderPay> printAllPayInfo(int orderNo) {
 		List<OrderPay>opList=oStore.printAllPayInfo(session,orderNo);
 		return opList;
+	}
+
+	@Override
+	public int registRefund(OrderCancle orderCancle) {
+		int result=oStore.registRefund(session,orderCancle);
+		return result;
+	}
+	
+	//주문테이블 상태 바꾸기(관리자)
+	@Override
+	public int changeStatus(OrderCancle orderCancle) {
+		int result=oStore.changeStatus(session,orderCancle);
+		return result;
+	}
+
+	//환불->포인트 반환(관리자)
+	@Override
+	public int registRefundPoint(String point, String memberId) {
+		int result=oStore.registRefundPoint(session,point,memberId);
+		return result;
 	}
 
 	
