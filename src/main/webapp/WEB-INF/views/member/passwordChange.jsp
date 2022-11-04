@@ -42,7 +42,7 @@
             <div class="join-input">
                 <div class="join-input-wrapper curPw">
                     <input class="join-input-input" type="password"  id="memberPw" placeholder="기존 비밀번호" maxlength="16">
-                    <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
+                    <button type="button" class="password-eye" id="memberPwEye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             </div>
             <p class="password ok">비밀번호가 일치합니다.</p>
@@ -51,7 +51,7 @@
             <div class="join-input">
                 <div class="join-input-wrapper newPw">
                     <input class="join-input-input" type="password" id="newMemberPw" name="memberPw" placeholder="새 비밀번호" maxlength="16" disabled>
-                    <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
+	                <button type="button" class="password-eye" id="newMemberPwEye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             </div>
     		<p class="passwordregex ok">비밀번호가 적절합니다.</p>
@@ -59,7 +59,7 @@
             <div class="join-input">
                 <div class="join-input-wrapper newPwCheck">
                     <input class="join-input-input" type="password" id="newMemberPwCheck" placeholder="새 비밀번호 확인" maxlength="16" disabled>
-                    <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
+                    <button type="button" class="password-eye" id="newMemberPwCheckEye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                 </div>
             </div>
             <p class="passwordCheck ok">비밀번호가 일치합니다.</p>
@@ -75,6 +75,6 @@
         </footer>
     </div>
     <script src="/resources/js/member/passwordChange.js"></script>
-    <script src="/resources/js/member/pwInputCommon.js"></script>
+    <script src="/resources/js/member/passwordChangeInput.js"></script>
 </body>
 </html>

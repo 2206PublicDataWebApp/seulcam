@@ -59,7 +59,7 @@
 	                            <span class="label-essential"></span>
 	                        </label>
 	                        <div class="join-input-wrapper">
-	                            <input class="join-input-input" type="password" id="memberPw" name="memberPw" placeholder="숫자, 영문, 특수문자 조합 최소 8자" maxlength="30">
+	                            <input class="join-input-input" type="password" id="memberPw" name="memberPw" placeholder="숫자, 영문, 특수문자 조합 최소 8자" maxlength="16">
 	                            <button type="button" class="password-eye" id="memberPwEye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
 	                        </div>
 	                        <p class="passwordregex ok">비밀번호가 적절합니다.</p>
