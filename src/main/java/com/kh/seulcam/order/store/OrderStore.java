@@ -68,6 +68,9 @@ public interface OrderStore {
 	//환불->포인트 반납 적용하기(관리자)
 	public int registRefundPoint(SqlSession session, String point, String memberId);
 
+	//상세페이지->주문 넘겨주기
+	public int registOrderProduct(SqlSession session, OrderProduct orderProduct);
+
 
 
 }

@@ -61,6 +61,13 @@ public class CartServiceImpl implements CartService {
 		return result;
 	}
 
+	//장바구니 등록
+	@Override
+	public int registCart(Cart cart) {
+		int result=cStore.registCart(session,cart);
+		return result;
+	}
+
 	
 
 }

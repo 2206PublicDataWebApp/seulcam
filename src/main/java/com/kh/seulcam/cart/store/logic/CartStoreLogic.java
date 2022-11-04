@@ -55,6 +55,12 @@ public class CartStoreLogic implements CartStore{
 		
 		return result;
 	}
+
+	@Override
+	public int registCart(SqlSession session,Cart cart) {
+		int result=session.insert("CartMapper.insertProduct",cart);
+		return result;
+	}
 	
 
 }

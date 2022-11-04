@@ -69,6 +69,9 @@ public interface OrderService {
 	//환불->포인트 반환(관리자)
 	public int registRefundPoint(String point, String memberId);
 
+	//상세페이지->주문으로 넘기기
+	public int orderProduct(OrderProduct orderProduct);
+
 
 	
 

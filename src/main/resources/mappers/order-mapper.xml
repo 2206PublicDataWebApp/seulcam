@@ -131,7 +131,13 @@
   		<result property="orderStatus" 	column="ORDER_STATUS"/>
   		
   </resultMap>
-      <insert id="insertProduct" parameterType="list">
+  
+  <insert id="insertOrderProduct">
+  INSERT INTO ORDER_PRODUCT_TBL
+  VALUES(SEQ_ORDER_PRODUCTNO.NEXTVAL,#{productNo},#{memberId},#{orderCount},#{orderNo},#{orderStatus})
+  </insert>
+    
+    <insert id="insertProduct" parameterType="list">
  	INSERT INTO ORDER_PRODUCT_TBL
 	SELECT SEQ_ORDER_PRODUCTNO.NEXTVAL AS ORDER_NUMBER, A.*
 	FROM ( 

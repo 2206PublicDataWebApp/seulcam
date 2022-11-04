@@ -15,10 +15,16 @@ public interface CartService {
 
 	public int changeCart(Cart cart);
 
+	//선택지우기
 	public int deleteOne(Integer cartNo);
 
+	//주문하기
 	public int orderProduct(OrderList order);
 
+	//체크한 상품만 지우기
 	public int deleteCheck(String productNo, String memberId);
+
+	//장바구니 등록
+	public int registCart(Cart cart);
 
 }

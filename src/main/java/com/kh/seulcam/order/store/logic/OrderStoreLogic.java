@@ -175,6 +175,7 @@ public class OrderStoreLogic implements OrderStore {
 		return result;
 	}
 
+	//환불 포인트 적용
 	@Override
 	public int registRefundPoint(SqlSession session, String point, String memberId) {
 		HashMap<String,String>paramMap=new HashMap<String,String>();
@@ -183,6 +184,13 @@ public class OrderStoreLogic implements OrderStore {
 		int result=session.insert("PointMapper.insertRefundPoint",paramMap);
 		int result1=session.update("OrderMapper.updateGetPoint",paramMap);
 		return 0;
+	}
+
+	//상세페이지 주문 넘겨주기
+	@Override
+	public int registOrderProduct(SqlSession session, OrderProduct orderProduct) {
+		int result=session.insert("OrderMapper.insertOrderProduct",orderProduct);
+		return result;
 	}
 
 }

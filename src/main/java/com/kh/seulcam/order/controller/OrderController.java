@@ -18,6 +18,7 @@ import com.kh.seulcam.cart.domain.Cart;
 import com.kh.seulcam.cart.service.CartService;
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.order.domain.Order;
+import com.kh.seulcam.order.domain.OrderList;
 import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.order.domain.OrderProduct;
 import com.kh.seulcam.order.service.OrderService;
@@ -239,4 +240,26 @@ public class OrderController {
 		}
 	}
 
+	
+	//상세페이지에서 주문으로 넘겨주기
+	//주문하기로 넘겨주기
+		@RequestMapping(value="/product/order",method=RequestMethod.POST)
+		public String cartOrder(
+				@ModelAttribute OrderProduct orderProduct,
+				HttpSession session
+				) {
+			Member member=(Member)session.getAttribute("loginUser");
+			String memberId=member.getMemberId();
+			if(memberId!=null) {
+			orderProduct.setMemberId(memberId);
+			int result = oService.orderProduct(orderProduct);
+			}else {
+				return"error";
+			}
+			
+			return "success";
+			
+			
+			}
+			
 }
