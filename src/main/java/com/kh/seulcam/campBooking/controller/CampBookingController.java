@@ -241,6 +241,10 @@ public class CampBookingController {
                     return mv;
                 }
             }
+            String firstDay =  campBooking.getFirstDay().substring(0,10);
+            String lastDay = campBooking.getLastDay().substring(0,10);
+            campBooking.setFirstDay(firstDay);
+            campBooking.setLastDay(lastDay);
             mv.addObject("campBooking",campBooking);
             mv.addObject("campSite",campSite);
             mv.setViewName("campBooking/campBookingDetail");
