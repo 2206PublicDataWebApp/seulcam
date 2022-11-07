@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,20 +24,38 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.service.CampServie;
+import com.kh.seulcam.campBooking.domain.CampBooking;
+import com.kh.seulcam.campBooking.service.CampBookingService;
+import com.kh.seulcam.member.domain.Member;
+import com.kh.seulcam.order.domain.OrderCancle;
+import com.kh.seulcam.order.domain.OrderPay;
+import com.kh.seulcam.order.service.OrderService;
+import com.kh.seulcam.order.service.PaymentService;
 
 @Controller
 public class CampAdminController {
-
+    
+    @Autowired
+    private CampBookingService bService;
+    
     @Autowired
     private CampServie cService;
+    
+    @Autowired
+    private OrderService oService;
+    
+    @Autowired
+    private PaymentService paymentService;
 
     // 캠핑리스트 관리 페이지
     @RequestMapping(value = "/campAdmin/campAdminMain.kh", method = RequestMethod.GET)
@@ -276,7 +295,7 @@ public class CampAdminController {
         return mv;
     }
 
-    // 캠핑장 예약가능여부 컨트롤
+    // 캠핑장 사이트 예약가능여부 컨트롤
     @RequestMapping(value = "/campAdmin/campRegistAviCon.kh", method = RequestMethod.GET)
     public ModelAndView campRegistAviCon(
             @RequestParam(value = "contentId", required = false) int contentId,
@@ -304,6 +323,116 @@ public class CampAdminController {
             mv.addObject("msg", "정보 수정 실패").setViewName("common/errorPage");
         }
         return mv;
+    }
+    
+    //캠핑장 예약리스트 관리
+    @RequestMapping(value = "/campAdmin/campBookingList.kh", method = RequestMethod.GET)
+    public ModelAndView campBookingList(
+            HttpSession session,
+            ModelAndView mv) {
+        try {
+            String memberId = null;
+            List<CampBooking> cbList = bService.BooingListView(memberId);
+            for(int i = 0; i<cbList.size(); i++) {
+                String firstDay = cbList.get(i).getFirstDay().substring(0,10);
+                String lastDay = cbList.get(i).getLastDay().substring(0,10);
+                cbList.get(i).setFirstDay(firstDay);
+                cbList.get(i).setLastDay(lastDay);
+            }
+            if(!cbList.isEmpty()) {
+                List<OrderPay>opList = new ArrayList();
+            for (int i = 0; i < cbList.size(); i++) {
+                int bookingNo = cbList.get(i).getBookingNo();
+                List<OrderPay>opList1=cService.printAllPayInfo(bookingNo);
+                opList.addAll(opList1);
+                }
+            mv.addObject("opList",opList);
+            }
+            mv.addObject("cbList",cbList);
+            mv.setViewName("admin/campABookingList");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mv.addObject("msg", "리스트 조회 실패").setViewName("common/errorPage");
+        }
+        
+        return mv;
+    }
+    
+    // 예약 환불 정보 반영
+    @ResponseBody
+    @RequestMapping(value="/camp/refund/complete",method=RequestMethod.POST)
+    public String campRefund(
+            @ModelAttribute OrderCancle orderCancle) {
+        try {
+            int orderNo=Integer.parseInt(orderCancle.getOrderNo());
+            OrderPay orderPay=oService.printOrderPayInfo(orderNo);
+            String point=orderCancle.getRefundPoint();
+            String memberId=orderCancle.getMemberId();
+            if(point!="") {
+                orderCancle.setRefundPoint(point);
+            int result2=oService.registRefundPoint(point, memberId);
+            }else {
+                point="0";
+                orderCancle.setRefundPoint(point);
+            int result2=oService.registRefundPoint(point, memberId);
+            }
+            //환불정보 저장
+            int result=oService.registRefund(orderCancle);
+            //주문테이블 상태 바꾸기
+            int result1=bService.changeBookingStatus(orderCancle);
+            //포인트 테이블 넣어주기//맴버 포인트 더해주기
+        
+            int result2=oService.registRefundPoint(point, memberId);
+            // 예약 현황 삭제
+            int result3 = bService.deleteBookStatus(orderNo);
+            
+            
+            
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+    
+    //캠핑장 댓글 관리
+    @ResponseBody
+    @RequestMapping(value="/campAdmin/campReviewList.kh",method=RequestMethod.GET)
+    public ModelAndView campAdminReviewList(
+            ModelAndView mv) {
+        try {
+            List<CampReview> rList = cService.campReviewAllList();
+            
+            
+            mv.addObject("rList",rList);
+            mv.setViewName("admin/campReviewList");
+        } catch (Exception e) {
+            
+        }
+        return mv;
+    }
+    
+  //리뷰선택삭제
+    @ResponseBody
+    @RequestMapping(value="/campAdmin/campReviewDelete.kh", produces="application/json;charset=utf-8", method=RequestMethod.POST)
+    public String campReviewDelete(
+             @RequestParam(value="rNo[]") List<Integer>rNo
+            ) {
+        System.out.println(rNo.toString());
+        int result=0;
+        for (int i = 0; i < rNo.size(); i++) {
+            CampReview cReview = new CampReview();
+            cReview.setCampReviewNo(rNo.get(i));;
+           result=cService.removeReview(cReview);
+
+        }
+        System.out.println("======================="+result);
+        if(result>0) {
+            return "success" ;
+        }else {
+            return"error";
+        }
+        
     }
 
     // 캠핑장 데이터 db 등록

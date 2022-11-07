@@ -59,4 +59,24 @@
   		UPDATE CAMP_SITE_TBL SET SITE_NAME = #{siteName}, SITE_CHAR = #{siteChar}, SITE_INFO = #{siteInfo}, SITE_INTRO = #{siteIntro}, STANDARD_PEOPLE = #{standardPeople}, MAX_PEOPLE = #{maxPeople}, EXCESS_CHARGE = #{excessCharge}, IN_TIME = #{inTime}, OUT_TIME = #{outTime}, SITE_PRICE = #{sitePrice}, SITE_COUNT = #{siteCount} WHERE SITE_NO = #{siteNo}
   	</update>
   	
+  	<resultMap  type="OrderPay" id="orderPayResultMap"> 
+  		<id property="payNo" 	column="PAY_NO"/>
+  		<result property="orderNo" 			column="ORDER_NO"/>
+  		<result property="memberId" 		column="MEMBER_ID"/>
+  		<result property="imp_uid" 			column="IMP_UID"/>
+  		<result property="merchant_uid" 	column="MERCHANT_UID"/>
+  		<result property="payDate" 			column="PAY_DATE"/>
+  		<result property="payPrice" 		column="PAY_PRICE"/>
+  		<result property="productPrice" 	column="PRODUCT_PRICE"/>
+  		<result property="usePoint" 		column="USE_POINT"/>
+  		<result property="getPoint" 		column="GET_POINT"/>
+  		<result property="payStatus" 		column="PAY_STATUS"/>
+  		<result property="payType" 			column="PAY_TYPE"/>
+  		
+  </resultMap>
+  
+  <select id="printAllPayInfo" resultMap="orderPayResultMap">
+  	SELECT * FROM PAY_TBL WHERE ORDER_NO=#{bookingNo} AND PAY_TYPE='C'
+  </select>
+  	
 </mapper>

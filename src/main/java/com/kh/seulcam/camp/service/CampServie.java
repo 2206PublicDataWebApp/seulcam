@@ -3,7 +3,9 @@ package com.kh.seulcam.camp.service;
 import java.util.List;
 
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.CampLike;
 import com.kh.seulcam.camp.domain.SearchList;
+import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.domain.CampSite;
 
@@ -38,5 +40,16 @@ public interface CampServie {
     public CampSite printSite(int siteNo);
 
     public int modifySite(CampSite campSite);
+
+    public List<OrderPay> printAllPayInfo(int bookingNo);
+
+    public List<CampReview> campReviewAllList();
+
+    public Integer campLikeCount(CampLike campLike);
+
+    public Integer campLikeDelete(CampLike campLike);
+
+    public Integer campLikeUpdate(CampLike campLike);
+
 
 }

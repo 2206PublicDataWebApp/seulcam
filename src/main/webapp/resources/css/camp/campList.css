@@ -93,6 +93,7 @@ select {
 }
 .list_area {
 	margin: auto;
+	
 }
 .switch_area #switchName {
 	margin: auto;
@@ -122,8 +123,42 @@ select {
 
 .card-text:last-child {
 	margin-bottom: 5px;
+	
 }
 
 #searchResult {
 	font-size: 15px;
+}
+.likeBtn{
+	min-width: 50px;
+	max-width: fit-content;
+    display: flex;
+    align-items: center;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.likeBtn:hover{
+    background-color: #dc3545;
+        color: #f1f1f1;
+}
+
+.alreadyLike{
+    background-color: #dc3545;
+        color: #f1f1f1;
+}
+.iZone {
+    display: flex;
+}
+.heart {
+    margin-top: 2px;
+    margin-left: 8px;
+    margin-right: 2px;
+}
+.likeCount{
+    font-size: 13pt; 
+    margin-left: 5px; 
+    margin-right: 6px; 
+    margin-top: 1px;
 }

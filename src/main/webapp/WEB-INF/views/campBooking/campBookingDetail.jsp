@@ -129,6 +129,7 @@ header {
 .bookBtn{
 	
 	/* position: fixed; */
+	margin: 1px;
 	bottom: 0;
 	width: 50%;
 	height: 37px;
@@ -152,7 +153,33 @@ header {
 	justify-content : center; 
 	align-items : center;
 }
-
+.disabled {
+    position: relative;
+	width: 100%;
+    height: 100%;
+}
+    .disabled::before{
+		font-size: 30px;
+		display: flex;
+		color: red;
+        content: '환불완료';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.75);
+        z-index: 2;
+		justify-content: center;
+    	align-items: center;
+    }
+	.com{
+    position: sticky;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background-color: gray;
+    z-index: 1;
+    color: #fff;
+    }
 </style>
 <body>
 <!-- 헤더&메뉴바 -->
@@ -162,12 +189,37 @@ header {
 
 	<!-- 컨텐츠 -->
 	<div class="body-wrapper">
+		<!-- 현재날짜 -->
+		<c:set var="date" value="<%=new java.util.Date()%>" />
+		<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
+		<!-- 마지막날짜 -->
+		<fmt:parseDate value="${campBooking.firstDay }" var="dateValue" pattern="yyyy-MM-dd"/>
+		<c:set var="firstDay"><fmt:formatDate value="${dateValue}" pattern="yyyy-MM-dd"/></c:set>
 		<div class="container" >
-		<div class="detailMain">
+			<c:choose> 
+			<c:when test="${campBooking.bookCancleStatus == 'Y'}">
+				<div class="detailMain disabled">	
+			</c:when> 
+			<c:otherwise>
+				<div class="detailMain">
+			</c:otherwise> 
+		</c:choose> 
 			<div class="site_info">
 				<div class='text-right tt' stlyle='padding-bottom: 0.75rem; color: black;'>
 					<b>예약상품정보</b>
-					<p style="margin: 0; font-size: 12px; color: gray;">예약번호 : No.${campBooking.bookingNo}</p>
+					<c:choose> 
+						<c:when test="${today > firstDay}">
+							<p style="margin: 0; font-size: 12px; color: gray;">예약번호 : No.${campBooking.bookingNo}   <span class="com">이용완료</span></p>
+							
+						</c:when> 
+						<c:when test="${campBooking.bookCancleStatus == 'Y'}">
+							<p style="margin: 0; font-size: 12px; color: gray;">예약번호 : No.${campBooking.bookingNo}   <span class="com">취소완료</span></p>
+						</c:when> 
+						<c:otherwise>
+							<p style="margin: 0; font-size: 12px; color: gray;">예약번호 : No.${campBooking.bookingNo}</p>
+						</c:otherwise> 
+					</c:choose> 
+					<p style="margin: 0; font-size: 12px; color: gray;">예약일자 : <fmt:formatDate value="${campBooking.bookDate }" pattern="yyyy-MM-dd HH:mm"/></p>
 				</div>
 				<a href="/camp/campDetail.kh?contentId=${campSite.campId}"><h4 style="padding-top: 5px;">${campSite.campName}</h4></a>
 				<div class="row" style="padding: 15px;">
@@ -183,8 +235,6 @@ header {
 						<tr>
 							<td class="infoTitle">숙박기간</td>
 							<td>${campBooking.firstDay} ~ ${campBooking.lastDay} <b>(${campBooking.totalDay}박)</b></td>
-							<input type="hidden" name="firstDay" id="firstDay" value="${firstDay}">
-							<input type="hidden" name="lastDay" id="lastDay" value="${lastDay}">
 						</tr>
 						<tr>
 							<td class="infoTitle">기준인원</td>
@@ -266,14 +316,28 @@ header {
 		<br><br>
 
 	<div class="btn_foot">
-		<a href="/campBooking/campBookingList.kh" class="btn btn-dark bookBtn">예약내역보기</a>
-		<a href="/camp/campList.kh" class="btn btn-dark bookBtn">캠핑장 구경하러 가기</a>
+		<c:choose> 
+			<c:when test="${today >= firstDay || empty pay || campBooking.bookCancleStatus == 'Y'}">
+				<a href="/campBooking/campBookingList.kh" class="btn btn-dark bookBtn">예약내역보기</a>
+				<a href="/camp/campList.kh" class="btn btn-dark bookBtn">캠핑장 구경하러 가기</a>
+			</c:when> 
+			<c:otherwise>
+				<a href="/campBooking/campBookingList.kh" class="btn btn-dark bookBtn">예약내역보기</a>
+				<input type="hidden" class="memberId" 		value="${campBooking.memberId }"/>
+				<input type="hidden" class="orderNo" 		value="${campBooking.bookingNo }"/>
+				<input type="hidden" class="refundPoint" 		value="${campBooking.bookUsePoint  }"/>
+				<input type="hidden" class="imp_uid" 		value="${pay[0].imp_uid }"/>
+				<input type="hidden" class="merchant_uid" value="${pay[0].merchant_uid }"/>
+				<input type="hidden" class="payPrice"   	value="${pay[0].payPrice }"/>
+				<a onclick="cancelPay(this)" class="btn btn-secondary bookBtn">예약취소 요청</a>
+			</c:otherwise> 
+		</c:choose> 
 	</div>
 		
 	</div>
 	</div>
 <script>
-	var sitePrice = ${campSite.sitePrice};
+	var sitePrice = ${campBooking.bookIniPrice} / ${campBooking.totalDay};
 	var totalSitePrice = ${campBooking.bookIniPrice};
 	var extraTotal = ${campBooking.bookExtra};
 	var bookUsePoint = ${campBooking.bookUsePoint};
@@ -286,6 +350,61 @@ header {
 	$("#bookUsePoint").html(bookUsePoint.toLocaleString('ko-KR')+"원");
 	$("#bookGetPoint").html(bookGetPoint.toLocaleString('ko-KR') + "원");
 	$(".totalPrice").html(totalPrice.toLocaleString('ko-KR') + "원");
+
+	function cancelPay(obj){
+    	const data={
+    		imp_uid:$(obj).parent().children('.imp_uid').val(),	
+    		merchant_uid:$(obj).parent().children('.merchant_uid').val(),
+    		orderNo:$(obj).parent().children('.orderNo').val(),
+    		refundPrice:$(obj).parent().children('.payPrice').val(),
+    		memberId:$(obj).parent().children('.memberId').val(),
+    		refundPoint:$(obj).parent().children('.refundPoint').val(),
+            payType:"C"
+    	}
+    	console.log(data);
+		if(confirm("환불요청 하시겠습니까?")){
+            $.ajax({
+                url: "/payments/cancel", // 예: http://www.myservice.com/payments/cancel
+                type: "POST",
+               // contentType: "application/json",
+                data: {
+                  imp_uid:data.imp_uid,
+                  merchant_uid: data.merchant_uid, // 예: ORD20180131-0000011
+                  cancel_request_amount: 100, // 환불금액
+                  reason: "테스트 결제 환불" // 환불사유
+                
+                },success:function(){
+                   // alert("환불 완료");
+                    refundComplete(data);
+                }
+                //dataType: "json"
+              });
+            
+            
+        function refundComplete(data){
+            $.ajax({
+              url:"/camp/refund/complete",
+              type:"post",
+              data:data,
+              success:function(message){
+                  if(message="success"){
+                      alert("환불 완료");
+                      location.replace("/campBooking/campBookingList.kh");
+                  }else{
+                      alert("환불 안됨");
+                  }
+                  },error:function(){
+                      alert("ajax 통신 오류! 관리자에게 문의해 주세요!");
+                  }
+              
+            })
+            
+        }
+
+
+        }
+
+	}
 </script>
 </body>
 </html>

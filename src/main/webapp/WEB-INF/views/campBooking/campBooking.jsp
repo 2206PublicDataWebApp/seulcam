@@ -350,6 +350,7 @@ hr {
 	//결제
 	function bookPay(){
 		const data={
+			"Num":createOrderNum(),
 			"memberId":"${mOne.memberId}",
 			"siteNo":${campSite.siteNo},
 			"bookName":$("#bookName").val(),
@@ -371,6 +372,18 @@ hr {
 			"payType":"C"
 		}
 		paymentCard(data)
+	}
+	function createOrderNum(){
+		const date = new Date();
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, "0");
+		const day = String(date.getDate()).padStart(2, "0");
+		
+		let orderNum = year + month + day;
+		for(let i=0;i<10;i++) {
+			orderNum += Math.floor(Math.random() * 8);	
+		}
+		return orderNum;
 	}
 
 	function paymentCard(data) {
@@ -398,9 +411,9 @@ hr {
 		function (rsp) { // callback
 			if (rsp.success) {
 				// 결제 성공 시 로직,
-				data.impUid = rsp.imp_uid;
-				//아임포트 고유 결제번호
-				//success가 false이고 사전 validation에 실패한 경우, imp_uid는 null일 수 있음
+		        data.imp_uid = rsp.imp_uid;
+	         //아임포트 고유 결제번호
+			//success가 false이고 사전 validation에 실패한 경우, imp_uid는 null일 수 있음
 		        data.merchant_uid = rsp.merchant_uid;
 		        //가맹점에서 생성/관리하는 고유 주문번호
 		        //이미 결제가 승인 된(status: paid) merchant_uid로는 재결제 불가

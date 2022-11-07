@@ -73,11 +73,14 @@
   	<select id="selectCampReview" resultMap="CampReviewResultMap">
   		SELECT * FROM CAMP_REVIEW_TBL WHERE CAMP_ID = #{contentId} ORDER BY CAMP_REVIEW_NO DESC
   	</select>
+  	<select id="selectAllReview" resultMap="CampReviewResultMap">
+  		SELECT * FROM CAMP_REVIEW_TBL ORDER BY CAMP_REVIEW_NO DESC
+  	</select>
   	<delete id="deleteReview">
   		DELETE FROM CAMP_REVIEW_TBL WHERE CAMP_REVIEW_NO = #{campReviewNo}
   	</delete>
   	<update id="updateReview">
-  		UPDATE CAMP_REVIEW_TBL SET CAMP_REVIEW_CONTENTS = #{campReviewContents}, CAMP_REVIEW_STAR = #{campReviewStar} WHERE CAMP_REVIEW_NO =#{campReviewNo}
+  		UPDATE CAMP_REVIEW_TBL SET CAMP_REVIEW_CONTENTS = #{campReviewContents}, CAMP_REVIEW_STAR = #{campReviewStar}, R_MODIFY_DATE= SYSDATE WHERE CAMP_REVIEW_NO =#{campReviewNo}
   	</update>
   	<select id="selectListCount" resultType="_int">
   		SELECT COUNT(*) FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL 
@@ -96,4 +99,21 @@
   		)
   	</select>
   	
+  	<select id="selectLikeCount" resultType="_integer">
+  		SELECT COUNT(*) FROM CAMP_LIKE_TBL
+  		<where>
+  			<if test="memberId != null and memberId != '' "> 
+  				AND MEMBER_ID = #{memberId}
+  			</if>
+  			AND CAMP_ID = #{campId}
+  		</where>
+  	</select>
+  	
+  	<insert id="insertCampLike">
+  		INSERT INTO CAMP_LIKE_TBL VALUES(#{memberId},#{campId},#{mapX},#{mapY},DEFAULT)
+  	</insert>
+  	
+  	<delete id="deleteCampLike">
+  		DELETE FROM CAMP_LIKE_TBL WHERE MEMBER_ID=#{memberId} AND CAMP_ID=#{campId}
+  	</delete>
 </mapper>

@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
@@ -31,12 +32,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.CampLike;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.service.CampServie;
 import com.kh.seulcam.campBooking.domain.bookingStatusSearch;
 import com.kh.seulcam.campBooking.service.CampBookingService;
+import com.kh.seulcam.member.domain.Member;
+import com.kh.seulcam.member.service.MemberService;
 
 @Controller
 public class CampController {
@@ -45,6 +49,8 @@ public class CampController {
 	private CampServie cService;
 	@Autowired
     private CampBookingService bService;
+	@Autowired
+    private MemberService mService;
 	
 	// 캠핑장 리스트 메인
 	@RequestMapping(value = "/camp/campList.kh", method = RequestMethod.GET)
@@ -57,48 +63,26 @@ public class CampController {
 		@RequestMapping(value = "/camp/campDetail.kh", method = RequestMethod.GET)
 		public ModelAndView campDetail(
 				@RequestParam(value="contentId", required = false) int contentId,
-				ModelAndView mv
+				ModelAndView mv,
+				HttpSession session
 				) {
-			Camp camp= cService.printCampDetail(contentId);
 			try {
-				StringBuilder urlBuilder = new StringBuilder("https://dapi.kakao.com/v2/search/blog");
-	            urlBuilder.append("?" + URLEncoder.encode("sort","UTF-8") + "=" + URLEncoder.encode("accuracy", "UTF-8")); /*페이지 번호*/
-	            urlBuilder.append("&" + URLEncoder.encode("page","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*한 페이지 결과 수*/
-	            urlBuilder.append("&" + URLEncoder.encode("size","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*OS*/
-	            urlBuilder.append("&" + URLEncoder.encode("query","UTF-8") + "=" + URLEncoder.encode(camp.getFacltNm(), "UTF-8")); /*OS*/
-	            URL url = new URL(urlBuilder.toString());
-	            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-				con.setRequestMethod("GET");
-				con.setRequestProperty("Authorization", "KakaoAK 7072f1c5ec76f11a0937d2337e6cad4e");
-				con.setRequestProperty("Content-type", "application/json");
-				System.out.println("Printing Response Header...\n" + "responseCode : " +con.getResponseCode());
+			    Camp camp= cService.printCampDetail(contentId);
+			    CampLike campLike = new CampLike();
+			    campLike.setCampId(contentId+"");
+			    Integer likeCount = cService.campLikeCount(campLike);
+			    Member member = (Member)session.getAttribute("loginUser");
+			    Integer likeCheck = 0;
+			    if(member != null) {
+			        String memberId = member.getMemberId();
+			        campLike.setMemberId(memberId);
+			        likeCheck = cService.campLikeCount(campLike);
+			    }
 				
-				int responseCode = con.getResponseCode(); //
-				BufferedReader br;
-				if(responseCode==200) 
-				{ // 정상 호출
-					br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8")); 
-				} 
-				else 
-				{  // 에러 발생
-					br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
-				}
-				String inputLine;
-				StringBuffer sb = new StringBuffer();
-				while ((inputLine = br.readLine()) != null) 
-				{
-					sb.append(inputLine);
-				}
-				br.close();
-				 JSONParser parser = new JSONParser();
-			        // json data 최상단
-			        JSONObject objmain = (JSONObject) parser.parse(sb.toString());
-			     // json.response
-			        JSONObject objResponse = (JSONObject) parser.parse(objmain.get("meta").toString());
-//				System.out.println("sd>>  "+sb.toString());
-//				System.out.println(objResponse.get("total_count"));
-			        mv.addObject("camp",camp);
-			        mv.setViewName("camp/campDetail");
+			    mv.addObject("likeCheck",likeCheck);
+			    mv.addObject("likeCount",likeCount);
+		        mv.addObject("camp",camp);
+		        mv.setViewName("camp/campDetail");
 			} catch (Exception e) {
 			    e.printStackTrace();
 			    mv.addObject("msg", "상세페이지 조회 실패").setViewName("common/errorPage");
@@ -111,7 +95,8 @@ public class CampController {
 	@RequestMapping(value = "/camp/campListShow.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )
 	public String campListShow(
 			@ModelAttribute SearchList sList,
-			HttpServletRequest request
+			HttpServletRequest request,
+			HttpSession session
 			) {
 		try {
 			List<Camp> cList = cService.printCampList(sList);
@@ -119,7 +104,21 @@ public class CampController {
 			if(!cList.isEmpty()) {
 			    cList.get(0).setBlogCount(result);
 			}
-           
+			for( int i = 0; i<cList.size(); i++) {
+			    CampLike campLike = new CampLike();
+                campLike.setCampId(cList.get(i).getContentId()+"");
+                Integer likeCount = cService.campLikeCount(campLike);
+                Member member = (Member)session.getAttribute("loginUser");
+                Integer likeCheck = 0;
+                if(member != null) {
+                    String memberId = member.getMemberId();
+                    campLike.setMemberId(memberId);
+                    likeCheck = cService.campLikeCount(campLike);
+                }
+                cList.get(i).setLikeCheck(likeCheck);
+                cList.get(i).setLikeCount(likeCount);
+			}
+			
 	        return new Gson().toJson(cList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,10 +132,25 @@ public class CampController {
 	@RequestMapping(value = "/camp/campListScroll.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )
 	public String campListScroll(
 			@ModelAttribute SearchList sList,
-			HttpServletRequest request
+			HttpServletRequest request,
+			HttpSession session
 			) {
 		try {
 			List<Camp> cList = cService.printCampList(sList);
+			for( int i = 0; i<cList.size(); i++) {
+                CampLike campLike = new CampLike();
+                campLike.setCampId(cList.get(i).getContentId()+"");
+                Integer likeCount = cService.campLikeCount(campLike);
+                Member member = (Member)session.getAttribute("loginUser");
+                Integer likeCheck = 0;
+                if(member != null) {
+                    String memberId = member.getMemberId();
+                    campLike.setMemberId(memberId);
+                    likeCheck = cService.campLikeCount(campLike);
+                }
+                cList.get(i).setLikeCheck(likeCheck);
+                cList.get(i).setLikeCount(likeCount);
+            }
 			
 	        return new Gson().toJson(cList);
 		} catch (Exception e) {
@@ -224,14 +238,84 @@ public class CampController {
 			return "common/errorPage";
 		}
 	}
+	// 좋아요 갯수 카운트
+	@ResponseBody
+    @RequestMapping(value = "/camp/campLikeCount.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )
+    public String campLikeCount(
+            @ModelAttribute CampLike campLike,
+            HttpServletRequest request) {
+        try {
+            Integer result = cService.campLikeCount(campLike);
+            return result+"";
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("msg", "좋아요 카운트 실패");
+            return "common/errorPage";
+        }
+    }
 	
+	// 좋아요 체크 카운트
+    @ResponseBody
+    @RequestMapping(value = "/camp/campLikeCheck.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )
+    public String campLikeCheck(
+            @ModelAttribute CampLike campLike,
+            HttpServletRequest request) {
+        try {
+            Integer result = cService.campLikeCount(campLike);
+            return result+"";
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("msg", "좋아요 체크 실패");
+            return "common/errorPage";
+        }
+    }
+	
+	// 좋아요 등록
 	@ResponseBody
 	@RequestMapping(value = "/camp/campLike.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )
-	public String campLike() {
+	public String campLikeUpdate(
+	        @ModelAttribute CampLike campLike,
+            HttpServletRequest request,
+            HttpSession session) {
+		try {
+		    if(session.getAttribute("loginUser") == null) {
+                return "none";
+            }else{
+                Member member = (Member)session.getAttribute("loginUser");
+                String memberId = member.getMemberId();
+                Member mOne = mService.printOneById(memberId);
+                if(!memberId.equals(campLike.getMemberId())) {
+                    return "abnormal";
+                }
+            }
+		    int result2;
+		    Integer result = cService.campLikeCount(campLike);
+		    if(result > 0) {
+		        result2 = cService.campLikeDelete(campLike);
+		        System.out.println(result2);
+		    }else {
+		        result2 = cService.campLikeUpdate(campLike);
+		    }
+		    
+            return result2+"";
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("msg", "좋아요 체크 실패");
+            return "common/errorPage";
+        }
 		
-		
-		return null;
 	}
+	
+	// 좋아요 삭제
+	@ResponseBody
+    @RequestMapping(value = "/camp/campLikeDel.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET )
+    public String campLikeRemove(
+            @ModelAttribute CampLike campLike,
+            HttpServletRequest request) {
+        
+        
+        return null;
+    }
 	
 	//캠핑장 사이트 상세페이지
 	@RequestMapping(value="/camp/campSiteDetail.kh" , method = RequestMethod.GET)
