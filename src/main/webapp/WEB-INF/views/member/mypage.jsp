@@ -84,7 +84,7 @@
                 <h3 class="shop-info">쇼핑정보</h3>
                 <ul class="info-list">
                     <li class="list-item">
-                        <a class="item-link" href="#">주문/배송/픽업 조회</a>
+                        <a class="item-link" href="/order/complete/list.kh">주문/배송/픽업 조회</a>
                     </li>
 
                     <li class="list-item">
@@ -92,7 +92,7 @@
                     </li>
 
                     <li class="list-item">
-                        <a class="item-link" href="#">포인트 내역 조회</a>
+                        <a class="item-link" href="/point/list.kh">포인트 내역 조회</a>
                     </li>
 
                     <li class="list-item">

@@ -165,7 +165,7 @@
 				price=checked.parent().parent().eq(i).parent().children('.product-info').children('.option-value').children().children('.p-price').text();
 				
 				totalPrice += parseInt(price);
-				$(".total-price").html(totalPrice);
+				$(".total-price").html(totalPrice.toLocaleString('ko-KR'));
 		  })
 		  
 		  }else{
@@ -186,7 +186,7 @@
 				<c:forEach items="${cList}" var="cart" varStatus="i">
 				var productPrice${i.count}=$("#p-count${i.count }.inp").val()*$("#p-price${i.count }").text();
 				totalPrice+=productPrice${i.count}
-				 $(".total-price").html(totalPrice);
+				 $(".total-price").html(totalPrice.toLocaleString('ko-KR'));
 				</c:forEach>
 			  })
 

@@ -70,6 +70,9 @@ public interface OrderStore {
 
 	//상세페이지->주문 넘겨주기
 	public int registOrderProduct(SqlSession session, OrderProduct orderProduct);
+	
+	//배송 상세조회 메뉴 바꾸기
+	public List<Order> printCompleteList(SqlSession session, String memberId, String dirivaryStatus);
 
 
 

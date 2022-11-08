@@ -140,25 +140,38 @@ public class CartController {
 	@RequestMapping(value="/product/cart",method=RequestMethod.POST)
 	public String getCart(
 			@ModelAttribute Cart cart,
+			@RequestParam(value="productNo")String productNo,
 			HttpSession session
 			) {
 		Member member=(Member)session.getAttribute("loginUser");
+		if(member == null) {
+			return "noLogin";
+		}
 		String memberId=member.getMemberId();
+		cart.setProductNo(Integer.parseInt(productNo));
 		if(memberId!=null) {
 			cart.setMemberId(memberId);
 		//장바구니 등록
 		int result=cService.registCart(cart);
+		if(result>0) {
+			return "success";
 		}else {
-			return "error";
-		}
 		
-		
-		return "success";
+		return "error";
+				
 		
 	}
-	
-	
-	
-
-
+	}else {
+		return "error";
+	}
 }
+}
+
+
+
+	
+	
+	
+
+
+

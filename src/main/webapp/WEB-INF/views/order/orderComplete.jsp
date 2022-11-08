@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,8 @@
 <style>
 body {
         font-size: 14px;
-       /*  color: #000; */
+       	color: #000;
+		background-color: #f1f1f1;
     }
     header {
         position: fixed;
@@ -24,12 +26,12 @@ body {
         height: 50px;
         background-color: rgb(255, 255, 255);
         z-index: 200;
-        max-width: 600px;
+        max-width: 768px;
         margin: 0 auto; 
     }
 
 .wrap{
- 		max-width: 600px;
+ 		max-width: 768px;
         margin: 0 auto; 
         background-color: white;
         min-height: 100vh;
@@ -141,9 +143,9 @@ width:100%;
 		
 		<div class="info">
 		<div class="small-title">결제 상세</div><br>
-		<div>상품 금액<span class="price">${orderPay.productPrice}원</span></div>
-		<div>포인트 할인<span class="price">-${orderPay.usePoint }원</span></div>
-		<div style="font-weight:bold">총 결제 금액<span class="price">${orderPay.payPrice }원</span></div>
+		<div>상품 금액<span class="price"><fmt:formatNumber value="${orderPay.productPrice}" pattern="#,###,###"/>원</span></div>
+		<div>포인트 할인<span class="price">-<fmt:formatNumber value="${orderPay.usePoint }" pattern="#,###,###"/>원</span></div>
+		<div style="font-weight:bold">총 결제 금액<span class="price"><fmt:formatNumber value="${orderPay.payPrice }" pattern="#,###,###"/>원</span></div>
 		
 		</div>
 		

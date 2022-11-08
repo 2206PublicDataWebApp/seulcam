@@ -61,14 +61,16 @@
 				<span id="totalPriceSum">0</span> <span style="float: left">총액</span>
 
 			</div>
+
 			<c:if test="${product.productStock eq 0 }">
 				<div id="soldOut">품절된 상품입니다.</div>
 			</c:if>
 			<c:if test="${product.productStock ne 0 }">
 				<div class="buttons">
-					<button type="button" class onclick="product_cart()" id="actionCart">장바구니</button>
-					<button type="button" class onclick="product_buy()" id="actionBuy">바로구매</button>
+					<button type="button" class onclick="product_cart(${product.productNo})" id="actionCart">장바구니</button>
+					<button type="button" class onclick="product_buy(${product.productNo})" id="actionBuy">바로구매</button>
 				</div>
+				
 			</c:if>
 
 

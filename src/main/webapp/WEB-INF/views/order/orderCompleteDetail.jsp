@@ -32,12 +32,12 @@ header {
 	height: 50px;
 	background-color: rgb(255, 255, 255);
 	z-index: 200;
-	max-width: 600px;
+	max-width: 768px;
 	margin: 0 auto;
 }
 
 .wrap {
-	max-width: 600px;
+	max-width: 768px;
 	margin: 0 auto;
 	background-color: white;
 	min-height: 100vh;
@@ -47,7 +47,11 @@ header {
 	padding-top: 60px;
 }
 .data-No-Date{
-width:100%
+width:100%;
+
+}
+.padding{
+padding:10px;
 }
 .bold{
 font-weight:bold;
@@ -55,10 +59,10 @@ font-size:20px;
 }
 .line{
 	width:100%;
-	border-bottom:solid 3px lightgray;
+	border-bottom:solid 2px lightgray;
 }
 .title{
- height:50px;
+ height:30px;
 }
 .right{
 	float:right;
@@ -78,6 +82,13 @@ height:100px;
  .btnn{
 text-align:center;
 }
+.orderBtn{
+width:50%;
+float:left;
+}
+.totalPrice{
+padding-bottom:20px;
+}
 
 </style>
 
@@ -91,12 +102,14 @@ text-align:center;
 
 		<div class="contents">
 		
-		<div class="data-No-Date line">
+		<div class="bold title padding">${order.dirivaryStatus }</div>
+		
+		<div class="data-No-Date line padding">
 		<span id="orderNo"><span class="bold">No.</span><span >${order.orderNo }</span></span>
 		<span id="orderDate" class="right">${order.orderDate }</span>
 		</div>
 		
-		<div class="bold line title">${order.dirivaryStatus }</div>
+		
 		
 		<div >
 		<c:forEach items="${oList}" var="order" varStatus="i">
@@ -120,7 +133,7 @@ text-align:center;
 				</tr>
 				<tr>
 					<td>가격</td>
-					<td><span id="order_price${i.count }" class="order_price" data-value="1000" >${product.productPrice }</span></td>
+					<td><span id="order_price${i.count }" class="order_price" data-value="1000">${product.productPrice }</span></td>
 				</tr>
 			</table>
 						</c:if>
@@ -129,13 +142,13 @@ text-align:center;
 		</div>
 		
 		<div class="line">
-		<div>
+		<div class="padding">
 		<div class="bold " >주문자 정보</div>
 		<div>이름 : ${order.memberName }</div>
 		<div>연락처 : ${order.memberPhone }</div>
 		</div>
 		
-		<div>
+		<div class="padding">
 		<div class="bold " >배송지</div>
 		<div>${order.orderAddress1 }${order.orderAddress2 }</div>
 		<div>(${order.orderAddressPost })</div>
@@ -143,28 +156,47 @@ text-align:center;
 		<div>${order.orderMessage }</div>	
 		</div>
 		</div>
-		
+		<div class="padding">
 		<div class="bold ">결제 정보</div>
 		<div>
 		<span>상품금액</span>
-		<span class="right">${orderPay.productPrice }원</span>
+		<span class="right" id="productPrice">${orderPay.productPrice }</span>
 		</div>
 		<div class="line">
 		<span>포인트 할인</span>
-		<span class="right">- ${orderPay.usePoint }원</span>
+		<span class="right">- <span id="pointPrice">${orderPay.usePoint }</span></span>
 		</div>
 		
-		<div>
+		<div class="totalPrice padding">
 		<span class="bold">총 결제 금액</span>
-		<span class="right totlaPrice">${orderPay.payPrice }원</span>
+		<span class="right totlaPrice" id="totalPrice">${orderPay.payPrice }</span>
+		</div>
 		</div>
 		
 		<div class="btnn">
-		<button type="button" class="btn btn-dark" onclick="location.href='/order/complete/list.kh?memberId=${order.memberId}'" >주문 내역 리스트 보기</button>
+		<button type="button" class="btn btn-dark orderBtn" onclick="location.href='/order/complete/list.kh?memberId=${order.memberId}'" >주문 내역 리스트 보기</button>
+		<button type="button" class="btn btn-dark orderBtn" onclick="location.href='/product/top20List'" >쇼핑하러 가기</button>
 		</div>
 		
 		</div>
 	</div>
+	
+	
+	<script >
+	<c:forEach items="${oList}" var="order" varStatus="i">
+	var productOnePrice=Number($('#order_price${i.count }').text());
+	$('#order_price${i.count}').html(productOnePrice.toLocaleString('ko-KR')+"원");
+	</c:forEach>
+	const productPrice=Number($("#productPrice").text());
+	const pointPrice=Number($("#pointPrice").text());
+	const totalPrice=Number($("#totalPrice").text());
+	
+	
+	$("#productPrice").text(productPrice.toLocaleString('ko-KR')+"원");
+	$("#pointPrice").html(pointPrice.toLocaleString('ko-KR')+"원");
+	$("#totalPrice").html(totalPrice.toLocaleString('ko-KR')+"원");
+	
+	</script>
 
 </body>
 </html>

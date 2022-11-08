@@ -21,7 +21,9 @@
 <style>
 body {
 	font-size: 14px;
-	/*  color: #000; */
+	line-height: 1.5;
+	color: #000;
+	background-color: #f1f1f1;
 }
 
 header {
@@ -32,49 +34,100 @@ header {
 	height: 50px;
 	background-color: rgb(255, 255, 255);
 	z-index: 200;
-	max-width: 600px;
+	max-width: 768px;
 	margin: 0 auto;
+}
+h2 {
+    font-size: 16px;
+}
+#header-block {
+    height: 50px;
+}
+
+header {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    max-width: 768px;
+    margin: 0 auto; 
+}
+
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 768px;
+    margin: 0 auto;
+    height: 50px;
+    position: relative;
+}
+
+.back-layout {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 5px;
+    left: 5px;
+}
+
+.go-back {
+	background-color:white;
+	border:none;
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+
+.go-back img {
+    width: 25px;
+    height: 25px;
+}
+/* Section */
+.cm-line {
+    height: 10px;
+    background-color: #f1f1f1;
 }
 
 .wrap {
-	max-width: 600px;
+	max-width: 768px;
 	margin: 0 auto;
 	background-color: white;
 	min-height: 100vh;
 }
 
-.contents {
-	padding-top: 50px;
-}
-.title {
-	display: flex;
-	-webkit-box-align: center;
-	align-items: center;
-	-webkit-box-pack: center;
-	justify-content: center;
-	height: 90px;
-	font-size: 16px;
-	border-bottom: solid 3px lightgray;
-}
+
+
 .container{
 	font-weight:bold;
 	font-size:20px;
 	height:50px;
-	padding-top:20px;
+ 	padding-top:20px; 
 }
 </style>
 <body>
 
 	<div class="wrap">
-		<div class="head">
-			<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-		</div>
+        <div id="header-block">
+            <header>
+                <div class="header-wrapper">
+                    <div class="back-layout">
+                        <button class="go-back" onclick="history.back()">
+                            <img src="../../../resources/images/back_arrow.png">
+                        </button>
+                    </div>
+                    <h2>포인트 조회</h2>
+                </div>        
+            </header>
+        </div>
+        <div class="cm-line"></div>
 		<div class="contents">
-		<div class="title">
-			<span>포인트 내역 조회</span>
-		</div>
-		
-		<div class="container text-center ">
+		 <div class="container text-center ">
 		<div class="row">
 		    <div class="col">
 		     <span>현재 포인트</span>
@@ -108,7 +161,7 @@ header {
 		<td style='color:blue;'>+${point.point }</td>
 		</c:if>
 		<c:if test="${point.pointType eq '환불완료 반환' }">
-		<td style='color:yellow;'>+${point.point }</td>
+		<td style='color:orange;'>+${point.point }</td>
 		</c:if>
 		</tr>
 		</c:forEach>
