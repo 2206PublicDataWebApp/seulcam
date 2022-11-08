@@ -1,0 +1,34 @@
+.youtubeBg {
+	position: fixed;
+	width: 100%;
+	height: calc(100% - 56px);
+	left: 0;
+	bottom: 0;
+}
+
+.landing {
+	position: absolute;
+	left: 30px;
+	top: 120px;
+}
+
+.landing-title {
+	color: white;
+	font-size: 48px;
+}
+
+
+
+@media screen and (max-width: 768px) {
+ 
+.landing {
+	left: 20px;
+	top: 100px;	
+}
+
+ 
+.landing-title {
+ 	font-size: 28px;
+ }
+ 
+ }
