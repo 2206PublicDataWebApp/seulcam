@@ -48,7 +48,16 @@
 		                        <span class="box">
 		                            <p class="name">${product.productName }</p>
 		                            <p class="color">${product.productColor }</p>
-		                            <span class="price">${product.productPrice }</span>
+	                           <c:if test="${product.discount eq 0}">
+		                            	<span id="priceBox">${product.productPrice}</span>
+	                            </c:if>
+	                            <c:if test="${product.discount ne 0}">
+		                            <span id="priceBox">
+		                            	<span class="befPrice" style="text-decoration:line-through" val="${product.productPrice}">${product.productPrice}</span>
+		                            	<span class="discount" style="color:red;" value="${product.discount }">${product.discount }%↓</span>
+		                            	<span class="resultPrice">${resultPrice[i.index] }</span>
+		                            </span>
+	                            </c:if>
 		                        </span> 
 		                    </a>
 		                                

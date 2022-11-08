@@ -202,6 +202,7 @@
                                             <th>색상</th>
                                             <th>재고</th>
                                             <th>판매량</th>
+                                            <th>할인율</th>
                                             <th>사진등록여부</th>
                                             <th>등록일</th>
                                         </tr>
@@ -218,6 +219,7 @@
                                         	<td>${product.productColor}</td>
                                         	<td>${product.productStock}</td>
                                         	<td>${product.saleCount}</td>
+                                        	<td>${product.discount}</td>
                                         	<c:if test="${product.mainFileName eq null }">
                                         		<td>X</td>
                                         	</c:if>
@@ -230,6 +232,7 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
+                                 <input type="button" class="page-link" onclick="productRefist()"style="margin-top:10px;margin-left: 0px; float:right; color:#4e73df; display:inline;border-radius: 0.35rem;"value="상품등록">
                             </div>
                         </div>
                     </div>
@@ -258,6 +261,11 @@
     <script src="/resources/js/datatables-demo.js"></script>
     <script src="/resources/js/jquery.dataTables.js"></script>
     <script src="/resources/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+	    function productRefist(){
+	    	location.href="/admin/productRegist";
+	    }
+    </script>
 </body>
 
 </html>

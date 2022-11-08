@@ -269,3 +269,8 @@ img{
 	float:left;
 	margin-left:20px;
 }
+#soldOut{
+	margin-top:20px;
+	text-align:center;
+	color:red;
+}

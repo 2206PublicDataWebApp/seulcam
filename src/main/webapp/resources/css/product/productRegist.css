@@ -1,6 +1,6 @@
 @charset "UTF-8";
 div.leftForm, #upload-box-form{
-    width: 45%;
+    width: 100%;
     margin: 20px;
     float: left;
 }
@@ -109,8 +109,22 @@ input[type=button]{
 #submit{
 	float:right;
 }
+#p_delete{
+	float:right;
+	margin-right:10px;
+	color:#858796;
+}
 
 input[readonly] {
   background-color: #e2e2e2;
   border:none;
+}
+.bottomButton{
+	float:left;
+	width: 100%;
+	 margin-bottom:20px;
+	margin-left:2px;
+box-sizing: border-box;
+padding-right:30px;
+margin-top:30px;
 }

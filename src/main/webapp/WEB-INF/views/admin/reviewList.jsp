@@ -227,7 +227,7 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-	                                <input type="button" class="page-link" onclick="selectDel()"style="margin-left: 0px; float:right; color:red; display:inline;border-radius: 0.35rem;"value="선택삭제">
+	                                <input type="button" class="page-link" onclick="selectDel()"style="margin-top:10px; margin-left: 0px; float:right; color:red; display:inline;border-radius: 0.35rem;"value="선택삭제">
                             </div>
                         </div>
                     </div>

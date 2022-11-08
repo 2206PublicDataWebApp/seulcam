@@ -58,6 +58,15 @@ public interface ProductStore {
 
 	public List<Brand> selectAllBrand(SqlSession session);
 
+	public int deleteStore(SqlSession session, int storeNo);
+
+	public int updateProduct(SqlSession session, Product product);
+
+	public int updateProductDetail(SqlSession session, Detail dt);
+
+	public int deleteProduct(SqlSession session, Integer productNo);
+
+	public void deleteDetail(SqlSession session, Detail detail);
 
 
 }

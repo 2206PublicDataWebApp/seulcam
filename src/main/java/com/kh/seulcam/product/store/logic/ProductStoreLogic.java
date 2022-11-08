@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.seulcam.product.domain.Brand;
@@ -154,6 +155,35 @@ public class ProductStoreLogic implements ProductStore {
 	public List<Brand> selectAllBrand(SqlSession session) {
 		List<Brand> bList = session.selectList("BrandMapper.selectAllBrand");
 		return bList;
+	}
+
+	@Override
+	public int deleteStore(SqlSession session, int storeNo) {
+		int result = session.delete("BrandMapper.deleteStore", storeNo);
+		return result;
+	}
+
+	@Override
+	public int updateProduct(SqlSession session, Product product) {
+		int productNo = session.update("ProductMapper.updateProduct", product);
+		return productNo;
+	}
+
+	@Override
+	public int updateProductDetail(SqlSession session, Detail dt) {
+		int result = session.update("ProductMapper.updateProductDetail", dt);
+		return result;
+	}
+
+	@Override
+	public int deleteProduct(SqlSession session, Integer productNo) {
+		int result = session.delete("ProductMapper.deleteProduct", productNo);
+		return result;
+	}
+
+	@Override
+	public void deleteDetail(SqlSession session, Detail detail) {
+		session.delete("ProductMapper.deleteDetail", detail);
 	}
 
 

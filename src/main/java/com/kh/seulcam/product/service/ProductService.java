@@ -57,4 +57,17 @@ public interface ProductService {
 
 	public List<Brand> getAllBrand();
 
+	public int removeStore(int storeNo);
+
+	public int modifyProduct(Product product);
+
+	public int modifyProductDetail(Detail dt);
+
+	public int removeProduct(Integer productNo);
+
+	public void removeDetail(Detail detail);
+	
+	public List<Integer> discountList(List<Product> pList);
+
+	public int discountProduct(Product product);
 }

@@ -2,6 +2,7 @@ package com.kh.seulcam.product.service.logic;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -153,5 +154,57 @@ public class ProductServiceImpl implements ProductService{
 		return bList;
 	}
 
-	
+	@Override
+	public int removeStore(int storeNo) {
+		int result = pStore.deleteStore(session, storeNo);
+		return result;
+	}
+
+	@Override
+	public int modifyProduct(Product product) {
+		int productNo = pStore.updateProduct(session, product);
+		return productNo;
+	}
+
+	@Override
+	public int modifyProductDetail(Detail dt) {
+		int result = pStore.updateProductDetail(session, dt);
+		return result;
+	}
+
+	@Override
+	public int removeProduct(Integer productNo) {
+		int result = pStore.deleteProduct(session, productNo);
+		return result;
+	}
+
+	@Override
+	public void removeDetail(Detail detail) {
+		pStore.deleteDetail(session, detail);
+			
+	}
+
+	@Override
+	public List<Integer> discountList(List<Product> pList) {
+		List<Integer> resultPrice = new ArrayList<Integer>();
+		for(int i=0; i<pList.size(); i++) {
+			double percent= pList.get(i).getDiscount()*0.01;
+			double discount=pList.get(i).getProductPrice()*percent;
+			double dPrice = pList.get(i).getProductPrice()-discount;
+			
+			int iPrice =(int)Math.round(dPrice/1000.0)*1000;
+			resultPrice.add(iPrice);
+		}
+		return resultPrice;
+	}
+	@Override
+	public int discountProduct(Product product) {
+		double percent= product.getDiscount()*0.01;
+		double discount=product.getProductPrice()*percent;
+		double dPrice = product.getProductPrice()-discount;
+		
+		int resultPrice =(int)Math.round(dPrice/1000.0)*1000;
+		
+		return resultPrice;
+	}
 }

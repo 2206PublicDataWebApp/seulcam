@@ -29,17 +29,33 @@
             </li>
             <c:if test="${!empty pList }">
 	            <c:forEach var="product" items="${pList}" varStatus="i">
-		            <li class="xans-record-">
-		            <a href="/product/productDetail?productNo=${product.productNo }">
-		                        <span class="thumbNail" style="background-image:url('../resources/puploadFiles/${product.mainFileRename}')"></span>
-		                        <span class="box">
-		                            <p class="name">${product.productName }</p>
-		                            <p class="color">${product.productColor }</p>
-		                            <span class="price">${product.productPrice }</span>
-		                        </span> 
-		                    </a>
-		                                
-		            </li>
+	            	
+			            <li class="xans-record-">
+			            <c:if test="${product.productStock eq 0 }">
+			            	<a href="/product/productDetail?productNo=${product.productNo }" id="soldOut">Sold Out</div>
+			            </c:if>
+			            <a href="/product/productDetail?productNo=${product.productNo }">
+			                        <span class="thumbNail" style="background-image:url('../resources/puploadFiles/${product.mainFileRename}')"></span>
+			                        <span class="box">
+			                            <p class="name">${product.productName }</p>
+			                            <p class="color">
+											${product.productColor } <span class="colorchip"
+												style="background-color:${product.productColor };">　</span>
+										</p>
+										<c:if test="${product.discount eq 0}">
+			                            	<span id="priceBox">${product.productPrice}</span>
+			                            </c:if>
+			                            <c:if test="${product.discount ne 0}">
+				                            <span id="priceBox">
+				                            	<span class="befPrice" style="text-decoration:line-through" val="${product.productPrice}">${product.productPrice}</span>
+				                            	<span class="discount" style="color:red;" value="${product.discount }">${product.discount }%↓</span>
+				                            	<span class="resultPrice">${resultPrice[i.index] }</span>
+				                            </span>
+			                            </c:if>
+			                        </span> 
+			                    </a>
+			            </li>
+	                                
 		         </c:forEach>
 	         </c:if>
         </ul>
@@ -47,7 +63,13 @@
     </article>  
 </section>
 
+<script>
+var defPrice = $("#befPrice").val();
+var discount = $("#discount").val();
+var resultPrice=defPrice*((100-discount)/100);
+console.log(resultPrice);
 
+</script>
 
 
 </body>

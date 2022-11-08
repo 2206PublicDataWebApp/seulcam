@@ -9,6 +9,7 @@
 	</resultMap>
 	<resultMap type="Brand" id="brandResultMap">
 		<id property="brandName"	column="BRAND_NAME"/>
+		<result property="storeNo"		column="STORE_NO"/>
 		<result property="storeName"		column="STORE_NAME"/>
 		<result property="storeZipcode"		column="STORE_ZIPCODE"/>
 		<result property="storeAddr"		column="STORE_ADDR"/>
@@ -16,7 +17,7 @@
 	</resultMap>
 		<insert id="insertBrand" parameterType="Brand">
   		INSERT INTO BRAND_TBL
-  		VALUES(#{brandName},#{storeZipcode},#{storeAddr},#{storeAddrDetail},#{storeName})
+  		VALUES(#{brandName},#{storeZipcode},#{storeAddr},#{storeAddrDetail},#{storeName},STORE_NO_SEQ.NEXTVAL)
   	</insert>
 	<select id="selectAllBrand" resultMap="brandResultMap">
   		SELECT*FROM BRAND_TBL
@@ -27,4 +28,7 @@
   	<select id="selectOneBrand" resultMap="brandResultMap">
   		SELECT * FROM BRAND_TBL WHERE BRAND_NAME=#{brandName}
   	</select>
+  	<delete id="deleteStore">
+  		DELETE FROM BRAND_TBL WHERE STORE_NO=#{storeNo}
+  	</delete>
 </mapper>

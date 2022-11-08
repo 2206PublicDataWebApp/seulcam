@@ -49,19 +49,19 @@
 	            </li>
 	
 	            <li class="nav-item active">
-	                <a class="nav-link" href="/admin/productList">>
+	                <a class="nav-link" href="/admin/productList">
 	                    <i class="fas fa-fw fa-table"></i>
 	                    <span>상품관리</span></a>
 	            </li>
 	
 	            <li class="nav-item">
-	                <a class="nav-link" href="tables.html">
+	                <a class="nav-link" href="/admin/reviewList">
 	                    <i class="fas fa-fw fa-table"></i>
 	                    <span>상품 리뷰 관리</span></a>
 	            </li>
 	
 	            <li class="nav-item">
-	                <a class="nav-link" href="tables.html">
+	                <a class="nav-link" href="/admin/brandList">
 	                    <i class="fas fa-fw fa-table"></i>
 	                    <span>브랜드관리</span></a>
 	            </li>
@@ -117,10 +117,66 @@
 	            </div>
 	
 	        </ul>
-	        
-	<div id ="content-wrapper" class="d-flex flex-column">
-		<div id="content">
-			<form action="/admin/productModify" enctype="multipart/form-data" method="post">
+	         <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+            
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.loginUser.memberNickname}</span>
+                                <c:if test="${member.memberFilername==null}"><img class="img-profile rounded-circle" src="https://image.msscdn.net/mfile_s01/_simbols/_basic/c.png"></c:if>
+                                <c:if test="${member.memberFilername!=null}"><img class="img-profile rounded-circle" src="/resources/profileImageFiles/${member.memberFilername }"></c:if>
+                            </a>      
+                        </li>
+                    </ul>
+                </nav> 
+                 <!-- End of Topbar -->
+                       
+	
+		    <div class="container-fluid">
 			   <section class="productDetail">
 					   	<div class="card shadow mb-4">
 					   		<div class="card-header py-3">
@@ -128,61 +184,71 @@
 							   <h6 class="m-0 font-weight-bold text-primary">등록날짜 : ${product.updateDate }</h6>
 							</div>
 						<div class="card-body">
-					        <div class="leftForm">
-					            <div class="box-form">
-					                <label>상품명</label>
-					                <input type="text" class="g-inputbox-medium textarea-title" placeholder="${product.productName }" name="productName" value="" >
-					            </div>
-					            <div class="box-form">
-					                <label>브랜드</label>
-					                <select class="selectBox"  name="brandName" id="brand_selectBox">
-					                    <c:forEach items="${sNameList }" var="brandName" varStatus="i">
-					                   		 <option value="${brandName.brandName }">${brandName.brandName }</option>
-					                    </c:forEach>
-					                </select>
-					            </div>
-					            <div class="box-form">
-					                <label>카테고리</label>
-					                <select class="selectBox" name="category" id="category_selectBox">
-											<option value="텐트">텐트</option>
-											<option value="타프">타프</option>
-											<option value="테이블">테이블</option>
-											<option value="체어">체어</option>
-											<option value="침낭">침낭</option>
-											<option value="매트">매트</option>
-											<option value="야전침대">야전침대</option>
-											<option value="코펠">코펠</option>
-											<option value="취사도구">취사도구</option>
-											<option value="컵/머그컵">컵/머그컵</option>
-											<option value="스토브">스토브</option>
-											<option value="화로대">화로대</option>
-											<option value="난로">난로</option>
-											<option value="전자용품">전자용품</option>
-											<option value="기타소품">기타소품</option>
-					                </select>
-					            </div>
-					            <div class="box-form">
-					                <label>가격</label>
-					                <input type="text" class="g-inputbox-medium textarea-title" name="productPrice" value="${product.productPrice }" >
-					            </div>
-					             <div class="box-form">
-					                <label>색상</label>
-					                <input type="text" class="g-inputbox-medium textarea-title" name="productColor" value="${product.productColor }" >
-					            </div>
-					            <div class="box-form">
-					                <label>재고</label>
-					                <input type="text" class="g-inputbox-medium textarea-title"  name="productStock" value="${product.productStock }">
-					            </div>
-					            <div class="box-form">
-					                <label>소재</label>
-					                <input type="text" class="g-inputbox-medium textarea-title" name="productMaterial" value="${product.productMaterial }" >
-					            </div>
-					             <div class="box-form">
-					                <label>판매량</label>
-					                <input type="text" class="g-inputbox-medium textarea-title" name="updateDate" value="${product.saleCount }" readonly>
-					            </div>
-					        </div>
-					        
+					       <div class="table-responsive">
+									<form action="/admin/productModify" enctype="multipart/form-data" method="post">
+									<input type="hidden" name="productNo" value="${product.productNo }">
+									 <div class="row">
+
+                                        <div class="col-md-6">
+								            <div class="box-form">
+								                <label>상품명</label>
+								                <input type="text" class="g-inputbox-medium textarea-title" placeholder="${product.productName }" name="productName" value="${product.productName }"  readonly>
+								            </div>
+								            <div class="box-form">
+								                <label>브랜드</label>
+								                <select class="selectBox"  name="brandName" id="brand_selectBox" readonly>
+								                    <c:forEach items="${sNameList }" var="brandName" varStatus="i">
+								                   		 <option value="${brandName.brandName }">${brandName.brandName }</option>
+								                    </c:forEach>
+								                </select>
+								            </div>
+								            <div class="box-form">
+								                <label>카테고리</label>
+								                <select class="selectBox" name="category" id="category_selectBox" readonly>
+														<option value="텐트">텐트</option>
+														<option value="타프">타프</option>
+														<option value="테이블">테이블</option>
+														<option value="체어">체어</option>
+														<option value="침낭">침낭</option>
+														<option value="매트">매트</option>
+														<option value="야전침대">야전침대</option>
+														<option value="코펠">코펠</option>
+														<option value="취사도구">취사도구</option>
+														<option value="컵/머그컵">컵/머그컵</option>
+														<option value="스토브">스토브</option>
+														<option value="화로대">화로대</option>
+														<option value="난로">난로</option>
+														<option value="전자용품">전자용품</option>
+														<option value="기타소품">기타소품</option>
+								                </select>
+								            </div>
+								            <div class="box-form">
+								                <label>가격</label>
+								                <input type="text" class="g-inputbox-medium textarea-title" name="productPrice" value="${product.productPrice }" >
+								            </div>
+								             <div class="box-form">
+								                <label>색상</label>
+								                <input type="text" class="g-inputbox-medium textarea-title" name="productColor" value="${product.productColor }" >
+								            </div>
+								            <div class="box-form">
+								                <label>재고</label>
+								                <input type="text" class="g-inputbox-medium textarea-title"  name="productStock" value="${product.productStock }">
+								            </div>
+								            <div class="box-form">
+								                <label>소재</label>
+								                <input type="text" class="g-inputbox-medium textarea-title" name="productMaterial" value="${product.productMaterial }" >
+								            </div>
+								             <div class="box-form">
+								                <label>판매량</label>
+								                <input type="text" class="g-inputbox-medium textarea-title" name="updateDate" value="${product.saleCount }" readonly>
+								            </div>
+								             <div class="box-form">
+								                <label>할인율(%)</label>
+								                <input type="text" class="g-inputbox-medium textarea-title" name="discount" value="${product.discount }">
+								            </div>
+								            <br><br><br>
+					       			 </div>
+			           <div class="col-md-6">
 					        <div id="upload-box-form">
 					            <div class="box-form">
 					                <label>메인사진</label>
@@ -238,51 +304,60 @@
 					            
 					        </div>
 					     
-					        <div style="float:left;width: 100%;">
-						        <button type="button" class="page-link" id="goBack" onclick="goBack()" style="float:left">뒤로가기</button>
-						        <button id="submit" class="page-link">수정하기</button>
-					        </div>
 					      </div>
 			        </div>
-			    </section>
-			</form>
+					        <div class="bottomButton">
+						        <button type="button" class="page-link" id="goBack" onclick="goList()" style="float:left">뒤로가기</button>
+						        <button id="submit" class="page-link">수정하기</button>
+						        <button type="button" id="p_delete" onclick="productDelete()"class="page-link">삭제하기</button>
+			        </div>
+			       </div>
+						</form>
+			       </div>
+			       </div>
+		    </section>
 		</div>
 	</div>
-</div>  
+</div> 
+ 
 <script>
 
 //불러온값에 따라 셀렉트박스 미리 선택
 $("#category_selectBox").val('${product.category}').prop("selected", true);
 $("#brand_selectBox").val('${product.brandName}').prop("selected", true);
 
-
 if(${product.mainFileName!=null}){
 	$(".img-delete-bt").eq(0).click(function(){
-		$('#upload-box-form > div:nth-child(1)').empty();
-		$('#upload-box-form > div:nth-child(1)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
-		$('#upload-box-form > div:nth-child(1)').append('<input type="hidden" name="mainFileName" value="del">');
+		$('div:nth-child(1) > div.box-img-upload').empty();
+		$('div:nth-child(1) > div.box-img-upload').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="uploadFile" class="drop-zone__input">');
+		$('div:nth-child(1) > div.box-img-upload').append('<input type="hidden" name="mainFileName" value="del">');
 	});
 }
 if(${dList[0].detailFileName !=null}){
 	$(".img-delete-bt").eq(1).click(function(){
-		$('#upload-box-form > div:nth-child(2)').empty();
-		$('#upload-box-form > div:nth-child(2)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
-		$('#upload-box-form > div:nth-child(2)').append('<input type="hidden" name="dList[0].detailFileName" value="del">');
+		$('div:nth-child(2) > div.box-img-upload').empty();
+		$('div:nth-child(2) > div.box-img-upload').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="dList[0].detailFileNameMPF" class="drop-zone__input">');
+		$('div:nth-child(2) > div.box-img-upload').append('<input type="hidden" name="dList[0].detailFileName" value="del">');
 	});
 }
 if(${dList[1].detailFileName !=null}){
 	$(".img-delete-bt").eq(2).click(function(){
-		$('#upload-box-form > div:nth-child(3)').empty();
-		$('#upload-box-form > div:nth-child(3)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
-		$('#upload-box-form > div:nth-child(2)').append('<input type="hidden" name="dList[1].detailFileName" value="del">');
+		$('div:nth-child(3) > div.box-img-upload').empty();
+		$('div:nth-child(3) > div.box-img-upload').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="dList[1].detailFileNameMPF" class="drop-zone__input">');
+		$('div:nth-child(3) > div.box-img-upload').append('<input type="hidden" name="dList[1].detailFileName" value="del">');
 	});
 }
  
 
 
-function goBack() {
-	  window.history.back();
+function goList() {
+	location.href = "/admin/productList";
 	}
+function productDelete(){
+	if(confirm("상품을 삭제하시겠습니까?")){
+		location.href="/admin/productDelete?productNo=${product.productNo}";
+	}
+}
 
 	    document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 	  const dropZoneElement = inputElement.closest(".box-img-upload");

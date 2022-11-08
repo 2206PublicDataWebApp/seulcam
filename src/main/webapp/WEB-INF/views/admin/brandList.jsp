@@ -186,13 +186,14 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">전체 상품리뷰</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">브랜드 스토어리스트</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                        	<th>스토어번호</th>
                                             <th>브랜드명</th>
                                             <th>매장명</th>
                                             <th>매장주소</th>
@@ -203,7 +204,8 @@
                                     <tbody>
                                         <c:forEach items="${bList}" var="brand" varStatus="i">
                                         <tr>
-                                        	<td id="brandName"><a href="#">${brand.brandName }</a></td>
+                                        	<td id="storeNo">${brand.storeNo }</td>
+                                        	<td><a href="#">${brand.brandName }</a></td>
                                         	<c:if test="${brand.storeAddr eq null }">
                                         		<td colspan="2">스토어 미등록</td>>
                                         	</c:if>
@@ -217,7 +219,7 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-	                                <input type="button" class="page-link" onclick="selectDel()"style="margin-left: 0px; float:right; color:red; display:inline;border-radius: 0.35rem;"value="선택삭제">
+	                                <input type="button" class="page-link" onclick="selectDel()"style="margin-top:10px; margin-left: 0px; float:right; color:red; display:inline;border-radius: 0.35rem;"value="선택삭제">
                             </div>
                         </div>
                     </div>
@@ -254,13 +256,13 @@
 		var checkNoArr = []; 
 		if(checked.length>0){
 			checked.each(function(i){
-				brandName=checked.parent().eq(i).siblings('#brandName').children().text();
+				brandName=checked.parent().eq(i).siblings('#storeNo').text();
 				checkNoArr.push(brandName);
 			});
 		 	$.ajax({
 				 url:"/admin/brandCheckDelete",
 				 type:"POST",
-				 data: {"bName" : checkNoArr},
+				 data: {"snList" : checkNoArr},
 				dataType : 'text', 
 				success:function(data){
 					if(data=="success"){

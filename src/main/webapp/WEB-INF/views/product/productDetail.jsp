@@ -35,10 +35,17 @@
 					${product.productColor } <span class="colorchip"
 						style="background-color:${product.productColor };">　</span>
 				</p>
-				<span class="price"> <span id="product-price"
-					class="ProductPrice">${product.productPrice }</span> <input
-					id="product_price" name="product_price" value="389000"
-					type="hidden">
+				<span class="price"> 
+					<c:if test="${product.discount eq 0}">
+                          	<span id="priceBox">${product.productPrice}</span>
+                    </c:if>
+                    <c:if test="${product.discount ne 0}">
+                           <span id="priceBox">
+                           	<span class="befPrice" style="text-decoration:line-through" val="${product.productPrice}">${product.productPrice}</span>
+                           	<span class="discount" style="color:red;" value="${product.discount }">${product.discount }%↓</span>
+                           	<span class="resultPrice">${resultPrice }</span>
+                           </span>
+                   	</c:if>
 				</span> <br>
 			</div>
 
@@ -54,11 +61,15 @@
 				<span id="totalPriceSum">0</span> <span style="float: left">총액</span>
 
 			</div>
-
-			<div class="buttons">
-				<button type="button" class onclick="product_cart()" id="actionCart">장바구니</button>
-				<button type="button" class onclick="product_buy()" id="actionBuy">바로구매</button>
-			</div>
+			<c:if test="${product.productStock eq 0 }">
+				<div id="soldOut">품절된 상품입니다.</div>
+			</c:if>
+			<c:if test="${product.productStock ne 0 }">
+				<div class="buttons">
+					<button type="button" class onclick="product_cart()" id="actionCart">장바구니</button>
+					<button type="button" class onclick="product_buy()" id="actionBuy">바로구매</button>
+				</div>
+			</c:if>
 
 
 		</article>
@@ -158,6 +169,7 @@
 				<ol class="ac-sub" id="review_title_all">
 
 				</ol>
+					
 				
 					<div>
 				 		<a href="#" onclick="reviewRegist()">후기작성 </a>
@@ -263,7 +275,7 @@ function reviewRegist(){
 					 	var pUrl="../resources/puploadFiles/";
 						var title = dList[i].detailContents;
 			  			strDOM += '<div class="image_panel">';
-				        strDOM += '<img src='+pUrl+dList[i].detailFileRename+' >';
+				        strDOM += "<img src="+pUrl+dList[i].detailFileRename+">";
 				        strDOM += '<p class="title">'+ title +'</p>';
 				        strDOM += '</div>';
 					 }
@@ -288,6 +300,7 @@ function reviewRegist(){
 		 var loginUser ="";
 	 }
 	 if($("#ac-4").is(":checked")){
+		 var strDOM="";
 		 $.ajax({
 			 url :"/product/reviewList",
 			 data:{
@@ -296,10 +309,8 @@ function reviewRegist(){
 				 },
 			 type:"get",
 			 success : function(rList){
-				 $("#review_title_all").html("");				
-				 var strDOM="<div id='no_review'>등록된 상품평이 없습니다.</div>";
-				 if(rList != null){
-					 var strDOM="";
+				 $("#review_title_all").html("");	
+				
 					 for(var i in rList){
 								var rUrl="../resources/puploadFiles/";
 								strDOM+='<li>';
@@ -335,16 +346,13 @@ function reviewRegist(){
 								 	strDOM+='<a href="javascript:void(0)"style="float:right;" onclick="reviewDelete('+rList[i].reviewNo+')">삭제</a></div></article>';
 									 }
 							 strDOM+='</li>';
-							 
-	
-					 		 	
 					 }
-				
-				}
 					$("#review_title_all").append(strDOM);
 			 },
 			 error : function(){
+				 strDOM='<div id="no_review">등록된 상품평이 없습니다.</div>';
 				 console.log("리스트불러오기 실패");
+				 $("#review_title_all").append(strDOM);
 			 }
 			 
 		 });
@@ -389,25 +397,28 @@ function reviewRegist(){
 			 type:"get",
 			// dataType:"Object",
 			 success:function(data){
-				 for(var i=0; i<data.bsList.length;i++){
-					 fullAddr+="<p><button type='button' onclick='findStore()' class='findStore'><b>"+data.bsList[i].storeName+"</b>";
-					 fullAddr+="</button>ㅤㅤ["+data.bsList[i].storeZipcode+"] ";
-					 fullAddr+=data.bsList[i].storeAddr;
-					 fullAddr+=data.bsList[i].storeAddrDetail+"</p><br>";
-					 
-				var marker = new naver.maps.Marker({
-				    position: new naver.maps.LatLng(data.coordsList[i][1], data.coordsList[i][0]),
-				    map: map 
-		
-				 });
-				 }
-				$("#store_addr").append(fullAddr);
 				
+					 
+					 for(var i=0; i<data.bsList.length;i++){
+						 fullAddr+="<p><button type='button' onclick='findStore()' class='findStore'><b>"+data.bsList[i].storeName+"</b>";
+						 fullAddr+="</button>ㅤㅤ["+data.bsList[i].storeZipcode+"] ";
+						 fullAddr+=data.bsList[i].storeAddr;
+						 fullAddr+=" "+data.bsList[i].storeAddrDetail+"</p><br>";
+						 
+						var marker = new naver.maps.Marker({
+						    position: new naver.maps.LatLng(data.coordsList[i][1], data.coordsList[i][0]),
+						    map: map 
+						 });
+					 }
+				 $("#store_addr").append(fullAddr);
 			 },
 			 
 			 
 			 error : function(){
 				 console.log("에러");
+				 fullAddr+="<p>오프라인 매장이 등록되어있지 않습니다.</p>";
+					 
+				 $("#store_addr").append(fullAddr);
 			 }
 		 });
 		 

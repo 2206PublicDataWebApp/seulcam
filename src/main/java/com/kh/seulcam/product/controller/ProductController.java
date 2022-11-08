@@ -65,9 +65,9 @@ public class ProductController {
 	public ModelAndView top20ListView(ModelAndView mv) {
 		String arrayCd="topSale";
 		List<Product> pList = pService.getProductListByArrayDf(arrayCd);
-		
+		List<Integer> resultPrice = pService.discountList(pList);
+		mv.addObject("resultPrice",resultPrice);
 		mv.addObject("pList", pList);
-	
 		return mv;
 	}
 	
@@ -76,14 +76,14 @@ public class ProductController {
 	public ModelAndView newArrivalListView(Model model, ModelAndView mv) {
 		String arrayCd="newArrival";
 		List<Product> pList = pService.getProductListByArrayDf(arrayCd);
-		
+		List<Integer> resultPrice = pService.discountList(pList);
+		mv.addObject("resultPrice",resultPrice);
 		mv.addObject("pList", pList);
-		
 		return mv;
 	}
 	
 
-	
+	//상품상세페이지
 	@RequestMapping(value="/product/productDetail", method=RequestMethod.GET)
 	public ModelAndView detailView(Model model
 			,ModelAndView mv
@@ -91,7 +91,7 @@ public class ProductController {
 			,HttpSession session) {
 	
 		Product product = pService.getProductByNo(productNo);
-		
+		int resultPrice = pService.discountProduct(product);
 		Member member=null;
 		if(session.getAttribute("loginUser") != null) {
 			member =(Member)session.getAttribute("loginUser");
@@ -99,6 +99,7 @@ public class ProductController {
 			mv.addObject("loginUser",member);
 		}
 		if(product!=null) {
+			mv.addObject("resultPrice", resultPrice);
 			mv.addObject("product", product);
 		}
 		return mv;
@@ -116,6 +117,12 @@ public class ProductController {
 		//System.out.println(dList.toString());	
 		session.setAttribute("productNo", productNo);
 		if(!dList.isEmpty()) {
+			for(int i=0; i>dList.size(); i++) {
+				if(dList.get(i).getDetailContents().isEmpty()) {
+					dList.get(i).setDetailContents("");
+				}
+				
+			}
 			Gson gson = new GsonBuilder().create();
 			return gson.toJson(dList);
 		}
@@ -318,7 +325,7 @@ public class ProductController {
 		if (result>0) {
 			mv.setViewName("redirect:/product/productDetail?productNo="+productNo);
 		}else {
-			mv.setViewName("errorPage");
+			mv.setViewName("common/errorPage");
 		}
 		
 		return mv;
@@ -336,8 +343,10 @@ public class ProductController {
 		if(!rList.isEmpty()) {
 			Gson gson = new GsonBuilder().create();
 			return gson.toJson(rList);
+		}else {
+			
+			return "error";
 		}
-		return null;
 		
 	}
 	//나의 리뷰리스트 출력-마이페이지
@@ -388,35 +397,32 @@ public class ProductController {
 		List<Brand> bsList = pService.getbrandStore(brandName);
 		ArrayList<Float[]> coordsList =new ArrayList<Float[]>();
 		Float[] coords=null;
+		if(bsList.get(0).getStoreAddr()!=null) {
 			try {
 				for(int i = 0; i<bsList.size(); i++) {
 					String address = bsList.get(i).getStoreAddr();
-				coords = geoCoder(address);
-				coordsList.add(coords);
-				coordsList.get(i)[0]=coords[0];
-				coordsList.get(i)[1]=coords[1];
+					coords = geoCoder(address);
+					coordsList.add(coords);
+					coordsList.get(i)[0]=coords[0];
+					coordsList.get(i)[1]=coords[1];
+					System.out.println(coords[0].toString());
 				}
+					
+					mv.addObject("bsList", bsList);
+					mv.addObject("coordsList", coordsList);
+					Map<String,Object> hMap = new HashMap<String,Object>();
+					hMap.put("bsList",bsList);
+					hMap.put("coordsList",coordsList);
+					Gson gson = new Gson();
+					return gson.toJson(hMap);
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		    
-		
-
-		//System.out.println(coordsList.toString());
-		if(!coordsList.isEmpty()) {
-			mv.addObject("bsList", bsList);
-			mv.addObject("coordsList", coordsList);
-			Map<String,Object> hMap = new HashMap<String,Object>();
-			hMap.put("bsList",bsList);
-			hMap.put("coordsList",coordsList);
-			Gson gson = new Gson();
-			return gson.toJson(hMap);
-			
-			
 			
 		}
+		
 		return null;
 		
 	            
@@ -499,6 +505,8 @@ public class ProductController {
 			System.out.println("============================="+keyword);
 			pList = pService.findProductByKeyword(keyword);
 			searchCt=pList.size();
+			List<Integer> resultPrice = pService.discountList(pList);
+			mv.addObject("resultPrice",resultPrice);
 		}
 		mv.addObject("pList", pList);
 		mv.addObject("searchCt", searchCt);
@@ -521,6 +529,8 @@ public class ProductController {
 		List<Product> pList =pService.findProductByBrand(brandNameTemp,sortCd);
 		int searchCt=0;
 		searchCt=pList.size();
+		List<Integer> resultPrice = pService.discountList(pList);
+		mv.addObject("resultPrice",resultPrice);
 		mv.addObject("brandNameTemp", brandNameTemp);
 		mv.addObject("pList", pList);
 		mv.addObject("searchCt", searchCt);
@@ -546,6 +556,8 @@ public class ProductController {
 		List<Product> pList =pService.findProductByCategory(cate_no,sortCd);
 		int searchCt=0;
 		searchCt=pList.size();
+		List<Integer> resultPrice = pService.discountList(pList);
+		mv.addObject("resultPrice",resultPrice);
 		mv.addObject("pList", pList);
 		mv.addObject("searchCt", searchCt);
 //		session.removeAttribute("cate_no");
