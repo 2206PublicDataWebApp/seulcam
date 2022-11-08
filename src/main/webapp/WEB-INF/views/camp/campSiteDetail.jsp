@@ -38,7 +38,7 @@ header {
 	height: 50px;
 	background-color: rgb(255, 255, 255);
 	z-index: 200;
-	max-width: 600px;
+	max-width: 770px;
 	margin: 0 auto;
 }
 
@@ -46,14 +46,14 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	max-width: 385px;
+	max-width: 770px;
 	margin: 0 auto;
 	height: 50px;
 	position: relative;
 }
 
 .body-wrapper {
-	max-width: 400px;
+	max-width: 770px;
 	margin: 0 auto;
 	background-color: white;
 	min-height: 100vh;
