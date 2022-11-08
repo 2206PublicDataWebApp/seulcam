@@ -6,6 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0 user-scalable=no">
 <title>마이 캠핑장 예약</title>
 <link rel="stylesheet" href="/resources/css/camp/switch.css">
 <!-- <link href="../resources/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -187,6 +190,7 @@ header {
 .product-box {
     display: flex;
     padding: 24px 15px 20px;
+    cursor: pointer;
 }
 
 .thumbnail-box {
@@ -216,9 +220,9 @@ header {
     width: calc(100% );
 }
 
-.a-wrap {
+/* .a-wrap {
     width: calc(100% - 22px);
-}
+} */
 
 .brand-name {
     display: block;
@@ -418,6 +422,27 @@ footer {
         margin: 10px;
         box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 25%);
     }
+.disabled {
+    position: relative;
+    height: 100%;
+}
+    .disabled::before{
+        content: '';
+        position: absolute;
+        width: 96%;
+        height: 65%;
+        background-color: rgba(255, 255, 255, 0.75);
+        z-index: 2;
+    }
+    .com{
+    position: sticky;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background-color: gray;
+    z-index: 3;
+    color: #fff;
+    }
     
     </style>
 <body>
@@ -443,9 +468,23 @@ footer {
                 </div>
             </div>
             <c:forEach items="${cbList }" var="campBookingList" varStatus="i">
-            <a href="#" style="pointer-events: all; cursor: pointer;">
-
-                <div class="product-box" style="cursor: pointer;" onclick ='location.href="/campBooking/campBookingDetail.kh?bookingNo="+${campBookingList.bookingNo }+""'>
+                <!-- 현재날짜 -->
+                <c:set var="date" value="<%=new java.util.Date()%>" />
+                <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
+                <!-- 마지막날짜 -->
+                <fmt:parseDate value="${campBookingList.lastDay }" var="dateValue" pattern="yyyy-MM-dd"/>
+                <c:set var="lastDay"><fmt:formatDate value="${dateValue}" pattern="yyyy-MM-dd"/></c:set>
+                <c:choose> 
+                    <c:when test="${today > lastDay}">
+                        <div class="product-box disabled" onclick ='location.href="/campBooking/campBookingDetail.kh?bookingNo="+${campBookingList.bookingNo }+""'>
+                    </c:when> 
+                    <c:when test="${campBookingList.bookCancleStatus == 'Y'}">
+                        <div class="product-box disabled" onclick ='location.href="/campBooking/campBookingDetail.kh?bookingNo="+${campBookingList.bookingNo }+""'>
+                    </c:when> 
+                    <c:otherwise>
+                        <div class="product-box" onclick ='location.href="/campBooking/campBookingDetail.kh?bookingNo="+${campBookingList.bookingNo }+""'>
+                    </c:otherwise> 
+                </c:choose> 
                     <div class="order-thumbnail">
                         <div class="thumbnail-box">
                             <a href="#" class="thumbnail-link">
@@ -457,11 +496,23 @@ footer {
                         <div class="product">
                             <div class="brand-info">
                                 <div class="a-wrap">
-                                    <a href="#" class="brand-name">예약번호 : No.${campBookingList.bookingNo }</a>
-                                    <a href="#" class="product-name">(주)디노담양힐링파크 지점</a>
+                                    <c:if test="${today > dateValue}">
+                                    </c:if>
+                                    <c:choose> 
+                                        <c:when test="${today > lastDay}">
+                                            <p  class="brand-name">예약번호 : No.${campBookingList.bookingNo } <span class="com">이용완료</span></p>
+                                        </c:when> 
+                                        <c:when test="${campBookingList.bookCancleStatus == 'Y'}">
+                                            <p  class="brand-name">예약번호 : No.${campBookingList.bookingNo } <span class="com">취소완료</span></p>
+                                        </c:when> 
+                                        <c:otherwise>
+                                            <p  class="brand-name">예약번호 : No.${campBookingList.bookingNo }</p>
+                                        </c:otherwise> 
+                                    </c:choose> 
+                                    <p  class="product-name">${campBookingList.bookCancleStatus} ${campBookingList.campSite.campName}</p>
                                 </div>
                             </div>
-                            <span class="brand-name"><b>예약일 : ${campBookingList.bookDate }</b></span>
+                            <span class="brand-name"><b>예약일 : <fmt:formatDate value="${campBookingList.bookDate }" pattern="yyyy-MM-dd"/></b></span>
                         </div>
                         <div class="option-value">
                             <span class="product-option">${campBookingList.firstDay } ~ ${campBookingList.lastDay } (${campBookingList.totalDay }박)</span>
@@ -471,10 +522,10 @@ footer {
                             <div class="item-amountc">
                                 <span class="product-option">입실 ${campBookingList.campSite.inTime }시 / 퇴실 ${campBookingList.campSite.outTime }시</span>
                             </div>
+                            <button>예약취소</button>
                         </div>
                     </div>
                 </div>
-            </a>
             </c:forEach>
             <div class="product-box">
 

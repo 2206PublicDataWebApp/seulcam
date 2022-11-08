@@ -1,6 +1,7 @@
 package com.kh.seulcam.campBooking.domain;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.CampSite;

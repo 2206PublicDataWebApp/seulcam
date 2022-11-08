@@ -107,16 +107,18 @@ public class CampBookingController {
             @ModelAttribute CampBooking cBooking) {
         try {
             System.out.println(cBooking);
-            //잔여좌석 없으면 예약안되도록
+            //잔여좌석 없으면 예약안되도록 -> 분해해야함 안그러면 결제 후 이쪽으로 넘어옴
             bookingStatusSearch bss = new bookingStatusSearch();
             bss.setFirstDay(cBooking.getFirstDay());
             bss.setLastDay(cBooking.getLastDay());
             bss.setSiteNo(cBooking.getSiteNo());
             String resultbss = bService.bookingCount(bss);
-            if(Integer.parseInt(resultbss) < 1) {
-                request.setAttribute("msg", "예약가능갯수가 없습니다.");
-                request.setAttribute("url", "/camp/campList.kh");
-                return "fail";
+            if(resultbss != null) {
+                if(Integer.parseInt(resultbss) < 1 ) {
+                    request.setAttribute("msg", "예약가능갯수가 없습니다.");
+                    request.setAttribute("url", "/camp/campList.kh");
+                    return "fail";
+                }
             }
             
             // 예약저장
@@ -147,7 +149,6 @@ public class CampBookingController {
             if(result == 1) {
                 bsInsert = bService.bookingStatus(bs);
             }
-            System.out.println(bsInsert);
 //            if(result ==1 && bsInsert == -1) {
 //                return "success";
 //            }else {
@@ -188,6 +189,10 @@ public class CampBookingController {
         try {
             CampBooking campBooking= bService.printBookingInfo(bookingNo);
             CampSite campSite = cService.printSite(campBooking.getSiteNo());
+            String firstDay =  campBooking.getFirstDay().substring(0,10);
+            String lastDay = campBooking.getLastDay().substring(0,10);
+            campBooking.setFirstDay(firstDay);
+            campBooking.setLastDay(lastDay);
             if(session.getAttribute("loginUser") == null) {
                 request.setAttribute("msg", "정상적인 접근이 아닙니다.");
                 request.setAttribute("url", "/");
@@ -245,6 +250,9 @@ public class CampBookingController {
             String lastDay = campBooking.getLastDay().substring(0,10);
             campBooking.setFirstDay(firstDay);
             campBooking.setLastDay(lastDay);
+            
+            List<OrderPay>opList=cService.printAllPayInfo(Integer.parseInt(bookingNo));
+            mv.addObject("pay",opList);
             mv.addObject("campBooking",campBooking);
             mv.addObject("campSite",campSite);
             mv.setViewName("campBooking/campBookingDetail");
@@ -254,7 +262,7 @@ public class CampBookingController {
         
         return mv;
     }
-  //캠핑장 예약확인 디테일
+  //캠핑장 예약리스트
     @ResponseBody
     @RequestMapping(value = "/campBooking/campBookingList.kh", method = RequestMethod.GET )
     public ModelAndView campBookingList(
@@ -263,11 +271,13 @@ public class CampBookingController {
             ModelAndView mv,
             HttpSession session) {
             NumberFormat numberFormat = NumberFormat.getInstance();
-
         try {
             Member member = (Member)session.getAttribute("loginUser");
+            System.out.println(member);
             String memberId = member.getMemberId();
+            System.out.println(memberId);
             List<CampBooking> cbList = bService.BooingListView(memberId);
+            System.out.println(4);
             for(int i = 0; i<cbList.size(); i++) {
                 String firstDay = cbList.get(i).getFirstDay().substring(0,10);
                 String lastDay = cbList.get(i).getLastDay().substring(0,10);
@@ -281,6 +291,15 @@ public class CampBookingController {
             // TODO: handle exception
         }
     
+        return mv;
+    }
+    
+    //캠핑장 예약 취소
+    @ResponseBody
+    @RequestMapping(value = "/campBooking/campBookingCancle.kh", method = RequestMethod.GET )
+    public ModelAndView campBookingCancle(
+            ModelAndView mv) {
+        
         return mv;
     }
 }

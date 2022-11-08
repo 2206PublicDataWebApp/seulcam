@@ -11,6 +11,7 @@ import com.kh.seulcam.campBooking.domain.CampBooking;
 import com.kh.seulcam.campBooking.domain.bookingStatusSearch;
 import com.kh.seulcam.campBooking.service.CampBookingService;
 import com.kh.seulcam.campBooking.store.CampBookingStore;
+import com.kh.seulcam.order.domain.OrderCancle;
 
 @Service
 public class CampBookingServiceImpl implements CampBookingService{
@@ -46,8 +47,21 @@ public class CampBookingServiceImpl implements CampBookingService{
 
     @Override
     public List<CampBooking> BooingListView(String memberId) {
+        System.out.println("서비스");
         List<CampBooking> cbList = bStore.selectBookList(session,memberId);
         return cbList;
+    }
+
+    @Override
+    public int changeBookingStatus(OrderCancle orderCancle) {
+        int result = bStore.updateBookingStatus(session, orderCancle);
+        return result;
+    }
+
+    @Override
+    public int deleteBookStatus(int orderNo) {
+        int result = bStore.deleteBookStatus(session,orderNo);
+        return result;
     }
 
 }

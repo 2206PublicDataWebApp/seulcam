@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.CampLike;
 import com.kh.seulcam.camp.domain.SearchList;
+import com.kh.seulcam.order.domain.OrderPay;
 import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.domain.CampSite;
 
@@ -41,5 +43,15 @@ public interface CampStore {
     public CampSite selectSite(SqlSession session, int siteNo);
 
     public int updateSite(SqlSession session, CampSite campSite);
+
+    public List<OrderPay> printAllPayInfo(SqlSession session, int bookingNo);
+
+    public List<CampReview> selectAllReview(SqlSession session);
+
+    public Integer selectLikeCount(SqlSession session, CampLike campLike);
+
+    public Integer deleteCampLike(SqlSessionTemplate session, CampLike campLike);
+
+    public Integer insertCampLike(SqlSessionTemplate session, CampLike campLike);
 
 }

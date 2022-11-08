@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -73,25 +74,25 @@ div::-webkit-scrollbar {
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/admin/productList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/admin/reviewList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품 리뷰 관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/admin/brandList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>브랜드관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/orderAdmin/list.kh">
                     <i class="fas fa-fw fa-table"></i>
                     <span>주문관리</span></a>
             </li>
@@ -111,13 +112,13 @@ div::-webkit-scrollbar {
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/campAdmin/campReviewList.kh">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 댓글 관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/campAdmin/campBookingList.kh">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 예약 관리</span></a>
             </li>
@@ -257,7 +258,7 @@ div::-webkit-scrollbar {
                                                     <td><a
                                                         href="/camp/campDetail.kh?contentId=${campSiteList.campId}">${campSiteList.campName}</a></td>
                                                     <td><a class="siteInfo" data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='modal(${campSiteList.siteNo})'>${campSiteList.siteName}</a></td>
-                                                    <td>${campSiteList.sitePrice}원</td>
+                                                    <td><fmt:formatNumber value="${campSiteList.sitePrice}" pattern="#,###" />원</td>
                                                     <td>${campSiteList.standardPeople}명/${campSiteList.maxPeople}명</td>
                                                     <td>${campSiteList.siteCount}개</td>
                                                     <td>-</td>

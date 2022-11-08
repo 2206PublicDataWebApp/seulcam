@@ -8,10 +8,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.CampLike;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.store.CampStore;
+import com.kh.seulcam.order.domain.Order;
+import com.kh.seulcam.order.domain.OrderPay;
 @Repository
 public class CampStoreLogic implements CampStore{
 
@@ -111,6 +114,36 @@ public class CampStoreLogic implements CampStore{
         }else {
             result = session.update("CampAdminMapper.updateSite",campSite);
         }
+        return result;
+    }
+
+    @Override
+    public List<OrderPay> printAllPayInfo(SqlSession session, int bookingNo) {
+        List<OrderPay> opList = session.selectList("CampAdminMapper.printAllPayInfo",bookingNo);
+        return opList;
+    }
+
+    @Override
+    public List<CampReview> selectAllReview(SqlSession session) {
+        List<CampReview> rList = session.selectList("CampMapper.selectAllReview");
+        return rList;
+    }
+
+    @Override
+    public Integer selectLikeCount(SqlSession session, CampLike campLike) {
+        Integer result = session.selectOne("CampMapper.selectLikeCount",campLike);
+        return result;
+    }
+
+    @Override
+    public Integer deleteCampLike(SqlSessionTemplate session, CampLike campLike) {
+        Integer result = session.delete("CampMapper.deleteCampLike",campLike);
+        return result;
+    }
+
+    @Override
+    public Integer insertCampLike(SqlSessionTemplate session, CampLike campLike) {
+        Integer result = session.insert("CampMapper.insertCampLike",campLike);
         return result;
     }
 

@@ -111,19 +111,19 @@ div::-webkit-scrollbar {
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/admin/productList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/admin/reviewList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품 리뷰 관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/admin/brandList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>브랜드관리</span></a>
             </li>
@@ -149,13 +149,13 @@ div::-webkit-scrollbar {
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/campAdmin/campReviewList.kh">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 댓글 관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/campAdmin/campBookingList.kh">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 예약 관리</span></a>
             </li>

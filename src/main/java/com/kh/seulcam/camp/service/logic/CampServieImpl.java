@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.seulcam.camp.domain.Camp;
+import com.kh.seulcam.camp.domain.CampLike;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.domain.CampSite;
 import com.kh.seulcam.camp.service.CampServie;
 import com.kh.seulcam.camp.store.CampStore;
+import com.kh.seulcam.order.domain.OrderPay;
 
 @Service
 public class CampServieImpl implements CampServie{
@@ -126,5 +128,41 @@ public class CampServieImpl implements CampServie{
         int result = cStore.updateSite(session,campSite);
         return result;
     }
+    
+    // 캠핑장 관리 예약리스트 결제파트 데이터 출력
+    @Override
+    public List<OrderPay> printAllPayInfo(int bookingNo) {
+        List<OrderPay> opList = cStore.printAllPayInfo(session,bookingNo);
+        return opList;
+    }
+    
+    //캠핑장 all 리뷰
+    @Override
+    public List<CampReview> campReviewAllList() {
+        List<CampReview> rList = cStore.selectAllReview(session);
+        return rList;
+    }
+    //좋아요 갯수 카운트
+    @Override
+    public Integer campLikeCount(CampLike campLike) {
+        Integer result = cStore.selectLikeCount(session,campLike);
+        return result;
+    }
+    
+    //좋아요 삭제
+    @Override
+    public Integer campLikeDelete(CampLike campLike) {
+        Integer result = cStore.deleteCampLike(session,campLike);
+        return result;
+    }
+    
+    //좋아요 등록
+    @Override
+    public Integer campLikeUpdate(CampLike campLike) {
+        Integer result = cStore.insertCampLike(session,campLike);
+        return result;
+    }
+    
+    
 
 }

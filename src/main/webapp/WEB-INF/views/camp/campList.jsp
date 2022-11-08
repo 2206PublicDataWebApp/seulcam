@@ -16,8 +16,12 @@
 	<link rel="stylesheet" href="/resources/css/camp/campList.css">
 	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 	<!-- jQuery -->
 	<script src="../../../resources/js/jquery-3.6.1.min.js"></script>
+	<!-- slick -->
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	</head>
 <body>
 	<!-- 헤더&메뉴바 -->
@@ -77,7 +81,6 @@
 							<span class="onoff-switch"></span>
 						</label>
 					</span>
-				
 				</div>
 				
 				<div class="input-group mb-3">
@@ -86,6 +89,8 @@
 				</div>
 
 			</div>
+
+				
 			<div class="list_area" >
 				<div class="word_area">
 					<h5>검색결과</h5>
@@ -106,6 +111,96 @@
 		var search = "";
 		var regist ="N";
 		var listUrl ="";
+
+		// 좋아요 버튼 클릭시 동작
+		function likeButton(AcontentId,AmapX,AmapY){
+			const data ={
+				"memberId":"${sessionScope.loginUser.memberId}",
+				"contentId":AcontentId,
+				"campId" : AcontentId,
+				"mapX":AmapX,
+				"mapY":AmapY
+			}
+		// var memberId = "${sessionScope.loginUser.memberId}";
+		// var contentId = AcontentId;
+		// var mapX = AmapX;
+		// var mapY = AmapY;
+		console.log(data);
+        if(data.memberId == ""){
+            alert("로그인이 필요한 서비스 입니다.")
+        }else{
+            $.ajax({
+            url : "/camp/campLike.kh",
+            type : "get",
+            data : data,
+            async : false,
+            success : function(result){
+                if(result == "none"){
+                    alert("로그인이 필요한 서비스 입니다.");
+                    location.href="/camp/campList.kh";
+                }else if(result == "abnormal"){
+                    alert("비정상적인 접근입니다.");
+                    location.href="/camp/campList.kh";
+                }else{
+                    likeCount(data);
+                    likeCheck(data);
+                }
+            },
+            error : function(request, status, error){
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+            }
+
+        })
+        }
+    }
+
+    // 좋아요 갯수 카운트
+    function likeCount(data){
+        $.ajax({
+            url : "/camp/campLikeCount.kh",
+            type : "get",
+            data : data,
+            async : false,
+            success : function(result){
+                $("#likeCount-"+data.contentId+"").html(result)
+            },
+            error : function(request, status, error){
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+            }
+
+        })
+    }
+
+    //로그인 한 아이디가 좋아요를 이미 눌렀을경우 표시
+    function likeCheck(data){
+        if(data.memberId != ""){
+            $.ajax({
+                url : "/camp/campLikeCheck.kh",
+                type : "get",
+                data : data,
+                async : false,
+                success : function(result){
+                    if(result>0){
+                        $("#like-"+data.contentId+"").addClass("alreadyLike");
+                    }else{
+                        $("#like-"+data.contentId+"").removeClass("alreadyLike");
+                    }
+                },
+                error : function(request, status, error){
+                    console.log("code: " + request.status)
+                    console.log("message: " + request.responseText)
+                    console.log("error: " + error);
+                }
+    
+            })
+
+        }
+
+    }
 
 		// 리스트 생성 function
 		function urlLoad(){
@@ -135,7 +230,14 @@
 										str += "<div style='height: 225px; background: url("+data[i].firstImageUrl+") no-repeat center center #343a40; background-size: 100%;'></div></a>"
 									}	
 										str += "<div class='card-body 'style='padding-top: 8px;'><div class='text-right tt' stlyle='padding: 0px 12px;'><small class='text-muted'>"+data[i].induty+"</small></div>"
-										str += "<a href='/camp/campDetail.kh?contentId="+data[i].contentId+"' data-id='"+data[i].contentId+"'><h5 class='card-title tt'>"+data[i].facltNm+"</h5><p class='card-text tt'>"+data[i].addr1+"</p></a></div><b>좋아요 : 0</b></div><hr>"
+										str += "<a href='/camp/campDetail.kh?contentId="+data[i].contentId+"' data-id='"+data[i].contentId+"'><h5 class='card-title tt'>"+data[i].facltNm+"</h5><p class='card-text tt'>"+data[i].addr1+"</p></a></div>"
+										if(data[i].likeCheck > 0){
+											str += "<div class='likeBtn alreadyLike' id='like-"+data[i].contentId+"' onclick='likeButton("+data[i].contentId+","+data[i].mapX+","+data[i].mapY+")' ><svg class='heart' xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16'>"
+										}else{
+											str += "<div class='likeBtn' id='like-"+data[i].contentId+"' onclick='likeButton("+data[i].contentId+","+data[i].mapX+","+data[i].mapY+")' ><svg class='heart' xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16'>"
+										}
+										str += "<path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z'></path></svg><span class='likeCount' id='likeCount-"+data[i].contentId+"'>"+data[i].likeCount+"</span></div></div><hr>"
+
 									}
 									if(listUrl == "/camp/campListScroll.kh"){
 										$("#list_area").append(str);

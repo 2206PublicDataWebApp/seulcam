@@ -17,7 +17,28 @@
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <!-- jQuery -->
-    <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
+    <!-- <script src="../../../resources/js/jquery-3.6.1.min.js"></script> -->
+    <!-- slick -->
+	<!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/> -->
+    <!-- ✅ Load slick CSS ✅ -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"
+      integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- ✅ Load slick theme CSS ✅ -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+      integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+	</head>
 </head>
 <style>
     body {
@@ -33,7 +54,7 @@
         height: 50px;
         background-color: rgb(255, 255, 255);
         z-index: 200;
-        max-width: 600px;
+        max-width: 770px;
         margin: 0 auto; 
     }
     .header-wrapper {
@@ -46,7 +67,7 @@
         position: relative;
     }
     .body-wrapper {
-        max-width: 600px;
+        max-width: 770px;
         margin: 0 auto; 
         background-color: white;
         min-height: 100vh;
@@ -172,7 +193,44 @@
   .reviewList i:hover {
     color: blue;
   }
+  .post-slider .post-wrapper .card{
+  display:inline-block;
+}
+.card {
+    cursor: pointer;
+}
+.likeBtn{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.likeBtn:hover{
+    background-color: #dc3545;
+        color: #f1f1f1;
+}
 
+.alreadyLike{
+    background-color: #dc3545;
+        color: #f1f1f1;
+}
+.iZone {
+    display: flex;
+}
+.heart {
+    margin-top: 2px;
+    margin-left: 8px;
+    margin-right: 2px;
+}
+.likeCount{
+    font-size: 13pt; 
+    margin-left: 5px; 
+    margin-right: 6px; 
+    margin-top: 1px;
+}
 
     </style>
 <body >
@@ -194,13 +252,24 @@
                     <h3>${camp.facltNm}</h3>
                     <p>${camp.lineIntro}</p>
                     <div style="height: 100%; overflow:auto; ">
-                        <div style="width: 50%; float: left;">
+                        <div class="iZone" style="width: 50%; float: left;">
                             <a href="${camp.homepage}" target='_blank'>
                                     <svg class="iconh" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
                                         <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
                                         </svg>
                             </a>
+                            <c:if test="${likeCheck > 0}">
+                                <div class="likeBtn alreadyLike" onclick="likeButton()" >
+                            </c:if>
+                            <c:if test="${likeCheck < 1}">
+                                <div class="likeBtn" onclick="likeButton()" >
+                            </c:if>
+                                <svg class="heart" xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"></path>
+                                  </svg>
+                                  <span class="likeCount">${likeCount}</span>
+                            </div>
                         </div>
                         <div align = "center" style=" width: 50%; float: left;">
                             <c:if test="${camp.registAvi == 'Y'}"> 
@@ -250,6 +319,13 @@
                     <div id="map" style="width:100%;height:400px;"></div>
                     <hr>
                 </div>
+                <div class="post-slider">
+                    <h4 class="sider-title">함께 갈만한 가까운 캠핑장</h4>
+                    <div class="post-wrapper">
+                    </div>
+                </div>
+                <hr>
+
                 <h4>리뷰등록</h4>
                 <div class="reviewWrite_area">
                     <div id="input">
@@ -273,15 +349,128 @@
             
             
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=2i99b6lxe8&submodules=geocoder"></script>    
+	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=2i99b6lxe8&submodules=geocoder"></script>   
+     <!-- ✅ load jQuery ✅ -->
+     <script
+     src="https://code.jquery.com/jquery-3.6.0.min.js"
+     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+     crossorigin="anonymous"
+   ></script>
+
+   <!-- ✅ load Slick ✅ -->
+   <script
+     src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+     integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+     crossorigin="anonymous"
+     referrerpolicy="no-referrer"
+   ></script> 
     <script>
-        function asdf(){
-            console.log(0)
+        
+    var page = 1;
+    var memberId = "${sessionScope.loginUser.memberId}";
+    var mapX = ${camp.mapX};
+    var mapY = ${camp.mapY};
+    var contentId = ${camp.contentId};
+
+    // 블로그 글, 리뷰 리스트, 가까운 캠핑장 출력
+    $(document).ready(function() {
+        blogLoad();
+        nearCampLoad();
+        campReviewList();
+    })
+
+    // 좋아요 버튼 클릭시 동작
+    function likeButton(){
+        if(memberId == ""){
+            alert("로그인이 필요한 서비스 입니다.")
+        }else{
+            $.ajax({
+            url : "/camp/campLike.kh",
+            type : "get",
+            data : {
+                "memberId" : memberId,
+                "campId" : contentId,
+                "mapX" : mapX,
+                "mapY" : mapY
+            },
+            async : false,
+            success : function(data){
+                if(data == "none"){
+                    alert("로그인이 필요한 서비스 입니다.");
+                    location.href="/camp/campDetail.kh?contentId="+contentId;
+                }else if(data == "abnormal"){
+                    alert("비정상적인 접근입니다.");
+                    location.href="/camp/campDetail.kh?contentId="+contentId;
+                }else{
+                    likeCount();
+                    likeCheck();
+                }
+            },
+            error : function(request, status, error){
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+            }
+
+        })
+        }
+    }
+
+    // 좋아요 갯수 카운트
+    function likeCount(){
+        $.ajax({
+            url : "/camp/campLikeCount.kh",
+            type : "get",
+            data : {
+                
+                "campId" : contentId
+            },
+            async : false,
+            success : function(data){
+                $(".likeCount").html(data)
+            },
+            error : function(request, status, error){
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+            }
+
+        })
+    }
+
+    //로그인 한 아이디가 좋아요를 이미 눌렀을경우 표시
+    function likeCheck(){
+        if(memberId != ""){
+            $.ajax({
+                url : "/camp/campLikeCheck.kh",
+                type : "get",
+                data : {
+                    
+                    "memberId" : memberId,
+                    "campId" : contentId
+                },
+                async : false,
+                success : function(data){
+                    if(data>0){
+                        $(".likeBtn").addClass("alreadyLike");
+                    }else{
+                        $(".likeBtn").removeClass("alreadyLike");
+                    }
+                },
+                error : function(request, status, error){
+                    console.log("code: " + request.status)
+                    console.log("message: " + request.responseText)
+                    console.log("error: " + error);
+                }
+    
+            })
 
         }
-        var page = 1;
-        //블로그 출력용 함수
-        function blogLoad(){
+
+    }
+
+    //블로그 출력용 함수
+    function blogLoad(){
             var url = 'https://dapi.kakao.com/v2/search/blog'; /*URL*/
             var queryParams = '?' + encodeURIComponent('sort') + '=' + encodeURIComponent('accuracy'); /**/
             queryParams += '&' + encodeURIComponent('page') + '=' + encodeURIComponent(page);
@@ -314,18 +503,101 @@
                         }
                     })
             }
-         
-    // 블로그 글, 리뷰 리스트 출력
-    $(document).ready(function() {
-        blogLoad();
-        campReviewList();
-    })
 
     // 블로그 글 더보기
     function blogMore(){
         page++
         blogLoad();
     }
+
+    // 근처 캠핑장 데이터 파싱
+    function nearCampLoad(){
+            var mapX=${camp.mapX};
+            var mapY=${camp.mapY};
+            var url = 'https://apis.data.go.kr/B551011/GoCamping/locationBasedList'; /*URL*/
+            var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'qbHoplMaKq5PUqUFEhfVjBpLiBxBcVPOw%2Fio3GvQ91q8xQjh%2BLZMz4caQ5Nqyt%2BU%2BeCGuAPRaJHRIhTzUqKmHw%3D%3D'; /*Service Key*/
+            queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+            queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10');
+            queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('WIN');
+            queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('seulcam'); /**/
+            queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json');
+            queryParams += '&' + encodeURIComponent('mapX') + '=' + encodeURIComponent('${camp.mapX}'); 
+            queryParams += '&' + encodeURIComponent('mapY') + '=' + encodeURIComponent('${camp.mapY}'); 
+            queryParams += '&' + encodeURIComponent('radius') + '=' + encodeURIComponent('20000'); 
+            var urli = url+queryParams;
+            console.log(urli)
+            $.ajax({
+                        url : urli,
+                        type : "GET",
+                        data : {},
+                        dataType : "json",
+                        async: false,
+                        success : function(data) {
+                            console.log(data)
+                            var str = "";
+                            var j = 0;
+                            for (var i = 0; i < data.response.body.items.item.length; i++) {
+                                var campItem = data.response.body.items.item;
+                                if(j != 0 ){
+                                    str += "<div class='card' style='width: 14rem;' onclick ='location.href=\"/camp/campDetail.kh?contentId="+campItem[i].contentId+"\"'>"
+                                        if(campItem[i].firstImageUrl == ""){
+                                            str += "<img style='max-height:164.66px; height : 100%;' src='https://campingagains3.s3.ap-northeast-2.amazonaws.com/medium_2021_10_17_11_38_57_fad16366d0.png' class='card-img-top' alt=''><div class='card-body'>"
+                                        }else{
+                                            str += "<img style='max-height:164.66px;' src='"+campItem[i].firstImageUrl+"' class='card-img-top' alt=''><div class='card-body'>"
+                                        }
+                                    str += "<p class='card-text'><b>"+campItem[i].facltNm+"</b></p><p>"+campItem[i].addr1+"</p></div></div>"
+                                }
+                                j++;
+                                }
+                            if(str == ""){
+                                $(".post-wrapper").append("없서용");
+                            }
+                            $(".post-wrapper").append(str);
+                            slick()
+
+                        },
+                        error : function(request, status, error){
+                            console.log("code: " + request.status)
+                            console.log("message: " + request.responseText)
+                            console.log("error: " + error);
+                        }
+                    })
+        }
+       
+        // 파싱받은 데이터 슬릭 처리
+        function slick(){
+            $('.post-wrapper').slick({
+                slide: 'div',        //슬라이드 되어야 할 태그
+                infinite : true,     //무한 반복 옵션     
+                slidesToShow : 3,        // 한 화면에 보여질 컨텐츠 개수
+                slidesToScroll : 3,        //스크롤 한번에 움직일 컨텐츠 개수
+                speed : 500,     // 다음 버튼 누르고 다음 화면 뜨는데까지 걸리는 시간(ms)
+                arrows : false,         // 옆으로 이동하는 화살표 표시 여부
+                dots : true,         // 스크롤바 아래 점으로 페이지네이션 여부
+                autoplay : true,            // 자동 스크롤 사용 여부
+                autoplaySpeed : 2000,         // 자동 스크롤 시 다음으로 넘어가는데 걸리는 시간 (ms)
+                pauseOnHover : true,        // 슬라이드 이동    시 마우스 호버하면 슬라이더 멈추게 설정
+                vertical : false,        // 세로 방향 슬라이드 옵션
+                prevArrow : "<button type='button' class='slick-prev'>Previous</button>",
+                nextArrow : "<button type='button' class='slick-next'>Next</button>",
+                draggable : true,     //드래그 가능 여부 
+                responsive: [ // 반응형 웹 구현 옵션
+                    {  
+                    breakpoint: 500, //화면 사이즈 960px
+                    settings: {
+                        slidesToShow: 2
+                    } 
+                    },
+                    { 
+                    breakpoint: 400, //화면 사이즈 768px
+                    settings: {    
+                        slidesToShow: 1
+                    } 
+                    }
+                ]
+
+                });
+                }
 
     // 댓글 별점 구현
     var reviewId = "";
