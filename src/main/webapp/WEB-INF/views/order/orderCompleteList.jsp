@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -91,40 +92,46 @@ header {
 
 		<div class="contents">
 
-			<div class="title">
+		<!-- 	<div class="title">
 				<span>주문 내역 리스트</span>
-			</div>
+			</div> -->
 			<div class="list-menu">
 				<table class="menu-tbl">
 					<tr>
 						<td>
-							<ul>
-								<li class="bold">10</li>
+							<ul onclick="location.href='/order/complete/list.kh'">
+								<li class="bold" >10</li>
 								<li>전체</li>
 							</ul>
 						</td>
 						<td>
-							<ul>
+							<ul onclick="cngDel('입금확인')">
 								<li class="bold">10</li>
 								<li>입금/결제</li>
 							</ul>
 						</td>
 						<td>
-							<ul>
+							<ul onclick="cngDel('배송중')">
 								<li class="bold">10</li>
 								<li>배송중</li>
 							</ul>
 						</td>
 						<td>
-							<ul>
+							<ul onclick="cngDel('배송완료')">
 								<li class="bold">10</li>
 								<li>배송완료</li>
 							</ul>
 						</td>
 						<td>
-							<ul>
+							<ul onclick="cngDel('구매확정')">
 								<li class="bold">10</li>
 								<li>구매확정</li>
+							</ul>
+						</td>
+						<td>
+							<ul onclick="cngDel('구매취소')">
+								<li class="bold">10</li>
+								<li>구매취소</li>
 							</ul>
 						</td>
 					</tr>
@@ -134,7 +141,6 @@ header {
 			<div class="list-contents">
 				<table class="contents-tbl">
 					<c:forEach items="${oList}" var="order" varStatus="i">
-
 						 <c:forEach items="${opList}" var="orderPay" varStatus="op">
 							<c:if test="${order.orderNo eq orderPay.orderNo }">
 								<%-- <c:forEach items="${pList}" var="product" varStatus="p">
@@ -164,7 +170,7 @@ header {
 											</td>
 											<td>
 											<ul><li class="bold">${order.orderMainProductName }</li>
-												<li>${orderPay.payPrice }원</li>
+												<li><fmt:formatNumber value="${orderPay.payPrice }" pattern="#,###,###"/>원</li>
 											</ul>
 											</td>
 											
@@ -178,13 +184,13 @@ header {
 											</c:if>
 											<c:if test="${order.dirivaryStatus eq '배송중'}">
 											<td colspan="3">
-											<span><button  style='float: right' class="btn btn-secondary btn-sm" >배송조회</button></span>
+											<span><button  style='float: right' class="btn btn-secondary btn-sm" onclick="diliveryDtail(${order.orderNo})">배송조회</button></span>
 											<!-- <span><a href="https://tracker.delivery/#/:carrier_id/:track_id" target="_blank">배송조회</a></span> -->
 											</td>
 											</c:if>
 											<c:if test="${order.dirivaryStatus eq '배송완료'}">
 											<td colspan="3">
-											<span><button  style='float: right' class="btn btn-secondary btn-sm" >배송조회</button></span>
+											<span><button  style='float: right' class="btn btn-secondary btn-sm" onclick="diliveryDtail(${order.orderNo})">배송조회</button></span>
 											<span><button  style='float: right' class="btn btn-secondary btn-sm" onclick="getPoint(this)">구매확정</button>
 												<input type="hidden" id="orderNo" value="${order.orderNo }"/>
 											</span>
@@ -194,13 +200,15 @@ header {
 											</c:if>
 											<c:if test="${order.dirivaryStatus eq '구매확정'}">
 											<td colspan="3">
-											<span><button  style='float: right' class="btn btn-secondary btn-sm" >배송조회</button></span>
+											<span><button  style='float: right' class="btn btn-secondary btn-sm" onclick="diliveryDtail(${order.orderNo})">배송조회</button></span>
 											<span><button  style='float: right' class="btn btn-secondary btn-sm" >후기작성</button></span>
 											</td>
 											</c:if>
 										</tr>
-							</c:if>
+						</c:if>
 						</c:forEach>
+						<input type="hidden"id="put2"/>
+						
 					</c:forEach>
 				</table>
 			</div>
@@ -210,6 +218,17 @@ header {
 	</div>
 	
 	<script>
+	function diliveryDtail(orderNo){
+		location.href="/order/delliveryDtail?orderNo="+orderNo+""
+		//alert("/order/delliveryDtail?orderNo="+orderNo+"");
+		
+	}
+	
+	
+	function cngDel(msg){
+		location.href="/order/delliveryMenu?dirivaryStatus="+msg+""
+	} 
+	
 	function getPoint(obj){
 		var orderNo=$(obj).parent().children("#orderNo").val();	
 

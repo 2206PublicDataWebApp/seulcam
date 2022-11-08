@@ -72,6 +72,9 @@ public interface OrderService {
 	//상세페이지->주문으로 넘기기
 	public int orderProduct(OrderProduct orderProduct);
 
+	//배송 상세조회 메뉴 바꾸기
+	public List<Order> printChangeCompleteList(String memberId, String dirivaryStatus);
+
 
 	
 

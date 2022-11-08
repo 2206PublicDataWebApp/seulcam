@@ -243,23 +243,67 @@ public class OrderController {
 	
 	//상세페이지에서 주문으로 넘겨주기
 	//주문하기로 넘겨주기
+		@ResponseBody
 		@RequestMapping(value="/product/order",method=RequestMethod.POST)
 		public String cartOrder(
 				@ModelAttribute OrderProduct orderProduct,
 				HttpSession session
 				) {
 			Member member=(Member)session.getAttribute("loginUser");
+			if(member == null) {
+				return "noLogin";
+			}
 			String memberId=member.getMemberId();
 			if(memberId!=null) {
 			orderProduct.setMemberId(memberId);
 			int result = oService.orderProduct(orderProduct);
+			System.out.println(result);
+			if(result>0) {
+			return "success";
+			}else {
+				return "error";
+			}
 			}else {
 				return"error";
 			}
 			
-			return "success";
-			
-			
 			}
+		
+		//배송 상세조회 메뉴 바꾸기
+		@RequestMapping(value="/order/delliveryMenu",method=RequestMethod.GET)
+		public ModelAndView changeMenu(
+				ModelAndView mv,
+				@RequestParam(value="dirivaryStatus")String dirivaryStatus,
+				HttpSession session
+				) {Member member = (Member) session.getAttribute("loginUser");
+				String memberId=member.getMemberId();
+				List<Order> oList = oService.printChangeCompleteList(memberId,dirivaryStatus);
+				if (!oList.isEmpty()) {
+					List<OrderPay> opList = new ArrayList();
+					for (int i = 0; i < oList.size(); i++) {
+						int orderNo = oList.get(i).getOrderNo();
+
+						List<OrderPay> opList1 = oService.printOrderPay(orderNo);
+						opList.addAll(opList1);
+					}
+					mv.addObject("opList", opList);
+				}
+
+				mv.addObject("oList", oList);
+				mv.setViewName("order/orderCompleteList");
+				return mv;
+		}
+		
+		
+		//배송조회 화면 보여주기
+		@RequestMapping(value="/order/delliveryDtail",method=RequestMethod.GET)
+		public ModelAndView changeMenu(
+				@RequestParam("orderNo")int orderNo,
+				ModelAndView mv) {
+			Order order=oService.printOrderInfo(orderNo);
+		mv.addObject("order",order);
+		mv.setViewName("order/dilivery");
+			return mv;
+		}
 			
 }

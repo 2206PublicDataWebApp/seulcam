@@ -193,4 +193,15 @@ public class OrderStoreLogic implements OrderStore {
 		return result;
 	}
 
+	//배송 상세조회 메뉴 바꾸기
+	@Override
+	public List<Order> printCompleteList(SqlSession session, String memberId, String dirivaryStatus) {
+		HashMap<String,String>paramMap=new HashMap<String,String>();
+		  paramMap.put("dirivaryStatus",dirivaryStatus );
+		  paramMap.put("memberId",memberId);
+		  
+		  List<Order>oList=session.selectList("OrderMapper.selectChangeCompleteList",paramMap);
+		return oList;
+	}
+
 }

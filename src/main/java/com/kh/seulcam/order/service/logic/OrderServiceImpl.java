@@ -185,6 +185,13 @@ public class OrderServiceImpl implements OrderService {
 		return result;
 	}
 
+	//배송 상세조회 메뉴 바꾸기
+	@Override
+	public List<Order> printChangeCompleteList(String memberId, String dirivaryStatus) {
+		List<Order>oList = oStore.printCompleteList(session,memberId,dirivaryStatus);
+		return oList;
+	}
+
 	
 	
 }

@@ -21,6 +21,7 @@
 body {
         font-size: 14px;
         color: #000;
+        background-color: #f1f1f1;
     }
     header {
         position: fixed;
@@ -30,12 +31,12 @@ body {
         height: 50px;
         background-color: rgb(255, 255, 255);
         z-index: 200;
-        max-width: 600px;
+        max-width: 768px;
         margin: 0 auto; 
     }
 
 .wrap{
- 		max-width: 600px;
+ 		max-width: 768px;
         margin: 0 auto; 
         background-color: white;
         min-height: 100vh;
@@ -113,13 +114,17 @@ width:100%;
     color: #fff;
 	
 }
-.point-right{
-	float:right;
-}
 .pointinfo{
+	display:flex;
+	align:right;
 	color:blue;
-	float:right;
+	 float:right; 
+	 left:100px; 
 }
+.point-right{
+ 	float:right; 
+}
+
 #message{
 width:100%;
 }

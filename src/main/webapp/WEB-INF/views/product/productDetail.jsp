@@ -56,8 +56,8 @@
 			</div>
 
 			<div class="buttons">
-				<button type="button" class onclick="product_cart()" id="actionCart">장바구니</button>
-				<button type="button" class onclick="product_buy()" id="actionBuy">바로구매</button>
+				<button type="button" class onclick="product_cart(${product.productNo})" id="actionCart">장바구니</button>
+				<button type="button" class onclick="product_buy(${product.productNo})" id="actionBuy">바로구매</button>
 			</div>
 
 
