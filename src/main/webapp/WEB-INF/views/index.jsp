@@ -15,7 +15,7 @@
 <body>
 
 	<section class="youtubeBg">
-		<div data-vbg-mute="true" data-vbg-loop="true" data-vbg-autoplay="true" data-vbg-start-at="40" data-vbg="https://youtu.be/wSZ0j6eBRpg"></div>
+		<div data-vbg-muted="true" data-vbg-loop="true" data-vbg-autoplay="true" data-vbg-start-at="40" data-vbg="https://youtu.be/wSZ0j6eBRpg"></div>
 	</section>
 	
 	<!-- 헤더 -->

@@ -9,6 +9,8 @@
     <title>내 정보 관리</title>
     <link rel="stylesheet" href="/resources/css/member/mypageMember.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
+    <link rel="shortcut icon" href="resources/images/faviconlogo.ico" type="image/x-icon">
+    <link rel="icon" href="resources/images/faviconlogo.ico" type="image/x-icon">
 </head>
 <body>
     <div class="body-wrapper">

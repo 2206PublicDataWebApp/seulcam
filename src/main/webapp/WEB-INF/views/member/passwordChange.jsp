@@ -5,13 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalabel=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>비밀번호 변경</title>
     <link rel="stylesheet" href="/resources/css/member/passwordChange.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
     <link rel="stylesheet" href="/resources/css/memberCommon.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
