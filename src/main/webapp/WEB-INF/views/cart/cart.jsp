@@ -53,12 +53,12 @@
                                     <div class="thumbnail-box">
                                         <input type="checkbox" name="cartbox" id="product${i.count }" class="check-all"onclick="checkSelectAll()">
                                         <label for="product${i.count }" class="check-label"></label>
-                                        <a href="#" class="thumbnail-link">
+                                        <a href='/product/productDetail?productNo=${product.productNo}' class="thumbnail-link">
                                             <img class="thumbnail-image"src="/resources/puploadFiles/${product.mainFileRename}"/>
                                         </a>
                                     </div>
                                 </div>
-                                <div class="product-info">
+                                <div class="product-info" onclick="location.href='/product/productDetail?productNo=${product.productNo}'">
                                     <div class="product">
                                         <div class="brand-info">
                                             <div class="a-wrap">
@@ -372,9 +372,9 @@
 			productNo=checked.parent().parent().eq(i).children().children('.info-pNo').val();
 			//alert(count);
 			//alert(productNo);
-			var input = ("<input type='text'name='orders[" + orderNumber + "].productNo' value='"+productNo+"'/>")
-			input+=("<input type='text' name='orders[" + orderNumber + "].orderCount'value='"+count+"'/>")
-			input+=("<input type='text'name='orders[" + orderNumber + "].memberId' value='${memberId.memberId}'/>")
+			var input = ("<input type='hidden'name='orders[" + orderNumber + "].productNo' value='"+productNo+"'/>")
+			input+=("<input type='hidden' name='orders[" + orderNumber + "].orderCount'value='"+count+"'/>")
+			input+=("<input type='hidden'name='orders[" + orderNumber + "].memberId' value='${memberId.memberId}'/>")
 			
 			orderNumber += 1;
 			$(".order-form").append(input);

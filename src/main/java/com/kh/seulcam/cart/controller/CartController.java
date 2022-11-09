@@ -92,13 +92,14 @@ public class CartController {
 	}
 
 
-	//주문하기로 넘겨주기
+	//주문하기로 넘겨주기 -> //장바구니 물건 지우기
 	@RequestMapping(value="/cart/order.kh",method=RequestMethod.POST)
 	public ModelAndView cartOrder(
 			ModelAndView mv
 			,@ModelAttribute(value="OrderList")OrderList order
 			) {
 		int result = cService.orderProduct(order);
+		
 		
 		mv.setViewName("redirect:/order/order.kh");
 		return mv;

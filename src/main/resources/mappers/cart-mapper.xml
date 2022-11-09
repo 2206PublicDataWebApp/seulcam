@@ -38,6 +38,15 @@
 		  <delete id="deleteCheck">
 		  	DELETE FROM CART_TBL WHERE PRODUCT_NO=#{productNo} AND MEMBER_ID=#{memberId}
 		  </delete>
+		  
+		    <delete id="deleteCartProduct" parameterType="list"> 
+			DELETE FROM CART_TBL
+			<where> 
+				<foreach collection="orders" item="item" open="" close="" separator="OR"> 
+				(MEMBER_ID = #{item.memberId} AND  PRODUCT_NO= #{item.productNo}) 
+				</foreach> 
+				</where> 
+			</delete>
 		
 	<resultMap type="Product" id="productResultMap">
   		<id 	property="productNo" 		column="PRODUCT_NO"/>

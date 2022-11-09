@@ -130,6 +130,8 @@ width:100%;
 		<div id="post">${order.orderAddress1 }</div>
 		<div id="address1">${order.orderAddress2 }</div>
 		<div id="address2">${order.orderAddressPost }</div>
+		<div class="small-title">배송 메모</div>
+		<div>${order.orderMessage }</div>
 		<!-- <input type="text" name="post" class="postcodify_postcode5" > -->
 		</div>
 		</div>

@@ -106,31 +106,31 @@ header {
 						</td>
 						<td>
 							<ul onclick="cngDel('입금확인')">
-								<li class="bold">10</li>
+								<li class="bold">${count1 }</li>
 								<li>입금/결제</li>
 							</ul>
 						</td>
 						<td>
 							<ul onclick="cngDel('배송중')">
-								<li class="bold">10</li>
+								<li class="bold">${count2 }</li>
 								<li>배송중</li>
 							</ul>
 						</td>
 						<td>
 							<ul onclick="cngDel('배송완료')">
-								<li class="bold">10</li>
+								<li class="bold">${count3 }</li>
 								<li>배송완료</li>
 							</ul>
 						</td>
 						<td>
 							<ul onclick="cngDel('구매확정')">
-								<li class="bold">10</li>
+								<li class="bold">${count4 }</li>
 								<li>구매확정</li>
 							</ul>
 						</td>
 						<td>
 							<ul onclick="cngDel('구매취소')">
-								<li class="bold">10</li>
+								<li class="bold">${count5 }</li>
 								<li>구매취소</li>
 							</ul>
 						</td>
@@ -218,6 +218,8 @@ header {
 	</div>
 	
 	<script>
+	
+	console.log(oList);
 	function diliveryDtail(orderNo){
 		location.href="/order/delliveryDtail?orderNo="+orderNo+""
 		//alert("/order/delliveryDtail?orderNo="+orderNo+"");

@@ -1,12 +1,12 @@
-var productCount=$('.inp').val();
 
 function product_cart(pNo){
-alert(productCount);
+var cartCount=Number($('.inp').val());
+console.log(cartCount);
 
 $.ajax({
 	url:"/product/cart",
 	type:"post",
-	data:{"productNo": pNo,"cartCount":productCount},
+	data:{"productNo": pNo,"cartCount":cartCount},
 	success:function(message){
 	if(message=="success"){
 		alert("장바구니에 담겼습니다.");
@@ -22,12 +22,15 @@ $.ajax({
 });
 
 }
+
 function product_buy(pNo){
+var orderCount=Number($('.inp').val());
+console.log(orderCount);
 	
 $.ajax({
 	url:"/product/order",
 	type:"post",
-	data:{"productNo":pNo,"orderCount":productCount},
+	data:{"productNo":pNo,"orderCount":orderCount},
 	success:function(message){
 	if(message=="success"){
 		location.replace("/order/order.kh");

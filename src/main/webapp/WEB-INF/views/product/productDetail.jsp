@@ -241,6 +241,7 @@ function reviewRegist(){
         }
         if(num != now){
             $count.val(num);
+            $count.attr("value",num);
         }
     }
 });

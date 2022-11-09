@@ -42,6 +42,7 @@ public class CartStoreLogic implements CartStore{
 	@Override
 	public int insertOrder(SqlSession session, OrderList order) {
 		int result = session.insert("OrderMapper.insertProduct",order);
+		int result2 = session.delete("CartMapper.deleteCartProduct",order);
 		return result;
 	}
 
