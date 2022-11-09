@@ -1,4 +1,4 @@
-var productCount=$('.inp').val();
+var productCount=Number($('.inp').val());
 
 function product_cart(pNo){
 alert(productCount);

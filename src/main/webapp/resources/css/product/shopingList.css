@@ -24,7 +24,7 @@ body {
     height: 100%;
 }
 .shop{
-	width:770px;
+	max-width:770px;
 	    margin: 0 auto;
     border-left: 1px solid black;
 }
@@ -50,8 +50,8 @@ section.top20 > article.list > ul > li {
     width: 50%;
     float: left;
     position: relative;
-    border-top: solid 1px #000;
     border-right: solid 1px #000;
+    border-bottom:solid 1px #000;
 }
 li {
     list-style: none;
@@ -120,6 +120,9 @@ section.top20 > article.list > ul > li:nth-child(2n) > a .thumbNail {
     right: 4px;
     text-align: right;
     display: inline-block;
+}
+.wrapper{
+	border-bottom:1px solid black;
 }
 section.top20 > article.list > ul > li > .label {
     position: absolute;

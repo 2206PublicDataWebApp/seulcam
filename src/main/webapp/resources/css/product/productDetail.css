@@ -240,7 +240,7 @@ div.ac-sub{
 	
 }
 img{
-	width:95%;
+	width:100%;
 	onerror:display:none;
 
 }
@@ -273,4 +273,7 @@ img{
 	margin-top:20px;
 	text-align:center;
 	color:red;
+}
+ div.ac-sub > div.image_panel > img{
+	width:345px;
 }

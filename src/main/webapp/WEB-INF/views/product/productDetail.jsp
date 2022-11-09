@@ -51,7 +51,7 @@
 
 			<div class="count-wrap _count">
 				<button type="button" class="minus">-</button>
-				<input type="text" class="inp" value="1" />
+				<input type="text" class="inp"  />
 				<button type="button" class="plus">+</button>
 			</div>
 			<br>
@@ -189,7 +189,6 @@
 		<br>
 
 	</section>
-
 <script src="/resources/js/product/cart-order.js"></script>
 <script>
 
@@ -399,9 +398,12 @@ function reviewRegist(){
 			 type:"get",
 			// dataType:"Object",
 			 success:function(data){
-				
-					 
+				 	var markers = new Array(); // 마커 정보를 담는 배열
+					var infoWindows = new Array(); // 정보창을 담는 배열
 					 for(var i=0; i<data.bsList.length;i++){
+						 
+						 fullAddr="";
+						 
 						 fullAddr+="<p><button type='button' onclick='findStore()' class='findStore'><b>"+data.bsList[i].storeName+"</b>";
 						 fullAddr+="</button>ㅤㅤ["+data.bsList[i].storeZipcode+"] ";
 						 fullAddr+=data.bsList[i].storeAddr;
@@ -409,10 +411,12 @@ function reviewRegist(){
 						 
 						var marker = new naver.maps.Marker({
 						    position: new naver.maps.LatLng(data.coordsList[i][1], data.coordsList[i][0]),
-						    map: map 
+						    map: map,
+						    
 						 });
+					
+					 $("#store_addr").append(fullAddr);
 					 }
-				 $("#store_addr").append(fullAddr);
 			 },
 			 
 			 
@@ -428,11 +432,10 @@ function reviewRegist(){
 	 }
 
  });    
-    
 
-    
     
  
 </script>
+
 </body>
 </html>
