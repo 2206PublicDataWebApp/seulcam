@@ -51,5 +51,7 @@ public interface CampServie {
 
     public Integer campLikeUpdate(CampLike campLike);
 
+    public String printStarAvg(int contentId);
+
 
 }

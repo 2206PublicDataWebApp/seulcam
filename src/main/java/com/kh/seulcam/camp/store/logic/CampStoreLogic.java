@@ -147,4 +147,10 @@ public class CampStoreLogic implements CampStore{
         return result;
     }
 
+    @Override
+    public String selectStarAvg(SqlSessionTemplate session, int contentId) {
+        String result = session.selectOne("CampMapper.selectStarAvg",contentId);
+        return result;
+    }
+
 }

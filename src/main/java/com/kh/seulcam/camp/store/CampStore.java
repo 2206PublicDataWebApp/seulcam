@@ -54,4 +54,6 @@ public interface CampStore {
 
     public Integer insertCampLike(SqlSessionTemplate session, CampLike campLike);
 
+    public String selectStarAvg(SqlSessionTemplate session, int contentId);
+
 }

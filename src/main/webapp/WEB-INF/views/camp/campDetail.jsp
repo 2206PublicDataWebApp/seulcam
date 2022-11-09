@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,37 +42,39 @@
 	</head>
 </head>
 <style>
-    body {
-        font-size: 14px;
-        color: #000;
-        background-color: #f1f1f1;
-    }
-    header {
-        position: fixed;
-        left: 0px;
-        right: 0px;
-        top: 0px;
-        height: 50px;
-        background-color: rgb(255, 255, 255);
-        z-index: 200;
-        max-width: 770px;
-        margin: 0 auto; 
-    }
-    .header-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        max-width: 385px;
-        margin: 0 auto;
-        height: 50px;
-        position: relative;
-    }
-    .body-wrapper {
-        max-width: 770px;
-        margin: 0 auto; 
-        background-color: white;
-        min-height: 100vh;
-    }
+    ul {
+    padding-left: 0;
+}
+body {
+	font-size: 14px;
+	color: #000;
+}
+header {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	height: 50px;
+	background-color: rgb(255, 255, 255);
+	z-index: 200;
+	margin: 0 auto; 
+}
+.header-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 385px;
+	margin: 0 auto;
+	height: 50px;
+	position: relative;
+}
+.body-wrapper {
+	max-width: 770px;
+    margin: 0 auto; 
+    background-color: white;
+    min-height: 100vh;
+
+}
     /* 컨텐츠css */
     .detailMain {
 	padding-top: 70px;
@@ -198,6 +201,7 @@
 }
 .card {
     cursor: pointer;
+    height: 300px;
 }
 .likeBtn{
     margin-left: 10px;
@@ -229,9 +233,26 @@
     font-size: 13pt; 
     margin-left: 5px; 
     margin-right: 6px; 
-    margin-top: 1px;
+    margin-top: 3px;
 }
-
+.starCzone{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    border-radius: 5px;
+}
+.starC{
+    margin-left: 8px;
+    margin-right: 2px;
+}
+.starCount{
+    font-size: 13pt; 
+    margin-left: 5px; 
+    margin-right: 6px; 
+    margin-top: 3px;
+}
     </style>
 <body >
 
@@ -246,7 +267,12 @@
         <div class="detailMain">
             <div class="container"> 
                 <div class="info_img">
-                    <div  style='height: 300px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'></div>
+                    <div class="img-slick">
+                        <div class="img-wrapper">
+                            <div  style='height: 300px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'></div>
+                        </div>
+                    
+                    </div>
                     <br>
                     <div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>${camp.induty}</small></div>
                     <h3>${camp.facltNm}</h3>
@@ -254,7 +280,7 @@
                     <div style="height: 100%; overflow:auto; ">
                         <div class="iZone" style="width: 50%; float: left;">
                             <a href="${camp.homepage}" target='_blank'>
-                                    <svg class="iconh" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                                    <svg class="iconh" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
                                         <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
                                         </svg>
@@ -270,8 +296,15 @@
                                   </svg>
                                   <span class="likeCount">${likeCount}</span>
                             </div>
+                            <div  class="starCzone" >
+                                <svg class="starC" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                  </svg>
+                                </svg>
+                                <span class="starCount"><fmt:formatNumber type="number"  pattern="0.00" value="${starAvg}" /></span>
+                            </div>
                         </div>
-                        <div align = "center" style=" width: 50%; float: left;">
+                        <div align = "right" style=" width: 50%; float: left;">
                             <c:if test="${camp.registAvi == 'Y'}"> 
                                 <a href="/camp/campSiteDetail.kh?contentId=${camp.contentId}" class="btn btn-outline-success">예약하러가기</a>
                             </c:if>
@@ -325,8 +358,14 @@
                     </div>
                 </div>
                 <hr>
-
-                <h4>리뷰등록</h4>
+                <div style="display: flex; margin-bottom: 5px;">
+                    <h4 style="margin-top: 5px; margin-bottom: 0px;">리뷰등록</h4>
+                    <span class="starCzone" style="border: 0; "><svg class="starC" style="margin-left: 0px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                      </svg>
+                    </svg>
+                    <span class="starCount"><fmt:formatNumber type="number"  pattern="0.00" value="${starAvg}" /></span></span>
+                </div>
                 <div class="reviewWrite_area">
                     <div id="input">
                         <span class="star">
@@ -374,9 +413,10 @@
 
     // 블로그 글, 리뷰 리스트, 가까운 캠핑장 출력
     $(document).ready(function() {
+        campImgLoad()
         blogLoad();
-        nearCampLoad();
         campReviewList();
+        nearCampLoad();
     })
 
     // 좋아요 버튼 클릭시 동작
@@ -414,6 +454,28 @@
 
         })
         }
+    }
+
+    // 별점 평균 출력
+    function starAvg(){
+        $.ajax({
+            url : "/camp/campStarAvg.kh",
+            type : "get",
+            data : {
+                "contentId" : contentId
+            },
+            async : false,
+            success : function(data){
+                var avg = parseFloat(data).toFixed(2);
+                $(".starCount").html(avg)
+            },
+            error : function(request, status, error){
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+            }
+
+        })
     }
 
     // 좋아요 갯수 카운트
@@ -484,7 +546,7 @@
                         data : {},
                         dataType : "json",
                         headers : {Authorization: "KakaoAK 7072f1c5ec76f11a0937d2337e6cad4e"},
-                        async: false,
+                        // async: false,
                         success : function(data) {
                             var str = "";
                             for (var i = 0; i < data.documents.length; i++) {
@@ -510,6 +572,51 @@
         blogLoad();
     }
 
+    // 캠핑장 사진 파싱
+    function campImgLoad(){
+            var mapX=${camp.mapX};
+            var mapY=${camp.mapY};
+            var url = 'https://apis.data.go.kr/B551011/GoCamping/imageList'; /*URL*/
+            var queryParams = '?' + encodeURIComponent('serviceKey') + '='+'qbHoplMaKq5PUqUFEhfVjBpLiBxBcVPOw%2Fio3GvQ91q8xQjh%2BLZMz4caQ5Nqyt%2BU%2BeCGuAPRaJHRIhTzUqKmHw%3D%3D'; /*Service Key*/
+            queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+            queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10');
+            queryParams += '&' + encodeURIComponent('MobileOS') + '=' + encodeURIComponent('WIN');
+            queryParams += '&' + encodeURIComponent('MobileApp') + '=' + encodeURIComponent('seulcam'); /**/
+            queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('json');
+            queryParams += '&' + encodeURIComponent('contentId') + '=' + encodeURIComponent('${camp.contentId}'); 
+            var urli = url+queryParams;
+            console.log(urli)
+            $.ajax({
+                        url : urli,
+                        type : "GET",
+                        data : {},
+                        dataType : "json",
+                        // async: false,
+                        success : function(data) {
+                            console.log(data)
+                            var str = "";
+                            for (var i = 1; i < data.response.body.items.item.length; i++) {
+                                var campItem = data.response.body.items.item;
+                                str += "<div  style='height: 300px; background: url("+campItem[i].imageUrl+") no-repeat center center #343a40; background-size: 100%;'></div>"
+                                }
+                            $(".img-wrapper").append(str);
+                            $('.img-wrapper').slick({
+                                slide: 'div', 
+                                slidesToShow : 1, 
+                                slidesToScroll : 1,
+                                draggable : true,
+                                dots : true 
+                            });
+                           
+                        },
+                        error : function(request, status, error){
+                            console.log("code: " + request.status)
+                            console.log("message: " + request.responseText)
+                            console.log("error: " + error);
+                        }
+                    })
+        }
+
     // 근처 캠핑장 데이터 파싱
     function nearCampLoad(){
             var mapX=${camp.mapX};
@@ -531,7 +638,7 @@
                         type : "GET",
                         data : {},
                         dataType : "json",
-                        async: false,
+                        // async: false,
                         success : function(data) {
                             console.log(data)
                             var str = "";
@@ -591,13 +698,15 @@
                     { 
                     breakpoint: 400, //화면 사이즈 768px
                     settings: {    
-                        slidesToShow: 1
+                        slidesToShow: 2
                     } 
                     }
                 ]
 
                 });
-                }
+                
+                
+        }
 
     // 댓글 별점 구현
     var reviewId = "";
@@ -612,9 +721,9 @@
 
     // 댓글 수정창 출력
     function reviewModify(campReviewContents,campReviewNo,memberNickname,campReviewStar){
-        console.log(campReviewContents)
         // $("#11").css({visibility: 'hidden'})
-        campReviewList()
+        // campReviewList()
+        console.log(campReviewContents)
         var str=""
         str += "<br><div class='reviewList' style='padding : 5px; border : none; border-radius : 5px;'><div class='review_contents'>"
         str += "<span class='star'>★★★★★<span id='checkstar"+campReviewNo+"' style='width : "+campReviewStar*10+"%'>★★★★★</span>"
@@ -647,6 +756,7 @@
                 },
                 success : function(result){
                     if(result == "success"){
+                        starAvg()
                         campReviewList()
                     }
                 },
@@ -691,6 +801,7 @@
                 success : function(result){
                     if(result == "success"){
                         alert("등록완료");
+                        starAvg()
                         campReviewList()
                     }else{
                         alert("등록실패");
@@ -716,7 +827,7 @@
             data : {
                 "contentId" : contentId
             },
-            async: false,
+            // async: false,
             success : function(data){
                 var str = "";
                 for(var i = 0; i<data.length ; i++){
@@ -760,9 +871,11 @@
                     console.log(result)
                     if(result == "success"){
                         alert("댓글 삭제 완료");
+                        starAvg()
                         campReviewList();
                     }else{
                         alert("댓글 삭제 실패");
+                        starAvg()
                         campReviewList();
                     }
                 },

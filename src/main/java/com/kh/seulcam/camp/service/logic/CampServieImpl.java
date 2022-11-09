@@ -163,6 +163,13 @@ public class CampServieImpl implements CampServie{
         return result;
     }
     
+    //별점 평균
+    @Override
+    public String printStarAvg(int contentId) {
+        String result = cStore.selectStarAvg(session,contentId);
+        return result;
+    }
+    
     
 
 }

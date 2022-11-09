@@ -68,6 +68,10 @@ public class CampController {
 				) {
 			try {
 			    Camp camp= cService.printCampDetail(contentId);
+			    String starAvg = cService.printStarAvg(contentId);
+			    if(starAvg == null) {
+			        starAvg = "0.0";
+			    }
 			    CampLike campLike = new CampLike();
 			    campLike.setCampId(contentId+"");
 			    Integer likeCount = cService.campLikeCount(campLike);
@@ -79,6 +83,7 @@ public class CampController {
 			        likeCheck = cService.campLikeCount(campLike);
 			    }
 				
+			    mv.addObject("starAvg",starAvg);
 			    mv.addObject("likeCheck",likeCheck);
 			    mv.addObject("likeCount",likeCount);
 		        mv.addObject("camp",camp);
@@ -115,6 +120,11 @@ public class CampController {
                     campLike.setMemberId(memberId);
                     likeCheck = cService.campLikeCount(campLike);
                 }
+                String starAvg = cService.printStarAvg(cList.get(i).getContentId());
+                if(starAvg == null) {
+                    starAvg = "0";
+                }
+                cList.get(i).setStarAvg(starAvg);
                 cList.get(i).setLikeCheck(likeCheck);
                 cList.get(i).setLikeCount(likeCount);
 			}
@@ -148,6 +158,11 @@ public class CampController {
                     campLike.setMemberId(memberId);
                     likeCheck = cService.campLikeCount(campLike);
                 }
+                String starAvg = cService.printStarAvg(cList.get(i).getContentId());
+                if(starAvg == null) {
+                    starAvg = "0";
+                }
+                cList.get(i).setStarAvg(starAvg);
                 cList.get(i).setLikeCheck(likeCheck);
                 cList.get(i).setLikeCount(likeCount);
             }
@@ -170,6 +185,27 @@ public class CampController {
 		// 도, 카테고리, 검색어, 예약유무
 		return null;
 	}
+	
+	// 캠핑장 댓글 별점 카운트
+    @ResponseBody
+    @RequestMapping(value = "/camp/campStarAvg.kh", method = RequestMethod.GET )
+    public String campStarAvg(
+            @RequestParam(value="contentId", required = false) int contentId,
+            HttpServletRequest request
+            ) {
+            try {
+                String starAvg = cService.printStarAvg(contentId);
+                if(starAvg == null) {
+                    starAvg = "0.0";
+                }
+                
+                return starAvg;
+            } catch (Exception e) {
+                e.printStackTrace();
+                request.setAttribute("msg", "댓글 저장 실패");
+                return "common/errorPage";
+            }
+    }
 	
 	// 캠핑장 댓글 등록
 	@ResponseBody

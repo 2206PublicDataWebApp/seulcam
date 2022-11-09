@@ -31,7 +31,7 @@
   		SELECT COUNT(*) FROM CAMP_SITE_TBL WHERE CAMP_ID = #{contentId}
   	</select>
   	<insert id="insertSite">
-  		INSERT INTO CAMP_SITE_TBL VALUES(SEQ_SITE_NO.NEXTVAL,#{siteName},#{campId},#{campName},#{siteChar},#{siteInfo},#{siteIntro},#{standardPeople},#{maxPeople},#{excessCharge},#{inTime},#{outTime},#{sitePrice},#{siteCount},#{siteThumbnailName},#{siteThumbnailPath},#{siteThumbnailRename},DEFAULT)
+  		INSERT INTO CAMP_SITE_TBL VALUES(SEQ_SITE_NO.NEXTVAL,#{siteName},#{campId},#{campName},#{siteChar},#{siteInfo},#{siteIntro},#{standardPeople},#{maxPeople},#{excessCharge},#{inTime},#{outTime},#{sitePrice},#{siteCount},#{siteThumbnailName},#{siteThumbnailPath},#{siteThumbnailRename},DEFAULT,DEFAULT,DEFAULT)
   	</insert>
   	<update id="updateCampRegistAvi">
   		UPDATE CAMP_TBL SET 

@@ -116,4 +116,8 @@
   	<delete id="deleteCampLike">
   		DELETE FROM CAMP_LIKE_TBL WHERE MEMBER_ID=#{memberId} AND CAMP_ID=#{campId}
   	</delete>
+  	
+  	<select id="selectStarAvg" resultType="string">
+  		SELECT AVG(CAMP_REVIEW_STAR) FROM CAMP_REVIEW_TBL WHERE CAMP_ID = #{contentId}
+  	</select>
 </mapper>

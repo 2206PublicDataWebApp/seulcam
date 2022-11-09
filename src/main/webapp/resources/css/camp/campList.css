@@ -4,6 +4,10 @@
     margin: 0;
 }
 
+ul {
+    padding-left: 0;
+}
+
 h2 {
 	padding: 20px 0;
 }
@@ -59,6 +63,8 @@ header {
 }
 
 .search_area {
+	padding-left: 10px;
+	padding-right: 10px;
 	padding-top: 50px;
 	padding-bottom: 10px;
 	margin: auto;
@@ -73,6 +79,7 @@ header {
 	text-align: center;
 }
 .search_area p{
+	
 	font-size: 20px;
 }
 select {
@@ -92,6 +99,8 @@ select {
 	margin: auto;
 }
 .list_area {
+	padding-left: 10px;
+	padding-right: 10px;
 	margin: auto;
 	
 }
@@ -160,5 +169,24 @@ select {
     font-size: 13pt; 
     margin-left: 5px; 
     margin-right: 6px; 
-    margin-top: 1px;
+    margin-top: 3px;
+}
+.starCzone{
+	max-width: fit-content;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    border-radius: 5px;
+}
+.starC{
+    margin-left: 8px;
+    margin-right: 2px;
+}
+.starCount{
+    font-size: 13pt; 
+    margin-left: 5px; 
+    margin-right: 6px; 
+    margin-top: 3px;
 }
