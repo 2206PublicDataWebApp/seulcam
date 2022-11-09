@@ -17,15 +17,12 @@
 	font-size: 48px;
 }
 
-
-
 @media screen and (max-width: 768px) {
  
 .landing {
 	left: 20px;
 	top: 100px;	
 }
-
  
 .landing-title {
  	font-size: 28px;
