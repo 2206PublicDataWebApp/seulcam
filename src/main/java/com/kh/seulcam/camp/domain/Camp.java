@@ -32,6 +32,7 @@ public class Camp {
 	private String registAvi;
 	private int likeCheck;
 	private int likeCount;
+	private String starAvg;
 	
 	
 	
@@ -43,7 +44,8 @@ public class Camp {
             String induty, String lctCl, String doNm, String sigunguNm, String zipcode, String addr1, String tel,
             String mapX, String mapY, String homepage, String resveUrl, String tooltip, String glampInnerFclty,
             String caravInnerFclty, String operPdCl, String operDeCl, String sbrsCl, String sbrsEtc, String animalCmgCl,
-            String tourEraCl, String firstImageUrl, int blogCount, String registAvi, int likeCheck, int likeCount) {
+            String tourEraCl, String firstImageUrl, int blogCount, String registAvi, int likeCheck, int likeCount,
+            String starAvg) {
         this.contentId = contentId;
         this.facltNm = facltNm;
         this.lineIntro = lineIntro;
@@ -75,6 +77,7 @@ public class Camp {
         this.registAvi = registAvi;
         this.likeCheck = likeCheck;
         this.likeCount = likeCount;
+        this.starAvg = starAvg;
     }
 
 
@@ -89,7 +92,7 @@ public class Camp {
                 + caravInnerFclty + ", operPdCl=" + operPdCl + ", operDeCl=" + operDeCl + ", sbrsCl=" + sbrsCl
                 + ", sbrsEtc=" + sbrsEtc + ", animalCmgCl=" + animalCmgCl + ", tourEraCl=" + tourEraCl
                 + ", firstImageUrl=" + firstImageUrl + ", blogCount=" + blogCount + ", registAvi=" + registAvi
-                + ", likeCheck=" + likeCheck + ", likeCount=" + likeCount + "]";
+                + ", likeCheck=" + likeCheck + ", likeCount=" + likeCount + ", starAvg=" + starAvg + "]";
     }
 
 
@@ -466,8 +469,19 @@ public class Camp {
 
 
 
-	
-	
+    public String getStarAvg() {
+        return starAvg;
+    }
+
+
+
+    public void setStarAvg(String starAvg) {
+        this.starAvg = starAvg;
+    }
+
+
+
+    
 	
 	
 }

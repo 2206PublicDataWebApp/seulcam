@@ -29,12 +29,13 @@
 </head>
 <style>
 
+ul {
+    padding-left: 0;
+}
 body {
 	font-size: 14px;
 	color: #000;
-	background-color: #f1f1f1;
 }
-
 header {
 	position: fixed;
 	left: 0px;
@@ -43,10 +44,8 @@ header {
 	height: 50px;
 	background-color: rgb(255, 255, 255);
 	z-index: 200;
-	max-width: 600px;
-	margin: 0 auto;
+	margin: 0 auto; 
 }
-
 .header-wrapper {
 	display: flex;
 	align-items: center;
@@ -56,15 +55,15 @@ header {
 	height: 50px;
 	position: relative;
 }
-
 .body-wrapper {
-	max-width: 600px;
-	margin: 0 auto;
-	background-color: white;
-	min-height: 100vh;
-	/* 컨텐츠css */
-	
+	max-width: 770px;
+    margin: 0 auto; 
+    background-color: white;
+    min-height: 100vh;
+
 }
+/* 컨텐츠css */
+
 .detailMain {
 	padding-top: 70px;
     }
@@ -145,7 +144,7 @@ header {
     background: #fff;
 	height: 40px;
     width: 100%;
-    max-width: 600px;
+    max-width: 770px;
     transform: translateX(-50%);
 }
 input::-webkit-outer-spin-button,
