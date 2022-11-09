@@ -192,6 +192,41 @@ public class OrderServiceImpl implements OrderService {
 		return oList;
 	}
 
+	//상품 갯수 카운트 올리기(상품번호 가져오기)
+	@Override
+	public List<OrderProduct> plusProduct(int orderNo) {
+	List<OrderProduct>pNoList=oStore.plusProduct(session,orderNo);	
+		return pNoList;
+	}
+	
+	//상품갯수 카운트 올리기
+	@Override
+	public int plusProductCount(int productNo) {
+		int result=oStore.plusProductCount(session,productNo);
+		return result;
+	}
+
+	//상품갯수 카운트 줄이기
+	@Override
+	public int minusProductCount(int productNo) {
+		int result=oStore.minusProductCount(session,productNo);
+		return result;
+	}
+
+	//주문중 페이지 벗어날시 주문상품 삭제(주문취소)
+	@Override
+	public int deleteOrderProduct(String memberId) {
+		int result = oStore.deleteOrderProduc(session,memberId);
+		return result;
+	}
+
+	//갯수구하기
+	@Override
+	public int countDelStatus(String memberId, String string) {
+		int count=oStore.selectCountDel(session,memberId,string);
+		return count;
+	}
+
 	
 	
 }

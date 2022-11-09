@@ -204,4 +204,41 @@ public class OrderStoreLogic implements OrderStore {
 		return oList;
 	}
 
+	//상품 갯수 카운트 올리기(상품번호 가져오기)
+	@Override
+	public List<OrderProduct> plusProduct(SqlSession session, int orderNo) {
+		List<OrderProduct>pNoList=session.selectList("OrderMapper.selectOrderPNo",orderNo);
+		return pNoList;
+	}
+	
+	//상품 갯수 카운트 올리기
+	@Override
+	public int plusProductCount(SqlSession session,int productNo) {
+		int result=session.update("OrderMapper.updatePCountPlus",productNo);
+		return result;
+	}
+
+	//상품 갯수 카운트 줄이기
+	@Override
+	public int minusProductCount(SqlSession session, int productNo) {
+		int result=session.update("OrderMapper.updatePCountMinus",productNo);
+		return result;
+	}
+
+	//주문중 페이지 벗어날시 주문상품 삭제(주문취소)
+	@Override
+	public int deleteOrderProduc(SqlSession session, String memberId) {
+		int result=session.delete("OrderMapper.deleteOrderProduct",memberId);
+		return result;
+	}
+
+	@Override
+	public int selectCountDel(SqlSession session, String memberId, String string) {
+		HashMap<String,String>paramMap=new HashMap<String,String>();
+		  paramMap.put("dirivaryStatus",string );
+		  paramMap.put("memberId",memberId);
+		int count=session.selectOne("OrderMapper.selectDilivaryCount",paramMap);
+		return count;
+	}
+
 }

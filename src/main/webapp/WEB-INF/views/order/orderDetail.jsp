@@ -34,6 +34,68 @@ body {
         max-width: 768px;
         margin: 0 auto; 
     }
+/* 헤더 */
+#header-block {
+    height: 50px;
+}
+
+header {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    max-width: 768px;
+    margin: 0 auto; 
+}
+h2 {
+    font-size: 16px;
+}
+
+
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 768px;
+    margin: 0 auto;
+    height: 50px;
+    position: relative;
+}
+
+.back-layout {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 5px;
+    left: 5px;
+    background-color:white;
+    boaer:0px;
+    outline:0px;
+}
+
+.go-back {
+	background-color:white;
+	border:none;
+    display:inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+
+.go-back img {
+    width: 25px;
+    height: 25px;
+}
+
+/* Section */
+.cm-line {
+    height: 8px;
+    background-color: #f1f1f1;
+}
 
 .wrap{
  		max-width: 768px;
@@ -137,6 +199,21 @@ width:100%;
 			<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 		</div>
 		<div class="contents">
+		<div>
+		<header>
+		<div class="header-wrapper">
+		
+                    <div class="back-layout">
+                        <button class="go-back" onclick="history.back()">
+                            <img src="../../../resources/images/back_arrow.png">
+                        </button>
+                    </div>
+                    <h2>주문하기</h2>
+                </div>
+		<div class="cm-line"></div>
+               </header> 
+		
+		</div>
 		<div class="address line">
 		<div class="info">
 		
@@ -235,7 +312,32 @@ width:100%;
 
 	
 	<script>
+	 var checkUnload = true;
+	    $(window).on("beforeunload", function(){
+	        if(checkUnload) {
+	        var memberId=$("#memberId").val();
+	        $.ajax({
+	        	url:"/order/notCompleteOrder",
+	        	type:"GET",
+	        	data:{"memberId":memberId},
+	        	success:function(){
+	        		//alert("주문 취소");
+	        		window.location.href('/');
+	        		
+	        		
+	        	},error:function(){
+					alert("ajax 통신 오류! 관리자에게 문의해 주세요!");
+				}
+	        	
+	        	
+	        });		        
+	       /*  return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다." */
+	        
+	        };
+	    });
+	
 	function addressChange(obj){
+		checkUnload = false;
 		event.preventDefault();
 		var $div=$("<div id='addressChangeForm'>");
 		$div.append("<span style='font-weight:bold'>주소 변경</span>");
@@ -344,10 +446,11 @@ width:100%;
 			productPrice : $("#product_price").text(),
 			orderMainFileRename : $('#img1').attr("src"),
 			orderMainProductName:$("#order_product1").text(),
-			point:$("#point").val()
+			point:$("#point").val(),
+			orderMessage:$("#message").val()
 				
 		}
-		//console.log(data);
+		console.log(data);
 		//paymentComplete(data);//결제 완료후
 		paymentCard(data);//결제 화면
 	}
@@ -417,6 +520,7 @@ function paymentComplete(data){
 		method:"POST",
 		data:data,
 		success:function(orderNo){
+				checkUnload = false;
 				alert("주문 성공");
 				let url="/order/finish.kh?orderNo="+orderNo+"";
 				location.replace(url);

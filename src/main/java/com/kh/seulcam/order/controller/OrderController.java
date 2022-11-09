@@ -33,9 +33,6 @@ public class OrderController {
 
 	@Autowired
 	private OrderService oService;
-	
-	
-
 
 
 	// 주문
@@ -59,7 +56,6 @@ public class OrderController {
 			for (int i = 0; i < pList.size(); i++) {
 				int price = pList.get(i).getProductPrice() * oList.get(i).getOrderCount();
 				totalPrice += price;
-
 			}
 			mv.addObject("totalPrice", totalPrice);
 			mv.addObject("pList", pList);
@@ -113,6 +109,14 @@ public class OrderController {
 		if(point.getPoint() != "") {
 		int result3=oService.registUsePoint(point);
 		}
+		//상품 갯수 카운트 올리기
+		List<OrderProduct>pNoList=oService.plusProduct(orderNo);
+		for (int i = 0; i < pNoList.size(); i++) {
+			int productNo = pNoList.get(i).getProductNo();
+			int result4=oService.plusProductCount(productNo);
+
+		}
+		
 		return String.valueOf(orderNo);
 
 	}
@@ -191,6 +195,36 @@ public class OrderController {
 			 * }
 			 */
 		}
+	
+		String dirivaryStatus="입금확인";
+		int count1=oService.countDelStatus(memberId,"입금확인");
+		int count2=oService.countDelStatus(memberId,"배송중");
+		int count3=oService.countDelStatus(memberId,"배송완료");
+		int count4=oService.countDelStatus(memberId,"구매확정");
+		int count5=oService.countDelStatus(memberId,"구매취소");
+		/*
+		 * for (int i = 0; i < oList.size(); i++) { String dStatus =
+		 * oList.get(i).getDirivaryStatus(); System.out.println(dStatus);
+		 * if(oList.get(i).getDirivaryStatus() == "입금확인") { count1++;
+		 * System.out.println("입금 맞음"); System.out.println(count1); }else
+		 * if(oList.get(i).getDirivaryStatus() == "배송중") { count2++; }else
+		 * if(oList.get(i).getDirivaryStatus() =="배송완료") { count3++; }else
+		 * if(oList.get(i).getDirivaryStatus() =="구매확정") { count4++; }else
+		 * if(oList.get(i).getDirivaryStatus() =="구매취소") { count5++; }
+		 * 
+		 * 
+		 * }
+		 */
+		System.out.println(count1);
+		System.out.println(count2);
+		System.out.println(count3);
+		System.out.println(count4);
+		System.out.println(count5);
+		mv.addObject("count1",count1);
+		mv.addObject("count2",count2);
+		mv.addObject("count3",count3);
+		mv.addObject("count4",count4);
+		mv.addObject("count5",count5);
 
 		mv.addObject("oList", oList);
 		mv.setViewName("order/orderCompleteList");
@@ -231,7 +265,13 @@ public class OrderController {
 		Member member = (Member) session.getAttribute("loginUser");
 		String memberId=member.getMemberId();
 		int result=oService.changeOrderCancle(orderNo,memberId);
-		
+		//상품 카운트 줄이기
+		List<OrderProduct>pNoList=oService.plusProduct(Integer.parseInt(orderNo));
+		for (int i = 0; i < pNoList.size(); i++) {
+			int productNo = pNoList.get(i).getProductNo();
+			int result4=oService.minusProductCount(productNo);
+
+		}
 		if(result>0) {
 		
 		return"success";
@@ -305,5 +345,16 @@ public class OrderController {
 		mv.setViewName("order/dilivery");
 			return mv;
 		}
+		
+		//주문중 페이지 벗어날시 주문상품 삭제(주문취소)
+		@ResponseBody
+		@RequestMapping(value="/order/notCompleteOrder",method=RequestMethod.GET)
+		public String notCompleteOrder(
+				@RequestParam(value="memberId")String memberId
+				) {
+			int result=oService.deleteOrderProduct(memberId);
+			return "success";
+		}
+		
 			
 }

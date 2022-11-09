@@ -75,6 +75,23 @@ public interface OrderService {
 	//배송 상세조회 메뉴 바꾸기
 	public List<Order> printChangeCompleteList(String memberId, String dirivaryStatus);
 
+	//상품갯수 카운트 올리기(상품번호 가져오기)(주문시)
+	public List<OrderProduct> plusProduct(int orderNo);
+
+	//상품갯수 카운트 올리기(주문시)
+	public int plusProductCount(int productNo);
+
+	//상품갯수 카운트 줄이기(구매취소시)
+	public int minusProductCount(int productNo);
+
+	//주문중 페이지 벗어날시 주문상품 삭제(주문취소)
+	public int deleteOrderProduct(String memberId);
+
+	//갯수 구하기
+	public int countDelStatus(String memberId, String string);
+
+
+
 
 	
 

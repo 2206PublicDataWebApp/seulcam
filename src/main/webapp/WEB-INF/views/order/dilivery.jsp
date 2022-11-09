@@ -259,7 +259,7 @@ color:#03a9f4;
 <c:if test="${order.dirivaryStatus ne '배송완료' and order.dirivaryStatus ne '구매확정' }">
 <div class="tracking-status-item">
         <div class="list-circle" style="background-color:#03a9f4"></div>
-        <span class="location-text">서울 남대문</span> | <span class="status-text">배송출발</span>
+        <span class="location-text">서울 남대문</span> | <span class="status-text-clear">배송출발</span>
         <!-- <div class="vertical-line" style="top:110px"></div> -->
     </div>
 </c:if>

@@ -74,6 +74,21 @@ public interface OrderStore {
 	//배송 상세조회 메뉴 바꾸기
 	public List<Order> printCompleteList(SqlSession session, String memberId, String dirivaryStatus);
 
+	//상품 갯수 카운트 올리기(상품가져오기)
+	public List<OrderProduct> plusProduct(SqlSession session, int orderNo);
+
+	//상품 갯수 카운트 올리기
+	public int plusProductCount(SqlSession session,int productNo);
+
+	//상품 갯수 카운트 줄이기
+	public int minusProductCount(SqlSession session, int productNo);
+
+	//주문중 페이지 벗어날시 주문상품 삭제(주문취소)
+	public int deleteOrderProduc(SqlSession session, String memberId);
+
+	
+	public int selectCountDel(SqlSession session, String memberId, String string);
+
 
 
 }

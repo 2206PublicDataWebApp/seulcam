@@ -75,7 +75,7 @@
   
   <insert id="insertOrder" useGeneratedKeys="true" keyColumn="ORDER_NUMBER"  keyProperty="orderNo">
   INSERT INTO ORDER_TBL 
-  VALUES(SEQ_ORDER.NEXTVAL,#{memberId}, #{memberName}, #{memberPhone}, NULL,
+  VALUES(SEQ_ORDER.NEXTVAL,#{memberId}, #{memberName}, #{memberPhone}, #{orderMessage},
    #{orderAddressPost},#{orderAddress1},#{orderAddress2},#{orderMainProductName},
    #{orderMainFileRename},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
   </insert>
@@ -83,6 +83,10 @@
   <select id="selectPrintOrder" resultMap="orderResultMap">
   SELECT * FROM ORDER_TBL
   WHERE ORDER_NUMBER=#{orderNo}
+  </select>
+  <select id="selectDilivaryCount" resultMap="orderResultMap">
+   SELECT COUNT(*) FROM ORDER_TBL
+   WHERE MEMBER_ID=#{memberId} AND DILIVERY_STATUS=#{dirivaryStatus}
   </select>
   
   <update id="updateCompleteAddress">
@@ -153,6 +157,9 @@
  	  FROM DUAL
  	</foreach>)A
   </insert> 
+  
+  
+  
   <select id="selectProductInfo" resultMap="orderProductResultMap">
   SELECT * FROM ORDER_PRODUCT_TBL WHERE MEMBER_ID=#{memberId} AND ORDER_STATUS IS NULL AND ORDER_NUMBER ='0'
   </select>
@@ -161,10 +168,19 @@
    SELECT * FROM ORDER_PRODUCT_TBL WHERE ORDER_NUMBER=#{orderNo}
   </select>
   
+  <select id="selectOrderPNo" resultMap="orderProductResultMap">
+  SELECT PRODUCT_NO FROM ORDER_PRODUCT_TBL WHERE ORDER_NUMBER=#{orderNo}
+  </select>
+  
  <update id="updateOrderProduct">
   UPDATE ORDER_PRODUCT_TBL
   SET ORDER_NUMBER=#{orderNo}, ORDER_STATUS='Y' WHERE MEMBER_ID=#{memberId} AND ORDER_STATUS IS NULL AND ORDER_NUMBER ='0'
   </update>
+  
+  <delete id="deleteOrderProduct">
+  DELETE FROM ORDER_PRODUCT_TBL
+  WHERE MEMBER_ID=#{memberId} AND ORDER_STATUS IS NULL AND ORDER_NUMBER ='0'
+  </delete>
   
   
   <resultMap  type="OrderPay" id="orderPayResultMap"> 
@@ -218,7 +234,37 @@
   WHERE ORDER_NUMBER=#{orderNo}
   </update>
   
-  
+  <resultMap type="Product" id="productResultMap">
+  		<id 	property="productNo" 		column="PRODUCT_NO"/>
+  		<result property="productName" 		column="PRODUCT_NAME"/>
+  		<result property="category" 		column="CATEGORY"/>
+  		<result property="productPrice" 	column="PRODUCT_PRICE"/>
+  		<result property="productColor" 	column="PRODUCT_COLOR"/>
+  		<result property="productStock" 	column="PRODUCT_STOCK"/>
+  		<result property="mainFileName" 	column="MAIN_FILE_NAME"/>
+  		<result property="mainFilePath" 	column="MAIN_FILE_PATH"/>
+  		<result property="mainFileRename" 	column="MAIN_FILE_RENAME"/>
+  		<result property="updateDate" 		column="UPDATE_DATE"/>
+  		<result property="brandName" 		column="BRAND_NAME"/>
+  		<result property="productMaterial" 	column="PRODUCT_MATERIAL"/>
+  		<result property="saleCount" 		column="SALE_COUNT"/>
+
+  		
+  	</resultMap>
+  	
+  	<update id="updatePCountPlus">
+  	UPDATE PRODUCT_TBL
+  	SET SALE_COUNT=SALE_COUNT + 1
+  	WHERE PRODUCT_NO=#{productNo}
+  	
+  	</update>
+  	
+  	<update id="updatePCountMinus">
+  	UPDATE PRODUCT_TBL
+  	SET SALE_COUNT=SALE_COUNT - 1
+  	WHERE PRODUCT_NO=#{productNo}
+  	
+  	</update>
   
  
   </mapper>
