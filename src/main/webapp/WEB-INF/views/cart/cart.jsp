@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,7 +71,7 @@
                                     </div>
                                     <div class="option-value">
                                         <span class="product-option">${product.productColor }</span>
-                                        <span class="product-price"><span id="p-price${i.count }"class="p-price">${product.productPrice }</span><span>원</span></span>
+                                        <span class="product-price"><span id="p-price${i.count }" class="p-price"> ${product.productPrice }</span><span>원</span></span>
                                     </div>
                                     <div class="item-amount-wrap">
                                         <div class="item-amount count-wrap _count"">
@@ -118,12 +119,17 @@
 
 
     <script>
+    function priceToString(price) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    function stringNumberToInt(stringNumber){
+        return parseInt(stringNumber.replace(/,/g , ''));
+    }
     
-   
      //수량별 상품가격  
 	<c:forEach items="${cList}" var="cart" varStatus="i">
 	var productPrice=$("#p-count${i.count }.inp").val()*$("#p-price${i.count }").text();
-	$("#p-price${i.count }").html(productPrice);
+	$("#p-price${i.count }").html(productPrice.toLocaleString('ko-KR'));
 	</c:forEach>
 	//체크 전 체크한 갯수
 	
@@ -145,11 +151,6 @@
 		  $(".p-count").html(checked.length);
 		  $(".c-count").html(checked.length);
 		var pname=checked.parent().parent().children().children('.info-pName').val();
-		//var price=checked.parent().parent().parent().children('.info-cNo').val();
-		  //console.log(pname);
-		 //var ck=checked.attr('id');
-		//console.log(ck);
-		 
 		
 		if(checkboxes.length === checked.length)  {
 			 selectAll.checked = true;
@@ -162,9 +163,9 @@
 		  if(checked.length>0){
 			 	var totalPrice = 0;
 			 	checked.each(function(i){
-				price=checked.parent().parent().eq(i).parent().children('.product-info').children('.option-value').children().children('.p-price').text();
+			 		price=checked.parent().parent().eq(i).parent().children('.product-info').children('.option-value').children().children('.p-price').text();
 				
-				totalPrice += parseInt(price);
+				totalPrice += stringNumberToInt(price);
 				$(".total-price").html(totalPrice.toLocaleString('ko-KR'));
 		  })
 		  
@@ -181,13 +182,16 @@
 		     = document.getElementsByName('cartbox');
 		  checkboxes.forEach((checkbox) => {
 			    checkbox.checked = selectAll.checked	
-			   
-			    var totalPrice=0;
-				<c:forEach items="${cList}" var="cart" varStatus="i">
-				var productPrice${i.count}=$("#p-count${i.count }.inp").val()*$("#p-price${i.count }").text();
-				totalPrice+=productPrice${i.count}
-				 $(".total-price").html(totalPrice.toLocaleString('ko-KR'));
-				</c:forEach>
+			    
+			    const checked
+				  =$('input[name="cartbox"]:checked');
+			    var totalPrice = 0;
+			 	checked.each(function(i){
+			 		price=checked.parent().parent().eq(i).parent().children('.product-info').children('.option-value').children().children('.p-price').text();
+				
+				totalPrice += stringNumberToInt(price);
+				$(".total-price").html(totalPrice.toLocaleString('ko-KR'));
+			 	});
 			  })
 
 			}else{
@@ -201,12 +205,7 @@
 		   $(".total-price").html("0");
 		  
 			}
-			
-		  
-		 
 		}
-		
-		
 	//수량 수정	
 	$('._count :button').on({
 	    'click' : function(e){

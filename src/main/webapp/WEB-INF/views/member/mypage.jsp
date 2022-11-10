@@ -61,18 +61,18 @@
             </div>
 
             <div class="order-list">
-                <a class="order-box" href="#">
+                <a class="order-box" href="/order/delliveryMenu?dirivaryStatus=입금확인">
                     <p class="order-number">0</p>
                     <p class="order-text">입금<br>결제</p>
                 </a>
 
-                <a class="order-box" href="#">
+                <a class="order-box" href="/order/delliveryMenu?dirivaryStatus=배송중">
                     <p class="order-number">0</p>
                     <p class="order-text">배송 중<br>픽업 대기</p>
                 </a>
 
 
-                <a class="order-box" href="#">
+                <a class="order-box" href="/order/delliveryMenu?dirivaryStatus=배송완료">
                     <p class="order-number">0</p>
                     <p class="order-text">배송 완료<br>픽업 완료</p>
                 </a>
@@ -88,7 +88,7 @@
                     </li>
 
                     <li class="list-item">
-                        <a class="item-link" href="#">취소/교환/환불 내역</a>
+                        <a class="item-link" href="/order/complete/Cancle/list">취소/교환/환불 내역</a>
                     </li>
 
                     <li class="list-item">

@@ -233,9 +233,9 @@ public class OrderStoreLogic implements OrderStore {
 	}
 
 	@Override
-	public int selectCountDel(SqlSession session, String memberId, String string) {
+	public int selectCountDel(SqlSession session, String memberId, String dirivaryStatus) {
 		HashMap<String,String>paramMap=new HashMap<String,String>();
-		  paramMap.put("dirivaryStatus",string );
+		  paramMap.put("dirivaryStatus",dirivaryStatus );
 		  paramMap.put("memberId",memberId);
 		int count=session.selectOne("OrderMapper.selectDilivaryCount",paramMap);
 		return count;

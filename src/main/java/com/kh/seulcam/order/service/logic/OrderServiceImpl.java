@@ -222,8 +222,8 @@ public class OrderServiceImpl implements OrderService {
 
 	//갯수구하기
 	@Override
-	public int countDelStatus(String memberId, String string) {
-		int count=oStore.selectCountDel(session,memberId,string);
+	public int countDelStatus(String memberId, String dirivaryStatus) {
+		int count=oStore.selectCountDel(session,memberId,dirivaryStatus);
 		return count;
 	}
 

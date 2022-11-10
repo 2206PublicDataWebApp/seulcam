@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0 user-scalable=no">
-<title>주문내역 리스트</title>
+<title>취소/환불 주문내역</title>
 <link rel="stylesheet" href="/resources/css/camp/switch.css">
 <!-- <link href="../resources/css/bootstrap.min.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="/resources/css/fonts.css">
@@ -243,9 +243,24 @@ header {
     text-overflow: ellipsis;
 }
 
+.x-button {
+    position: relative;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+}
+
+.x-button:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "\2573";
+    color: black;
+    text-align: center;
+}
 
 .product-option {
-	font-weight:700;
+	pont-weight:700px;
     color: #6e6e6e;
     font-size: 12px;
 }
@@ -262,6 +277,29 @@ header {
     align-items: flex-end;
 }
 
+/* .item-amount-wrap {
+    display: flex;
+    margin-top: 6px;
+    justify-content: space-between;
+} */
+
+.item-amount {
+    display: flex;
+    width: 74px;
+    height: 24px;
+    border: 1px solid #f3f3f3;
+    border-radius: 4px;
+    align-items: center;
+}
+
+.amount-minus {
+    width: 24px;
+    height: 100%;
+    padding: 3px;
+    background-color: #f3f3f3;
+    font-size: 14px;
+    font-weight: 600;
+}
 
 .product-amount {
     width: 50%;
@@ -389,7 +427,6 @@ footer {
         margin: 10px;
         box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 25%);
     }
-    
 
 /* 메뉴 */
 .list-menu{
@@ -408,22 +445,6 @@ footer {
 .line{
  	height: 2px;
     background-color: #f1f1f1;
-}
-.btn-blue{
- 	background-color: #0078ff;
-    color: #fff;
-    border-radius: 4px;
-    font-weight: 400;
-    /* font-size: 16px; */
-    justify-content: center;
-    align-items: center;
-    line-height: 1.5;
-    border:0px;
-
-}
-.btn-size{
-	width: 60px;
-    height: 28px;
 }
     </style>
 <body>
@@ -446,52 +467,37 @@ footer {
 				<table class="menu-tbl">
 					<tr>
 						<td>
-							<ul onclick="location.href='/order/complete/list.kh'">
-								<li class="bold" >${count6 }</li>
+							<ul onclick="location.href='/order/complete/Cancle/list'">
+								<li class="bold" >${count3 }</li>
 								<li>전체</li>
 							</ul>
 						</td>
 						<td>
-							<ul onclick="cngDel('입금확인')">
-								<!-- <li class="bold" id="count1"></li> -->
-								<li class="bold">${count1 }</li>
-								<li>입금/결제</li>
+							<ul onclick="cngDel('구매취소')">
+							<!-- <li class="bold" id="count5"></li> -->
+							<li class="bold">${count1 }</li> 
+								<%-- <li class="bold">${count5 }</li> --%>
+								<li>구매취소</li>
 							</ul>
 						</td>
 						<td>
-							<ul onclick="cngDel('배송중')">
-							<!-- <li class="bold" id="count2"></li> -->
-								<li class="bold">${count2 }</li> 
-								<li>배송중</li>
+							<ul onclick="cngDel('환불완료')">
+							<!-- <li class="bold" id="count5"></li> -->
+							<li class="bold">${count2 }</li> 
+								<%-- <li class="bold">${count5 }</li> --%>
+								<li>환불완료</li>
 							</ul>
 						</td>
-						<td>
-							<ul onclick="cngDel('배송완료')">
-							<!-- <li class="bold" id="count3"></li> -->
-							<li class="bold">${count3 }</li> 
-								<%-- <li class="bold">${count3 }</li> --%>
-								<li>배송완료</li>
-							</ul>
-						</td>
-						<td>
-							<ul onclick="cngDel('구매확정')">
-							<!-- <li class="bold" id="count4"></li> -->
-							<li class="bold">${count4 }</li> 
-								<%-- <li class="bold">${count4 }</li> --%>
-								<li>구매확정</li>
-							</ul>
-						</td>
-						
 					</tr>
 				</table>
 			</div>
 			<div class="line"></div>
            <c:forEach items="${oList}" var="order" varStatus="i">
-         <c:if test="${order.dirivaryStatus ne '구매취소' and order.dirivaryStatus ne '환불완료' }">
+           <c:if test="${order.dirivaryStatus eq '구매취소' or order.dirivaryStatus eq '환불완료' }">
 						 <c:forEach items="${opList}" var="orderPay" varStatus="op">
 						 <c:if test="${order.orderNo eq orderPay.orderNo }">
               <div class="product-box" >
-                     
+                   
                  
                     <div class="order-thumbnail">
                         <div class="thumbnail-box">
@@ -503,12 +509,12 @@ footer {
                     <div class="product-info">
                         <div class="product">
                             <div class="brand-info">
-                            <div class="item-amount-wrap">
-                            <div class="item-amountc">
-                                <span class="dilivary-status">${order.dirivaryStatus}</span>
-                           
-                            </div>
-                        </div>
+		                         <div class="item-amount-wrap">
+		                            <div class="item-amountc">
+		                                <span class="dilivary-status">${order.dirivaryStatus}</span>
+		                           
+		                            </div>
+		                       	 </div>
                                 <div class="a-wrap">
                                             <span class="brand-name">주문번호 : No.${order.orderNo }</span>
                                     <span class="product-name">${order.orderMainProductName }</span>
@@ -561,7 +567,7 @@ footer {
             </c:if>
             </c:forEach>
             <c:if test="${empty oList}">
-                <div class="product-box nocamp">
+               <div class="product-box nocamp">
                     <h3>주문 내역이 없습니다.</h3>
                     <p style="color: gray;">멋진 캠핑용품을 쇼핑해보세요</p>
                     <a href="/product/newArrivalList" class="campListBtn">쇼핑하러가기</a>    
@@ -584,11 +590,11 @@ function diliveryDtail(orderNo){
 
 
 function cngDel(msg){
-	location.href="/order/delliveryMenu?dirivaryStatus="+msg+""
+	location.href="/order/cancle/delliveryMenu?dirivaryStatus="+msg+""
 	dilivaryCount();
 } 
 
-function getPoint(obj){
+/* function getPoint(obj){
 	var orderNo=$(obj).parent().children("#orderNo").val();	
 
 	$.ajax({
@@ -620,7 +626,7 @@ function cancleOrder(obj){
 			
 		}
 	})
-}
+} */
 </script>
 </script>
 </body>
