@@ -87,7 +87,7 @@ header {
     top: 0px;
     height: 50px;
     background-color: rgb(255, 255, 255);
-    z-index: 10;
+    z-index: 1;
     max-width: 768px;
     margin: 0 auto; 
 }
@@ -361,99 +361,85 @@ header {
 }
 
 
-/* footer */
-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    max-width: 768px;
-    margin: 0 auto;
-    width: 100%;
-    padding: 12px 7px;
-
-}
-
-.footer-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
-.submit-button {
-    background-color: #0078ff;
-    color: #fff;
-    display: flex;
-    width: 100%;
-    height: 50px;
-    border-radius: 4px;
-    font-weight: 400;
-    font-size: 16px;
-    justify-content: center;
-    align-items: center;
-    line-height: 1.5;
-}
-
-.footer-span1 {
-    opacity: 0.7;
-    color: #fff;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.footer-span1:after {
-    display: inline-block;
-    width: 1px;
-    height: 14px;
-    margin: -2px 12px 0;
-    background-color: #fff;
-    opacity: 0.4;
-    vertical-align: middle;
-    content: '';
-}
-
-.footer-span2 {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.5;
-    cursor: pointer;
-}
-    .product-box {
-        margin: 10px;
-        box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 25%);
-    }
-.disabled {
+.star {
     position: relative;
+    font-size: 1.5rem;
+    color: #ddd;
+  }
+  
+  .star input {
+    width: 100%;
     height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .star span {
+    width: 100%;
+    position: absolute; 
+    left: 0;
+    color: red;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  .cm-line{
+      height: 10px;
+    background-color: #f1f1f1;
+    width:100%;
+  }
+  .review-information{
+  	padding-left:3%;
+    display: flex;
+    margin: 0 15px 20px;
+    border-bottom: 1px solid #f5f5f5;
+    justify-content: space-between;
 }
-    .disabled::before{
-        content: '';
-        position: absolute;
-        width: 96%;
-        height: 65%;
-        background-color: rgba(255, 255, 255, 0.75);
-        z-index: 2;
-    }
-    .com{
-    position: sticky;
-    font-size: 10px;
-    padding: 2px 6px;
+.review-product-information {
+    display: flex;
+    max-height: 54px;
+    padding: 0 15px 15px 53px;
+    align-items: center;
+}
+.review-product-information_thumbnail >img{
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100%;
     border-radius: 4px;
-    background-color: gray;
-    z-index: 3;
-    color: #fff;
-    }
-    .campListBtn{
-        margin: 10px;
-        padding: 6px 30px 5px 30px;
-        color: #0078ff;
-        border: 1px solid #0078ff;
-        border-radius: 5px;
-    }
-    .campListBtn:hover{
-        color: white;
-        background-color: #0078ff;
-    }
+    transform: translate(-50%,-50%);
+    -o-object-fit: contain;
+    object-fit: contain;
+
+}
+.review-product-information_thumbnail{
+	overflow: hidden;
+    position: relative;
+    width: 45px;
+    height: 54px;
+}
+.review-information>span{
+	align:right;
+	margin-top:15px;
+}
+.review-product-information-text{
+	
+	width: calc(100% - 55px);
+	    margin-left: 10px;
+	    font-size: 12px;
+}
+.review-grade{
+	
+    height: 40px;
+    padding-bottom: 10px;
+    width:90%;
+    padding-left:5%;
+}
+.review-contents{
+	padding-left:5%;
+}
     .nocamp{
         display: flex;
     height: 300px;
@@ -461,20 +447,7 @@ footer {
     align-items: center;
     flex-direction: column;
     }
-    .go-home {
-    display: inline-flex;
-    position: relative;
-    width: 40px;
-    height: 40px;
-    padding: 5px;
-}
-.home-layout {
-    display: flex;
-    position: absolute;
-    align-items: center;
-    top: 8px;
-    right: 5px;
-}
+    
     </style>
 <body>
     <div class="body-wrapper">
@@ -486,12 +459,7 @@ footer {
                             <img src="/resources/images/back_arrow.png">
                         </a>
                     </div>
-                    <h2>마이 캠핑장 예약</h2>
-                    <div class="home-layout">
-                        <button class="go-home" onclick="location.href='/';">
-                            <img src="/resources/images/home.png">
-                        </button>
-                    </div>
+                    <h2>캠핑장 좋아요 조회</h2>
                 </div>
             </header>
         </div>
@@ -500,95 +468,95 @@ footer {
             <div class="order-check">
                 <div class="check-bar">
                     
-                    <label for="check-all" >전체예약 <b>
-                        ${cbList.size()}
+                    <label for="check-all" >캠핑장 댓글 <b>
+                        
                     <c:if test="${empty cbList}">0</c:if>    
                     </b>개</label>
                     <!-- <button class="delete-btn">선택</button> -->
                 </div>
             </div>
-            <c:forEach items="${cbList }" var="campBookingList" varStatus="i">
-                <!-- 현재날짜 -->
-                <c:set var="date" value="<%=new java.util.Date()%>" />
-                <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
-                <!-- 마지막날짜 -->
-                <fmt:parseDate value="${campBookingList.lastDay }" var="dateValue" pattern="yyyy-MM-dd"/>
-                <c:set var="lastDay"><fmt:formatDate value="${dateValue}" pattern="yyyy-MM-dd"/></c:set>
-                <c:choose> 
-                    <c:when test="${today > lastDay}">
-                        <div class="product-box disabled" onclick ='location.href="/campBooking/campBookingDetail.kh?bookingNo="+${campBookingList.bookingNo }+""'>
-                    </c:when> 
-                    <c:when test="${campBookingList.bookCancleStatus == 'Y'}">
-                        <div class="product-box disabled" onclick ='location.href="/campBooking/campBookingDetail.kh?bookingNo="+${campBookingList.bookingNo }+""'>
-                    </c:when> 
-                    <c:otherwise>
-                        <div class="product-box" onclick ='location.href="/campBooking/campBookingDetail.kh?bookingNo="+${campBookingList.bookingNo }+""'>
-                    </c:otherwise> 
-                </c:choose> 
-                    <div class="order-thumbnail">
-                        <div class="thumbnail-box">
-                            <a href="#" class="thumbnail-link">
-                                <img class="thumbnail-image" style="width:100%; height: 100%;"  src="${campBookingList.camp.firstImageUrl }"/>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product">
-                            <div class="brand-info">
-                                <div class="a-wrap">
-                                    <c:if test="${today > dateValue}">
-                                    </c:if>
-                                    <c:choose> 
-                                        <c:when test="${campBookingList.bookCancleStatus == 'Y'}">
-                                            <p  class="brand-name">예약번호 : No.${campBookingList.bookingNo } <span class="com">취소완료</span></p>
-                                        </c:when> 
-                                        <c:when test="${today > lastDay}">
-                                            <p  class="brand-name">예약번호 : No.${campBookingList.bookingNo } <span class="com">이용완료</span></p>
-                                        </c:when> 
-                                        <c:otherwise>
-                                            <p  class="brand-name">예약번호 : No.${campBookingList.bookingNo }</p>
-                                        </c:otherwise> 
-                                    </c:choose> 
-                                    <p  class="product-name">${campBookingList.campSite.campName}</p>
-                                </div>
+				       <div class="layout-wrapper">
+                        <div style="height: 100%; overflow:auto; ">
+                            <div class="map_area">
+                                <h4>캠핑장 위치</h4>
+                                <div id="map" style="width:90%;height:600px;"></div>
+                                <hr>
                             </div>
-                            <span class="brand-name"><b>예약일 : <fmt:formatDate value="${campBookingList.bookDate }" pattern="yyyy-MM-dd"/></b></span>
                         </div>
-                        <div class="option-value">
-                            <span class="product-option">${campBookingList.firstDay } ~ ${campBookingList.lastDay } (${campBookingList.totalDay }박)</span>
-                            <span><fmt:formatNumber value="${campBookingList.bookTotalPrice }" pattern="#,###" />원</span>
-                        </div>
-                        <div class="item-amount-wrap">
-                            <div class="item-amountc">
-                                <span class="product-option">입실 ${campBookingList.campSite.inTime }시 / 퇴실 ${campBookingList.campSite.outTime }시</span>
-                            </div>
-                            <button></button>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
-            <c:if test="${empty cbList}">
-                <div class="product-box nocamp">
+							 
+							 
+							 
+				       </div>
+                
+                <!-- <div class="product-box nocamp">
                     <h3>캠핑장 예약내역이 없습니다.</h3>
                     <p style="color: gray;">캠핑장을 예약해 보세요</p>
                     <a href="/camp/campList.kh" class="campListBtn">캠핑장 보러가기</a>    
                     
-                </div>
-            </c:if>
+                </div> -->
 
             
         </section>
 
         <footer>
-            <!-- <div class="footer-wrapper">
-                <button type="button" class="submit-button">
-                    <span class="footer-span1">총 1개</span>
-                    <span class="footer-span2">244,000</span>
-                    원 결제하기
-                </buttn>
-            </div> -->
+
         </footer>
     </div>
+
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=2i99b6lxe8&submodules=geocoder"></script>
+    <script>
+        // 지도 위치 표시
+    function addSearch(){
+			new daum.Postcode({
+		        oncomplete: function(data) {
+		            console.log(data)
+		            document.querySelector("#postCode").value = data.zonecode;
+		            document.querySelector("#roadAddr").value = data.roadAddress;
+		            document.querySelector("#jibunAddr").value = data.jibunAddress;
+		        }
+		    }).open();
+		}
+		var mapOptions = {
+			    center: new naver.maps.LatLng(35.8404, 127.600),
+			    zoom: 7,
+			    zoomControl : true,
+			    zoomControlOption : {
+			    	position : naver.maps.Position.TOP_RIGHT,
+			    	style : naver.maps.ZoomControlStyle.SMALL
+			    }
+			};
+		//mapOptions를 아래 변수에 넣어서 구문을 하나로 합칠수도있음
+		var map = new naver.maps.Map('map', mapOptions); //지도생성
+		
+		var markerOptions = {};
+		//마커 찍기
+		var marker = new naver.maps.Marker({//마커생성
+			position : new naver.maps.LatLng(35, 127), //옵션설정
+			map : map
+		});
+		var titleCamp = "${camp.facltNm}";
+        var campAddr ="${camp.addr1}";
+
+		//마커에 정보창 표시
+		var contentStr = "<div class='maps'><div class=''  style='height: 100px; width: 220px; margin-bottom: 10px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'></div><span class=col-md-8><h5>"+titleCamp+"</h5><p>"+campAddr+"</p></span></div>";
+		var infoWindow = new naver.maps.InfoWindow({
+			content : contentStr
+		});
+        //말풍선창 제어
+		infoWindow.open(map,marker);
+		naver.maps.Event.addListener(marker,"click",function(e){
+			//true면 열려있고 fales면 닫혀있고
+			if(infoWindow.getMap()){
+			infoWindow.close();
+				
+			}else{
+				infoWindow = new naver.maps.InfoWindow({
+					content : contentStr
+				});
+				infoWindow.open(map,marker);
+			}
+		});
+    </script>
 
 </body>
 </html>

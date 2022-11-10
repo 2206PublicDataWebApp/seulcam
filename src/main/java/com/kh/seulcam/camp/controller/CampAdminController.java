@@ -58,7 +58,7 @@ public class CampAdminController {
     private PaymentService paymentService;
 
     // 캠핑리스트 관리 페이지
-    @RequestMapping(value = "/campAdmin/campAdminMain.kh", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/camp/campList", method = RequestMethod.GET)
     public ModelAndView campAdmin(
             @RequestParam(value = "page", required = false) Integer page,
             @ModelAttribute SearchList sList,
@@ -103,7 +103,7 @@ public class CampAdminController {
     }
 
     // 캠핑장 사이트 출력
-    @RequestMapping(value = "/campAdmin/campAdminSite.kh", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/camp/siteList", method = RequestMethod.GET)
     public ModelAndView campAdminSite(
             @RequestParam(value = "contentId", required = false) int contentId,
             ModelAndView mv) {
@@ -317,7 +317,7 @@ public class CampAdminController {
                 int confirm = 1;
                 int update = cService.campRegistAviModify(contentId, confirm);
             }
-            mv.setViewName("redirect:/campAdmin/campAdminSite.kh?contentId=" + contentId);
+            mv.setViewName("redirect:/admin/camp/siteList?contentId=" + contentId);
         } catch (Exception e) {
             e.printStackTrace();
             mv.addObject("msg", "정보 수정 실패").setViewName("common/errorPage");
@@ -326,7 +326,7 @@ public class CampAdminController {
     }
     
     //캠핑장 예약리스트 관리
-    @RequestMapping(value = "/campAdmin/campBookingList.kh", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/camp/bookingList", method = RequestMethod.GET)
     public ModelAndView campBookingList(
             HttpSession session,
             ModelAndView mv) {
@@ -397,7 +397,7 @@ public class CampAdminController {
     
     //캠핑장 댓글 관리
     @ResponseBody
-    @RequestMapping(value="/campAdmin/campReviewList.kh",method=RequestMethod.GET)
+    @RequestMapping(value="/admin/camp/reviewList",method=RequestMethod.GET)
     public ModelAndView campAdminReviewList(
             ModelAndView mv) {
         try {

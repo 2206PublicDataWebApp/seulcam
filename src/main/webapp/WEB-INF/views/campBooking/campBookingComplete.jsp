@@ -44,13 +44,13 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	max-width: 385px;
+	max-width: 768px;
 	margin: 0 auto;
 	height: 50px;
 	position: relative;
 }
 .body-wrapper {
-	max-width: 770px;
+	max-width: 768px;
     margin: 0 auto; 
     background-color: white;
     min-height: 100vh;
@@ -139,7 +139,7 @@ header {
     background: #fff;
 	height: 40px;
     width: 100%;
-    max-width: 770px;
+    max-width: 768px;
     transform: translateX(-50%);
 }
 .comMessege {
@@ -148,7 +148,42 @@ header {
 	justify-content : center; 
 	align-items : center;
 }
+/* 버튼 */
+.bookBtn{
+	display: flex;
+	align-items: center;
+    justify-content: center;
+	/* position: fixed; */
+	border-radius: 4px;
+	font-weight: 400;
+    font-size: 16px;
+	margin: 1px;
+	bottom: 0;
+	width: 50%;
+	height: 50px;
+	background-color: #0078ff;
+	color: white;
+}
+.btn_foot a{
+	text-decoration: none;
+	color: white;
 
+}
+
+.btn_foot{
+	position: fixed;
+	display: flex;
+	float: left;
+    bottom: 0;
+    left: 50%;
+    z-index: 11;
+    background: #fff;
+	height: 53px;
+    width: 100%;
+    max-width: 768px;
+    transform: translateX(-50%);
+	cursor: pointer;
+}
 </style>
 <body>
 <!-- 헤더&메뉴바 -->
@@ -266,8 +301,8 @@ header {
 		<br><br>
 
 	<div class="btn_foot">
-		<a href="/campBooking/campBookingList.kh" class="btn btn-dark bookBtn">예약내역보기</a>
-		<a href="/camp/campList.kh" class="btn btn-dark bookBtn">캠핑장 구경하러 가기</a>
+		<a href="/campBooking/campBookingList.kh" class="bookBtn">예약내역보기</a>
+		<a href="/camp/campList.kh" class="bookBtn">캠핑장 구경하러 가기</a>
 	</div>
 		
 	</div>

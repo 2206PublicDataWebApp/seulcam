@@ -136,20 +136,26 @@ public class CampStoreLogic implements CampStore{
     }
 
     @Override
-    public Integer deleteCampLike(SqlSessionTemplate session, CampLike campLike) {
+    public Integer deleteCampLike(SqlSession session, CampLike campLike) {
         Integer result = session.delete("CampMapper.deleteCampLike",campLike);
         return result;
     }
 
     @Override
-    public Integer insertCampLike(SqlSessionTemplate session, CampLike campLike) {
+    public Integer insertCampLike(SqlSession session, CampLike campLike) {
         Integer result = session.insert("CampMapper.insertCampLike",campLike);
         return result;
     }
 
     @Override
-    public String selectStarAvg(SqlSessionTemplate session, int contentId) {
+    public String selectStarAvg(SqlSession session, int contentId) {
         String result = session.selectOne("CampMapper.selectStarAvg",contentId);
+        return result;
+    }
+
+    @Override
+    public Integer selectMinPrice(SqlSession session, int contentId) {
+        Integer result = session.selectOne("CampMapper.selectMinPrice",contentId);
         return result;
     }
 

@@ -118,9 +118,16 @@ header {
 	font-size: 14px;
 	font-weight: bold;
 }
-.btn-dark{
-	height: 31px;
+.btnPoint{
+	margin-bottom: 0;
+	display: flex;
+	color: white;
+	background-color: #0078ff;
+	height: 30px;
     width: 68px;
+	justify-content: center;
+    align-items: center;
+	border-radius: 4px;
 }
 .pointInput{
 	height: 30px;
@@ -129,24 +136,7 @@ header {
 .nowPoint{
 	color: blue;
 }
-.bookBtn{
-	
-	/* position: fixed; */
-	bottom: 0;
-	width: 100%;
-	height: 37px;
-}
-.btn_foot{
-	position: fixed;
-    bottom: 0;
-    left: 50%;
-    z-index: 11;
-    background: #fff;
-	height: 40px;
-    width: 100%;
-    max-width: 770px;
-    transform: translateX(-50%);
-}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -164,6 +154,44 @@ input:focus{
 }
 hr {
 
+}
+.bookBtn{
+	display: flex;
+	align-items: center;
+    justify-content: center;
+	/* position: fixed; */
+	border-radius: 4px;
+	font-weight: 400;
+    font-size: 16px;
+	margin: 1px;
+	bottom: 0;
+	width: 50%;
+	height: 50px;
+	background-color: #0078ff;
+	color: white;
+}
+.btn_foot a{
+	text-decoration: none;
+	color: white;
+
+}
+a:hover{
+	color: white;
+}
+
+.btn_foot{
+	position: fixed;
+	display: flex;
+	float: left;
+    bottom: 0;
+    left: 50%;
+    z-index: 11;
+    background: #fff;
+	height: 53px;
+    width: 100%;
+    max-width: 768px;
+    transform: translateX(-50%);
+	cursor: pointer;
 }
 </style>
 <body>
@@ -234,7 +262,7 @@ hr {
 				<h5><b>전체 인원 정보</b></h5>
 				<div class="input_info row">
 					<div class="col-4">
-						<h6 style="margin: auto; padding: auto;">인원</h6>
+						<h6 style="margin-top: 10px; padding: auto;">인원</h6>
 					</div>
 					<div class="col-8" style="text-align: left;">
 						<div class="count-wrap _count">
@@ -265,20 +293,20 @@ hr {
 					<div class="col-4">
 						<p class="peopleInfo">인원추가요금</p>
 					</div>
-					<div class="col-8 text-end" style="text-align: left;">
+					<div class="col-8 text-end" style="text-align: left; margin-bottom: 15px;" >
 						<h7 style="margin: auto; padding-right: 15px;"><b class="peopleMoney"></b></h7>
 					</div>
 					<hr>
 				</div>
 				<h5><b>포인트 할인</b></h5>
 				<div class="input_info row">
-					<div class="col-3">
+					<div class="col-3" style="margin-bottom: 0;">
 						<h6>포인트</h6>
 					</div>
-					<div class="col-9 text-end" style="text-align: left;">
-						<input type="number" class="pointInput" name="" value="" id="pointInput" placeholder=""><button type="button" onclick="pointCancle()" class="btn btn-dark btn-sm">사용취소</button>
-						<p align="right" class="nowPoint">사용가능 포인트 <span id="available-point">${mOne.totalPoint}</span>원</p>
-					</div>
+					<div class="col-9 text-end" style="text-align: left; display: flex;  margin-bottom: 0;  flex-direction: row; justify-content: flex-end;">
+						<input type="number" class="pointInput" name="" value="" id="pointInput" placeholder=""><div class="btnPoint" style="margin-bottom: 0;"><a onclick="pointCancle()" >사용취소</a></div>
+						
+					</div><p align="right" class="nowPoint">사용가능 포인트 <span id="available-point">${mOne.totalPoint}</span>원</p>
 					<hr>
 				</div>
 				<h5><b>결제 상세</b></h5>
@@ -322,8 +350,7 @@ hr {
 		<br><br>
 
 	<div class="btn_foot">
-		<button onclick="bookPay()" class="btn btn-dark bookBtn"><span class="totalPrice"></span> 예약하기</button>
-
+		<a onclick="bookPay()" style="width: 100%;" class="bookBtn"><span class="totalPrice"></span>　예약하기</a>
 	</div>
 		
 	</div>
@@ -352,6 +379,7 @@ hr {
 			"Num":createOrderNum(),
 			"memberId":"${mOne.memberId}",
 			"siteNo":${campSite.siteNo},
+			"name" : "${campSite.campName}",
 			"bookName":$("#bookName").val(),
 			"bookPhone":$("#bookPhone").val(),
 			"bookRequest":$("#bookRequest").val(),

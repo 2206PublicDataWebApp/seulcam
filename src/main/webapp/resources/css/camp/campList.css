@@ -190,3 +190,14 @@ select {
     margin-right: 6px; 
     margin-top: 3px;
 }
+.booking {
+	display: flex;
+	height: 100%;
+	font-size: 16px;
+	padding-top: 20px;
+	align-items: flex-end;
+    justify-content: flex-end;
+}
+.booking p{
+	margin: 0;
+}

@@ -31,7 +31,7 @@ body {
 	background-color: #f1f1f1;
 }
 
-header {
+/* header {
 	position: fixed;
 	left: 0px;
 	right: 0px;
@@ -51,10 +51,65 @@ header {
 	margin: 0 auto;
 	height: 50px;
 	position: relative;
+} */
+/* Header */
+#header-block {
+    height: 50px;
+}
+
+header {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    z-index: 10;
+    max-width: 768px;
+    margin: 0 auto; 
+}
+
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 768px;
+    margin: 0 auto;
+    height: 50px;
+    position: relative;
+}
+
+.back-layout {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 5px;
+    left: 5px;
+}
+
+.go-back {
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+
+.go-back img {
+    width: 25px;
+    height: 25px;
+}
+h2 {
+	margin: 0;
+    font-size: 16px;
+	font-weight: bold;
+}
+a{
+	text-decoration:none;
 }
 
 .body-wrapper {
-	max-width: 600px;
+	max-width: 768px;
 	margin: 0 auto;
 	background-color: white;
 	min-height: 100vh;
@@ -62,7 +117,7 @@ header {
 	
 }
 .detailMain {
-	padding-top: 70px;
+	padding-top: 25px;
     }
 .infoTitle {
 	font-weight: bold;
@@ -127,13 +182,26 @@ header {
 	color: blue;
 }
 .bookBtn{
-	
+	display: flex;
+	align-items: center;
+    justify-content: center;
 	/* position: fixed; */
+	border-radius: 4px;
+	font-weight: 400;
+    font-size: 16px;
 	margin: 1px;
 	bottom: 0;
 	width: 50%;
-	height: 37px;
+	height: 50px;
+	background-color: #0078ff;
+	color: white;
 }
+.btn_foot a{
+	text-decoration: none;
+	color: white;
+
+}
+
 .btn_foot{
 	position: fixed;
 	display: flex;
@@ -142,10 +210,17 @@ header {
     left: 50%;
     z-index: 11;
     background: #fff;
-	height: 40px;
+	height: 53px;
     width: 100%;
-    max-width: 600px;
+    max-width: 768px;
     transform: translateX(-50%);
+	cursor: pointer;
+}
+
+/*  */
+.cm-line {
+    height: 10px;
+    background-color: #f1f1f1;
 }
 .comMessege {
 	height: 60px; 
@@ -180,15 +255,31 @@ header {
     z-index: 1;
     color: #fff;
     }
+
 </style>
 <body>
 <!-- 헤더&메뉴바 -->
 	<header>
-		<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+		
 	</header>
 
 	<!-- 컨텐츠 -->
+	
 	<div class="body-wrapper">
+		<div id="header-block">
+            <header>
+                <div class="header-wrapper">
+                    <div class="back-layout">
+                        <a href="/campBooking/campBookingList.kh" class="go-back">
+                            <img src="/resources/images/back_arrow.png">
+                        </a>
+                    </div>
+                    <h2>예약 상세보기</h2>
+                    
+                </div>
+            </header>
+        </div>
+		<div class="cm-line"></div>
 		<!-- 현재날짜 -->
 		<c:set var="date" value="<%=new java.util.Date()%>" />
 		<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
@@ -315,21 +406,22 @@ header {
 		</div>
 		<br><br>
 
+
 	<div class="btn_foot">
 		<c:choose> 
 			<c:when test="${today >= firstDay || empty pay || campBooking.bookCancleStatus == 'Y'}">
-				<a href="/campBooking/campBookingList.kh" class="btn btn-dark bookBtn">예약내역보기</a>
-				<a href="/camp/campList.kh" class="btn btn-dark bookBtn">캠핑장 구경하러 가기</a>
+				
+				<a href="/camp/campList.kh" style="width: 100%;" class="bookBtn">캠핑장 구경하러 가기</a>
 			</c:when> 
 			<c:otherwise>
-				<a href="/campBooking/campBookingList.kh" class="btn btn-dark bookBtn">예약내역보기</a>
+				<a href="/camp/campList.kh" class="bookBtn">캠핑장 구경하러 가기</a>
 				<input type="hidden" class="memberId" 		value="${campBooking.memberId }"/>
 				<input type="hidden" class="orderNo" 		value="${campBooking.bookingNo }"/>
 				<input type="hidden" class="refundPoint" 		value="${campBooking.bookUsePoint  }"/>
 				<input type="hidden" class="imp_uid" 		value="${pay[0].imp_uid }"/>
 				<input type="hidden" class="merchant_uid" value="${pay[0].merchant_uid }"/>
 				<input type="hidden" class="payPrice"   	value="${pay[0].payPrice }"/>
-				<a onclick="cancelPay(this)" class="btn btn-secondary bookBtn">예약취소 요청</a>
+				<a onclick="cancelPay(this)" class="bookBtn">예약취소 요청</a>
 			</c:otherwise> 
 		</c:choose> 
 	</div>
