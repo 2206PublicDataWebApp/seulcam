@@ -12,7 +12,7 @@ body {
 }
 
 .body-wrapper {
-    max-width: 400px;
+    max-width: 768px;
     margin: 0 auto; 
     background-color: white;
     min-height: 100vh;
@@ -50,7 +50,7 @@ header {
     height: 50px;
     background-color: rgb(255, 255, 255);
     z-index: 1;
-    max-width: 400px;
+    max-width: 768px;
     margin: 0 auto; 
 
 }
@@ -59,7 +59,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 385px;
+    max-width: 768px;
     margin: 0 auto;
     height: 50px;
     position: relative;
@@ -95,7 +95,7 @@ header > h1 {
 /* Section */
 /* Main Section */
 section {
-    max-width: 385px;
+    max-width: 768px;
     margin: 0 auto;
     padding: 20px 15px 100px 15px;
     margin: 0 auto;
@@ -194,7 +194,7 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
-    max-width: 400px;
+    max-width: 768px;
     margin: 0 auto;
     width: 100%;
     padding: 28px 15px 20px;

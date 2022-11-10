@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>슬기로운 캠핑 생활</title>
     <link rel="stylesheet" href="/resources/css/member/login.css">
-    <link rel="stylesheet" href="/resources/css/memberCommon.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
@@ -52,7 +51,7 @@
                             <button type="button" class="password-eye"><i id="toggle-eye" class="fa fa-eye fa-lg"></i></button>
                         </div>
                     </div>
-					<input type="hidden" name="redirectURI" value="${redirectURI}"/>
+					<input type="hidden" class="redirectURI" name="redirectURI" value="${redirectURI}"/>
                     <button type="submit" class="login-button">로그인</button>
 
                     <div class="member-util">
@@ -78,12 +77,13 @@
             </div>
             <form action="/member/kakaoLogin" id="kakaoForm" method="post" hidden>
            		<input type="hidden" name="memberEmail" id="kakaoemail" />
-           		<input type="hidden" name="redirectURI" value="${redirectURI}"/>
+           		<input type="hidden" class="redirectURI" name="redirectURI" value="${redirectURI}"/>
             </form>
             
         </section>
     </div>
     <script src="/resources/js/member/pwInputCommon.js"></script>
     <script src="/resources/js/member/kakaoLogin.js"></script>
+    <script src="/resources/js/member/redirectUri.js"></script>
 </body>
 </html>

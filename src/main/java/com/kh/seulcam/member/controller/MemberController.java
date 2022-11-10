@@ -59,18 +59,30 @@ public class MemberController {
 		return "member/findPw";
 	}
 	
+	// 아이디 찾기 결과 창으로 이동
+	@RequestMapping(value="/member/idResultView", method=RequestMethod.POST)
+	public ModelAndView idResult(
+			@RequestParam("memberEmail") String memberEmail
+			, ModelAndView mv) {
+	try {
+		List<Member> mList = mService.listIdByEmail(memberEmail);
+		mv.addObject("mList", mList);
+		mv.setViewName("/member/idResult");
+	} catch (Exception e) {
+		mv.addObject("msg", e.getMessage());
+		mv.setViewName("common/errorPage");
+	}
+	return mv;
+	}
+	
 	// 비밀번호 찾기 결과 창으로 이동
-	@RequestMapping(value="/member/pwResultView", method=RequestMethod.GET)
+	@RequestMapping(value="/member/pwResultView", method=RequestMethod.POST)
 	public ModelAndView pwResultView(
-			String memberId
-			, ModelAndView mv
-			, HttpServletRequest request) {
+			@RequestParam("memberId") String memberId
+			, ModelAndView mv) {
 		try {
-			HttpSession session = request.getSession();
-			//Member pwResult = mService.printOneById(memberId);
-			mv.addObject("pwResult", memberId);
-			//mv.addObject("member", pwResult);
-			mv.setViewName("member/pwResult");
+			mv.addObject("memberId", memberId);
+			mv.setViewName("/member/pwResult");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
 		}
@@ -93,8 +105,10 @@ public class MemberController {
 		/* 마이페이지 관련 */
 	// 로그인 상태일 때 마이페이지 창으로 이동
 	@RequestMapping(value="/member/myPageView", method=RequestMethod.GET)
-	public ModelAndView memberMyPageView(HttpServletRequest request
-			, ModelAndView mv) {
+	public ModelAndView memberMyPageView(
+			HttpServletRequest request
+			, HttpServletResponse response
+			, ModelAndView mv) throws Exception {
 		try {
 			HttpSession session = request.getSession();
 			Member member = (Member)session.getAttribute("loginUser");
@@ -104,7 +118,10 @@ public class MemberController {
 			mv.setViewName("member/mypage");
 
 		} catch (Exception e) {
-			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+			response.setContentType("text/html; charset=UTF-8");
+	        PrintWriter out = response.getWriter();
+	        out.println("<script>alert('로그인 정보를 확인해주세요.'); history.go(-1);</script>");
+	        out.flush(); 
 		}
 		return mv;
 	}
@@ -283,6 +300,10 @@ public class MemberController {
 			Member loginUser = mService.loginMember(member);
 			String memberId = loginUser.getMemberId();
 			HttpSession session = request.getSession();
+			if (redirectURI=="") {
+				redirectURI = "http://127.0.0.1:9999/";
+			}
+		
 			if(rememberMe == null) { 
 			} else {
 				// 로그인 유지에 체크 했을 때
@@ -339,21 +360,6 @@ public class MemberController {
 			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
 		}
 		return mv;
-	}
-	
-	// 아이디 찾기 결과 창으로 이동
-	@RequestMapping(value="/member/idResult", method=RequestMethod.GET)
-	public ModelAndView idResult(@RequestParam("memberEmail") String memberEmail
-			, ModelAndView mv) {
-	try {
-		List<Member> mList = mService.listIdByEmail(memberEmail);
-		mv.addObject("mList", mList);
-		mv.setViewName("/member/idResult");
-	} catch (Exception e) {
-		mv.addObject("msg", e.getMessage());
-		mv.setViewName("common/errorPage");
-	}
-	return mv;
 	}
 	
 	// 닉네임 수정
@@ -455,23 +461,35 @@ public class MemberController {
 	}
 	
 	// 멤버 관리자 페이지 열기
-	@RequestMapping(value="/member/memberListView",method = RequestMethod.GET)
+	@RequestMapping(value="/admin/member/ListView",method = RequestMethod.GET)
 	public ModelAndView memberList(HttpSession session
 			, HttpServletRequest request
-			, ModelAndView mv) {
+			, HttpServletResponse response
+			, ModelAndView mv) throws Exception  {
 		try {
-
 			HttpSession receive = request.getSession();
 			List<Member> mList = mService.printAllMember();
 			Member member = (Member)receive.getAttribute("loginUser");
 			String memberId = member.getMemberId();
 			Member mOne = mService.printOneById(memberId);
-			mv.addObject("member", mOne);
-			mv.addObject("mList",mList);
-			mv.setViewName("admin/memberList");
-		}catch (Exception e) {
-			mv.addObject("msg", e.getMessage());
-			mv.setViewName("common/errorPage");
+			Boolean adminCheck = member.getAdminCheck();
+			if(adminCheck==false) {
+				response.setContentType("text/html; charset=UTF-8");
+		        PrintWriter out = response.getWriter();
+		        out.println("<script>alert('로그인 정보를 확인해주세요.'); history.go(-1);</script>");
+		        out.flush(); 
+		        mv.setViewName("redirect:/");
+			} else {
+				mv.addObject("member", mOne);
+				mv.addObject("mList",mList);
+				mv.setViewName("admin/memberList");
+			}
+
+		}catch (Exception e) {            
+		response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('로그인 정보를 확인해주세요.'); history.go(-1);</script>");
+        out.flush(); 
 		}
 		
 		return mv;

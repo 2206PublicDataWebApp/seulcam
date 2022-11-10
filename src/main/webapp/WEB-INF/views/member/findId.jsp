@@ -42,7 +42,7 @@
             </div>
 
             <h3>이메일을 통해 아이디 찾기</h3>
-			<form action="/member/idResult" method="GET">
+			<form action="/member/idResultView" method="POST">
             <div class="email-auth">
                     <input type="email" class="email-input" id="memberEmail" name="memberEmail" placeholder="이메일을 입력해주세요."  autocomplete="off">
                     <button type="button" class="auth-button" disabled>인증 요청</button>

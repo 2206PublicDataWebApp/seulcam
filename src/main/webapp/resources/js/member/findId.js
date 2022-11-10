@@ -3,7 +3,7 @@ $(function() {
 	$(".email.error").hide();
 	$(".auth-number.ok").hide();
 	$(".auth-number.error").hide();
-	let email_auth_cd = 'derg51ergegv';
+	let email_auth_cd = 'derg51e51651rgegv';
 
 	$("#memberEmail").on("keyup", function(){
 	    let memberEmail = $("#memberEmail").val();

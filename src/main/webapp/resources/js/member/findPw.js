@@ -1,8 +1,3 @@
-function getPwResult() {
-    var mId = $("#memberId").val();
-    location.href='/member/pwResultView?memberId='+mId;
-}
-
 $(function() { 
 	$(".id.ok").hide();
 	$(".id.error").hide();
