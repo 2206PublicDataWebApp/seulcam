@@ -18,6 +18,21 @@ h1, h2, h3, h4, h5, span, small {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
+p{
+	font-size:14px;
+	margin-top: 3px;
+}
+.detail_menu, .shop.detail{
+	max-width:768px;
+    margin: 0 auto;
+/* 	border-right:1px solid black;*/
+
+	box-sizing: border-box;
+	
+}
+.shop.detail{
+	border-bottom:1px solid black;
+}
     section.shop.detail > article.gallery img {
     width: 100%;
     height: auto;
@@ -34,7 +49,7 @@ section.shop.detail > article.order h1 {
     font-weight: 500 !important;
 }
 section.shop.detail > article.order .color {
-    font-size: 13px;
+    font-size: 14px;
     display: block;
     margin-top: 3px;
 }
@@ -43,7 +58,7 @@ section.shop.detail > article.order .price {
     text-align: right;
     top: 0;
     right: 0;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1;
     display: inline-block;
 }
@@ -74,7 +89,7 @@ section.shop.detail > article.order .buttons button {
     margin-top: 8px;
     border: solid 1px #000;
     line-height: 38px;
-    font-size: 12px;
+    font-size: 14px;
     float: left;
     background-color: white;
     cursor:pointer;
@@ -107,8 +122,7 @@ section.shop.detail > article.order .cont >.product_additional > dl > dt.materia
     padding-right: 55px;
 }
 body > section.detail_menu {
-    border-top: solid 1px #000;
-    font-size: 10px;
+    font-size: 14px;
 }
 body > header, body > nav, body > section, body > footer {
     width: 100%;
@@ -123,7 +137,7 @@ body > section.detail_menu div.ac {
 body > section.detail_menu label.ac-label{
     border-bottom: solid 1px #000;
     height: 50px;
-    font-size: 12px;
+    font-size: 14px;
     position: relative;
     padding-left: 15px;
     padding-top: 15px;
@@ -201,7 +215,7 @@ label#reviewTitle{
 body > section.detail_menu > div> article > div > a{
 	float:right;
 	margin-right:30px;
-	font-size:12px;
+	font-size:14px;
 }
 
 .count-wrap {
@@ -220,7 +234,7 @@ body > section.detail_menu > div> article > div > a{
     height: 38px;
     position: absolute;
     top: 0;
-    font-size: 12px;}
+    font-size: 14px;}
 .count-wrap > button.minus {left: 0;}
 .count-wrap > button.plus {right: 0;}
 .count-wrap .inp {
@@ -276,4 +290,34 @@ img{
 }
  div.ac-sub > div.image_panel > img{
 	width:345px;
+}
+
+.star {
+    position: relative;
+    font-size: 1.5rem;
+    color: #ddd;
+  }
+  
+  .star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .star span {
+    width: 100%;
+    position: absolute; 
+    left: 0;
+    color: red;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .review-grade{
+	
+    height: 40px;
+    padding-bottom: 10px;
+    width:90%;
 }

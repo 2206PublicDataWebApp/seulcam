@@ -28,7 +28,11 @@ body{
         width: 100%;
     height: 100%;
 }
-
+.list{
+		max-width:768px;
+	    margin: 0 auto;
+    border-left: 1px solid black;
+}
 article.search{
 	border-bottom: solid 1px #000;
     text-align: center;

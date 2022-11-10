@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,12 +13,15 @@
 </head>
 <link rel="stylesheet" href="/resources/css/product/productDetail.css">
 <link rel="stylesheet" href="/resources/css/fonts.css">
+<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+<link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 
 <script type="text/javascript"
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zj6zbz23cl"></script>
 
 <body>
-	<jsp:include page="/WEB-INF/views/common/header.jsp" />
+	<jsp:include page="/WEB-INF/views/common/headerBack.jsp" />
+
 	<section class="shop detail">
 		<article class="gallery">
 			<div class="swiper-container">
@@ -31,19 +35,29 @@
 		<article class="order">
 			<div class="cont">
 				<h1>${product.productName }</h1>
+				<br><br>
+				<p> ${product.brandName } / ${product.productNo }</p>
+				<p> ${product.productMaterial } </p>
 				<p class="color">
 					${product.productColor } <span class="colorchip"
 						style="background-color:${product.productColor };">　</span>
 				</p>
 				<span class="price"> 
 					<c:if test="${product.discount eq 0}">
-                          	<span id="priceBox">${product.productPrice}</span>
+                          	<span id="priceBox">
+                          		<span class="resultPrice">
+                          			<fmt:formatNumber value="${product.productPrice}" pattern="#,###"/>
+                          			<input type="hidden" id="intPrice" value="${product.productPrice}">
+                       			</span>
+                       		</span>
+                          			
                     </c:if>
                     <c:if test="${product.discount ne 0}">
                            <span id="priceBox">
                            	<span class="befPrice" style="text-decoration:line-through" val="${product.productPrice}">${product.productPrice}</span>
                            	<span class="discount" style="color:red;" value="${product.discount }">${product.discount }%↓</span>
-                           	<span class="resultPrice">${resultPrice }</span>
+                           	<span class="resultPrice" value="${resultPrice }"><fmt:formatNumber value="${resultPrice }" pattern="#,###"/></span>
+                           	<input type="hidden" id="intPrice" value="${resultPrice }">
                            </span>
                    	</c:if>
 				</span> <br>
@@ -171,12 +185,6 @@
 				<ol class="ac-sub" id="review_title_all">
 
 				</ol>
-					
-				
-					<div>
-				 		<a href="#" onclick="reviewRegist()">후기작성 </a>
-					</div>
-				
 			</article>
 
 			<article class="ac-sub-text">
@@ -189,26 +197,10 @@
 		<br>
 
 	</section>
+		
 <script src="/resources/js/product/cart-order.js"></script>
 <script>
 
-
-	
-	
-
-function reviewRegist(){
-	if(${loginUser == null}){
-		if(confirm("로그인이 필요합니다.")==true){
-			location.href="/member/loginView";
-		}else{
-			event.preventDefault();
-			
-		}
-	}else{
-		
-		location.href="/product/reviewRegist?productNo="+${product.productNo };
-	}
-}
  
  //갯수변경, 총액계산
  
@@ -244,21 +236,34 @@ function reviewRegist(){
         }
     }
 });
+    $(function(){
+    	var num = $('.totalPrice').children("#totalPriceSum").text()
+        	//아이디 tag인 태그의 text를 읽어온다 
+    	num2 = $.numberWithCommas(parseInt(num));
+      	// 받아온 text값을 정수로 변환하여 numberwithCommas 함수의 인자값으로 넣는다
+    })
+    $.numberWithCommas = function (x) {
+    	  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    	}
     
     $('.minus').click(function(e){
         e.preventDefault();
     	var now = $(".inp").val();
         
-	    var price=$('#product-price').text();
-	    $('.totalPrice').children("#totalPriceSum").text(price*now);
+	    var price=$("#intPrice").val();
+	    console.log(price);
+	    var totalPrice=(price*now).toLocaleString()
+	    $('.totalPrice').children("#totalPriceSum").text(totalPrice);
     });
     	
    
     $('.plus').click(function(e){
         e.preventDefault();
     	var now = $(".inp").val();
-	    var price=$('#product-price').text();
-	    $('.totalPrice').children("#totalPriceSum").text(price*now);
+        var price=$("#intPrice").val();
+        console.log(price);
+        var totalPrice=(price*now).toLocaleString()
+	    $('.totalPrice').children("#totalPriceSum").text(totalPrice);
     });
  
 //상품상세 ajax
@@ -277,8 +282,13 @@ function reviewRegist(){
 					 	var pUrl="../resources/puploadFiles/";
 						var title = dList[i].detailContents;
 			  			strDOM += '<div class="image_panel">';
-				        strDOM += "<img src="+pUrl+dList[i].detailFileRename+">";
-				        strDOM += '<p class="title">'+ title +'</p>';
+			  			if(dList[i].detailFileRename!=null){
+			  				
+					        strDOM += "<img src="+pUrl+dList[i].detailFileRename+">";
+			  			}
+				        if(title!=null){
+					        strDOM += '<p class="title">'+ title +'</p>';
+				        }
 				        strDOM += '</div>';
 					 }
 				$("#detail_photo_info").append(strDOM);
@@ -340,19 +350,24 @@ function reviewRegist(){
 						        	strDOM +='<img src='+rUrl+rList[i].reviewFileRename3 +'>';
 							 	}
 							 	strDOM+='</div>';
+								strDOM+= '<div class="review-grade"><span class="star">★★★★★';
+								strDOM+= ' <span id="checkstar" style="width:'+(rList[i].reviewGrade*10)+'%">★★★★★</span></span></div>';
+							 	strDOM+= '<p>'+rList[i].reviewTitle+'</p>';
 							 	strDOM+= '<p>'+rList[i].reviewTitle+'</p>';
 							 	strDOM+= '<p>'+rList[i].reviewContents+'</p>';
-							 	if(rList[i].memberId=="${loginUser.memberId}"){
+							 	
+							 	/* if(rList[i].memberId=="${loginUser.memberId}"){
 								 	strDOM+='</div><div><a href="/product/reviewModify?reviewNo='+rList[i].reviewNo;				 		
 								 	strDOM+='&memberId=${loginUser.memberId}" style="float: left;">수정</a>';
 								 	strDOM+='<a href="javascript:void(0)"style="float:right;" onclick="reviewDelete('+rList[i].reviewNo+')">삭제</a></div></article>';
-									 }
+									 } */
 							 strDOM+='</li>';
 					 }
 					$("#review_title_all").append(strDOM);
 			 },
 			 error : function(){
-				 strDOM='<div id="no_review">등록된 상품평이 없습니다.</div>';
+				 $("#review_title_all").html("");	
+				 strDOM+='<div id="no_review">등록된 상품평이 없습니다.</div>';
 				 console.log("리스트불러오기 실패");
 				 $("#review_title_all").append(strDOM);
 			 }
@@ -437,6 +452,6 @@ function reviewRegist(){
     
  
 </script>
-
+<%-- <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> --%>
 </body>
 </html>

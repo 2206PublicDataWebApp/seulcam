@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,13 +44,13 @@
 												style="background-color:${product.productColor };">　</span>
 										</p>
 										<c:if test="${product.discount eq 0}">
-			                            	<span id="priceBox">${product.productPrice}</span>
+			                            	<span id="priceBox"><fmt:formatNumber value="${product.productPrice}" pattern="#,###"/></span>
 			                            </c:if>
 			                            <c:if test="${product.discount ne 0}">
 				                            <span id="priceBox">
 				                            	<span class="befPrice" style="text-decoration:line-through" val="${product.productPrice}">${product.productPrice}</span>
 				                            	<span class="discount" style="color:red;" value="${product.discount }">${product.discount }%↓</span>
-				                            	<span class="resultPrice">${resultPrice[i.index] }</span>
+				                            	<span class="resultPrice"><fmt:formatNumber value="${resultPrice[i.index] }" pattern="#,###"/></span>
 				                            </span>
 			                            </c:if>
 			                        </span> 
@@ -62,7 +63,7 @@
             
     </article>  
 </section>
-
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 <script>
 var defPrice = $("#befPrice").val();
 var discount = $("#discount").val();

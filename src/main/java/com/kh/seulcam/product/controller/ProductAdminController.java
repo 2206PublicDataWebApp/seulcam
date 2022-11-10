@@ -42,14 +42,14 @@ public class ProductAdminController {
 
 
 	//브랜드등록 폼
-	@RequestMapping(value="/admin/brandRegistView", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/product/BrandRegistView", method=RequestMethod.GET)
 	public String brandRegisterView(Model model) {
 		return "admin/brandRegist";
 	}
 
 	//브랜드 등록
 	@ResponseBody
-	@RequestMapping(value="/admin/brandRegister", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/product/BrandRegister", method=RequestMethod.POST)
 	public String brandRegister(ModelAndView mv
 			,@ModelAttribute Brand brand
 			,HttpServletResponse response) throws IOException {
@@ -58,7 +58,7 @@ public class ProductAdminController {
 		if(result>0) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('브랜드 등록되었습니다.'); location.href='/admin/productList' </script>");
+			out.println("<script>alert('브랜드 등록되었습니다.'); location.href='/admin/product/BrandListView' </script>");
 			out.flush();
 			return null;			
 		}else {
@@ -66,18 +66,19 @@ public class ProductAdminController {
 		}
 	}
 	//상품등록 폼
-	@RequestMapping(value="/admin/productRegist", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/product/RegistView", method=RequestMethod.GET)
 	public ModelAndView productRegisterView(ModelAndView mv) {
 		List<HashMap> sNameList=pService.getTotalStoreName();
 		//		System.out.println(sNameList.get(2).values());
 		if(!sNameList.isEmpty()) {
 			mv.addObject("sNameList", sNameList);
+			mv.setViewName("/admin/productRegist");
 		}
 		return mv;
 
 	}
 	//상품등록
-	@RequestMapping(value="/admin/productRegister", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/product/Register", method=RequestMethod.POST)
 	public String productRegister(ModelAndView mv
 			,@ModelAttribute Product product
 			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
@@ -139,7 +140,7 @@ public class ProductAdminController {
 
 				response.setContentType("text/html; charset=utf-8");
 				PrintWriter out = response.getWriter();
-				out.println("<script>alert('상품 등록되었습니다.'); location.href='/admin/productList' </script>");
+				out.println("<script>alert('상품 등록되었습니다.'); location.href='/admin/product/ListView' </script>");
 				out.flush();
 
 			}
@@ -159,17 +160,18 @@ public class ProductAdminController {
 
 	}
 	//전체 상품리스트
-	@RequestMapping(value="/admin/productList", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/product/ListView", method=RequestMethod.GET)
 	public ModelAndView findAllProduct(ModelAndView mv) {
 		String sortCd = "";
 		List<Product> pList = pService.getTotalProduct(sortCd);
 		if(!pList.isEmpty()) {
 			mv.addObject("pList", pList);
+			mv.setViewName("/admin/productList");
 		}
 		return mv;
 	}
 	//상품상세 + 수정화면
-	@RequestMapping(value="/admin/productDetail", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/product/DetailView", method=RequestMethod.GET)
 	public ModelAndView productDetailAdmin(ModelAndView mv
 			,@RequestParam("productNo") Integer productNo
 
@@ -181,6 +183,7 @@ public class ProductAdminController {
 		if(!sNameList.isEmpty()&&product!=null) {
 			mv.addObject("sNameList", sNameList);
 			mv.addObject("product", product);
+			mv.setViewName("/admin/productDetail");
 
 		}else {
 			mv.setViewName("common/errorPage");
@@ -190,7 +193,7 @@ public class ProductAdminController {
 
 	}
 
-	@RequestMapping(value="/admin/productModify", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/product/Modify", method=RequestMethod.POST)
 	public ModelAndView productModify(ModelAndView mv
 			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
 			,@ModelAttribute Product product
@@ -294,9 +297,9 @@ public class ProductAdminController {
 			
 			} 
 			if(result >0 ) {
-				mv.setViewName("redirect:/admin/productList");
+				mv.setViewName("redirect:/admin/product/ListView");
 			}else {
-				mv.setViewName("errorPage");
+				mv.setViewName("common/errorPage");
 			}
 		}catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
@@ -312,12 +315,13 @@ public class ProductAdminController {
 		return mv;
 
 	}
-	@RequestMapping(value="/admin/productDelete", method=RequestMethod.GET)
+	//상품삭제
+	@RequestMapping(value="/admin/product/Delete", method=RequestMethod.GET)
 	public String productDelete(
 			@RequestParam("productNo") Integer productNo) {
 		int result = pService.removeProduct(productNo);
 		if(result > 0) {
-			return "redirect:/admin/productList";
+			return "redirect:/admin/product/ListView";
 		}else {
 			return "common/errorPage";
 		}
@@ -327,11 +331,12 @@ public class ProductAdminController {
 
 	//전체리뷰리스트
 
-	@RequestMapping(value="/admin/reviewList", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/review/ListView", method=RequestMethod.GET)
 	public ModelAndView allReviewList(ModelAndView mv) {
 		List<Review> rList = pService.getAllReview();
 		if(!rList.isEmpty()) {
 			mv.addObject("rList",rList);
+			mv.setViewName("/admin/reviewList");
 
 		}else {
 			mv.setViewName("common/errorPage");
@@ -341,7 +346,7 @@ public class ProductAdminController {
 	}
 	//리뷰선택삭제
 	@ResponseBody
-	@RequestMapping(value="/admin/reviewCheckDelete", produces="application/json;charset=utf-8", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/review/Delete", produces="application/json;charset=utf-8", method=RequestMethod.POST)
 	public String reviewDeleteCheck(
 			@RequestParam(value="rNo[]") List<Integer>rNo
 			) {
@@ -362,11 +367,12 @@ public class ProductAdminController {
 	}
 
 	//브랜드 스토어 리스트
-	@RequestMapping(value="/admin/brandList", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/product/BrandListView", method=RequestMethod.GET)
 	public ModelAndView allBrandList(ModelAndView mv) {
 		List<Brand> bList = pService.getAllBrand();
 		if(!bList.isEmpty()) {
 			mv.addObject("bList",bList);
+			mv.setViewName("/admin/brandList");
 
 		}else {
 			mv.setViewName("common/errorPage");
@@ -376,7 +382,7 @@ public class ProductAdminController {
 	}
 	//스토어선택삭제
 	@ResponseBody
-	@RequestMapping(value="/admin/brandCheckDelete", produces="application/json;charset=utf-8", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/product/BrandDelete", produces="application/json;charset=utf-8", method=RequestMethod.POST)
 	public String brandDeleteCheck(
 			@RequestParam(value="snList[]") List<Integer>snList
 			) {

@@ -36,6 +36,9 @@
             <c:if test="${!empty pList }">
 	            <c:forEach var="product" items="${pList}" varStatus="i">
 		            <li class="xans-record-">
+		             <c:if test="${product.productStock eq 0 }">
+			            	<a href="/product/productDetail?productNo=${product.productNo }" id="soldOut">Sold Out</div>
+			            </c:if>
 		            <a href="/product/productDetail?productNo=${product.productNo }">
 		                        <span class="thumbNail" style="background-image:url('../resources/puploadFiles/${product.mainFileRename}')"></span>
 		                        <span class="box">

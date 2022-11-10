@@ -310,12 +310,6 @@
 														</div>
 														<div><input type="button" class="img-delete-bt" value="삭제">
 														</div>
-
-
-
-
-
-
 													</div>
 
 												</div>
@@ -325,13 +319,14 @@
 															style="float:left">뒤로가기</button>
 														<button id="submit" class="page-link" >등록하기</button>
 													</div>
-													<br><br><br>
+												
 											</section>
 										</form>
 									</div>
 								</div>
+									<br><br><br>
 							</div>
-
+	
 						</div>
 
 						<!-- /.container-fluid -->

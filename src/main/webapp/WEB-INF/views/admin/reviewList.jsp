@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -29,7 +30,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/member/ListView">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -46,31 +47,31 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="/member/memberListView">
+                <a class="nav-link" href="/admin/member/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>회원관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/admin/productList">
+                <a class="nav-link" href="/admin/product/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품관리</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="/admin/reviewList">
+                <a class="nav-link" href="/admin/review/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품 리뷰 관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/admin/brandList">
+                <a class="nav-link" href="/admin/product/BrandListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>브랜드관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/admin/order/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>주문관리</span></a>
             </li>
@@ -84,19 +85,19 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/admin/camp/campList">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/admin/camp/reviewList">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 댓글 관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/admin/camp/bookingList">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 예약 관리</span></a>
             </li>
@@ -207,12 +208,12 @@
                                     <tbody>
                                         <c:forEach items="${rList}" var="review" varStatus="i">
                                         <tr>
-                                        	<td id="reviewNo"><a href="/admin/productDetail?productNo=${review.reviewNo }">${review.reviewNo}</a></td>
+                                        	<td id="reivewNo">${review.reviewNo}</td>
                                         
                                         	<td>${review.productNo}</td>
                                         	<td>${review.memberId}</td>
                                         	<td>${review.reviewGrade}</td>
-                                        	<td>${review.reviewTitle}</td>
+                                        	<td id="reviewContents"><a href="#">${review.reviewTitle}</a></td>
                                        
                                         	<c:if test="${review.reviewFileName1 ne null or reviewFileRename2 ne null or reviewFileRename1 ne null}">
                                         		<td>O</td>
@@ -220,7 +221,7 @@
                                         	<c:if test="${review.reviewFileName1 eq null and reviewFileRename2 eq null and reviewFileRename1 eq null }">
                                         		<td>X</td>
                                         	</c:if>
-                                        	<td>${review.uploadDate}</td>
+                                        	<td><fmt:formatDate value="${review.uploadDate }" pattern="yyyy-MM-dd KK:mm:ss"/></td>
                                         	<td style="text-align:center"><input type="checkbox" class="delCheck" name="delCheck"></td>
                                         	
                                         </tr>
@@ -262,24 +263,24 @@
 		var checked =$('input[name="delCheck"]:checked');
 		console.log(checked);
 		var checkNoArr = []; 
-		if(checked.length>0){
+		if(checked.length>0&&confirm("선택하신 리뷰를 삭제하시겠습니까?")){
 			checked.each(function(i){
-				reviewNo=checked.parent().eq(i).siblings('#reviewNo').children().text();
+				reviewNo=checked.parent().parent().eq(i).siblings('#reviewNo').text();
 				console.log(reviewNo);
 				checkNoArr.push(reviewNo);
 				console.log(checkNoArr)
 			});
 		 	$.ajax({
-				 url:"/admin/reviewCheckDelete",
+				 url:"/admin/review/Delete",
 				 type:"POST",
 				 data: {"rNo" : checkNoArr},
 				dataType : 'text', 
 				success:function(data){
 					if(data=="success"){
-						alert("성공.");
-						location.replace("/admin/reviewList");
+						alert("리뷰를 삭제하였습니다.");
+						location.replace("/admin/review/ListView");
 					}else{
-						alert("실패");
+						alert("리뷰 삭제 실패");
 					}
 				},error:function(){
 					alert("ajax 통신에러!");

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,8 +33,13 @@
 			</form>
 	</div>
 	<div id="category">
-
+	<c:if test="${brandNameTemp ne null}">
 		<span>브랜드 > ${brandNameTemp }</span>
+	</c:if>
+	<c:if test="${brandNameTemp eq null}">
+		<span>브랜드 > 전체</span>
+	</c:if>
+	
 
 	</div>
 </article>
@@ -43,19 +49,22 @@
             <c:if test="${!empty pList }">
 	            <c:forEach var="product" items="${pList}" varStatus="i">
 		            <li class="xans-record-">
+		             <c:if test="${product.productStock eq 0 }">
+			            	<a href="/product/productDetail?productNo=${product.productNo }" id="soldOut">Sold Out</div>
+			            </c:if>
 		            <a href="/product/productDetail?productNo=${product.productNo }">
 		                        <span class="thumbNail" style="background-image:url('../resources/puploadFiles/${product.mainFileRename}')"></span>
 		                        <span class="box">
 		                            <p class="name">${product.productName }</p>
 		                            <p class="color">${product.productColor }</p>
 	                           <c:if test="${product.discount eq 0}">
-		                            	<span id="priceBox">${product.productPrice}</span>
+		                            	<span id="priceBox"><fmt:formatNumber value="${product.productPrice}" pattern="#,###"/></span>
 	                            </c:if>
 	                            <c:if test="${product.discount ne 0}">
 		                            <span id="priceBox">
 		                            	<span class="befPrice" style="text-decoration:line-through" val="${product.productPrice}">${product.productPrice}</span>
 		                            	<span class="discount" style="color:red;" value="${product.discount }">${product.discount }%↓</span>
-		                            	<span class="resultPrice">${resultPrice[i.index] }</span>
+		                            	<span class="resultPrice"><fmt:formatNumber value="${resultPrice[i.index] }" pattern="#,###"/></span>
 		                            </span>
 	                            </c:if>
 		                        </span> 

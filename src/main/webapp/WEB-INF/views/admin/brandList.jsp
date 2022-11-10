@@ -29,7 +29,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/member/ListView">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -46,31 +46,31 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="/member/memberListView">
+                <a class="nav-link" href="/admin/member/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>회원관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/admin/productList">
+                <a class="nav-link" href="/admin/product/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품관리</span></a>
             </li>
 
             <li class="nav-item ">
-                <a class="nav-link" href="/admin/reviewList">
+                <a class="nav-link" href="/admin/review/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품 리뷰 관리</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="/admin/brandList">
+                <a class="nav-link" href="/admin/product/BrandListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>브랜드관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="/admin/order/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>주문관리</span></a>
             </li>
@@ -84,19 +84,19 @@
             </div>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/admin/camp/campList">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/admin/camp/reviewList">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 댓글 관리</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="/admin/camp/bookingList">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 예약 관리</span></a>
             </li>
@@ -220,6 +220,7 @@
                                     </tbody>
                                 </table>
 	                                <input type="button" class="page-link" onclick="selectDel()"style="margin-top:10px; margin-left: 0px; float:right; color:red; display:inline;border-radius: 0.35rem;"value="선택삭제">
+                                <input type="button" class="page-link" onclick="brandRegist()"style="margin-top:10px;margin-left:2px; float:left; color:#4e73df; display:inline;border-radius: 0.35rem;"value="상품등록">
                             </div>
                         </div>
                     </div>
@@ -249,7 +250,10 @@
     <script src="/resources/js/jquery.dataTables.js"></script>
     <script src="/resources/js/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript">
- 
+    function brandRegist(){
+    	location.href="/admin/product/BrandRegistView";
+    }
+    
     function selectDel(){
 		var checked =$('input[name="delCheck"]:checked');
 		console.log(checked);
@@ -260,16 +264,16 @@
 				checkNoArr.push(brandName);
 			});
 		 	$.ajax({
-				 url:"/admin/brandCheckDelete",
+				 url:"/admin/product/BrandDelete",
 				 type:"POST",
 				 data: {"snList" : checkNoArr},
 				dataType : 'text', 
 				success:function(data){
 					if(data=="success"){
-						alert("성공.");
-						location.replace("/admin/brandList");
+						alert("브랜드 스토어를 삭제했습니다.");
+						location.replace("/admin/brand/ListView");
 					}else{
-						alert("실패");
+						alert("브랜드 스토어를 삭제 실패");
 					}
 				},error:function(){
 					alert("ajax 통신에러!");

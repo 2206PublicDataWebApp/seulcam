@@ -26,7 +26,7 @@
 	        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 	
 	            <!-- Sidebar - Brand -->
-	            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+	            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/member/ListView">
 	                <div class="sidebar-brand-icon rotate-n-15">
 	                    <i class="fas fa-laugh-wink"></i>
 	                </div>
@@ -43,31 +43,31 @@
 	
 	            <!-- Nav Item - Pages Collapse Menu -->
 	            <li class="nav-item ">
-	                <a class="nav-link" href="/member/memberListView">
+	                <a class="nav-link" href="/admin/member/ListView">
 	                    <i class="fas fa-fw fa-table"></i>
 	                    <span>회원관리</span></a>
 	            </li>
 	
 	            <li class="nav-item active">
-	                <a class="nav-link" href="/admin/productList">
+	                <a class="nav-link" href="/admin/product/ListView">
 	                    <i class="fas fa-fw fa-table"></i>
 	                    <span>상품관리</span></a>
 	            </li>
 	
 	            <li class="nav-item">
-	                <a class="nav-link" href="/admin/reviewList">
+	                <a class="nav-link" href="/admin/review/ListView">
 	                    <i class="fas fa-fw fa-table"></i>
 	                    <span>상품 리뷰 관리</span></a>
 	            </li>
 	
 	            <li class="nav-item">
-	                <a class="nav-link" href="/admin/brandList">
+	                <a class="nav-link" href="/admin/product/BrandListView">
 	                    <i class="fas fa-fw fa-table"></i>
 	                    <span>브랜드관리</span></a>
 	            </li>
 	
 	            <li class="nav-item">
-	                <a class="nav-link" href="tables.html">
+	                <a class="nav-link" href="/admin/order/ListView">
 	                    <i class="fas fa-fw fa-table"></i>
 	                    <span>주문관리</span></a>
 	            </li>
@@ -81,19 +81,19 @@
 	            </div>
 	
 	            <li class="nav-item">
-	                <a class="nav-link" href="charts.html">
+	                <a class="nav-link" href=/admin/camp/campList>
 	                    <i class="fas fa-fw fa-chart-area"></i>
 	                    <span>캠핑장 관리</span></a>
 	            </li>
 	
 	            <li class="nav-item">
-	                <a class="nav-link" href="charts.html">
+	                <a class="nav-link" href="/admin/camp/reviewList">
 	                    <i class="fas fa-fw fa-chart-area"></i>
 	                    <span>캠핑장 댓글 관리</span></a>
 	            </li>
 	
 	            <li class="nav-item">
-	                <a class="nav-link" href="charts.html">
+	                <a class="nav-link" href="/admin/camp/bookingList">
 	                    <i class="fas fa-fw fa-chart-area"></i>
 	                    <span>캠핑장 예약 관리</span></a>
 	            </li>
@@ -185,7 +185,7 @@
 							</div>
 						<div class="card-body">
 					       <div class="table-responsive">
-									<form action="/admin/productModify" enctype="multipart/form-data" method="post">
+									<form action="/admin/product/Modify" enctype="multipart/form-data" method="post">
 									<input type="hidden" name="productNo" value="${product.productNo }">
 									 <div class="row">
 
@@ -259,7 +259,7 @@
 					                    <input type="file" name="uploadFile" class="drop-zone__input">
 					                    <c:if test="${product.mainFileName ne null }">
 								             		<div class="drop-zone__thumb" data-label="${product.mainFileRename }" 
-											             style="background-image:url('../resources/puploadFiles/${product.mainFileRename}')"></div>
+											             style="background-image:url('/resources/puploadFiles/${product.mainFileRename}')"></div>
 								          </c:if>
 					                </div>
 								<div><input type="button" class="img-delete-bt" value="삭제"></div>
@@ -274,7 +274,7 @@
 						                    </c:if>
 						                    <input type="file" name="dList[0].detailFileNameMPF" class="drop-zone__input" >
 						                    <c:if test="${dList[0].detailFileName ne null }">
-						                		 <div class="drop-zone__thumb" data-label="${dList[0].detailFileRename }" style="background-image:url('../resources/puploadFiles/${dList[0].detailFileRename}')"></div>
+						                		 <div class="drop-zone__thumb" data-label="${dList[0].detailFileRename }" style="background-image:url('/resources/puploadFiles/${dList[0].detailFileRename}')"></div>
 					           				</c:if>
 						                </div>
 						                <div class="box-textarea">
@@ -291,7 +291,7 @@
 							                     <input type="file" name="dList[1].detailFileNameMPF" class="drop-zone__input" >
 						                    <c:if test="${dList[1].detailFileName ne null }">
 							                    <div class="drop-zone__thumb" data-label="${dList[1].detailFileRename }" 
-															             style="background-image:url('../resources/puploadFiles/${dList[1].detailFileRename}')"></div>
+															             style="background-image:url('/resources/puploadFiles/${dList[1].detailFileRename}')"></div>
 					           				</c:if>
 						                </div>
 						                <div class="box-textarea">
@@ -351,11 +351,11 @@ if(${dList[1].detailFileName !=null}){
 
 
 function goList() {
-	location.href = "/admin/productList";
+	location.href = "/admin/product/ListView";
 	}
 function productDelete(){
 	if(confirm("상품을 삭제하시겠습니까?")){
-		location.href="/admin/productDelete?productNo=${product.productNo}";
+		location.href="/admin/product/Delete?productNo=${product.productNo}";
 	}
 }
 

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -35,8 +36,13 @@
 		   		<c:forEach var="review" items="${rList }" varStatus="i">
 				       <div class="layout-wrapper">
 							<div class="review-information">
-								<p>상품후기</p>
-								<span>${review.uploadDate }</span>
+							<c:if test="${review.reviewFileRename1 eq null }">
+								<p>일반 상품후기</p>
+							</c:if>
+							<c:if test="${review.reviewFileRename1 ne null }">
+								<p>포토 상품후기</p>
+							</c:if>
+								<span style="color:#aaas"><fmt:formatDate value="${review.uploadDate }" pattern="yyyy-MM-dd"/></span>
 							</div>
 							<a href="/product/productDetail?productNo=${rpList[i.index].productNo }">
 								<div class="review-product-information">
@@ -58,6 +64,23 @@
 								<p>${review.reviewTitle}</p>
 								<p>${review.reviewContents}</p>
 							</div>
+							<br>
+							<div class="image_panel">
+								<c:if test="${review.reviewFileRename1 ne null }">
+									<img src="../resources/puploadFiles/${review.reviewFileRename1  }">
+								</c:if>
+								<c:if test="${review.reviewFileRename2 ne null }">
+									<img src="../resources/puploadFiles/${review.reviewFileRename2  }">
+								</c:if>
+								<c:if test="${review.reviewFileRename3 ne null }">
+									<img src="../resources/puploadFiles/${review.reviewFileRename3  }">
+								</c:if>
+							</div>
+							<br>
+							<div class="button">
+								<button type="button" id="review_del" onclick="review_del(${review.reviewNo})">삭제</button>
+								<button type="button" id="review_modi" onclick="review_modi(${review.reviewNo})">수정</button>
+							</div>
 				       </div>
 				       <div class="cm-line"></div>
 			       </c:forEach>
@@ -66,6 +89,32 @@
 
 </div>
 <script >
+
+function review_del(reviewNo){
+	console.log(reviewNo);
+		if(confirm("리뷰 삭제하시겠습니까?")){
+ 		 $.ajax({
+ 			 url: "/product/reviewDelete",
+ 			 data: {"reviewNo":reviewNo},
+ 			 type:"get",
+ 			 success:function(data){
+ 				if(data=="success"){
+ 					alert("리뷰가 삭제되었습니다.");
+ 					document.location.href = document.location.href;
+				}else{
+					alert("리뷰 삭제 실패!");
+				}
+ 			 }, error : function(){
+ 				alert("ajax 통신 오류! 관리자에게 문의하세요!!");
+			 }
+ 			 
+ 		 });
+		}
+};
+
+function review_modi(reviewNo){
+	location.href="/product/reviewModify?reviewNo="+reviewNo;
+}
 
 </script>
 </body>

@@ -323,7 +323,7 @@ public class ProductController {
 		System.out.println(review.toString());
 		int result = pService.modifyProductReview(review);
 		if (result>0) {
-			mv.setViewName("redirect:/product/productDetail?productNo="+productNo);
+			mv.setViewName("redirect:/product/myReviewList");
 		}else {
 			mv.setViewName("common/errorPage");
 		}
