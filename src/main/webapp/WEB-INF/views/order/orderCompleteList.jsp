@@ -588,6 +588,9 @@ function cngDel(msg){
 	dilivaryCount();
 } 
 
+/* function reviewRegist(){
+      location.href="/product/reviewRegist?productNo="+${product.productNo };
+	} */
 function getPoint(obj){
 	var orderNo=$(obj).parent().children("#orderNo").val();	
 
