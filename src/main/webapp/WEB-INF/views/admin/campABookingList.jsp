@@ -47,57 +47,57 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="/member/memberListView">
+                <a class="nav-link" href="/admin/member/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>회원관리</span></a>
             </li>
-
+    
             <li class="nav-item">
-                <a class="nav-link" href="/admin/productList">
+                <a class="nav-link" href="/admin/product/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품관리</span></a>
             </li>
-
+    
             <li class="nav-item">
-                <a class="nav-link" href="/admin/reviewList">
+                <a class="nav-link" href="/admin/review/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>상품 리뷰 관리</span></a>
             </li>
-
+    
             <li class="nav-item">
-                <a class="nav-link" href="/admin/brandList">
+                <a class="nav-link" href="/admin/product/BrandListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>브랜드관리</span></a>
             </li>
-
+    
             <li class="nav-item">
-                <a class="nav-link" href="/orderAdmin/list.kh">
+                <a class="nav-link" href="/admin/order/ListView">
                     <i class="fas fa-fw fa-table"></i>
                     <span>주문관리</span></a>
             </li>
-
+    
             <!-- Divider -->
             <hr class="sidebar-divider">
-
+    
             <!-- Heading -->
             <div class="sidebar-heading">
                 캠핑장
             </div>
-
+    
             <li class="nav-item">
-                <a class="nav-link" href="/campAdmin/campAdminMain.kh?">
+                <a class="nav-link" href="/admin/camp/campList">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 관리</span></a>
             </li>
-
+    
             <li class="nav-item">
-                <a class="nav-link" href="/campAdmin/campReviewList.kh">
+                <a class="nav-link" href="/admin/camp/reviewList">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 댓글 관리</span></a>
             </li>
-
+    
             <li class="nav-item active">
-                <a class="nav-link" href="/campAdmin/campBookingList.kh">
+                <a class="nav-link" href="/admin/camp/bookingList">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>캠핑장 예약 관리</span></a>
             </li>
