@@ -33,6 +33,7 @@ public class Camp {
 	private int likeCheck;
 	private int likeCount;
 	private String starAvg;
+	private int minPrice;
 	
 	
 	
@@ -45,7 +46,7 @@ public class Camp {
             String mapX, String mapY, String homepage, String resveUrl, String tooltip, String glampInnerFclty,
             String caravInnerFclty, String operPdCl, String operDeCl, String sbrsCl, String sbrsEtc, String animalCmgCl,
             String tourEraCl, String firstImageUrl, int blogCount, String registAvi, int likeCheck, int likeCount,
-            String starAvg) {
+            String starAvg, int minPrice) {
         this.contentId = contentId;
         this.facltNm = facltNm;
         this.lineIntro = lineIntro;
@@ -78,6 +79,7 @@ public class Camp {
         this.likeCheck = likeCheck;
         this.likeCount = likeCount;
         this.starAvg = starAvg;
+        this.minPrice = minPrice;
     }
 
 
@@ -92,7 +94,8 @@ public class Camp {
                 + caravInnerFclty + ", operPdCl=" + operPdCl + ", operDeCl=" + operDeCl + ", sbrsCl=" + sbrsCl
                 + ", sbrsEtc=" + sbrsEtc + ", animalCmgCl=" + animalCmgCl + ", tourEraCl=" + tourEraCl
                 + ", firstImageUrl=" + firstImageUrl + ", blogCount=" + blogCount + ", registAvi=" + registAvi
-                + ", likeCheck=" + likeCheck + ", likeCount=" + likeCount + ", starAvg=" + starAvg + "]";
+                + ", likeCheck=" + likeCheck + ", likeCount=" + likeCount + ", starAvg=" + starAvg + ", minPrice="
+                + minPrice + "]";
     }
 
 
@@ -480,6 +483,20 @@ public class Camp {
     }
 
 
+
+    public int getMinPrice() {
+        return minPrice;
+    }
+
+
+
+    public void setMinPrice(int minPrice) {
+        this.minPrice = minPrice;
+    }
+
+
+
+    
 
     
 	

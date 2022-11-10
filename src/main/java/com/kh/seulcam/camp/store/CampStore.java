@@ -50,10 +50,12 @@ public interface CampStore {
 
     public Integer selectLikeCount(SqlSession session, CampLike campLike);
 
-    public Integer deleteCampLike(SqlSessionTemplate session, CampLike campLike);
+    public Integer deleteCampLike(SqlSession session, CampLike campLike);
 
-    public Integer insertCampLike(SqlSessionTemplate session, CampLike campLike);
+    public Integer insertCampLike(SqlSession session, CampLike campLike);
 
-    public String selectStarAvg(SqlSessionTemplate session, int contentId);
+    public String selectStarAvg(SqlSession session, int contentId);
+
+    public Integer selectMinPrice(SqlSession session, int contentId);
 
 }

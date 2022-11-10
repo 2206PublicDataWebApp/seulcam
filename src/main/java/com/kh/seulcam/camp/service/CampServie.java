@@ -53,5 +53,7 @@ public interface CampServie {
 
     public String printStarAvg(int contentId);
 
+    public Integer campMinPrice(int contentId);
+
 
 }

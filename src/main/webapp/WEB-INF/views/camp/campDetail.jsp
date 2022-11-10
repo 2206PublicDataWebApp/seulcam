@@ -269,7 +269,7 @@ header {
                 <div class="info_img">
                     <div class="img-slick">
                         <div class="img-wrapper">
-                            <div  style='height: 300px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'></div>
+                            <div  style='height: 450px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'></div>
                         </div>
                     
                     </div>
@@ -597,7 +597,7 @@ header {
                             var str = "";
                             for (var i = 1; i < data.response.body.items.item.length; i++) {
                                 var campItem = data.response.body.items.item;
-                                str += "<div  style='height: 300px; background: url("+campItem[i].imageUrl+") no-repeat center center #343a40; background-size: 100%;'></div>"
+                                str += "<div  style='height: 450px; background: url("+campItem[i].imageUrl+") no-repeat center center #343a40; background-size: 100%;'></div>"
                                 }
                             $(".img-wrapper").append(str);
                             $('.img-wrapper').slick({
@@ -904,7 +904,7 @@ header {
 		}
 		var mapOptions = {
 			    center: new naver.maps.LatLng(${camp.mapY}, ${camp.mapX}),
-			    zoom: 20,
+			    zoom: 12,
 			    zoomControl : true,
 			    zoomControlOption : {
 			    	position : naver.maps.Position.TOP_RIGHT,
@@ -924,7 +924,7 @@ header {
         var campAddr ="${camp.addr1}";
 
 		//마커에 정보창 표시
-		var contentStr = "<div class='maps'><div class=''  style='height: 60px; width: 60px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'></div><span class=col-md-8><h5>"+titleCamp+"</h5><p>"+campAddr+"</p></span></div>";
+		var contentStr = "<div class='maps'><div class=''  style='height: 100px; width: 220px; margin-bottom: 10px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'></div><span class=col-md-8><h5>"+titleCamp+"</h5><p>"+campAddr+"</p></span></div>";
 		var infoWindow = new naver.maps.InfoWindow({
 			content : contentStr
 		});

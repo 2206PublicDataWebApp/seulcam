@@ -169,6 +169,12 @@ public class CampServieImpl implements CampServie{
         String result = cStore.selectStarAvg(session,contentId);
         return result;
     }
+
+    @Override
+    public Integer campMinPrice(int contentId) {
+        Integer result = cStore.selectMinPrice(session,contentId);
+        return result;
+    }
     
     
 

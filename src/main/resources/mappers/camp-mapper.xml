@@ -120,4 +120,8 @@
   	<select id="selectStarAvg" resultType="string">
   		SELECT AVG(CAMP_REVIEW_STAR) FROM CAMP_REVIEW_TBL WHERE CAMP_ID = #{contentId}
   	</select>
+  	
+  	<select id="selectMinPrice" resultType="_integer">
+  		SELECT MIN(SITE_PRICE) FROM CAMP_SITE_TBL WHERE CAMP_ID = #{contentId}
+  	</select>
 </mapper>

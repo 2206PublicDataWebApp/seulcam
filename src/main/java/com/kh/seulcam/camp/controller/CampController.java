@@ -19,6 +19,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +54,8 @@ public class CampController {
 	@Autowired
     private MemberService mService;
 	
+	private static final Logger logger = LoggerFactory.getLogger(CampController.class);
+	
 	// 캠핑장 리스트 메인
 	@RequestMapping(value = "/camp/campList.kh", method = RequestMethod.GET)
 	public String campList(HttpServletRequest request) {
@@ -67,20 +71,32 @@ public class CampController {
 				HttpSession session
 				) {
 			try {
+			    // 캠프 데이터
 			    Camp camp= cService.printCampDetail(contentId);
+			    // 별점 평균
 			    String starAvg = cService.printStarAvg(contentId);
 			    if(starAvg == null) {
 			        starAvg = "0.0";
 			    }
+			    // 좋아요 체크
 			    CampLike campLike = new CampLike();
 			    campLike.setCampId(contentId+"");
+			    // 좋아요 갯수체크
 			    Integer likeCount = cService.campLikeCount(campLike);
 			    Member member = (Member)session.getAttribute("loginUser");
 			    Integer likeCheck = 0;
+			    // 최소 가격 체크
+                
+                Integer minPrice;
+                if(camp.getRegistAvi() == "Y") {
+                    minPrice=cService.campMinPrice(contentId);
+                    camp.setMinPrice(minPrice);
+                }
+			    
+			    //캠프 정보 외 데이터 삽입
 			    if(member != null) {
 			        String memberId = member.getMemberId();
 			        campLike.setMemberId(memberId);
-			        likeCheck = cService.campLikeCount(campLike);
 			    }
 				
 			    mv.addObject("starAvg",starAvg);
@@ -110,8 +126,10 @@ public class CampController {
 			    cList.get(0).setBlogCount(result);
 			}
 			for( int i = 0; i<cList.size(); i++) {
+			    //캠핑장 좋아요
 			    CampLike campLike = new CampLike();
                 campLike.setCampId(cList.get(i).getContentId()+"");
+                //좋아요 갯수
                 Integer likeCount = cService.campLikeCount(campLike);
                 Member member = (Member)session.getAttribute("loginUser");
                 Integer likeCheck = 0;
@@ -120,10 +138,16 @@ public class CampController {
                     campLike.setMemberId(memberId);
                     likeCheck = cService.campLikeCount(campLike);
                 }
+                Integer minPrice = cService.campMinPrice(cList.get(i).getContentId());;
+                if(minPrice == null) {
+                    minPrice=0;
+                }
+                //별점평균
                 String starAvg = cService.printStarAvg(cList.get(i).getContentId());
                 if(starAvg == null) {
                     starAvg = "0";
                 }
+                cList.get(i).setMinPrice(minPrice);
                 cList.get(i).setStarAvg(starAvg);
                 cList.get(i).setLikeCheck(likeCheck);
                 cList.get(i).setLikeCount(likeCount);
@@ -418,13 +442,22 @@ public class CampController {
     @RequestMapping(value="/camp/campSiteDetailView.kh", produces = "application/json;charset=utf-8",method= RequestMethod.GET)
     public String campSiteDetailView(
             @RequestParam(value="siteNo", required = false) int siteNo) {
-	    try {
+	   
 	        CampSite campSite = cService.printSite(siteNo);
 	        
 	        return new Gson().toJson(campSite);
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-	    return null;
 	}
+	//myLikeList
+	//myCampReview
+	
+	//캠핑장 사이트 정보 출력
+    @ResponseBody
+    @RequestMapping(value="/camp/myLikeList.kh",method= RequestMethod.GET)
+    public ModelAndView myLikeList(ModelAndView mv
+            ) {
+       
+            mv.setViewName("camp/myLikeList");
+            
+            return mv;
+    }
 }
