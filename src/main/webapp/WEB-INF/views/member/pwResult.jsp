@@ -38,12 +38,12 @@
 
         <!-- content -->
         <section>
-        <form action="/member/changePw" method="post">
-			<input type="hidden" name="memberId" value="${pwResult }">
+        <form action="/member/changePw" method="POST">
+			<input type="hidden" name="memberId" value="${memberId }" readonly>
             <h3>새로운 비밀번호를 입력해주세요.</h3>
             <div class="join-input">
                 <p class="pw-result">
-                    아이디 : <b>${pwResult }</b> 
+                    아이디 : <b>${memberId }</b> 
                 </p>
                 <div class="join-input-wrapper">
                     <input class="join-input-input" type="password" id="memberPw" name="memberPw" placeholder="새 비밀번호" maxlength="30">

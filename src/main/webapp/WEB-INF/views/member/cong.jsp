@@ -9,8 +9,8 @@
     <title>회원가입을 축하합니다.</title>
     <link rel="stylesheet" href="/resources/css/member/cong.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
-    <link rel="shortcut icon" href="resources/images/faviconlogo.ico" type="image/x-icon">
-    <link rel="icon" href="resources/images/faviconlogo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
+    <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
 </head>
 <body>
     <div class="body-wrapper">

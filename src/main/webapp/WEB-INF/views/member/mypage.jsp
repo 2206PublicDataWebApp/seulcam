@@ -109,14 +109,14 @@
                     </li>
 
                     <li class="list-item">
-                        <a class="item-link" href="#">캠핑장 댓글 조회</a>
-                    </li>
-
-                    <!--<li class="list-item">
-                        <a class="item-link" href="#">FAQ</a>
+                        <a class="item-link" href="/camp/myCampReview.kh">캠핑장 댓글 조회</a>
                     </li>
 
                     <li class="list-item">
+                        <a class="item-link" href="/camp/myLikeList.kh">캠핑장 좋아요 조회</a>
+                    </li>
+
+                    <!--<li class="list-item">
                         <a class="item-link" href="#">공지사항</a>
                     </li>-->
                 </ul>

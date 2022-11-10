@@ -42,7 +42,7 @@
             </div>
 
             <h3>이메일을 통해 비밀번호 찾기</h3>
-
+			<form action="/member/pwResultView" method="POST">
             <input type="text" class="findpw-id" id="memberId" name="memberId" placeholder="아이디를 입력해주세요." autocomplete="off">
             <p class="id ok">해당하는 아이디가 존재합니다.</p>
             <p class="id error">해당하는 아이디가 존재하지 않습니다.</p>
@@ -61,11 +61,12 @@
 
         <footer>
             <div class="footer-wrapper">
-                <button type="button" class="submit-button" onclick="getPwResult();" disabled >
+                <button type="submit" class="submit-button" disabled >
                 비밀번호 찾기
                 </button>
             </div>
         </footer>
+        </form>
     </div>
 
     <script src="/resources/js/member/findPw.js"></script>
