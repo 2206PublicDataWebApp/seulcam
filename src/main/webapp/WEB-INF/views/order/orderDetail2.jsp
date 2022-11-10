@@ -12,7 +12,6 @@
 	<link rel="stylesheet" href="/resources/css/fonts.css">
 	<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
     <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<!-- 주문 -->
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -117,10 +116,6 @@ padding-top: 50px;
 .info{
 	padding:30px;
 }
-.info-point{
-	padding-right:30px;
-	padding-left:30px;
-}
 .line{
 border-bottom:solid 3px lightgray;
 }
@@ -143,10 +138,19 @@ width:100%
 .info-button{
 	width:80px;
 	height:25px;
-	
+	background: #000;
+    color: #fff;
 	float:right;
 }
-
+.adress-button{
+	
+	
+	width:80px;
+	height:25px;
+	background: #000;
+    color: #fff;
+    float:right;
+}
 .delete {
 	border: none;
 	float:right;
@@ -162,13 +166,14 @@ width:100%;
 #addressChangeForm{
 	width:100%;
 	height:130%;
-	border: solid 1px lightgray;
-    padding: 15px;
+	border:solid 3px lightgray;
 }
 .ch-btn{
 	margin:5px;
 	width:80px;
 	height:25px;
+	background: #000;
+    color: #fff;
 	
 }
 .pointinfo{
@@ -200,173 +205,6 @@ width:100%;
     line-height: 1.5;
     border:0px;
 }
-
-/* 상품 레이아웃 */
-.product-box {
-    display: flex;
-    padding: 15px 30px 15px;
-    cursor: pointer;
-}
-
-.thumbnail-box {
-    display: flex;
-    align-items: flex-start;
-}
-
-.thumbnail-link {
-    display: block;
-    overflow: hidden;
-    position: relative;
-    width: 70px;
-    height: 83px;
-    background-color: #f9f9f9;
-    isolation: isolate;
-}
-
-.thumbnail-image {
-    /* top: 50%; */
-    position: absolute;
-    /* left: 50%; */
-    width:100%;
-    height: 100%;
-}
-
-.product-info {
-    margin-left: 30px;
-    margin-right: 40px;
-    margin-top: 20px;
-    width: calc(100% );
-}
-
-/* .a-wrap {
-    width: calc(100% - 22px);
-} */
-.order_price{
-font-size:14px;
-}
-.phone-num{
-	pont-weight:700px;
-    color: #6e6e6e;
-    font-size: 13px;
-}
-.brand-name {
-    display: block;
-    font-size: 12px;
-}
-.getpoint-one {
-    display: block;
-    font-size: 12px;
-    pont-weight:700px;
-    color:blue;
-   /*  color: #6e6e6e; */
-}
-.product {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.product-name {
-    display: block;
-    font-weight: 700;
-    font-size: 14px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.product-option {
-	pont-weight:700px;
-    color: #6e6e6e;
-    font-size: 12px;
-}
-
-.option-value {
-    display: flex;
-    font-size: 12px;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-.row {
-    --bs-gutter-x: 1.5rem;
-    --bs-gutter-y: 0;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: calc(-1 * var(--bs-gutter-y));
-    margin-right: calc(-.5 * var(--bs-gutter-x));
-    margin-left: calc(-.5 * var(--bs-gutter-x));
-    }
-    .input_info {
-    padding:20px 20px 0px;
-}
-.point-name{
-width:25%;
-}
-.point-box{
-width:75%;
-}
-.nowPoint{
-color:#0078ff;
-}
-.btn-blue{
- 	background-color: #0078ff;
-    color: #fff;
-    border-radius: 4px;
-    font-weight: 400;
-    /* font-size: 16px; */
-    justify-content: center;
-    align-items: center;
-    line-height: 1.5;
-    border:0px;
-
-}
-.btn-gray{
- 	background-color: gray;
-    color: white;
-    border-radius: 4px;
-    font-weight: 400;
-    /* font-size: 16px; */
-    justify-content: center;
-    align-items: center;
-    line-height: 1.5;
-    border:0px;
-
-}
-.point-btn{
-	width: 60px;
-    height: 28px;
-}
-.pointInput{
-height:25px;
-width:160px;
-}
-.point-font{
-	font-size:15px;
-}
-.pl{
-    width: 200px;
-    border: 1px solid #C4C4C4;
-    box-sizing: border-box;
-    border-radius: 10px;
-    padding: 4px 1px;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
-}
-.select-box{
-padding-top:10px;
-}
-/* 
-.pl:focus{
-    border: 1px solid #9B51E0;
-    box-sizing: border-box;
-    border-radius: 10px;
-    outline: 3px solid #F8E4FF;
-    border-radius: 10px;
-} */
-
-
 </style>
 </head>
 <body>
@@ -390,6 +228,7 @@ padding-top:10px;
                </header> 
 		
 		</div>
+		<div class="address line">
 		<div class="info">
 		
 			<div class="small-title">배송지</div>
@@ -399,66 +238,30 @@ padding-top:10px;
 				<span id="memberName">${member.memberName }</span>
 			<%-- 	<jsp:include page="/WEB-INF/views/order/addressPopup.jsp"></jsp:include> --%>
 				<!-- <button class="info-button"  id="postcodify_search_button ">배송지 변경</button> -->
-				<button class="info-button btn-blue"  id="btn" onclick="addressChange(this)">배송지 변경</button>
+				<button class="info-button"  id="btn" onclick="addressChange(this)">배송지 변경</button>
 			</div>
-			<div><span id="memberPhone" class="phone-num">${member.memberPhone }</span></div>
-			<div><span id="address1">${member.memberAddress1 }</span>
-			<span id="address2">${member.memberAddress2 }</span></div>
-			<div>(<span id="post">${member.memberZip }</span>)</div>
+			<div><span id="memberPhone">${member.memberPhone }</span></div>
+			<div id="post">${member.memberZip }</div>
+			<div id="address1">${member.memberAddress1 }</div>
+			<div id="address2">${member.memberAddress2 }</div>
 			<div id="addresscng"></div>
-			<div class="select-box">
-			<select class="pl" id="message">
+			<select id="message">
 				<option  value="" disabled selected hidden>배송시 요청사항을 선택하세요</option>
 				<option>부재 시 경비실에 맡겨주세요</option>
 				<option>부재 시 택배함에 넣어주세요</option>
 				<option>부재 시 집 앞에 넣어주세요</option>
 				<option>배송 전 연락 바랍니다.</option>
 			</select>
-			</div>
 		</div>
-		<hr>
-	<!-- 	<div class="product line">
-		<div class="info"> -->
+		</div>
+		
+		<div class="product line">
+		<div class="info">
 		
 		<c:forEach items="${oList}" var="order" varStatus="i">
 		<c:forEach items="${pList}" var="product" varStatus="p">
 		<c:if test="${order.productNo eq product.productNo }">
-                               <div class="product-box" >
-                     
-                 
-                    <div class="order-thumbnail">
-                        <div class="thumbnail-box">
-                            <a href="#" class="thumbnail-link"  onclick="location.href='#'">
-                                <img class="thumbnail-image" id="img${i.count }" alt="상품이미지" src="/resources/puploadFiles/${product.mainFileRename}" ">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <div class="product">
-                            <div class="brand-info">
-                                <div class="a-wrap">
-                                    <span class="product-name"id="order_product${i.count}">${product.productName }</span>
-                                            <span class="product-option">${product.brandName }/ <span class="product-option"><b>${product.productColor }</b></span></span>
-                                </div>
-                            </div>
-                            <span class="brand-name"><b><span id="order_price${i.count }" class="order_price" >${product.productPrice}</span>원</b>
-                            
-							<span class="getpoint-one">
-								<span id="getpoint-one${i.count}"></span>원 적립							
-							</span>
-                            </span>
-                        </div>
-                        <div class="option-value">
-                            <span>수량:<span id="order_count${i.count }" class="order_count">${order.orderCount}</span>개</span>
-                        </div>
-                        <div class="item-amount-wrap">
-                            <div class="item-amountc">
-                                
-                           
-                            </div>
-                        </div>
-                    </div>
-                </div>
+		
 		
 		
 			<%-- <table class="list_table">
@@ -488,26 +291,13 @@ padding-top:10px;
 						</c:forEach>
 						</c:forEach>
 			
-		<!-- </div>
-		</div> -->
-		<hr>
-		<div class="point line">
-		<div class="info-point">
-		<div class="small-title">포인트 할인</div>
-		<div class="input_info row">
-					<div class="point-name">
-						<span class="point-font">포인트</span>
-					</div>
-					<div class="point-box text-end" style="text-align: right;">
-						<input type="text" class="pointInput" name="" value="" id="point" placeholder=""><button type="button" onclick="pointCancle()" class="btn-blue point-btn">사용취소</button>
-						<p align="right" class="nowPoint">사용가능 포인트 <span id="available-point">${member.totalPoint}</span>원</p>
-					</div>
-					<hr>
-				</div>
-		
 		</div>
-		<hr>
-		<%-- <div>
+		</div>
+		
+		<div class="point line">
+		<div class="info">
+		<div class="small-title">포인트 할인</div>
+		<div>
 		포인트
 		<span class="point-right">
 		<input id="point" type="text"/>
@@ -516,7 +306,7 @@ padding-top:10px;
 		</div>
 		<div class="pointinfo">사용가능 포인트 <span id="available-point">${member.totalPoint}</span>원</div>
 		</div>
-		</div> --%>
+		</div>
 
 		<div class="info">
 		<div class="small-title">결제 상세</div><br>
@@ -527,11 +317,11 @@ padding-top:10px;
 		</div>
 		
 		
-		</div>
 		<div class="payButton">
 		<button class="submit-button" onclick="orderPay()"><span id="total-button"></span>원 결제하기</button>
 		</div>
 
+		</div>
 	</div>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -549,7 +339,7 @@ padding-top:10px;
     }
 	
 	
-	 //주문페이지 벗어나면 주문 취소
+	//주문페이지 벗어나면 주문 취소
 	 var checkUnload = true;
 	    $(window).on("beforeunload", function(){
 	        if(checkUnload) {
@@ -569,21 +359,21 @@ padding-top:10px;
 	        	
 	        	
 	        });		        
-	        return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다." 
+	       /*  return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다." */
 	        
 	        };
 	    });
-
+	
 	function addressChange(obj){
 		checkUnload = false;
 		event.preventDefault();
 		var $div=$("<div id='addressChangeForm'>");
 		$div.append("<span style='font-weight:bold'>주소 변경</span>");
-		$div.append("<span><button class='adress-button info-button btn-gray'  id='postcodify_search_button'onclick='popup(this)'>주소찾기</button></span> ");
+		$div.append("<span><button class='adress-button'  id='postcodify_search_button'onclick='popup(this)'>주소찾기</button></span> ");
 		$div.append("<div><input type='text'id='cng-post' name='post' class='post postcodify_postcode5' readonly></div>");
 		$div.append("<div><input type='text'id='cng-ad1' name='address1' class='post postcodify_address' readonly></div>");
 		$div.append("<div><input type='text'id='cng-ad2' name='address2' class='post postcodify_details' placeholder='상세주소를 입력하세요'></div>");
-		$div.append("<div><button class='ch-btn btn-gray' id='submit-address'onclick='change()'>변경</button><button class='ch-btn btn-gray' onclick='displayform(this)'>취소</button></div>");
+		$div.append("<div><button class='ch-btn' id='submit-address'onclick='change()'>변경</button><button class='ch-btn' onclick='displayform(this)'>취소</button></div>");
 		$div.append("</div>");
 		$("#addresscng").html($div);
 	}
@@ -608,8 +398,7 @@ padding-top:10px;
 			success:function(data){
 				if(data =="success"){
 					alert("주소 변경 완료");
-					location.replace("/order/order.kh");
-					var checkUnload = false;
+					
 				}else{
 					alert("주소 변경 실패");
 					
@@ -627,7 +416,7 @@ padding-top:10px;
 	<c:forEach items="${oList}" var="order" varStatus="i">
 	var price=$("#order_price${i.count}").text()*$("#order_count${i.count}").text();
 	$("#order_price${i.count}").text(price.toLocaleString('ko-KR'));
-	$("#getpoint-one${i.count}").text((price/100*3).toLocaleString('ko-KR'));
+	
 	</c:forEach>
 	
 	//포인트

@@ -88,7 +88,7 @@ public interface OrderService {
 	public int deleteOrderProduct(String memberId);
 
 	//갯수 구하기
-	public int countDelStatus(String memberId, String string);
+	public int countDelStatus(String memberId, String dirivaryStatus);
 
 
 

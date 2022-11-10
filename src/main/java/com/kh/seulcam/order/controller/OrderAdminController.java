@@ -35,7 +35,7 @@ public class OrderAdminController {
 		
 		
 	//주문 보여주기
-		@RequestMapping(value="/orderAdmin/list.kh",method=RequestMethod.GET)
+		@RequestMapping(value="/admin/order/ListView",method=RequestMethod.GET)
 		public ModelAndView printOrderList(
 				ModelAndView mv
 				) {
@@ -50,7 +50,7 @@ public class OrderAdminController {
 		
 		
 	//취소주문 보여주기(환불 여부도 반영)
-		@RequestMapping(value="/orderAdmin/cancle/list.kh",method=RequestMethod.GET)
+		@RequestMapping(value="/admin/order/CancleListView",method=RequestMethod.GET)
 		public ModelAndView printCancleList(
 				ModelAndView mv
 				) {

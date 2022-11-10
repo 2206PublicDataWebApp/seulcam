@@ -87,7 +87,7 @@ public interface OrderStore {
 	public int deleteOrderProduc(SqlSession session, String memberId);
 
 	
-	public int selectCountDel(SqlSession session, String memberId, String string);
+	public int selectCountDel(SqlSession session, String memberId, String dirivaryStatus);
 
 
 

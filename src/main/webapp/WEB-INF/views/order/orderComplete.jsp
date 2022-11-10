@@ -47,7 +47,7 @@ padding-top: 50px;
 	justify-content: center;
 	height: 150px;
 	font-size: 16px;
-	border-bottom: solid 3px lightgray;
+	/* border-bottom: solid 3px lightgray; */
 }
 .state{
 	color: #0078ff;
@@ -59,19 +59,17 @@ padding-top: 50px;
 .info-button{
 	width:80px;
 	height:25px;
-	background: #000;
-    color: #fff;
 	float:right;
 }
 .info{
 	padding:30px;
 }
-.buy-info{
+/* .buy-info{
 	border-bottom: solid 3px lightgray;
-}
-.order-number{
+} */
+/* .order-number{
 	border-bottom: solid 3px lightgray;
-}
+} */
 .go-button{
 	width:50%;
 	height:40px;
@@ -108,7 +106,77 @@ padding-top: 50px;
 .post{
 width:100%;
 }
+.btn-blue{
+ 	background-color: #0078ff;
+    color: #fff;
+    border-radius: 4px;
+    font-weight: 400;
+    /* font-size: 16px; */
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5;
+    border:0px;
 
+}
+.btn-gray{
+ 	background-color: gray;
+    color: white;
+    border-radius: 4px;
+    font-weight: 400;
+    /* font-size: 16px; */
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5;
+    border:0px;
+
+}
+.submit-button1 {
+    background-color: #0078ff;
+    color: #fff;
+    display: flex;
+    width: 50%;
+    height: 50px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    font-weight: 400;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5;
+/*     border-right:solid 1px black;
+     border-left:none;
+    border-top:none;
+    border-bottom:none;  */
+    border:0px; 
+    float:left;
+     border-right:solid 2px white;
+}
+.submit-button2 {
+    background-color: #0078ff;
+    color: #fff;
+    display: flex;
+    width: 50%;
+    height: 50px;
+	border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    font-weight: 400;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5;
+    border:0px;
+    float:left;
+}
+
+#addressChangeForm{
+	width:100%;
+	height:130%;
+	border: solid 1px lightgray;
+    padding: 15px;
+}
+.msg-box{
+padding-top:10px;
+}
 </style>
 <body>
 	<div class="wrap">
@@ -119,18 +187,19 @@ width:100%;
 		<div class="title">
 			<h2 class="state">주문완료</h2><h2 class="">되었습니다.</h2>
 		</div>
+		<hr>
 		<div class="buy-info">
 		<div class="info">
 		<div class="small-title">주문자 정보</div>
 		<div>이름 : <span>${order.memberName }</span></div>
 		<div>연락처 : <span>${order.memberPhone }</span></div><br>
 		<div><span class="small-title">배송지</span> 
-		<button class="info-button"  id="btn" onclick="addressChange(this,${order.orderNo})">변경</button>
+		<button class="info-button btn-blue"   id="btn" onclick="addressChange(this,${order.orderNo})">변경</button>
 <!-- 		<button class="info-button" id="postcodify_search_button">변경</button> -->
 		<div id="post">${order.orderAddress1 }</div>
 		<div id="address1">${order.orderAddress2 }</div>
 		<div id="address2">${order.orderAddressPost }</div>
-		<div class="small-title">배송 메모</div>
+		<div class="small-title msg-box">배송 메모</div>
 		<div>${order.orderMessage }</div>
 		<!-- <input type="text" name="post" class="postcodify_postcode5" > -->
 		</div>
@@ -138,11 +207,11 @@ width:100%;
 		<div class="order-number">
 		<div class="info">
 		<div class="small-title">주문 번호</div>
-		<span>${order.orderNo }</span>
-		<button class="info-button" onclick="location.href='/order/complete/datail.kh?orderNo=${order.orderNo}'">상세보기</button>
+		<span>No.${order.orderNo }</span>
+		<button class="info-button btn-blue" onclick="location.href='/order/complete/datail.kh?orderNo=${order.orderNo}'">상세보기</button>
 		</div>
 		</div>
-		
+		<hr>
 		<div class="info">
 		<div class="small-title">결제 상세</div><br>
 		<div>상품 금액<span class="price"><fmt:formatNumber value="${orderPay.productPrice}" pattern="#,###,###"/>원</span></div>
@@ -152,7 +221,7 @@ width:100%;
 		</div>
 		
 		<div>
-		<button class="go-button" style="border-left:solid 1px #fff"onclick="location.href='/order/complete/list.kh?memberId=${order.memberId}'" >구매내역 보기</button><button class="go-button" onclick="location.href='/product/top20List'">쇼핑 홈 가기</button>
+		<button class="submit-button1" style="border-left:solid 1px #fff"onclick="location.href='/order/complete/list.kh?memberId=${order.memberId}'" >구매내역 보기</button><button class="submit-button2" onclick="location.href='/product/top20List'">쇼핑 홈 가기</button>
 		</div>
 		
 
@@ -172,13 +241,13 @@ width:100%;
 		event.preventDefault();
 		var $div=$("<div id='addressChangeForm'>");
 		$div.append("<span style='font-weight:bold'>주소 변경</span>");
-		$div.append("<span><button class='adress-button'  id='postcodify_search_button'onclick='popup(this)'>주소찾기</button></span> ");
+		$div.append("<span><button class='adress-button info-button btn-gray'  id='postcodify_search_button'onclick='popup(this)'>주소찾기</button></span> ");
 		$div.append("<div><input type='text'id='cng-post' name='post' class='post postcodify_postcode5' readonly></div>");
 		$div.append("<div><input type='text'id='cng-ad1' name='address1' class='post postcodify_address' readonly></div>");
 		$div.append("<div><input type='text'id='cng-ad2' name='address2' class='post postcodify_details' placeholder='상세주소를 입력하세요'></div>");
-		$div.append("<div><button class='ch-btn' id='submit-address'onclick='change("+orderNo+")'>변경</button><button class='ch-btn' onclick='displayform(this)'>취소</button></div>");
+		$div.append("<div><button class='ch-btn btn-gray' id='submit-address'onclick='change()'>변경</button><button class='ch-btn btn-gray' onclick='displayform(this)'>취소</button></div>");
 		$div.append("</div>");
-		$("#address2").append($div);
+		$("#address2").html($div);
 	}
 	
 	function popup(obj){

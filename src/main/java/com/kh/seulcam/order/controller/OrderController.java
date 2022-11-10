@@ -1,6 +1,7 @@
 package com.kh.seulcam.order.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -195,36 +196,39 @@ public class OrderController {
 			 * }
 			 */
 		}
+		
+	int count1=0; 
+	int count2=0;
+	int count3=0; 
+	int count4=0; 
+	int count5=0;
 	
-		String dirivaryStatus="입금확인";
-		int count1=oService.countDelStatus(memberId,"입금확인");
-		int count2=oService.countDelStatus(memberId,"배송중");
-		int count3=oService.countDelStatus(memberId,"배송완료");
-		int count4=oService.countDelStatus(memberId,"구매확정");
-		int count5=oService.countDelStatus(memberId,"구매취소");
-		/*
-		 * for (int i = 0; i < oList.size(); i++) { String dStatus =
-		 * oList.get(i).getDirivaryStatus(); System.out.println(dStatus);
-		 * if(oList.get(i).getDirivaryStatus() == "입금확인") { count1++;
-		 * System.out.println("입금 맞음"); System.out.println(count1); }else
-		 * if(oList.get(i).getDirivaryStatus() == "배송중") { count2++; }else
-		 * if(oList.get(i).getDirivaryStatus() =="배송완료") { count3++; }else
-		 * if(oList.get(i).getDirivaryStatus() =="구매확정") { count4++; }else
-		 * if(oList.get(i).getDirivaryStatus() =="구매취소") { count5++; }
-		 * 
-		 * 
-		 * }
-		 */
-		System.out.println(count1);
-		System.out.println(count2);
-		System.out.println(count3);
-		System.out.println(count4);
-		System.out.println(count5);
-		mv.addObject("count1",count1);
-		mv.addObject("count2",count2);
-		mv.addObject("count3",count3);
-		mv.addObject("count4",count4);
-		mv.addObject("count5",count5);
+	
+	for (int i = 0; i < oList.size(); i++) { 
+		String dStatus =oList.get(i).getDirivaryStatus(); 
+		System.out.println(dStatus);
+		 if(dStatus!=null) {
+	if(dStatus.equals("입금확인")) {
+		count1++;
+	}else if(dStatus.equals("배송중")) { 
+		count2++; 
+		}else if(dStatus.equals("배송완료")) { 
+			count3++; 
+			}else if(dStatus.equals("구매확정")) {
+				count4++; 
+				}else if(dStatus.equals("구매취소")) {
+					count5++; 
+					}
+	}
+	}
+	int count6=count1+count2+count3+count4+count5;
+	
+	mv.addObject("count1",count1);
+	mv.addObject("count2",count2);
+	mv.addObject("count3",count3);
+	mv.addObject("count4",count4);
+	mv.addObject("count5",count5);
+	mv.addObject("count6",count6);
 
 		mv.addObject("oList", oList);
 		mv.setViewName("order/orderCompleteList");
@@ -232,6 +236,61 @@ public class OrderController {
 
 	}
 
+	//취소주문 리스트
+	@RequestMapping(value = "/order/complete/Cancle/list", method = RequestMethod.GET)
+	public ModelAndView printCompleteCancleList(ModelAndView mv, 
+		HttpSession session) {
+		Member member = (Member) session.getAttribute("loginUser");
+		String memberId=member.getMemberId();
+		List<Order> oList = oService.printCompleteList(memberId);
+		if (!oList.isEmpty()) {
+			List<OrderPay> opList = new ArrayList();
+			for (int i = 0; i < oList.size(); i++) {
+				int orderNo = oList.get(i).getOrderNo();
+
+				List<OrderPay> opList1 = oService.printOrderPay(orderNo);
+				opList.addAll(opList1);
+			}
+			mv.addObject("opList", opList);
+			
+		}
+		
+	int count1=0; 
+	int count2=0;
+	
+	
+	
+	for (int i = 0; i < oList.size(); i++) { 
+		String dStatus =oList.get(i).getDirivaryStatus(); 
+		System.out.println(dStatus);
+		 if(dStatus!=null) {
+	 if(dStatus.equals("구매취소")) {
+					count1++; 
+	}else if(dStatus.equals("환불완료")) {
+		count2++;
+	}
+	}
+	}
+	//취소 전체갯수
+	int count3=count1+count2;
+	mv.addObject("count1",count1);
+	mv.addObject("count2",count2);
+	mv.addObject("count3",count3);
+	
+
+		mv.addObject("oList", oList);
+		mv.setViewName("order/orderCompleteCancleList");
+		return mv;
+
+	}
+
+	
+	
+	
+	
+	
+	
+	
 	//오더테이블 구매확정으로 바꾸고//맴버 포인트 바꾸고//포인트 적립
 	@ResponseBody
 	@RequestMapping(value = "/order/GETPoint", method = RequestMethod.POST)
@@ -309,6 +368,59 @@ public class OrderController {
 			
 			}
 		
+		
+		//취소 배송 상세조회 메뉴 바꾸기
+		@RequestMapping(value="/order/cancle/delliveryMenu",method=RequestMethod.GET)
+		public ModelAndView cancleChangeMenu(
+				ModelAndView mv,
+				@RequestParam(value="dirivaryStatus")String dirivaryStatus,
+				HttpSession session
+				) {Member member = (Member) session.getAttribute("loginUser");
+				String memberId=member.getMemberId();
+				List<Order> oList = oService.printChangeCompleteList(memberId,dirivaryStatus);
+				if (!oList.isEmpty()) {
+					List<OrderPay> opList = new ArrayList();
+					for (int i = 0; i < oList.size(); i++) {
+						int orderNo = oList.get(i).getOrderNo();
+
+						List<OrderPay> opList1 = oService.printOrderPay(orderNo);
+						opList.addAll(opList1);
+					}
+					mv.addObject("opList", opList);
+				}
+
+				List<Order> allList = oService.printCompleteList(memberId);
+				int count1=0; 
+				int count2=0;
+				
+				
+				
+				for (int i = 0; i < allList.size(); i++) { 
+					String dStatus =allList.get(i).getDirivaryStatus(); 
+					System.out.println(dStatus);
+					 if(dStatus!=null) {
+				 if(dStatus.equals("구매취소")) {
+								count1++; 
+				}else if(dStatus.equals("환불완료")) {
+					count2++;
+				}
+				}
+				}
+				int count3=count1+count2;
+				
+				mv.addObject("count1",count1);
+				mv.addObject("count2",count2);
+				mv.addObject("count3",count3);
+				
+
+					mv.addObject("oList", oList);
+					mv.setViewName("order/orderCompleteCancleList");
+					return mv;
+		}
+		
+		
+		
+		
 		//배송 상세조회 메뉴 바꾸기
 		@RequestMapping(value="/order/delliveryMenu",method=RequestMethod.GET)
 		public ModelAndView changeMenu(
@@ -329,6 +441,44 @@ public class OrderController {
 					mv.addObject("opList", opList);
 				}
 
+				List<Order> allList = oService.printCompleteList(memberId);
+				int count1=0; 
+				int count2=0;
+				int count3=0; 
+				int count4=0; 
+				int count5=0;
+			
+				
+				
+				for (int i = 0; i < allList.size(); i++) { 
+					String dStatus =allList.get(i).getDirivaryStatus(); 
+					System.out.println(dStatus);
+					 if(dStatus!=null) {
+				if(dStatus.equals("입금확인")) {
+					count1++;
+				}else if(dStatus.equals("배송중")) { 
+					count2++; 
+					}else if(dStatus.equals("배송완료")) { 
+						count3++; 
+						}else if(dStatus.equals("구매확정")) {
+							count4++; 
+							}else if(dStatus.equals("구매취소")) {
+								count5++; 
+								}
+				
+				
+				}
+				}
+				int count6=count1+count2+count3+count4+count5;
+				
+				mv.addObject("count1",count1);
+				mv.addObject("count2",count2);
+				mv.addObject("count3",count3);
+				mv.addObject("count4",count4);
+				mv.addObject("count5",count5);
+				mv.addObject("count6",count6);
+
+				
 				mv.addObject("oList", oList);
 				mv.setViewName("order/orderCompleteList");
 				return mv;
