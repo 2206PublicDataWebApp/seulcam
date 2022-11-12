@@ -159,4 +159,40 @@ public class CampStoreLogic implements CampStore{
         return result;
     }
 
+    @Override
+    public List<CampLike> selectLikeList(SqlSession session, String memberId) {
+        List<CampLike> lList = session.selectList("CampMapper.selectLikeList",memberId);
+        return lList;
+    }
+
+    @Override
+    public List<CampReview> selectMyCampReview(SqlSession session, String memberId) {
+        List<CampReview> rList = session.selectList("CampMapper.selectMyCampReview",memberId);
+        return rList;
+    }
+
+    @Override
+    public int siteRemoveUpdate(SqlSessionTemplate session, int siteNo) {
+        int result = session.update("CampAdminMapper.siteRemoveUpdate",siteNo);
+        return result;
+    }
+
+    @Override
+    public Integer myCampReviewCounts(SqlSessionTemplate session, String memberId) {
+        Integer result = session.selectOne("CampMapper.myCampReviewCounts",memberId);
+        return result;
+    }
+
+    @Override
+    public List<Camp> selectAllCamp(SqlSessionTemplate session) {
+        List<Camp> cList = session.selectList("CampMapper.selectAllCamp");
+        return cList;
+    }
+
+    @Override
+    public int updateBlog(SqlSessionTemplate session, Camp camp) {
+        int result = session.update("CampMapper.updateBlog",camp);
+        return result;
+    }
+
 }

@@ -55,5 +55,17 @@ public interface CampServie {
 
     public Integer campMinPrice(int contentId);
 
+    public List<CampLike> likeListView(String memberId);
+
+    public List<CampReview> myCampReviewView(String memberId);
+
+    public int campSiteReUpdate(int siteNo);
+
+    public Integer myCampReviewCount(String memberId);
+
+    public List<Camp> selectAllCamp();
+
+    public int updateBlogData(Camp camp);
+
 
 }

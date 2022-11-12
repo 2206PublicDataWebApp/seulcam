@@ -23,12 +23,14 @@
   		<result property="siteThumbnailPath" column="SITE_THUMBNAIL_PATH" />
   		<result property="siteThumbnailRename" column="SITE_THUMBNAIL_RENAME" />
   		<result property="sCreateDate" column="S_CREATE_DATE" />
+  		<result property="sStatusUse" column="S_STATUS_USE" />
+  		<result property="sStatusDel" column="S_STATUS_DEL" />
  	</resultMap>
   	<insert id="insertCampList">
   		INSERT INTO CAMP_TBL VALUES(#{contentId},#{facltNm},#{lineIntro},#{intro},#{bizrno},#{featureNm},#{induty},#{lctCl},#{doNm},#{sigunguNm},#{zipcode},#{addr1},#{tel},#{mapX},#{mapY},#{homepage},#{resveUrl},#{tooltip},#{glampInnerFclty},#{caravInnerFclty},#{operPdCl},#{operDeCl},#{sbrsCl},#{sbrsEtc},#{animalCmgCl},#{tourEraCl},#{firstImageUrl},DEFAULT,DEFAULT)
   	</insert>
   	<select id="selectSiteListCount" resultType="_int">
-  		SELECT COUNT(*) FROM CAMP_SITE_TBL WHERE CAMP_ID = #{contentId}
+  		SELECT COUNT(*) FROM CAMP_SITE_TBL WHERE CAMP_ID = #{contentId} AND S_STATUS_DEL ='N'
   	</select>
   	<insert id="insertSite">
   		INSERT INTO CAMP_SITE_TBL VALUES(SEQ_SITE_NO.NEXTVAL,#{siteName},#{campId},#{campName},#{siteChar},#{siteInfo},#{siteIntro},#{standardPeople},#{maxPeople},#{excessCharge},#{inTime},#{outTime},#{sitePrice},#{siteCount},#{siteThumbnailName},#{siteThumbnailPath},#{siteThumbnailRename},DEFAULT,DEFAULT,DEFAULT)
@@ -44,7 +46,7 @@
   		WHERE CONTENTID = #{contentId}
   	</update>
   	<select id="selectSiteList" resultMap="CampSiteResultMap">
-  		SELECT * FROM CAMP_SITE_TBL WHERE CAMP_ID = #{contentId}
+  		SELECT * FROM CAMP_SITE_TBL WHERE CAMP_ID = #{contentId} AND S_STATUS_DEL ='N'
   	</select>
   	<delete id="deleteSite">
   		DELETE FROM CAMP_SITE_TBL WHERE SITE_NO = #{siteNo}
@@ -57,6 +59,9 @@
   	</update>
   	<update id="updateSiteNoImg">
   		UPDATE CAMP_SITE_TBL SET SITE_NAME = #{siteName}, SITE_CHAR = #{siteChar}, SITE_INFO = #{siteInfo}, SITE_INTRO = #{siteIntro}, STANDARD_PEOPLE = #{standardPeople}, MAX_PEOPLE = #{maxPeople}, EXCESS_CHARGE = #{excessCharge}, IN_TIME = #{inTime}, OUT_TIME = #{outTime}, SITE_PRICE = #{sitePrice}, SITE_COUNT = #{siteCount} WHERE SITE_NO = #{siteNo}
+  	</update>
+  	<update id="siteRemoveUpdate">
+  		UPDATE CAMP_SITE_TBL SET S_STATUS_DEL ='Y' WHERE SITE_NO = #{siteNo}
   	</update>
   	
   	<resultMap  type="OrderPay" id="orderPayResultMap"> 
