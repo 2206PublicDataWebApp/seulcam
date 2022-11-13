@@ -79,7 +79,7 @@ p.record{
 }
 
 
-body > header, body > nav, body > section, body > footer {
+body > nav, body > section, body > footer {
     width: 100%;
     position: relative;
 }
