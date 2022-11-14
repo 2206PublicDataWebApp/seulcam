@@ -10,7 +10,7 @@
 
 <h2 align="center">👪멤버 구성</h2>
 <p align="center">
-  <img src="./readme_assets/멤버 구성에_들어갈_이미지_이름.png">
+  <img src="./readme_assets/team-member.png">
 </p>
 <h2 align="center">🛠️개발 환경</h2>
 <p align="center">
