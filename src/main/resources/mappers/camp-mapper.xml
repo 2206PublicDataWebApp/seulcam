@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
- <mapper namespace= "CampMapper">
-  	<resultMap type="Camp" id="CampResultMap">
-  		<id property="contentId" column="CONTENTID" />
+
+<mapper namespace="CampMapper">
+	<resultMap type="Camp" id="CampResultMap">
+		<id property="contentId" column="CONTENTID" />
 		<result property="facltNm" column="FACLTNM" />
 		<result property="lineIntro" column="LINEINTRO" />
 		<result property="intro" column="INTRO" />
@@ -34,94 +34,145 @@
 		<result property="firstImageUrl" column="FIRSTIMAGEURL" />
 		<result property="blogCount" column="BLOGCOUNT" />
 		<result property="registAvi" column="REGISTAVI" />
-  	</resultMap>
-  	<resultMap type="CampReview" id="CampReviewResultMap">
-  		<id property="campReviewNo" column="CAMP_REVIEW_NO" />
-  		<result property="memberId" column="MEMBER_ID" />
-  		<result property="memberNickname" column="MEMBER_NICKNAME" />
-  		<result property="campId" column="CAMP_ID" />
-  		<result property="campName" column="CAMP_NAME" />
-  		<result property="campReviewContents" column="CAMP_REVIEW_CONTENTS" />
-  		<result property="campReviewStar" column="CAMP_REVIEW_STAR" />
-  		<result property="rCreateDate" column="R_CREATE_DATE" />
-  		<result property="rModifyDate" column="R_MODIFY_DATE" />
-  	</resultMap>
-  	<!-- 캠핑장 리스트 첫번째 조회 -->
-  	<select id="selectCampList" resultMap="CampResultMap">
-  		SELECT * FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL 
-  		<where>
-  			<if test="city != '' and city != null"> AND DONM = #{city}</if>
-  			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>
-  			<if test="search != '' and search != null"> 
-  			AND (facltNm LIKE '%'||#{search}||'%' 
-  			or SIGUNGUNM LIKE '%'||#{search}||'%'
-  			or DONM LIKE '%'||#{search}||'%')
-  			</if>
-  			<if test='regist == "Y"'>
-  			AND REGISTAVI = #{regist}
-  			</if>
-  		</where>
-  		) WHERE NUM BETWEEN (#{page}*10)+1 AND (#{page}+1)*10
-  	</select>
-  	
-  	<select id="selectCampDetail" resultMap="CampResultMap">
-  		SELECT * FROM CAMP_TBL WHERE CONTENTID = #{contentId}
-  	</select>
-  	<insert id="insertCampReview">
-  		INSERT INTO CAMP_REVIEW_TBL VALUES(SEQ_CAMP_REVIEW_NO.NEXTVAL,#{memberId},#{memberNickname},#{campId},#{campName},#{campReviewContents},#{campReviewStar},DEFAULT,DEFAULT)
-  	</insert>
-  	<select id="selectCampReview" resultMap="CampReviewResultMap">
-  		SELECT * FROM CAMP_REVIEW_TBL WHERE CAMP_ID = #{contentId} ORDER BY CAMP_REVIEW_NO DESC
-  	</select>
-  	<select id="selectAllReview" resultMap="CampReviewResultMap">
-  		SELECT * FROM CAMP_REVIEW_TBL ORDER BY CAMP_REVIEW_NO DESC
-  	</select>
-  	<delete id="deleteReview">
-  		DELETE FROM CAMP_REVIEW_TBL WHERE CAMP_REVIEW_NO = #{campReviewNo}
-  	</delete>
-  	<update id="updateReview">
-  		UPDATE CAMP_REVIEW_TBL SET CAMP_REVIEW_CONTENTS = #{campReviewContents}, CAMP_REVIEW_STAR = #{campReviewStar}, R_MODIFY_DATE= SYSDATE WHERE CAMP_REVIEW_NO =#{campReviewNo}
-  	</update>
-  	<select id="selectListCount" resultType="_int">
-  		SELECT COUNT(*) FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL 
-  		<where>
-  			<if test="city != '' and city != null"> AND DONM = #{city}</if>
-  			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>
-  			<if test="search != '' and search != null"> 
-  			AND (facltNm LIKE '%'||#{search}||'%' 
-  			or SIGUNGUNM LIKE '%'||#{search}||'%'
-  			or DONM LIKE '%'||#{search}||'%')
-  			</if>
-  			<if test='regist == "Y"'>
-  			AND REGISTAVI = #{regist}
-  			</if>
-  		</where>
-  		)
-  	</select>
-  	
-  	<select id="selectLikeCount" resultType="_integer">
-  		SELECT COUNT(*) FROM CAMP_LIKE_TBL
-  		<where>
-  			<if test="memberId != null and memberId != '' "> 
-  				AND MEMBER_ID = #{memberId}
-  			</if>
-  			AND CAMP_ID = #{campId}
-  		</where>
-  	</select>
-  	
-  	<insert id="insertCampLike">
-  		INSERT INTO CAMP_LIKE_TBL VALUES(#{memberId},#{campId},#{mapX},#{mapY},DEFAULT)
-  	</insert>
-  	
-  	<delete id="deleteCampLike">
-  		DELETE FROM CAMP_LIKE_TBL WHERE MEMBER_ID=#{memberId} AND CAMP_ID=#{campId}
-  	</delete>
-  	
-  	<select id="selectStarAvg" resultType="string">
-  		SELECT AVG(CAMP_REVIEW_STAR) FROM CAMP_REVIEW_TBL WHERE CAMP_ID = #{contentId}
-  	</select>
-  	
-  	<select id="selectMinPrice" resultType="_integer">
-  		SELECT MIN(SITE_PRICE) FROM CAMP_SITE_TBL WHERE CAMP_ID = #{contentId}
-  	</select>
+	</resultMap>
+	<resultMap type="CampReview" id="CampReviewResultMap">
+		<id property="campReviewNo" column="CAMP_REVIEW_NO" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberNickname" column="MEMBER_NICKNAME" />
+		<result property="campId" column="CAMP_ID" />
+		<result property="campName" column="CAMP_NAME" />
+		<result property="campReviewContents"
+			column="CAMP_REVIEW_CONTENTS" />
+		<result property="campReviewStar" column="CAMP_REVIEW_STAR" />
+		<result property="rCreateDate" column="R_CREATE_DATE" />
+		<result property="rModifyDate" column="R_MODIFY_DATE" />
+	</resultMap>
+	<resultMap type="CampLike" id="CampLikeResultMap">
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="campId" column="CAMP_ID" />
+		<result property="mapX" column="MAPX" />
+		<result property="mapY" column="MAPY" />
+		<result property="campLikeDate" column="CAMP_LIKE_DATE" />
+	</resultMap>
+	<select id="selectAllCamp" resultMap="CampResultMap">
+		SELECT * FROM CAMP_TBL
+	</select>
+	<select id="updateBlog">
+		UPDATE CAMP_TBL SET BLOGCOUNT = #{blogCount} WHERE CONTENTID=#{contentId}
+	</select>
+	<!-- 캠핑장 리스트 첫번째 조회 -->
+	<!-- <select id="selectCampList" resultMap="CampResultMap">
+		SELECT * FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL
+		<where>
+			<if test="city != '' and city != null"> AND DONM = #{city}</if>
+			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>
+			<if test="search != '' and search != null">
+				AND (facltNm LIKE '%'||#{search}||'%'
+				or SIGUNGUNM LIKE '%'||#{search}||'%'
+				or DONM LIKE '%'||#{search}||'%')
+			</if>
+			<if test='regist == "Y"'>
+				AND REGISTAVI = #{regist}
+			</if>
+		</where>
+		) WHERE NUM BETWEEN (#{page}*10)+1 AND (#{page}+1)*10
+	</select> -->
+	<select id="selectCampList" resultMap="CampResultMap">
+		SELECT * FROM(SELECT ROWNUM AS NUM,A.* FROM 
+		(SELECT * FROM CAMP_TBL WHERE CAMP_TBL.firstImageUrl is not null ORDER BY CAMP_TBL.BLOGCOUNT DESC) A
+		<where>
+			<if test="city != '' and city != null"> AND DONM = #{city}</if>
+			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>
+			<if test="search != '' and search != null">
+				AND (facltNm LIKE '%'||#{search}||'%'
+				or SIGUNGUNM LIKE '%'||#{search}||'%'
+				or DONM LIKE '%'||#{search}||'%')
+			</if>
+			<if test='regist == "Y"'>
+				AND REGISTAVI = #{regist}
+			</if>
+		</where>
+		) WHERE NUM BETWEEN (#{page}*10)+1 AND (#{page}+1)*10
+	</select>
+
+	<select id="selectCampDetail" resultMap="CampResultMap">
+		SELECT * FROM CAMP_TBL WHERE CONTENTID = #{contentId}
+	</select>
+	<insert id="insertCampReview">
+		INSERT INTO CAMP_REVIEW_TBL
+		VALUES(SEQ_CAMP_REVIEW_NO.NEXTVAL,#{memberId},#{memberNickname},#{campId},#{campName},#{campReviewContents},#{campReviewStar},DEFAULT,DEFAULT)
+	</insert>
+	<select id="selectCampReview" resultMap="CampReviewResultMap">
+		SELECT * FROM CAMP_REVIEW_TBL WHERE CAMP_ID = #{contentId} ORDER BY
+		CAMP_REVIEW_NO DESC
+	</select>
+	<select id="selectAllReview" resultMap="CampReviewResultMap">
+		SELECT * FROM CAMP_REVIEW_TBL ORDER BY CAMP_REVIEW_NO DESC
+	</select>
+	<delete id="deleteReview">
+		DELETE FROM CAMP_REVIEW_TBL WHERE CAMP_REVIEW_NO = #{campReviewNo}
+	</delete>
+	<update id="updateReview">
+		UPDATE CAMP_REVIEW_TBL SET CAMP_REVIEW_CONTENTS = #{campReviewContents},
+		CAMP_REVIEW_STAR = #{campReviewStar}, R_MODIFY_DATE= SYSDATE WHERE
+		CAMP_REVIEW_NO =#{campReviewNo}
+	</update>
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL
+		<where>
+			<if test="city != '' and city != null"> AND DONM = #{city}</if>
+			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>
+			<if test="search != '' and search != null">
+				AND (facltNm LIKE '%'||#{search}||'%'
+				or SIGUNGUNM LIKE '%'||#{search}||'%'
+				or DONM LIKE '%'||#{search}||'%')
+			</if>
+			<if test='regist == "Y"'>
+				AND REGISTAVI = #{regist}
+			</if>
+		</where>
+		)
+	</select>
+
+	<select id="selectLikeCount" resultType="_integer">
+		SELECT COUNT(*) FROM CAMP_LIKE_TBL
+		<where>
+			<if test="memberId != null and memberId != '' ">
+				AND MEMBER_ID = #{memberId}
+			</if>
+			<if test="campId != null and campId != '' ">
+				AND CAMP_ID = #{campId}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertCampLike">
+		INSERT INTO CAMP_LIKE_TBL
+		VALUES(#{memberId},#{campId},#{mapX},#{mapY},DEFAULT)
+	</insert>
+
+	<delete id="deleteCampLike">
+		DELETE FROM CAMP_LIKE_TBL WHERE MEMBER_ID=#{memberId} AND CAMP_ID=#{campId}
+	</delete>
+
+	<select id="selectStarAvg" resultType="string">
+		SELECT AVG(CAMP_REVIEW_STAR) FROM CAMP_REVIEW_TBL WHERE CAMP_ID =
+		#{contentId}
+	</select>
+
+	<select id="selectMinPrice" resultType="_integer">
+		SELECT MIN(SITE_PRICE) FROM CAMP_SITE_TBL WHERE CAMP_ID = #{contentId}
+	</select>
+
+	<select id="selectLikeList" resultMap="CampLikeResultMap">
+		SELECT * FROM CAMP_LIKE_TBL WHERE MEMBER_ID=#{memberId} ORDER BY CAMP_LIKE_DATE DESC
+	</select>
+
+	<select id="selectMyCampReview" resultMap="CampReviewResultMap">
+		SELECT * FROM CAMP_REVIEW_TBL WHERE MEMBER_ID = #{memberId} ORDER BY
+		CAMP_REVIEW_NO DESC
+	</select>
+	<select id="myCampReviewCounts" resultType="_integer">
+		SELECT COUNT(*) FROM CAMP_REVIEW_TBL WHERE MEMBER_ID = #{memberId}
+	</select>
 </mapper>

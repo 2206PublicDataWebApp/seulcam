@@ -169,10 +169,51 @@ public class CampServieImpl implements CampServie{
         String result = cStore.selectStarAvg(session,contentId);
         return result;
     }
-
+    
+    //최저가 확인
     @Override
     public Integer campMinPrice(int contentId) {
         Integer result = cStore.selectMinPrice(session,contentId);
+        return result;
+    }
+    // 좋아요 캠핑장 리스트
+    @Override
+    public List<CampLike> likeListView(String memberId) {
+        List<CampLike> lList = cStore.selectLikeList(session,memberId);
+        return lList;
+    }
+    // 마이 리뷰 리스트
+    @Override
+    public List<CampReview> myCampReviewView(String memberId) {
+        List<CampReview> rList = cStore.selectMyCampReview(session, memberId);
+        return rList;
+    }
+    
+    //캠핑장 사이트 삭제처리
+    @Override
+    public int campSiteReUpdate(int siteNo) {
+        int result = cStore.siteRemoveUpdate(session,siteNo);
+        return result;
+    }
+    
+    //리뷰 갯수 체크
+    @Override
+    public Integer myCampReviewCount(String memberId) {
+        Integer result = cStore.myCampReviewCounts(session,memberId);
+        return result;
+    }
+
+    
+    //데이터 파싱 저장용
+    @Override
+    public List<Camp> selectAllCamp() {
+        List<Camp> cList = cStore.selectAllCamp(session);
+        return cList;
+    }
+
+    @Override
+    public int updateBlogData(Camp camp) {
+        int result = cStore.updateBlog(session,camp);
         return result;
     }
     

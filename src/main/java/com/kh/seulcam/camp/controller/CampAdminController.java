@@ -191,7 +191,7 @@ public class CampAdminController {
             }
 
             request.setAttribute("msg", "사이트 등록이 완료되었습니다.");
-            request.setAttribute("url", "/campAdmin/campAdminSite.kh?contentId=" + campSite.getCampId());
+            request.setAttribute("url", "/admin/camp/siteList?contentId=" + campSite.getCampId());
             mv.setViewName("common/alert");
         } catch (Exception e) {
             e.printStackTrace();
@@ -250,7 +250,7 @@ public class CampAdminController {
             int result = cService.modifySite(campSite);
 
             request.setAttribute("msg", "사이트 정보 수정이 완료되었습니다.");
-            request.setAttribute("url", "/campAdmin/campAdminSite.kh?contentId=" + contentId);
+            request.setAttribute("url", "/admin/camp/siteList?contentId=" + contentId);
             mv.setViewName("common/alert");
         } catch (Exception e) {
             e.printStackTrace();
@@ -259,8 +259,27 @@ public class CampAdminController {
 
         return mv;
     }
+    
+ // 캠핑장 사이트 삭제처리
+    @RequestMapping(value = "/campAdmin/campSiteReUpdate.kh", method = RequestMethod.GET)
+    public ModelAndView campSiteReUpdate(
+            @RequestParam(value = "contentId", required = false) int contentId,
+            @RequestParam(value = "siteNo", required = false) int siteNo,
+            HttpServletRequest request,
+            ModelAndView mv) {
+        int reUpdate = cService.campSiteReUpdate(siteNo);
+        int result = cService.printSiteListCount(contentId);
+        if (result == 0) {
+            int confirm = 0;
+            int update = cService.campRegistAviModify(contentId, confirm);
+        }
+        mv.setViewName("redirect:/admin/camp/siteList?contentId=" + contentId);
 
-    // 캠핑장 사이트 삭제
+        
+        return mv;
+    }
+
+    // 캠핑장 사이트 완전 삭제
     @RequestMapping(value = "/campAdmin/campSiteRemove.kh", method = RequestMethod.GET)
     public ModelAndView campSiteRemove(
             @RequestParam(value = "contentId", required = false) int contentId,
@@ -286,7 +305,7 @@ public class CampAdminController {
                 int update = cService.campRegistAviModify(contentId, confirm);
             }
 
-            mv.setViewName("redirect:/campAdmin/campAdminSite.kh?contentId=" + contentId);
+            mv.setViewName("redirect:/admin/camp/siteList?contentId=" + contentId);
         } catch (Exception e) {
             e.printStackTrace();
             mv.addObject("msg", "사이트 삭제 실패").setViewName("common/errorPage");
@@ -305,7 +324,7 @@ public class CampAdminController {
             int result = cService.printSiteListCount(contentId);
             if (result == 0) {
                 request.setAttribute("msg", "사이트를 먼저 등록해주세요.");
-                request.setAttribute("url", "/campAdmin/campAdminSite.kh?contentId=" + contentId);
+                request.setAttribute("url", "/admin/camp/siteList?contentId=" + contentId);
                 mv.setViewName("common/alert");
                 return mv;
             }
@@ -543,5 +562,72 @@ public class CampAdminController {
             return null;
         }
         return "admin/campMain";
+    }
+    
+    @RequestMapping(value = "/campAdmin/campBlogInsert.kh", method = RequestMethod.GET)
+    public void campBlogInsert() {
+        try {
+            List<Camp> cList = cService.selectAllCamp();
+            int a=0;
+            System.out.println("start");
+            for(int i = 0; i < cList.size(); i++) {
+                System.out.println(a);
+                StringBuilder urlBuilder = new StringBuilder("https://dapi.kakao.com/v2/search/blog");
+                urlBuilder.append("?" + URLEncoder.encode("sort", "UTF-8") + "="
+                        + URLEncoder.encode("accuracy", "UTF-8")); /* 페이지 번호 */
+                urlBuilder.append("&" + URLEncoder.encode("page", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*
+                                                                                                                      * 한
+                                                                                                                      * 페이지
+                                                                                                                      * 결과 수
+                                                                                                                      */
+                urlBuilder.append("&" + URLEncoder.encode("size", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*
+                                                                                                                       * OS
+                                                                                                                       */
+                urlBuilder.append("&" + URLEncoder.encode("query", "UTF-8") + "=" + URLEncoder.encode(cList.get(i).getFacltNm() + " 캠핑장", "UTF-8")); /*
+                                                                                                                        * OS
+                                                                                                                        */
+                URL url = new URL(urlBuilder.toString());
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                con.setRequestProperty("Authorization", "KakaoAK 7072f1c5ec76f11a0937d2337e6cad4e");
+                con.setRequestProperty("Content-type", "application/json");
+                System.out.println("Printing Response Header...\n" + "responseCode : " + con.getResponseCode());
+
+                int responseCode = con.getResponseCode(); //
+                BufferedReader br;
+                if (responseCode == 200) { // 정상 호출
+                    br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+                } else { // 에러 발생
+                    br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+                }
+                String inputLine;
+                StringBuffer sb = new StringBuffer();
+                while ((inputLine = br.readLine()) != null) {
+                    sb.append(inputLine);
+                }
+                br.close();
+                JSONParser parser = new JSONParser();
+                // json data 최상단
+                JSONObject objmain = (JSONObject) parser.parse(sb.toString());
+                // json.response
+                JSONObject objResponse = (JSONObject) parser.parse(objmain.get("meta").toString());
+                System.out.println("sd>>  " + sb.toString());
+                System.out.println(objResponse.get("total_count"));
+                int count = Integer.valueOf(objResponse.get("total_count").toString());
+                cList.get(i).setBlogCount(count);
+                Camp camp = new Camp();
+                camp.setContentId(cList.get(i).getContentId());
+                camp.setBlogCount(count);
+                int result = cService.updateBlogData(camp);
+                a++;
+                System.out.println(a);
+                
+            }
+            System.out.println("end");
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        
     }
 }
