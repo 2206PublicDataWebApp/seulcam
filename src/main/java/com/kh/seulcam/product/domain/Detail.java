@@ -64,8 +64,9 @@ public class Detail {
 	public String toString() {
 		return "Detail [productNo=" + productNo + ", detailFileNameMPF=" + detailFileNameMPF + ", detailFileName="
 				+ detailFileName + ", detailFilePath=" + detailFilePath + ", detailFileRename=" + detailFileRename
-				+ ", detailContents=" + detailContents + "]";
+				+ ", detailContents=" + detailContents + ", dList=" + dList + "]";
 	}
+
 
 	
 }

@@ -34,7 +34,7 @@ public interface ProductStore {
 
 	public int insertProductReview(SqlSession session, Review review);
 
-	public List<Review> selectReviewByProductNo(SqlSession session, Integer productNo);
+	public List<Review> selectReviewByProductNo(SqlSession session, Integer productNo, int currentPage, int boardLimit);
 
 	public List<Brand> selectOneBrand(SqlSession session, String brandName);
 
@@ -66,7 +66,9 @@ public interface ProductStore {
 
 	public int deleteProduct(SqlSession session, Integer productNo);
 
-	public void deleteDetail(SqlSession session, Detail detail);
+	public void deleteDetail(SqlSession session, Detail dt);
+
+	public int selectReviewTotalCount(SqlSession session, Integer productNo);
 
 
 }
