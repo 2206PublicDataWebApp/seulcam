@@ -18,6 +18,7 @@
 body {
     font-size: 12px;
     overflow-x: hidden;
+    margin-top: 56px;
     width: 100%;
     position:relative;
 }
@@ -28,7 +29,8 @@ body {
     border-left: 1px solid black;
 }
 
-body > header, body > nav, body > section{
+
+body > nav, body > section{
     width: 100%;
     position: relative;
 }
@@ -104,9 +106,7 @@ section.top20 > article.list > ul > li:nth-child(2n) > a .thumbNail {
     width: 100%;
 
 }
-.thumbNail{
-	z-index:400;
-}
+
 #list > li.top20, #list > li:nth-child(2),#list > li:nth-child(3){
 	border-top:none;
 }
