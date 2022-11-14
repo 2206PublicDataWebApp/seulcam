@@ -1,6 +1,6 @@
 <h1 align="center">🏕️슬기로운 캠핑 생활</h1>
 <p align="center">
-  <img src="./readme_assets/메인에_들어갈_이미지_이름.png">
+  <img src="./readme_assets/main.PNG">
 </p>
 
 
