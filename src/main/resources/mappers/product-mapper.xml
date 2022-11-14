@@ -79,7 +79,7 @@
   		DETAIL_CONTENTS=#{detailContents}
   		WHERE PRODUCT_NO=#{productNo}
   	</update>
-  	<delete id="deleteDetail" parameterType="Detail">
+  	<delete id="deleteDetail" >
   		DELETE DETAIL_TBL WHERE PRODUCT_NO=#{productNo} AND DETAIL_FILE_RENAME=#{detailFileRename}
   	</delete>
   	<select id="selectAllProductByArrayDf" parameterType="String" resultMap="productResultMap">

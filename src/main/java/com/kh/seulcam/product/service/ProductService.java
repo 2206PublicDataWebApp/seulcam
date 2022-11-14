@@ -33,7 +33,7 @@ public interface ProductService {
 
 	public int registerProductReview(Review review);
 
-	public List<Review> getReviewByProductNo(Integer productNo);
+	public List<Review> getReviewByProductNo(Integer productNo, int currentPage, int boardLimit);
 
 	public List<Brand> getbrandStore(String brandName);
 
@@ -65,9 +65,11 @@ public interface ProductService {
 
 	public int removeProduct(Integer productNo);
 
-	public void removeDetail(Detail detail);
+	public void removeDetail(Detail dt);
 	
 	public List<Integer> discountList(List<Product> pList);
 
 	public int discountProduct(Product product);
+
+	public int getTotalCount(Integer productNo);
 }

@@ -334,18 +334,43 @@ public class ProductController {
 	//리뷰리스트출력-상품상세페이지
 	@ResponseBody
 	@RequestMapping(value="/product/reviewList", produces="application/json;charset=utf-8", method=RequestMethod.GET)
-	public String reviewListView(
+	public ModelAndView reviewListView(
 			@RequestParam("productNo") Integer productNo
 			,HttpServletRequest request
+			,ModelAndView mv
+			,@RequestParam(value="page", required=false) Integer page
 			) {
-		List<Review> rList = pService.getReviewByProductNo(productNo);
-
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = pService.getTotalCount(productNo);
+		int boardLimit = 5;
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		// 23/5 = 4.8 + 0.9 = 5(.7)
+		maxPage = (int)((double)totalCount/boardLimit + 0.9);
+		startNavi = ((int)((double)currentPage/naviLimit+0.9)-1)*naviLimit+1;
+		endNavi = startNavi + naviLimit - 1;
+		if(maxPage < endNavi) {
+			endNavi = maxPage;
+		}
+		List<Review> rList = pService.getReviewByProductNo(productNo, currentPage, boardLimit);
+		System.out.println(rList.toString());
 		if(!rList.isEmpty()) {
-			Gson gson = new GsonBuilder().create();
-			return gson.toJson(rList);
+			/*
+			 * Gson gson = new GsonBuilder().create(); return gson.toJson(rList);
+	s		 */
+			mv.addObject("maxPage",maxPage);
+			mv.addObject("currentPage",currentPage);
+			mv.addObject("startNavi",startNavi);
+			mv.addObject("endNavi",endNavi);
+			mv.addObject("rList",rList);
+			return mv;
+			
+			
 		}else {
 			
-			return "error";
+			return mv;
 		}
 		
 	}

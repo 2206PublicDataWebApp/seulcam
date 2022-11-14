@@ -83,8 +83,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<Review> getReviewByProductNo(Integer productNo) {
-		List<Review> rList=pStore.selectReviewByProductNo(session, productNo);
+	public List<Review> getReviewByProductNo(Integer productNo,int currentPage, int boardLimit) {
+		List<Review> rList=pStore.selectReviewByProductNo(session, productNo,currentPage,boardLimit);
 		return rList;
 	}
 
@@ -179,8 +179,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void removeDetail(Detail detail) {
-		pStore.deleteDetail(session, detail);
+	public void removeDetail(Detail dt) {
+		pStore.deleteDetail(session, dt);
 			
 	}
 
@@ -206,5 +206,11 @@ public class ProductServiceImpl implements ProductService{
 		int resultPrice =(int)Math.round(dPrice/1000.0)*1000;
 		
 		return resultPrice;
+	}
+
+	@Override
+	public int getTotalCount(Integer productNo) {
+		int totalCount = pStore.selectReviewTotalCount(session,productNo);
+		return totalCount;
 	}
 }

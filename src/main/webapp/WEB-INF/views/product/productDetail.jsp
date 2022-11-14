@@ -197,7 +197,6 @@
 		<br>
 
 	</section>
-		
 <script src="/resources/js/product/cart-order.js"></script>
 <script>
 
@@ -304,6 +303,7 @@
   
  //상품별 리뷰리스트
  $("#ac-4").change(function(){
+	 
 	 var productNo="${product.productNo}";
 	 if(${loginUser!=null}){
 		 var loginUser ="${loginUser}";
@@ -320,10 +320,13 @@
 				
 				 },
 			 type:"get",
-			 success : function(rList){
-				 $("#review_title_all").html("");	
-				
+			 success : function(data){
+				 console.log(data);
+				/*  $("#review_title_all").html("");	
 					 for(var i in rList){
+						 var idx = Number(startNum)+Number(i)+1;   
+							 
+						 
 								var rUrl="../resources/puploadFiles/";
 								strDOM+='<li>';
 							 	strDOM+='<input class="ac-input" id="review-'+i+'" name="review-'+i+'" type="checkbox"/>';
@@ -356,14 +359,15 @@
 							 	strDOM+= '<p>'+rList[i].reviewTitle+'</p>';
 							 	strDOM+= '<p>'+rList[i].reviewContents+'</p>';
 							 	
+							 	
 							 	/* if(rList[i].memberId=="${loginUser.memberId}"){
 								 	strDOM+='</div><div><a href="/product/reviewModify?reviewNo='+rList[i].reviewNo;				 		
 								 	strDOM+='&memberId=${loginUser.memberId}" style="float: left;">수정</a>';
 								 	strDOM+='<a href="javascript:void(0)"style="float:right;" onclick="reviewDelete('+rList[i].reviewNo+')">삭제</a></div></article>';
 									 } */
-							 strDOM+='</li>';
-					 }
-					$("#review_title_all").append(strDOM);
+							// strDOM+='</li>';
+				//	 }
+				//	$("#review_title_all").append(strDOM); */
 			 },
 			 error : function(){
 				 $("#review_title_all").html("");	
@@ -401,11 +405,10 @@
  
  $("#ac-2").change(function(){
 	 var brandName = '${product.brandName}';
-			 var fullAddr="";
-			 var map = new naver.maps.Map('map', {
+/* 			 var mapOptions = new naver.maps.Map('map', {
 				    center: new naver.maps.LatLng(36.3504119, 127.3845475),
 				    zoom: 5
-				});
+				}); */
 
 	 if($("#ac-2").is(":checked")){
 		 $.ajax({
@@ -414,7 +417,7 @@
 			 type:"get",
 			// dataType:"Object",
 			 success:function(data){
-				 	var markers = new Array(); // 마커 정보를 담는 배열
+				 	/*// var markers = new Array(); // 마커 정보를 담는 배열
 					var infoWindows = new Array(); // 정보창을 담는 배열
 					 for(var i=0; i<data.bsList.length;i++){
 						 
@@ -432,7 +435,100 @@
 						 });
 					
 					 $("#store_addr").append(fullAddr);
-					 }
+					 }// */
+				  
+	
+				var fullAddrs = new Array();
+				var fullAddr = "";
+				$(function() {
+					
+					initMap();
+					
+				});
+
+
+				function initMap() { 
+					
+					var areaArr = new Array();  // 지역을 담는 배열 ( 지역명/위도경도 )
+							/*지역구 이름*/			/*위도*/					/*경도*/
+						 for(var i=0; i<data.bsList.length;i++){
+							areaArr.push(
+							 {location : data.bsList[i].storeName , lat : data.coordsList[i][1] , lng : data.coordsList[i][0] },  
+							);
+							 fullAddr+="<p><button type='button' onclick='findStore("+i+")' class='findStore'><b>"+data.bsList[i].storeName+"</b>";
+							 fullAddr+="</button>ㅤㅤ["+data.bsList[i].storeZipcode+"] ";
+							 fullAddr+=data.bsList[i].storeAddr;
+							 fullAddr+=" "+data.bsList[i].storeAddrDetail+"</p><br>";
+							 fullAddrs.push("<p>"+data.bsList[i].storeAddr+"</p><p>"+data.bsList[i].storeAddrDetail)+"</p>";
+						 
+						 }
+						 $("#store_addr").append(fullAddr);
+						
+					
+					
+					
+					
+					let markers = new Array(); // 마커 정보를 담는 배열
+					let infoWindows = new Array(); // 정보창을 담는 배열
+					
+					var map = new naver.maps.Map('map', {
+				        center: new naver.maps.LatLng(36.3504119, 127.3845475), //지도 시작 지점
+				        zoom: 5,
+				        zoomControl : true,
+					    zoomControlOptions : {
+					    	position : naver.maps.Position.TOP_RIGHT,
+					    	style : naver.maps.ZoomControlStyle.SMALL
+					    }
+				    });
+					
+					
+					
+					
+					for (var i = 0; i < areaArr.length; i++) {
+						// 지역을 담은 배열의 길이만큼 for문으로 마커와 정보창을 채워주자 !
+
+					    var marker = new naver.maps.Marker({
+					        map: map,
+					        title: areaArr[i].location, // 지역구 이름 
+					        position: new naver.maps.LatLng(areaArr[i].lat , areaArr[i].lng) // 지역구의 위도 경도 넣기 
+					    });
+					    
+					    /* 정보창 */
+						 var infoWindow = new naver.maps.InfoWindow({
+						     content: '<div style="width:200px;text-align:center;padding:10px;"><b>' + areaArr[i].location + '</b><br> '+fullAddrs[i]+' </div>'
+						 }); // 클릭했을 때 띄워줄 정보 HTML 작성
+					    
+						 markers.push(marker); // 생성한 마커를 배열에 담는다.
+						 infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
+					}
+
+					
+				    
+					 
+				    function getClickHandler(seq) {
+						
+				            return function(e) {  // 마커를 클릭하는 부분
+				                var marker = markers[seq], // 클릭한 마커의 시퀀스로 찾는다.
+				                    infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
+	
+				                if (infoWindow.getMap()) {
+				                    infoWindow.close();
+				                } else {
+				                    infoWindow.open(map, marker); // 표출
+				                }
+				    		}
+				    	}
+			  
+				              
+				    for (var i=0, ii=markers.length; i<ii; i++) {
+				    	console.log(markers[i] , getClickHandler(i));
+				        naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i)); // 클릭한 마커 핸들러
+				
+				    }
+				}
+
+			
+
 			 },
 			 
 			 
@@ -444,14 +540,13 @@
 			 }
 		 });
 		 
-		 
 	 }
 
- });    
+ });  
 
-    
  
+
 </script>
-<%-- <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> --%>
+<%-- --%>
 </body>
 </html>

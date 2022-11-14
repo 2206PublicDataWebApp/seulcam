@@ -167,23 +167,23 @@
 <script>
 	if(${review.reviewFileName1 !=null}){
 		$(".img-delete-bt").eq(0).click(function(){
-			$('#upload-box-form > div:nth-child(1)').empty();
-			$('#upload-box-form > div:nth-child(1)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
+			$('#upload-box-form > div:nth-child(1) > div').remove();
+			$('#upload-box-form > div:nth-child(1)').prepend('<span class="drop-zone__prompt" >+</span>');
 			$('#upload-box-form > div:nth-child(1)').append('<input type="hidden" name="reviewFileName1" value="del">');
 		});
 	}
 	if(${review.reviewFileName2 !=null}){
 		$(".img-delete-bt").eq(1).click(function(){
-			$('#upload-box-form > div:nth-child(2)').empty();
-			$('#upload-box-form > div:nth-child(2)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
+			$('#upload-box-form > div:nth-child(2) > div').remove();
+			$('#upload-box-form > div:nth-child(2)').prepend('<span class="drop-zone__prompt" >+</span>');
 			$('#upload-box-form > div:nth-child(2)').append('<input type="hidden" name="reviewFileName2" value="del">');
 		});
 	}
 	if(${review.reviewFileName3 !=null}){
 		$(".img-delete-bt").eq(2).click(function(){
-			$('#upload-box-form > div:nth-child(3)').empty();
-			$('#upload-box-form > div:nth-child(3)').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="myFile" class="drop-zone__input">');
-			$('#upload-box-form > div:nth-child(2)').append('<input type="hidden" name="reviewFileName3" value="del">');
+			$('#upload-box-form > div:nth-child(3) > div').remove();
+			$('#upload-box-form > div:nth-child(3)').prepend('<span class="drop-zone__prompt" >+</span>');
+			$('#upload-box-form > div:nth-child(3)').append('<input type="hidden" name="reviewFileName3" value="del">');
 		});
 	}
 

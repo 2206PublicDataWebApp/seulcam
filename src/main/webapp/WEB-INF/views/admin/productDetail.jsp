@@ -268,6 +268,9 @@
 					          
 						            <div class="box-form">
 						            <label>상세 사진</label>
+					           					<input type="hidden" value="${dList[0].detailFileName }" name="dList[0].detailFileName">
+					           					<input type="hidden" value="${dList[0].detailFilePath }" name="dList[0].detailFilePath">
+					           					<input type="hidden" value="${dList[0].detailFileRename }" name="dList[0].detailFileRename">
 					                	<div class="box-img-upload">
 						                	<c:if test="${dList[0].detailFileName eq null }">
 							                    <span class="drop-zone__prompt">+</span>
@@ -284,6 +287,9 @@
 					               <div><input type="button" class="img-delete-bt" value="삭제"></div><br>
 					               
 					   	           <div class="box-form">
+					           					<input type="hidden" value="${dList[1].detailFileName }" name="dList[1].detailFileName">
+					           					<input type="hidden" value="${dList[1].detailFilePath }" name="dList[1].detailFilePath">
+					           					<input type="hidden" value="${dList[1].detailFileRename }" name="dList[1].detailFileRename">
 						                <div class="box-img-upload">
 						                	<c:if test="${dList[1].detailFileName eq null }">
 						                   		 <span class="drop-zone__prompt">+</span>
@@ -328,28 +334,27 @@ $("#brand_selectBox").val('${product.brandName}').prop("selected", true);
 
 if(${product.mainFileName!=null}){
 	$(".img-delete-bt").eq(0).click(function(){
-		$('div:nth-child(1) > div.box-img-upload').empty();
-		$('div:nth-child(1) > div.box-img-upload').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="uploadFile" class="drop-zone__input">');
+		$('div:nth-child(1) > div.box-img-upload>div').remove();
+		$('div:nth-child(1) > div.box-img-upload').prepend('<span class="drop-zone__prompt" >+</span>');
 		$('div:nth-child(1) > div.box-img-upload').append('<input type="hidden" name="mainFileName" value="del">');
 	});
 }
 if(${dList[0].detailFileName !=null}){
 	$(".img-delete-bt").eq(1).click(function(){
-		$('div:nth-child(2) > div.box-img-upload').empty();
-		$('div:nth-child(2) > div.box-img-upload').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="dList[0].detailFileNameMPF" class="drop-zone__input">');
-		$('div:nth-child(2) > div.box-img-upload').append('<input type="hidden" name="dList[0].detailFileName" value="del">');
+		$('div:nth-child(2) > div.box-img-upload>div').remove();
+		$('div:nth-child(2) > input[type=hidden]:nth-child(2)').remove();
+		$('div:nth-child(2) > div.box-img-upload').prepend('<input type="hidden" name="dList[0].detailFileName" value="del">');
+		$('div:nth-child(2) > div.box-img-upload').append('<span class="drop-zone__prompt" >+</span>');
 	});
 }
 if(${dList[1].detailFileName !=null}){
 	$(".img-delete-bt").eq(2).click(function(){
-		$('div:nth-child(3) > div.box-img-upload').empty();
-		$('div:nth-child(3) > div.box-img-upload').prepend('<span class="drop-zone__prompt" >+</span><input type="file" name="dList[1].detailFileNameMPF" class="drop-zone__input">');
-		$('div:nth-child(3) > div.box-img-upload').append('<input type="hidden" name="dList[1].detailFileName" value="del">');
+		$('div:nth-child(5) > div.box-img-upload>div').remove();
+		$('div:nth-child(5) > input[type=hidden]:nth-child(2)').remove();
+		$('div:nth-child(5) > div.box-img-upload').prepend('<input type="hidden" name="dList[1].detailFileName" value="del">');
+		$('div:nth-child(5) > div.box-img-upload').append('<span class="drop-zone__prompt" >+</span>');
 	});
 }
- 
-
-
 function goList() {
 	location.href = "/admin/product/ListView";
 	}

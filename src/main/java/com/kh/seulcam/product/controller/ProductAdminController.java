@@ -201,10 +201,11 @@ public class ProductAdminController {
 			,HttpServletRequest request
 			,HttpServletResponse response
 			) {
-		System.out.println(detail.getdList().toString());
+		System.out.println("==========================d=d=d=d="+detail.getdList().toString());
 		Product befProduct = pService.getProductByNo(product.getProductNo());
-		List<Detail> befDList = pService.printAllDetailInfo(product.getProductNo());
+		//List<Detail> befDList = pService.printAllDetailInfo(product.getProductNo());
 		//폴더에 파일 일단 삭제 + 수정전 객체 파일 리셋
+		System.out.println(detail.toString());
 		if(product.getMainFileName()!=null) {
 			File delFile = new File(befProduct.getMainFilePath());
 			delFile.delete();
@@ -212,24 +213,24 @@ public class ProductAdminController {
 			befProduct.setMainFilePath(null);
 			befProduct.setMainFileRename(null);
 		}
-		if(detail.getdList().get(0).getDetailFileName()!=null) {
-			File delFile = new File(befDList.get(0).getDetailFileRename());
-			delFile.delete();
-			pService.removeDetail(befDList.get(0));
-			befDList.get(0).setDetailFileName(null);
-			befDList.get(0).setDetailFilePath(null);
-			befDList.get(0).setDetailFileRename(null);
-
-		}
-		if(detail.getdList().get(1).getDetailFileName()!=null) {
-			File delFile = new File(befDList.get(1).getDetailFileRename());
-			delFile.delete();
-			pService.removeDetail(befDList.get(0));
-			befDList.get(1).setDetailFileName(null);
-			befDList.get(1).setDetailFilePath(null);
-			befDList.get(1).setDetailFileRename(null);
-
-		}
+//		pService.removeDetail(befProduct.getProductNo());
+//		if(detail.getdList().get(0).getDetailFileName()!=null) {
+//			File delFile = new File(befDList.get(0).getDetailFileRename());
+//			delFile.delete();
+//			befDList.get(0).setDetailFileName(null);
+//			befDList.get(0).setDetailFilePath(null);
+//			befDList.get(0).setDetailFileRename(null);
+//
+//		}
+//		if(detail.getdList().get(1).getDetailFileName()!=null) {
+//			File delFile = new File(befDList.get(1).getDetailFileRename());
+//			delFile.delete();
+//			pService.removeDetail(befDList.get(0));
+//			befDList.get(1).setDetailFileName(null);
+//			befDList.get(1).setDetailFilePath(null);
+//			befDList.get(1).setDetailFileRename(null);
+//
+//		}
 		
 		//수정파일 다시 업로드
 		try {
@@ -262,41 +263,59 @@ public class ProductAdminController {
 			int result = pService.modifyProduct(product);
 			for(int i=0; i<detail.getdList().size(); i++) {
 				Detail dt =detail.getdList().get(i);
-				String detailFileName = dt.getDetailFileNameMPF().getOriginalFilename();
-				System.out.println("=========================="+detailFileName);
-				if(!detailFileName.equals("")){
-					String root=request.getSession().getServletContext().getRealPath("resources");
-					String savePath = root+"\\puploadFiles";
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-					String detailFileRename =sdf.format(new Date(System.currentTimeMillis()))+
-							product.getProductNo()+"detailUpdate"+(i+1)+"."
-							+detailFileName.substring(detailFileName.lastIndexOf(".")+1);
-					
-					File file = new File(savePath);
-					if(!file.exists()) {
-						file.mkdir();
-					}
-					dt.getDetailFileNameMPF().transferTo(new File(savePath+"\\"+detailFileRename));
-					String detailFilePath=savePath+"\\"+detailFileRename;
-					dt.setProductNo(product.getProductNo());
-					dt.setDetailFileName(detailFileName);
-					dt.setDetailFilePath(detailFilePath);
-					dt.setDetailFileRename(detailFileRename);
-				}
-					else {
-						if(!befDList.isEmpty()) {
-							dt.setProductNo(product.getProductNo());
-							dt.setDetailFileName(befDList.get(i).getDetailFileName());
-							dt.setDetailFilePath(befDList.get(i).getDetailFilePath());
-							dt.setDetailFileRename(befDList.get(i).getDetailFileRename());
-						}
-						
-					}
+				dt.setProductNo(befProduct.getProductNo());
 				
-				int result2 =pService.registerProductDetail(dt);
+				String detailFileN = dt.getDetailFileNameMPF().getOriginalFilename();
+				System.out.println(detailFileN);
+				
+				
+				if(dt.getDetailFileName().equals("del")) {
+					File delFile = new File(dt.getDetailFileRename());
+					delFile.delete();
+					pService.removeDetail(dt);
+				}
+				
+				String detailFileNa = dt.getDetailFileNameMPF().getOriginalFilename();
+				System.out.println(detailFileNa);
+				
+				if(!dt.getDetailFileNameMPF().isEmpty()) {
+					
+					String detailFileName = dt.getDetailFileNameMPF().getOriginalFilename();
+					System.out.println("=========================="+detailFileName);
+//					System.out.println("=========================="+dt.getDetailFileNameMPF());
+					if(!detailFileName.equals("")){
+						String root=request.getSession().getServletContext().getRealPath("resources");
+						String savePath = root+"\\puploadFiles";
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+						String detailFileRename =sdf.format(new Date(System.currentTimeMillis()))+
+								product.getProductNo()+"detailUpdate"+(i+1)+"."
+								+detailFileName.substring(detailFileName.lastIndexOf(".")+1);
+						
+						File file = new File(savePath);
+						if(!file.exists()) {
+							file.mkdir();
+						}
+						dt.getDetailFileNameMPF().transferTo(new File(savePath+"\\"+detailFileRename));
+						String detailFilePath=savePath+"\\"+detailFileRename;
+						dt.setProductNo(product.getProductNo());
+						dt.setDetailFileName(detailFileName);
+						dt.setDetailFilePath(detailFilePath);
+						dt.setDetailFileRename(detailFileRename);
+				}
+					int result2 =pService.registerProductDetail(dt);
+				}
+				/*
+				 * else { if(!befDList.isEmpty()) { dt.setProductNo(product.getProductNo());
+				 * dt.setDetailFileName(befDList.get(i).getDetailFileName());
+				 * dt.setDetailFilePath(befDList.get(i).getDetailFilePath());
+				 * dt.setDetailFileRename(befDList.get(i).getDetailFileRename()); }
+				 * 
+				 * }
+				 */
+				
 			
 			} 
-			if(result >0 ) {
+			if(result >0  ) {
 				mv.setViewName("redirect:/admin/product/ListView");
 			}else {
 				mv.setViewName("common/errorPage");
