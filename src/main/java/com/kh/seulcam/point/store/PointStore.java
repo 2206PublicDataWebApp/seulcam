@@ -9,8 +9,10 @@ import com.kh.seulcam.point.domain.Point;
 
 public interface PointStore {
 
-	public List<Point> printAllPointList(SqlSession session, String memberId);
+	public List<Point> printAllPointList(SqlSession session, String memberId, int currentPage, int boardLimit);
 
 	public Member printTotalPoint(SqlSession session, String memberId);
+
+	public int getTotalCount(SqlSession session, String memberId);
 
 }

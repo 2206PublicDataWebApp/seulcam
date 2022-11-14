@@ -184,17 +184,6 @@ public class OrderController {
 			}
 			mv.addObject("opList", opList);
 			
-			/*
-			 * if (!opList.isEmpty()) { List<Product> pList = new ArrayList(); for (int i =
-			 * 0; i < oList.size(); i++) { int productNo = opList.get(i).getProductNo();
-			 * 
-			 * List<Product> ppList = oService.printAllProduct(productNo);
-			 * pList.addAll(ppList);
-			 * 
-			 * } mv.addObject("pList", pList);
-			 * 
-			 * }
-			 */
 		}
 		
 	int count1=0; 
@@ -495,6 +484,7 @@ public class OrderController {
 		mv.setViewName("order/dilivery");
 			return mv;
 		}
+		
 		
 		//주문중 페이지 벗어날시 주문상품 삭제(주문취소)
 		@ResponseBody

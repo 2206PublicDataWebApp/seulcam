@@ -545,7 +545,7 @@ footer {
 											<c:if test="${order.dirivaryStatus eq '구매확정'}">
 											<td colspan="3">
 											<span><button  style='float: right' class="btn btn-secondary btn-sm" onclick="diliveryDtail(${order.orderNo})">배송조회</button></span>
-											<span><button  style='float: right' class="btn btn-secondary btn-sm" >후기작성</button></span>
+											<span><button  style='float: right' class="btn btn-secondary btn-sm" onclick="location.href='/order/complete/datail.kh?orderNo=${order.orderNo}'">후기작성</button></span>
 											</td>
 											</c:if>
 							
