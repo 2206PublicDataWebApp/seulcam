@@ -109,6 +109,9 @@ header {
 	height:50px;
  	padding-top:20px; 
 }
+.pagination{
+        justify-content: center;
+    }
 </style>
 <body>
 
@@ -117,7 +120,7 @@ header {
             <header>
                 <div class="header-wrapper">
                     <div class="back-layout">
-                        <button class="go-back" onclick="history.back()">
+                        <button class="go-back" onclick="location.href='/member/myPageView'">
                             <img src="../../../resources/images/back_arrow.png">
                         </button>
                     </div>
@@ -164,6 +167,7 @@ header {
 		<td style='color:orange;'>+${point.point }</td>
 		</c:if>
 		</tr>
+		
 		</c:forEach>
 		</tbody>
 		</table>
@@ -174,6 +178,35 @@ header {
 		
 		
 		</div>
+		
+		<div class="paging">
+		<nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+				<c:if test="${currentPage != 1}">
+					<a class="page-link" href="/point/${urlVal }.kh?page=${currentPage - 1 }"><</a>
+					
+				</c:if>
+				</li>
+				<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
+					<c:if test="${currentPage eq p }">
+					<li class="page-item"><b class="page-link">${p }</b></li>						
+					</c:if>
+					<c:if test="${currentPage ne p }">						
+					<li class="page-item"><a class="page-link"  href="/point/${urlVal }.kh?page=${p }">${p }</a></li>
+					</c:if>
+				</c:forEach>
+				<c:if test="${maxPage > currentPage }">
+				<a class="page-link" href="/point/${urlVal }.kh?page=${currentPage + 1 }">></a>
+				</c:if>
+				</li>
+        </ul>
+      </nav>
+		</div>
+		
+		
+		
+	</div>
 	</div>
 
 </body>

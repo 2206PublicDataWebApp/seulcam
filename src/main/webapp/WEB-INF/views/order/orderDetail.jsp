@@ -19,10 +19,16 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
         font-size: 14px;
         color: #000;
         background-color: #f1f1f1;
+        height:100%;
     }
     header {
         position: fixed;
@@ -102,10 +108,13 @@ h2 {
  		max-width: 768px;
         margin: 0 auto; 
         background-color: white;
-        min-height: 100vh;
+        min-height: 100%;
+   		position: relative;
+        /* min-height: 100vh; */
 }
 .contents{
-padding-top: 50px;
+	padding-top: 50px;
+    padding-bottom: 53px;
 }
 .price{
 	float:right;
@@ -365,7 +374,37 @@ padding-top:10px;
     outline: 3px solid #F8E4FF;
     border-radius: 10px;
 } */
+footer {
+    position: absolute;
+    /* bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 768px;
+    margin: 0 auto; 
+    width: 100%; */
+   /*  padding: 12px 7px;
+    height: auto; */
+ 	
 
+}
+
+.footer-btn {
+   position: fixed;
+	display: flex;
+	float: left;
+    bottom: 0;
+    left: 50%;
+    z-index: 11;
+    background: #fff;
+	height: 53px;
+    width: 100%;
+    max-width: 768px;
+    transform: translateX(-50%);
+	cursor: pointer;
+}
+.payButton{
+	width:100%;
+}
 
 </style>
 </head>
@@ -491,7 +530,7 @@ padding-top:10px;
 		<!-- </div>
 		</div> -->
 		<hr>
-		<div class="point line">
+		<div class="point">
 		<div class="info-point">
 		<div class="small-title">포인트 할인</div>
 		<div class="input_info row">
@@ -525,12 +564,14 @@ padding-top:10px;
 		<div style="font-weight:bold">총 결제 금액<span class="price" ><span id="total-price"></span><span>원</span></span></div>
 		
 		</div>
-		
-		
 		</div>
+		
+		<div class="footer-btn">
 		<div class="payButton">
 		<button class="submit-button" onclick="orderPay()"><span id="total-button"></span>원 결제하기</button>
 		</div>
+		</div>
+		
 
 	</div>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
