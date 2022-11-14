@@ -1,538 +1,541 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-		<!DOCTYPE html>
-		<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
 
-		<head>
-			<meta charset="UTF-8">
-			<meta http-equiv="X-UA-Compatible" content="IE=edge">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
-			<title>캠핑장 사이트 정보</title>
-			<link rel="stylesheet" href="/resources/css/camp/switch.css">
-			<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
-			<link rel="stylesheet" href="/resources/css/fonts.css">
-			<!-- <link rel="stylesheet" href="/resources/css/memberCommon.css"> -->
-			<link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
-			<link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-			<!-- jQuery -->
-			<script src="../../../resources/js/jquery-3.6.1.min.js"></script>
-		</head>
-		<style>
-			ul {
-				padding-left: 0;
-			}
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0 user-scalable=no">
+<title>캠핑장 사이트 정보</title>
+<link rel="stylesheet" href="/resources/css/camp/switch.css">
+<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/fonts.css">
+<!-- <link rel="stylesheet" href="/resources/css/memberCommon.css"> -->
+<link rel="shortcut icon" href="/resources/images/faviconlogo.ico"
+	type="image/x-icon">
+<link rel="icon" href="/resources/images/faviconlogo.ico"
+	type="image/x-icon">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<!-- jQuery -->
+<script src="../../../resources/js/jquery-3.6.1.min.js"></script>
+</head>
+<style>
+ul {
+	padding-left: 0;
+}
 
-			body {
-				font-size: 14px;
-				color: #000;
-			}
+body {
+	font-size: 14px;
+	color: #000;
+}
 
-			header {
-				position: fixed;
-				left: 0px;
-				right: 0px;
-				top: 0px;
-				height: 50px;
-				background-color: rgb(255, 255, 255);
-				z-index: 200;
-				margin: 0 auto;
-			}
+header {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	height: 50px;
+	background-color: rgb(255, 255, 255);
+	z-index: 200;
+	margin: 0 auto;
+}
 
-			.header-wrapper {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				max-width: 385px;
-				margin: 0 auto;
-				height: 50px;
-				position: relative;
-			}
+.header-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 385px;
+	margin: 0 auto;
+	height: 50px;
+	position: relative;
+}
 
-			.body-wrapper {
-				max-width: 770px;
-				margin: 0 auto;
-				background-color: white;
-				min-height: 100vh;
+.body-wrapper {
+	max-width: 770px;
+	margin: 0 auto;
+	background-color: white;
+	min-height: 100vh;
+}
 
-			}
+/* 컨텐츠css */
+.detailMain {
+	padding-top: 70px;
+}
 
-			/* 컨텐츠css */
-			.detailMain {
-				padding-top: 70px;
-			}
+.info_area {
+	padding: 10px;
+}
 
-			.info_area {
-				padding: 10px;
-			}
+.infoTitle {
+	font-weight: bold;
+	color: green;
+	width: 100px;
+	padding: 5px;
+}
 
-			.infoTitle {
-				font-weight: bold;
-				color: green;
-				width: 100px;
-				padding: 5px;
-			}
+.itModal {
+	color: darkslategray;
+}
 
-			.itModal {
-				color: darkslategray;
-			}
+.container {
+	/* padding: 20px; */
+	
+}
 
-			.container {
-				/* padding: 20px; */
-			}
+.calendar_area {
+	padding: 10px;
+}
 
-			.calendar_area {
-				padding: 10px;
-			}
+.intro_area {
+	padding: 10px;
+}
 
-			.intro_area {
-				padding: 10px;
-			}
+.intro {
+	margin: auto;
+	padding: 10px;
+	border: 1px solid #ccc;
+	height: 114px;
+	overflow: hidden;
+	animation: 5s delay-overflow;
+}
 
-			.intro {
-				margin: auto;
-				padding: 10px;
-				border: 1px solid #ccc;
-				height: 114px;
-				overflow: hidden;
-				animation: 5s delay-overflow;
-			}
+.moreIntro {
+	margin-top: 10px;
+	border-radius: 5px;
+	border: 1px solid #343a40;
+	text-align: center;
+	padding: 7px;
+	font-size: 16px;
+}
 
-			.moreIntro {
-				margin-top: 10px;
-				border-radius: 5px;
-				border: 1px solid #343a40;
-				text-align: center;
-				padding: 7px;
-				font-size: 16px;
-			}
+.moreIntro:hover {
+	background-color: #343a40;
+	color: #ccc;
+}
 
-			.moreIntro:hover {
-				background-color: #343a40;
-				color: #ccc;
-			}
+.no_overflow {
+	overflow: auto;
+	height: auto;
+	/* persist overflow value from animation */
+	animation: 7s delay-overflow;
+}
 
-			.no_overflow {
-				overflow: auto;
-				height: auto;
-				/* persist overflow value from animation */
-				animation: 7s delay-overflow;
-			}
+@
+keyframes delay-overflow {from { overflow:auto;
+	
+}
 
-			@keyframes delay-overflow {
-				from {
-					overflow: auto;
-				}
-			}
+}
+div {
+	word-break: break-all;
+}
 
-			div {
-				word-break: break-all;
-			}
+.siteInfo {
+	position: relative;
+	margin: auto;
+	margin-bottom: 8px;
+	margin-left: 3px;
+	margin-right: 3px;
+	box-shadow: 0px 1px 2px 0px rgb(0 0 0/ 25%);
+	background-color: #fff;
+	cursor: pointer;
+}
 
-			.siteInfo {
-				position: relative;
-				margin: auto;
-				margin-bottom: 8px;
-				margin-left: 3px;
-				margin-right: 3px;
-				box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 25%);
-				background-color: #fff;
-				cursor: pointer;
-			}
+.siteList_area {
+	/* background-color: #F5F5F5; */
+	display: block;
+}
 
-			.siteList_area {
-				/* background-color: #F5F5F5; */
-				display: block;
-			}
+.siteList {
+	display: block;
+	overflow: hidden;
+}
 
-			.siteList {
-				display: block;
-				overflow: hidden;
-			}
+.siteImg {
+	width: 120px;
+	height: 122px;
+}
 
-			.siteImg {
-				width: 120px;
-				height: 122px;
-			}
+.registY {
+	position: absolute;
+	bottom: 4px;
+	left: 6px;
+	font-size: 10px;
+	padding: 2px 8px;
+	border-radius: 10px;
+	background-color: #F6B67B;
+	z-index: 3;
+	color: #fff;
+}
 
-			.registY {
-				position: absolute;
-				bottom: 4px;
-				left: 6px;
-				font-size: 10px;
-				padding: 2px 8px;
-				border-radius: 10px;
-				background-color: #F6B67B;
-				z-index: 3;
-				color: #fff;
-			}
+.registN {
+	position: absolute;
+	bottom: 4px;
+	left: 6px;
+	font-size: 10px;
+	padding: 2px 8px;
+	border-radius: 10px;
+	background-color: #E86F52;
+	z-index: 3;
+	color: #fff;
+}
 
-			.registN {
-				position: absolute;
-				bottom: 4px;
-				left: 6px;
-				font-size: 10px;
-				padding: 2px 8px;
-				border-radius: 10px;
-				background-color: #E86F52;
-				z-index: 3;
-				color: #fff;
-			}
+*, ::after, ::before {
+	box-sizing: border-box;
+}
 
-			*,
-			::after,
-			::before {
-				box-sizing: border-box;
-			}
-
-			/* div {
+/* div {
     display: block;
 } */
-			.siteImg>div {
-				width: 120px;
-				height: 100%;
-				object-fit: cover;
-			}
+.siteImg>div {
+	width: 120px;
+	height: 100%;
+	object-fit: cover;
+}
 
-			.d-flex {
-				display: flex !important;
-			}
+.d-flex {
+	display: flex !important;
+}
 
-			.siteIntro {
-				position: relative;
-				width: 180%;
-				padding: 8px;
+.siteIntro {
+	position: relative;
+	width: 180%;
+	padding: 8px;
+}
 
-			}
+.siteRegist {
+	width: 100%;
+	padding: 8px;
+}
 
-			.siteRegist {
-				width: 100%;
-				padding: 8px;
-			}
+.siteIntro-header {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
 
-			.siteIntro-header {
-				width: 100%;
-				display: flex;
-				flex-direction: column;
-			}
+.site-disabled {
+	pointer-events: none;
+}
 
-			.site-disabled {
-				pointer-events: none;
-			}
+.site-disabled:before {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.75);
+	z-index: 2;
+}
 
-			.site-disabled:before {
-				content: '';
-				position: absolute;
-				width: 100%;
-				height: 100%;
-				background-color: rgba(255, 255, 255, 0.75);
-				z-index: 2;
-			}
+/* section calendar */
+.sec_cal {
+	width: 360px;
+	margin: 0 auto;
+	font-family: "NotoSansR";
+}
 
-			/* section calendar */
+.sec_cal .cal_nav {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 78px;
+}
 
-			.sec_cal {
-				width: 360px;
-				margin: 0 auto;
-				font-family: "NotoSansR";
-			}
+.sec_cal .cal_nav .year-month {
+	width: 300px;
+	text-align: center;
+	line-height: 1;
+}
 
-			.sec_cal .cal_nav {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				font-weight: 700;
-				font-size: 24px;
-				line-height: 78px;
-			}
+.sec_cal .cal_nav .nav {
+	display: flex;
+	border: 1px solid #333333;
+	border-radius: 5px;
+}
 
-			.sec_cal .cal_nav .year-month {
-				width: 300px;
-				text-align: center;
-				line-height: 1;
-			}
+.sec_cal .cal_nav .go-prev, .sec_cal .cal_nav .go-next {
+	display: block;
+	width: 50px;
+	height: 35px;
+	font-size: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-			.sec_cal .cal_nav .nav {
-				display: flex;
-				border: 1px solid #333333;
-				border-radius: 5px;
-			}
+.sec_cal .cal_nav .go-prev::before, .sec_cal .cal_nav .go-next::before {
+	content: "";
+	display: block;
+	width: 20px;
+	height: 20px;
+	border: 3px solid #000;
+	border-width: 3px 3px 0 0;
+	transition: border 0.1s;
+}
 
-			.sec_cal .cal_nav .go-prev,
-			.sec_cal .cal_nav .go-next {
-				display: block;
-				width: 50px;
-				height: 35px;
-				font-size: 0;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
+.sec_cal .cal_nav .go-prev:hover::before, .sec_cal .cal_nav .go-next:hover::before
+	{
+	border-color: #ed2a61;
+}
 
-			.sec_cal .cal_nav .go-prev::before,
-			.sec_cal .cal_nav .go-next::before {
-				content: "";
-				display: block;
-				width: 20px;
-				height: 20px;
-				border: 3px solid #000;
-				border-width: 3px 3px 0 0;
-				transition: border 0.1s;
-			}
+.sec_cal .cal_nav .go-prev::before {
+	transform: rotate(-135deg);
+}
 
-			.sec_cal .cal_nav .go-prev:hover::before,
-			.sec_cal .cal_nav .go-next:hover::before {
-				border-color: #ed2a61;
-			}
+.sec_cal .cal_nav .go-next::before {
+	transform: rotate(45deg);
+}
 
-			.sec_cal .cal_nav .go-prev::before {
-				transform: rotate(-135deg);
-			}
+.sec_cal .cal_wrap {
+	padding-top: 20px;
+	position: relative;
+	margin: 0 auto;
+}
 
-			.sec_cal .cal_nav .go-next::before {
-				transform: rotate(45deg);
-			}
+.sec_cal .cal_wrap .days {
+	display: flex;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #ddd;
+}
 
-			.sec_cal .cal_wrap {
-				padding-top: 20px;
-				position: relative;
-				margin: 0 auto;
-			}
+.sec_cal .cal_wrap::after {
+	top: 368px;
+}
 
-			.sec_cal .cal_wrap .days {
-				display: flex;
-				margin-bottom: 20px;
-				padding-bottom: 20px;
-				border-bottom: 1px solid #ddd;
-			}
+.current {
+	pointer-events: all;
+}
 
-			.sec_cal .cal_wrap::after {
-				top: 368px;
-			}
+.current:hover {
+	background-color: #fdc9bc;
+}
 
-			.current {
-				pointer-events: all;
-			}
+.sec_cal .cal_wrap .day {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: calc(100%/ 7);
+	text-align: left;
+	color: #000;
+	font-size: 12px;
+	text-align: center;
+	border-radius: 5px
+}
 
-			.current:hover {
-				background-color: #fdc9bc;
+.current.today {
+	font-weight: bold;
+}
 
-			}
+.noContact {
+	background-color: rgb(242, 242, 242);
+}
 
-			.sec_cal .cal_wrap .day {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: calc(100% / 7);
-				text-align: left;
-				color: #000;
-				font-size: 12px;
-				text-align: center;
-				border-radius: 5px
-			}
+.sec_cal .cal_wrap .dates {
+	display: flex;
+	flex-flow: wrap;
+	height: 290px;
+}
 
-			.current.today {
-				font-weight: bold;
-			}
+.sec_cal .cal_wrap .day:nth-child(7n -1) {
+	color: #3c6ffa;
+}
 
-			.noContact {
-				background-color: rgb(242 242 242);
-			}
+.sec_cal .cal_wrap .day:nth-child(7n) {
+	color: #ed2a61;
+}
 
-			.sec_cal .cal_wrap .dates {
-				display: flex;
-				flex-flow: wrap;
-				height: 290px;
-			}
+.sec_cal .cal_wrap .day.disable {
+	color: #ddd;
+}
 
-			.sec_cal .cal_wrap .day:nth-child(7n -1) {
-				color: #3c6ffa;
-			}
+.selectDate {
+	background-color: #E86F52;
+	/* pointer-events: none; */
+	color: #fff !important;
+}
 
-			.sec_cal .cal_wrap .day:nth-child(7n) {
-				color: #ed2a61;
-			}
+.calSelect {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+	height: 40px;
+	background-color: #f1f1f1;
+	box-shadow: 0px 1px 2px 0px rgb(0 0 0/ 25%);
+	border-radius: 10px;
+}
 
-			.sec_cal .cal_wrap .day.disable {
-				color: #ddd;
-			}
+.calSelect div {
+	float: left;
+	height: 100%;
+	width: 50%;
+	text-align: center;
+}
 
-			.selectDate {
-				background-color: #E86F52;
-				/* pointer-events: none; */
-				color: #fff !important;
+footer {
+	position: relative !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+</style>
 
-			}
+<body>
+	<!-- 헤더&메뉴바 -->
+	<header>
+		<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+	</header>
 
-			.calSelect {
-				display: flex;
-				justify-content: center;
-				flex-direction: column;
-				width: 100%;
-				height: 40px;
-				background-color: #f1f1f1;
-				box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 25%);
-				border-radius: 10px;
-			}
+	<!-- 컨텐츠 -->
+	<div class="body-wrapper">
+		<div class="detailMain">
+			<div class="info_area">
+				<div class='text-right tt' stlyle='padding-bottom: 0.75rem;'>
+					<small class='text-muted'>${camp.induty}</small>
+				</div>
+				<h4 style="padding-top: 5px;">${camp.facltNm}</h4>
+				<table>
+					<tr>
+						<td class="infoTitle">대표번호</td>
+						<td>${camp.tel}</td>
+					</tr>
+					<tr>
+						<td class="infoTitle">주소</td>
+						<td>${camp.addr1}</td>
+					</tr>
+				</table>
+				<hr>
+			</div>
 
-			.calSelect div {
-				float: left;
-				height: 100%;
-				width: 50%;
-				text-align: center;
-			}
-		</style>
+			<div class="intro_area">
+				<h4>캠핑장 소개</h4>
+				<div class="intro">
+					<c:if test='${camp.intro == ""}'>
+						<h4>아직 등록된 소개가 없어요!</h4>
+					</c:if>
+					<c:if test='${camp.intro != ""}'>${camp.intro}</c:if>
+				</div>
+				<div class="moreIntro" onclick="moreIntro()">더보기</div>
+				<hr>
 
-		<body>
-			<!-- 헤더&메뉴바 -->
-			<header>
-				<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-			</header>
-
-			<!-- 컨텐츠 -->
-			<div class="body-wrapper">
-				<div class="detailMain">
-					<div class="info_area">
-						<div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small
-								class='text-muted'>${camp.induty}</small></div>
-						<h4 style="padding-top: 5px;">${camp.facltNm}</h4>
-						<table>
-							<tr>
-								<td class="infoTitle">대표번호</td>
-								<td>${camp.tel}</td>
-							</tr>
-							<tr>
-								<td class="infoTitle">주소</td>
-								<td>${camp.addr1}</td>
-							</tr>
-						</table>
-						<hr>
-					</div>
-
-					<div class="intro_area">
-						<h4>캠핑장 소개</h4>
-						<div class="intro">
-							<c:if test='${camp.intro == ""}'>
-								<h4>아직 등록된 소개가 없어요!</h4>
-							</c:if>
-							<c:if test='${camp.intro != ""}'>${camp.intro}</c:if>
+			</div>
+			<div class="calendar_area">
+				<h4>예약 일자 선택</h4>
+				<div class="calSelect">
+					<a data-bs-toggle='modal' data-bs-target='#calModal'>
+						<div>
+							<i class="bi bi-calendar-check"></i><span class="stDate"></span>
 						</div>
-						<div class="moreIntro" onclick="moreIntro()">
-							더보기
+						<div>
+							<i class="bi bi-calendar-check"></i><span class="edDate"></span>
 						</div>
-						<hr>
+					</a>
+				</div>
+				<hr>
+				<h4>예약 가능 사이트</h4>
+			</div>
+			<div class="siteList_area">
+				<div class="siteList"></div>
 
-					</div>
-					<div class="calendar_area">
-						<h4>예약 일자 선택</h4>
-						<div class="calSelect">
-							<a data-bs-toggle='modal' data-bs-target='#calModal'>
-								<div>
-									<i class="bi bi-calendar-check"></i><span class="stDate"></span>
-								</div>
-								<div>
-									<i class="bi bi-calendar-check"></i><span class="edDate"></span>
-								</div>
-							</a>
+				<hr>
+			</div>
+			<!-- data-bs-toggle='modal' data-bs-target='calModal' -->
+			<!-- Modal cal -->
+			<div class="modal fade" id="calModal" tabindex="-1"
+				aria-labelledby="ModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="ModalLabel">예약날짜</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
 						</div>
-						<hr>
-						<h4>예약 가능 사이트</h4>
-					</div>
-					<div class="siteList_area">
-						<div class="siteList">
-
-						</div>
-
-						<hr>
-					</div>
-					<!-- data-bs-toggle='modal' data-bs-target='calModal' -->
-					<!-- Modal cal -->
-					<div class="modal fade" id="calModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h1 class="modal-title fs-5" id="ModalLabel">예약날짜</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									<div class="calSelect">
-										<a>
-											<div>
-												<i class="bi bi-calendar-check"></i><span class="stDate"> 22년 10월
-													31일</span>
-											</div>
-											<div>
-												<i class="bi bi-calendar-check"></i><span class="edDate"> 22년 10월
-													31일</span>
-											</div>
-										</a>
+						<div class="modal-body">
+							<div class="calSelect">
+								<a>
+									<div>
+										<i class="bi bi-calendar-check"></i><span class="stDate">
+											22년 10월 31일</span>
 									</div>
-									<hr>
-									<div class="sec_cal">
-										<div class="cal_nav">
-											<a href="javascript:;" class="nav-btn go-prev">prev</a>
-											<div class="year-month"></div>
-											<a href="javascript:;" class="nav-btn go-next">next</a>
-										</div>
-										<div class="cal_wrap">
-											<div class="days">
-												<div class="day">MON</div>
-												<div class="day">TUE</div>
-												<div class="day">WED</div>
-												<div class="day">THU</div>
-												<div class="day">FRI</div>
-												<div class="day">SAT</div>
-												<div class="day">SUN</div>
-											</div>
-											<div class="dates"></div>
-										</div>
+									<div>
+										<i class="bi bi-calendar-check"></i><span class="edDate">
+											22년 10월 31일</span>
 									</div>
-
+								</a>
+							</div>
+							<hr>
+							<div class="sec_cal">
+								<div class="cal_nav">
+									<a href="javascript:;" class="nav-btn go-prev">prev</a>
+									<div class="year-month"></div>
+									<a href="javascript:;" class="nav-btn go-next">next</a>
 								</div>
-								<div class="modal-footer" style="padding: 10px;">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">선택</button>
+								<div class="cal_wrap">
+									<div class="days">
+										<div class="day">MON</div>
+										<div class="day">TUE</div>
+										<div class="day">WED</div>
+										<div class="day">THU</div>
+										<div class="day">FRI</div>
+										<div class="day">SAT</div>
+										<div class="day">SUN</div>
+									</div>
+									<div class="dates"></div>
 								</div>
 							</div>
+
+						</div>
+						<div class="modal-footer" style="padding: 10px;">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">선택</button>
 						</div>
 					</div>
-
-
-					<!-- Modal -->
-					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h1 class="modal-title fs-5" id="exampleModalLabel">Modal
-										title</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									<div class="siteImg-area" style="width: 80%; height: 200px; margin-bottom: 10px;"
-										align="center">
-
-									</div>
-									<div class="siteInfoDetail">
-
-									</div>
-
-								</div>
-								<div class="modal-footer" style="padding: 10px;">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-								</div>
-							</div>
-						</div>
-					</div>
-
 				</div>
 			</div>
 
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-				integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-				crossorigin="anonymous"></script>
-			<script type="text/javascript">
+
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">Modal
+								title</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="siteImg-area"
+								style="width: 80%; height: 200px; margin-bottom: 10px;"
+								align="center"></div>
+							<div class="siteInfoDetail"></div>
+
+						</div>
+						<div class="modal-footer" style="padding: 10px;">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+		crossorigin="anonymous"></script>
+	<script type="text/javascript">
 				// const myModal = document.getElementById('myModal')
 				// const myInput = document.getElementById('myInput')
 
@@ -888,6 +891,6 @@
 
 
 
-		</body>
+</body>
 
-		</html>
+</html>

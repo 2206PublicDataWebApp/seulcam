@@ -1,462 +1,477 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-            <!DOCTYPE html>
-            <html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
 
-            <head>
-                <meta charset="UTF-8">
-                <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
-                <title>${camp.facltNm}</title>
-                <link rel="stylesheet" href="/resources/css/camp/switch.css">
-                <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
-                <link rel="stylesheet" href="/resources/css/fonts.css">
-                <!-- <link rel="stylesheet" href="/resources/css/memberCommon.css"> -->
-                <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
-                <link rel="icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
-                <link rel="stylesheet"
-                    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-                <!-- jQuery -->
-                <!-- <script src="../../../resources/js/jquery-3.6.1.min.js"></script> -->
-                <!-- slick -->
-                <!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0 user-scalable=no">
+<title>${camp.facltNm}</title>
+<link rel="stylesheet" href="/resources/css/camp/switch.css">
+<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/fonts.css">
+<!-- <link rel="stylesheet" href="/resources/css/memberCommon.css"> -->
+<link rel="shortcut icon" href="/resources/images/faviconlogo.ico"
+	type="image/x-icon">
+<link rel="icon" href="/resources/images/faviconlogo.ico"
+	type="image/x-icon">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<!-- jQuery -->
+<!-- <script src="../../../resources/js/jquery-3.6.1.min.js"></script> -->
+<!-- slick -->
+<!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/> -->
-                <!-- ✅ Load slick CSS ✅ -->
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"
-                    integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw=="
-                    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- ✅ Load slick CSS ✅ -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"
+	integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-                <!-- ✅ Load slick theme CSS ✅ -->
-                <link rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
-                    integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
-                    crossorigin="anonymous" referrerpolicy="no-referrer" />
-            </head>
-            </head>
-            <style>
-                ul {
-                    padding-left: 0;
-                }
+<!-- ✅ Load slick theme CSS ✅ -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+	integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+</head>
+<style>
+ul {
+	padding-left: 0;
+}
 
-                body {
-                    font-size: 14px;
-                    color: #000;
-                }
+body {
+	font-size: 14px;
+	color: #000;
+}
 
-                header {
-                    position: fixed;
-                    left: 0px;
-                    right: 0px;
-                    top: 0px;
-                    height: 50px;
-                    background-color: rgb(255, 255, 255);
-                    z-index: 200;
-                    margin: 0 auto;
-                }
+header {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	height: 50px;
+	background-color: rgb(255, 255, 255);
+	z-index: 200;
+	margin: 0 auto;
+}
 
-                .header-wrapper {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    max-width: 385px;
-                    margin: 0 auto;
-                    height: 50px;
-                    position: relative;
-                }
+.header-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 385px;
+	margin: 0 auto;
+	height: 50px;
+	position: relative;
+}
 
-                .body-wrapper {
-                    max-width: 770px;
-                    margin: 0 auto;
-                    background-color: white;
-                    min-height: 100vh;
+.body-wrapper {
+	max-width: 770px;
+	margin: 0 auto;
+	background-color: white;
+	min-height: 100vh;
+}
 
-                }
+/* 컨텐츠css */
+.detailMain {
+	padding-top: 70px;
+}
 
-                /* 컨텐츠css */
-                .detailMain {
-                    padding-top: 70px;
-                }
+.info_img {
+	padding: 5px 5px;
+	/* border-bottom: 10px solid rgb(243, 243, 243); */
+}
 
-                .info_img {
-                    padding: 5px 5px;
-                    /* border-bottom: 10px solid rgb(243, 243, 243); */
-                }
+.iconh {
+	border: 2px solid #000;
+	border-radius: 20%;
+}
 
-                .iconh {
-                    border: 2px solid #000;
-                    border-radius: 20%;
+.iconh:hover {
+	background-color: #000;
+	color: #f1f1f1;
+}
 
-                }
+.infoTitle {
+	font-weight: bold;
+	color: rgb(39, 174, 96);
+	width: 100px;
+	padding: 5px;
+}
 
-                .iconh:hover {
-                    background-color: #000;
-                    color: #f1f1f1;
-                }
+.intro {
+	margin: auto;
+	padding: 10px;
+	border: 1px solid #ccc;
+}
 
-                .infoTitle {
-                    font-weight: bold;
-                    color: rgb(39, 174, 96);
-                    width: 100px;
-                    padding: 5px;
-                }
+.maps {
+	padding: 10px;
+}
 
-                .intro {
-                    margin: auto;
-                    padding: 10px;
-                    border: 1px solid #ccc;
-                }
+.moreBlog {
+	border-radius: 5px;
+	border: 1px solid #343a40;
+	text-align: center;
+	padding: 7px;
+	font-size: 16px;
+}
 
-                .maps {
-                    padding: 10px;
-                }
+.moreBlog:hover {
+	background-color: #343a40;
+	color: #ccc;
+}
 
-                .moreBlog {
-                    border-radius: 5px;
-                    border: 1px solid #343a40;
-                    text-align: center;
-                    padding: 7px;
-                    font-size: 16px;
-                }
+.reviewWrite_area>div {
+	float: left;
+}
 
-                .moreBlog:hover {
-                    background-color: #343a40;
-                    color: #ccc;
-                }
+.reviewWrite_area::after {
+	content: "";
+	display: block;
+	clear: both;
+}
 
-                .reviewWrite_area>div {
-                    float: left;
-                }
+#input {
+	width: 80%;
+}
 
-                .reviewWrite_area::after {
-                    content: "";
-                    display: block;
-                    clear: both;
-                }
+.button {
+	width: 20%;
+	height: 100px;
+}
 
-                #input {
-                    width: 80%;
-                }
+.button>div {
+	position: relative;
+	top: 33px;
+}
 
-                .button {
-                    width: 20%;
-                    height: 100px;
-                }
-
-                .button>div {
-                    position: relative;
-                    top: 33px;
-                }
-
-                /* #reviewWrite {
+/* #reviewWrite {
         width: 95%;
     } */
-                .star {
-                    position: relative;
-                    font-size: 1.5rem;
-                    color: #ddd;
-                }
+.star {
+	position: relative;
+	font-size: 1.5rem;
+	color: #ddd;
+}
 
-                .star input {
-                    width: 100%;
-                    height: 100%;
-                    position: absolute;
-                    left: 0;
-                    opacity: 0;
-                    cursor: pointer;
-                }
+.star input {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+	cursor: pointer;
+}
 
-                .star span {
-                    width: 100%;
-                    position: absolute;
-                    left: 0;
-                    color: red;
-                    overflow: hidden;
-                    pointer-events: none;
-                }
+.star span {
+	width: 100%;
+	position: absolute;
+	left: 0;
+	color: red;
+	overflow: hidden;
+	pointer-events: none;
+}
 
-                .reviewList {
-                    min-height: 100px;
+.reviewList {
+	min-height: 100px;
+	width: 100%;
+}
 
-                    width: 100%;
-                }
+.reviewList::after {
+	content: "";
+	display: block;
+	clear: both;
+}
 
-                .reviewList::after {
-                    content: "";
-                    display: block;
-                    clear: both;
-                }
+.review_contents {
+	float: left;
+	width: 80%;
+	height: 100%;
+}
 
-                .review_contents {
-                    float: left;
-                    width: 80%;
-                    height: 100%;
-                }
+.review_info {
+	width: 20%;
+	height: 100%;
+	padding: 5px;
+	float: left;
+}
 
-                .review_info {
-                    width: 20%;
-                    height: 100%;
-                    padding: 5px;
-                    float: left;
-                }
+.review_contents p {
+	font-size: 20px;
+}
 
-                .review_contents p {
-                    font-size: 20px;
-                }
+.bi-trash-fill {
+	visibility: hidden;
+}
 
-                .bi-trash-fill {
-                    visibility: hidden;
-                }
+.reviewList i {
+	padding-right: 5px;
+}
 
-                .reviewList i {
-                    padding-right: 5px;
-                }
+.reviewList i:hover {
+	color: blue;
+}
 
-                .reviewList i:hover {
-                    color: blue;
-                }
+.post-slider .post-wrapper .card {
+	display: inline-block;
+}
 
-                .post-slider .post-wrapper .card {
-                    display: inline-block;
-                }
+.card {
+	cursor: pointer;
+	height: 300px;
+}
 
-                .card {
-                    cursor: pointer;
-                    height: 300px;
-                }
+.likeBtn {
+	margin-left: 10px;
+	display: flex;
+	align-items: center;
+	color: #dc3545;
+	border: 2px solid #dc3545;
+	border-radius: 5px;
+	cursor: pointer;
+}
 
-                .likeBtn {
-                    margin-left: 10px;
-                    display: flex;
-                    align-items: center;
-                    color: #dc3545;
-                    border: 2px solid #dc3545;
-                    border-radius: 5px;
-                    cursor: pointer;
-                }
+.likeBtn:hover {
+	background-color: #dc3545;
+	color: #f1f1f1;
+}
 
-                .likeBtn:hover {
-                    background-color: #dc3545;
-                    color: #f1f1f1;
-                }
+.alreadyLike {
+	background-color: #dc3545;
+	color: #f1f1f1;
+}
 
-                .alreadyLike {
-                    background-color: #dc3545;
-                    color: #f1f1f1;
-                }
+.alreadyLike:hover {
+	border: 2px solid #9b1b28;
+	background-color: #9b1b28;
+	color: #f1f1f1;
+}
 
-                .alreadyLike:hover {
-                    border: 2px solid #9b1b28;
-                    background-color: #9b1b28;
-                    color: #f1f1f1;
-                }
+.iZone {
+	display: flex;
+}
 
-                .iZone {
-                    display: flex;
-                }
+.heart {
+	margin-top: 2px;
+	margin-left: 8px;
+	margin-right: 2px;
+}
 
-                .heart {
-                    margin-top: 2px;
-                    margin-left: 8px;
-                    margin-right: 2px;
-                }
+.likeCount {
+	font-size: 13pt;
+	margin-left: 5px;
+	margin-right: 6px;
+	margin-top: 3px;
+}
 
-                .likeCount {
-                    font-size: 13pt;
-                    margin-left: 5px;
-                    margin-right: 6px;
-                    margin-top: 3px;
-                }
+.starCzone {
+	margin-left: 10px;
+	display: flex;
+	align-items: center;
+	color: #dc3545;
+	border: 2px solid #dc3545;
+	border-radius: 5px;
+}
 
-                .starCzone {
-                    margin-left: 10px;
-                    display: flex;
-                    align-items: center;
-                    color: #dc3545;
-                    border: 2px solid #dc3545;
-                    border-radius: 5px;
-                }
+.starC {
+	margin-left: 8px;
+	margin-right: 2px;
+}
 
-                .starC {
-                    margin-left: 8px;
-                    margin-right: 2px;
-                }
+.starCount {
+	font-size: 13pt;
+	margin-left: 5px;
+	margin-right: 6px;
+	margin-top: 3px;
+}
 
-                .starCount {
-                    font-size: 13pt;
-                    margin-left: 5px;
-                    margin-right: 6px;
-                    margin-top: 3px;
-                }
-            </style>
+footer {
+	position: relative !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+</style>
 
-            <body>
+<body>
 
-                <!-- 헤더&메뉴바 -->
-                <header>
-                    <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-                </header>
+	<!-- 헤더&메뉴바 -->
+	<header>
+		<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+	</header>
 
-                <!-- 컨텐츠 -->
-                <div class="body-wrapper">
+	<!-- 컨텐츠 -->
+	<div class="body-wrapper">
 
-                    <div class="detailMain">
-                        <div class="container">
-                            <div class="info_img">
-                                <div class="img-slick">
-                                    <div class="img-wrapper">
-                                        <div
-                                            style='height: 450px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'>
-                                        </div>
-                                    </div>
+		<div class="detailMain">
+			<div class="container">
+				<div class="info_img">
+					<div class="img-slick">
+						<div class="img-wrapper">
+							<div
+								style='height: 450px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'>
+							</div>
+						</div>
 
-                                </div>
-                                <br>
-                                <div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small
-                                        class='text-muted'>${camp.induty}</small></div>
-                                <h3>${camp.facltNm}</h3>
-                                <p>${camp.lineIntro}</p>
-                                <div style="height: 100%; overflow:auto; ">
-                                    <div class="iZone" style="width: 50%; float: left;">
-                                        <a href="${camp.homepage}" target='_blank'>
-                                            <svg class="iconh" xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                                                fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
-                                                <path fill-rule="evenodd"
-                                                    d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                                                <path fill-rule="evenodd"
-                                                    d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+					</div>
+					<br>
+					<div class='text-right tt' stlyle='padding-bottom: 0.75rem;'>
+						<small class='text-muted'>${camp.induty}</small>
+					</div>
+					<h3>${camp.facltNm}</h3>
+					<p>${camp.lineIntro}</p>
+					<div style="height: 100%; overflow: auto;">
+						<div class="iZone" style="width: 50%; float: left;">
+							<a href="${camp.homepage}" target='_blank'> <svg
+									class="iconh" xmlns="http://www.w3.org/2000/svg" width="36"
+									height="36" fill="currentColor" class="bi bi-house-fill"
+									viewBox="0 0 16 16">
+                                                <path
+										fill-rule="evenodd"
+										d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                                                <path
+										fill-rule="evenodd"
+										d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
                                             </svg>
-                                        </a>
-                                        <c:if test="${likeCheck > 0}">
-                                            <div class="likeBtn alreadyLike" onclick="likeButton()">
-                                        </c:if>
-                                        <c:if test="${likeCheck < 1}">
-                                            <div class="likeBtn" onclick="likeButton()">
-                                        </c:if>
-                                        <svg class="heart" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                            fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+							</a>
+							<c:if test="${likeCheck > 0}">
+								<div class="likeBtn alreadyLike" onclick="likeButton()">
+							</c:if>
+							<c:if test="${likeCheck < 1}">
+								<div class="likeBtn" onclick="likeButton()">
+							</c:if>
+							<svg class="heart" xmlns="http://www.w3.org/2000/svg" width="15"
+								height="15" fill="currentColor" class="bi bi-heart-fill"
+								viewBox="0 0 16 16">
                                             <path fill-rule="evenodd"
-                                                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z">
+									d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z">
                                             </path>
                                         </svg>
-                                        <span class="likeCount">${likeCount}</span>
-                                    </div>
-                                    <div class="starCzone">
-                                        <svg class="starC" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+							<span class="likeCount">${likeCount}</span>
+						</div>
+						<div class="starCzone">
+							<svg class="starC" xmlns="http://www.w3.org/2000/svg" width="16"
+								height="16" fill="currentColor" class="bi bi-star-fill"
+								viewBox="0 0 16 16">
                                             <path
-                                                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+									d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                         </svg>
-                                        </svg>
-                                        <span class="starCount">
-                                            <fmt:formatNumber type="number" pattern="0.00" value="${starAvg}" />
-                                        </span>
-                                    </div>
-                                </div>
-                                <div align="right" style=" width: 50%; float: left;">
-                                    <c:if test="${camp.registAvi == 'Y'}">
-                                        <a href="/camp/campSiteDetail.kh?contentId=${camp.contentId}"
-                                            class="btn btn-outline-success">예약하러가기</a>
-                                    </c:if>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                        <div class="info_detail">
-                            <h4>기본정보</h4>
-                            <table>
-                                <tr>
-                                    <td class="infoTitle">캠핑형태</td>
-                                    <td>${camp.induty}</td>
-                                </tr>
-                                <tr>
-                                    <td class="infoTitle">환경</td>
-                                    <td>${camp.lctCl}</td>
-                                </tr>
-                                <tr>
-                                    <td class="infoTitle">대표번호</td>
-                                    <td>${camp.tel}</td>
-                                </tr>
-                                <tr>
-                                    <td class="infoTitle">주소</td>
-                                    <td>${camp.addr1}</td>
-                                </tr>
-                            </table>
-                            <hr>
-                            <h4>캠핑장 소개</h4>
-                            <div class="intro">
-                                <p style="color: #767676;">${camp.intro}</p>
-                            </div>
-                            <hr>
-                        </div>
-                        <div class="blog_area row">
-                            <h4>블로그 후기</h4>
-                        </div>
-                        <div class="moreBlog" onclick="blogMore()">
-                            더보기
-                        </div>
-                        <hr>
-                        <div class="map_area">
-                            <h4>캠핑장 위치</h4>
-                            <div class='text-right tt' stlyle='padding-bottom: 0.75rem;'><small class='text-muted'>주소 :
-                                    ${camp.addr1}</small></div>
-                            <div id="map" style="width:100%;height:400px;"></div>
-                            <hr>
-                        </div>
-                        <div class="post-slider">
-                            <h4 class="sider-title">함께 갈만한 가까운 캠핑장</h4>
-                            <div class="post-wrapper">
-                            </div>
-                        </div>
-                        <hr>
-                        <div style="display: flex; margin-bottom: 5px;">
-                            <h4 style="margin-top: 5px; margin-bottom: 0px;">리뷰등록</h4>
-                            <span class="starCzone" style="border: 0; "><svg class="starC" style="margin-left: 0px;"
-                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-star-fill" viewBox="0 0 16 16">
+							</svg>
+							<span class="starCount"> <fmt:formatNumber type="number"
+									pattern="0.00" value="${starAvg}" />
+							</span>
+						</div>
+					</div>
+					<div align="right" style="width: 50%; float: left;">
+						<c:if test="${camp.registAvi == 'Y'}">
+							<a href="/camp/campSiteDetail.kh?contentId=${camp.contentId}"
+								class="btn btn-outline-success">예약하러가기</a>
+						</c:if>
+					</div>
+				</div>
+				<hr>
+			</div>
+			<div class="info_detail">
+				<h4>기본정보</h4>
+				<table>
+					<tr>
+						<td class="infoTitle">캠핑형태</td>
+						<td>${camp.induty}</td>
+					</tr>
+					<tr>
+						<td class="infoTitle">환경</td>
+						<td>${camp.lctCl}</td>
+					</tr>
+					<tr>
+						<td class="infoTitle">대표번호</td>
+						<td>${camp.tel}</td>
+					</tr>
+					<tr>
+						<td class="infoTitle">주소</td>
+						<td>${camp.addr1}</td>
+					</tr>
+				</table>
+				<hr>
+				<h4>캠핑장 소개</h4>
+				<div class="intro">
+					<p style="color: #767676;">${camp.intro}</p>
+				</div>
+				<hr>
+			</div>
+			<div class="blog_area row">
+				<h4>블로그 후기</h4>
+			</div>
+			<div class="moreBlog" onclick="blogMore()">더보기</div>
+			<hr>
+			<div class="map_area">
+				<h4>캠핑장 위치</h4>
+				<div class='text-right tt' stlyle='padding-bottom: 0.75rem;'>
+					<small class='text-muted'>주소 : ${camp.addr1}</small>
+				</div>
+				<div id="map" style="width: 100%; height: 400px;"></div>
+				<hr>
+			</div>
+			<div class="post-slider">
+				<h4 class="sider-title">함께 갈만한 가까운 캠핑장</h4>
+				<div class="post-wrapper"></div>
+			</div>
+			<hr>
+			<div style="display: flex; margin-bottom: 5px;">
+				<h4 style="margin-top: 5px; margin-bottom: 0px;">리뷰등록</h4>
+				<span class="starCzone" style="border: 0;"><svg class="starC"
+						style="margin-left: 0px;" xmlns="http://www.w3.org/2000/svg"
+						width="16" height="16" fill="currentColor" class="bi bi-star-fill"
+						viewBox="0 0 16 16">
                                     <path
-                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                </svg>
-                                </svg>
-                                <span class="starCount">
-                                    <fmt:formatNumber type="number" pattern="0.00" value="${starAvg}" />
-                                </span></span>
-                        </div>
-                        <div class="reviewWrite_area">
-                            <div id="input">
-                                <span class="star">
-                                    ★★★★★
-                                    <span id="checkstar">★★★★★</span>
-                                    <input type="range" id="starCount" oninput="drawStar(this)" value="10" step="1"
-                                        min="1" max="10">
-                                </span>
-                                <textarea style="border-radius: 5px;width: 95%;" name="reviewWrite" id="reviewWrite"
-                                    rows="3" placeholder=" 리뷰를 남겨주세요."></textarea>
-                            </div>
-                            <div class="btn btn-secondary btn-block text-light button" onclick="insertReview()">
-                                <div>등록</div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="review_area">
+							d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                </svg> </svg> <span class="starCount"> <fmt:formatNumber
+							type="number" pattern="0.00" value="${starAvg}" />
+				</span></span>
+			</div>
+			<div class="reviewWrite_area">
+				<div id="input">
+					<span class="star"> ★★★★★ <span id="checkstar">★★★★★</span>
+						<input type="range" id="starCount" oninput="drawStar(this)"
+						value="10" step="1" min="1" max="10">
+					</span>
+					<textarea style="border-radius: 5px; width: 95%;"
+						name="reviewWrite" id="reviewWrite" rows="3"
+						placeholder=" 리뷰를 남겨주세요."></textarea>
+				</div>
+				<div class="btn btn-secondary btn-block text-light button"
+					onclick="insertReview()">
+					<div>등록</div>
+				</div>
+			</div>
+			<hr>
+			<div class="review_area"></div>
+		</div>
+	</div>
+	</div>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
-                        </div>
-                    </div>
-                </div>
+	<!-- 지도api -->
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script type="text/javascript"
+		src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=2i99b6lxe8&submodules=geocoder"></script>
+	<!-- ✅ load jQuery ✅ -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+		crossorigin="anonymous"></script>
 
-                <!-- 지도api -->
-                <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-                <script type="text/javascript"
-                    src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=2i99b6lxe8&submodules=geocoder"></script>
-                <!-- ✅ load jQuery ✅ -->
-                <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-                    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-                <!-- ✅ load Slick ✅ -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
-                    integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
-                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                <script>
+	<!-- ✅ load Slick ✅ -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+		integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script>
 
                     var page = 1;
                     var memberId = "${sessionScope.loginUser.memberId}";
@@ -1024,6 +1039,6 @@
                 </script>
 
 
-            </body>
+</body>
 
-            </html>
+</html>

@@ -382,7 +382,7 @@
                     float: left;
                     bottom: 0;
                     left: 50%;
-                    z-index: 11;
+                    z-index: 200;
                     background: #fff;
                     height: 53px;
                     width: 100%;
@@ -477,7 +477,7 @@
                                     <hr>
                                 </div>
                             </div>
-
+                            <br><br><br>
 
 
                         </div>
