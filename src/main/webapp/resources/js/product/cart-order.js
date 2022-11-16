@@ -1,7 +1,12 @@
 
 function product_cart(pNo){
 var cartCount=Number($('.inp').val());
-console.log(cartCount);
+if(cartCount == 0){
+
+alert("1개 이상 선택해주세요");
+
+return false;
+}else{
 
 $.ajax({
 	url:"/product/cart",
@@ -20,12 +25,18 @@ $.ajax({
 	
 	}
 });
+}
 
 }
 
 function product_buy(pNo){
 var orderCount=Number($('.inp').val());
-console.log(orderCount);
+if(orderCount == 0){
+
+alert("1개 이상 선택해주세요");
+
+return false;
+}else{
 	
 $.ajax({
 	url:"/product/order",
@@ -45,5 +56,5 @@ $.ajax({
 	}
 	
 	});
-
+}
 }

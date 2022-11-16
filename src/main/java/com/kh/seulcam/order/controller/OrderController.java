@@ -37,7 +37,7 @@ public class OrderController {
 
 
 	/**
-	 *주문
+	 *주문화면
 	 * 
 	 * @param mv
 	 * @param session
@@ -48,8 +48,9 @@ public class OrderController {
 		Member memberId = (Member) session.getAttribute("loginUser");
 		Member member = oService.printMemberInfo(memberId);
 		List<OrderProduct> oList = oService.printProductInfo(memberId);
-
+		int pCount=0;
 		if (!oList.isEmpty()) {
+			pCount=oList.size();
 			List<Product> pList = new ArrayList();
 			for (int i = 0; i < oList.size(); i++) {
 				int productNo = oList.get(i).getProductNo();
@@ -65,6 +66,7 @@ public class OrderController {
 			}
 			mv.addObject("totalPrice", totalPrice);
 			mv.addObject("pList", pList);
+			mv.addObject("pCount",pCount);
 		}
 		mv.addObject("oList", oList);
 		mv.addObject("member", member);
@@ -133,6 +135,7 @@ public class OrderController {
 		// 결제테이블에 정보 넣기
 		orderPay.setOrderNo(orderNo);
 		orderPay.setPayType("P");
+		System.out.println(orderPay);
 		int result2 = oService.registOrderPrice(orderPay);
 		// 포인트테이블에 정보 넣기
 		if(point.getPoint() != "") {

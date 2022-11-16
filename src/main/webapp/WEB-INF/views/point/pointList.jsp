@@ -114,6 +114,9 @@ header {
 .pagination{
         justify-content: center;
     }
+.table{
+	text-align:center;
+}
 </style>
 <body>
 
