@@ -84,6 +84,12 @@ body > nav, body > section, body > footer {
     width: 100%;
     position: relative;
 }
+footer{
+	position: relative !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .list ul {
     display: table;
     width: 100%;

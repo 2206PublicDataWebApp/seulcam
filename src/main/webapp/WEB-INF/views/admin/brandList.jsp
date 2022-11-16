@@ -271,7 +271,7 @@
 				success:function(data){
 					if(data=="success"){
 						alert("브랜드 스토어를 삭제했습니다.");
-						location.replace("/admin/brand/ListView");
+						location.replace("/admin/product/BrandListView");
 					}else{
 						alert("브랜드 스토어를 삭제 실패");
 					}

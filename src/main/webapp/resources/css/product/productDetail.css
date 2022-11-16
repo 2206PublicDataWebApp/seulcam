@@ -18,19 +18,23 @@ h1, h2, h3, h4, h5, span, small {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
+
 p{
 	font-size:14px;
 	margin-top: 3px;
+}
+#info-table{
+	font-size:14px;
+	display:inline;
+}
+#info-table>tbody>tr>td{
+	width:80px;
 }
 body > header, body > nav, body > section{
     width: 100%;
     position: relative;
 }
-body > footer{
-	width:768px;
-	margin:auto;
-	position: relative;
-}
+
 .detail_menu, .shop.detail{
 	max-width:768px;
     margin: 0 auto;
@@ -46,6 +50,10 @@ body > footer{
     section.shop.detail > article.gallery img {
     width: 100%;
     height: auto;
+}
+#product-image{
+	width:90%;
+	margin:auto;
 }
 section.shop.detail > article.order {
     width: 100%;
@@ -219,6 +227,8 @@ body > section.detail_menu label.ac-label{
 }
 label#reviewTitle{
     padding-left: 30px;
+    	border-top:1px solid #ced4da;
+	
 }
 body > section.detail_menu > div> article > div > a{
 	float:right;
@@ -284,12 +294,13 @@ img{
 	margin-left:20px;
 }
 #reviewTitle{
-	height:70px;
+	height:80px;
 }
 .review_title_text{
 	width:60%;
 	float:left;
 	margin-left:20px;
+
 }
 #soldOut{
 	margin-top:20px;
@@ -328,4 +339,37 @@ img{
     height: 40px;
     padding-bottom: 10px;
     width:90%;
+}
+#reivew_page_box{
+	
+	width:auto;
+	margin-top:30px;
+	display:flex;
+	justify-content: center;
+}
+#reivew_page{
+	background-color:transparent;
+	
+	width:25px;
+	height:30px;
+}
+#review_count{
+	text-align:right;
+	color:#0078FF;
+	height:40px;
+	padding:20px 20px 20px;
+	margin-bottom:15px;
+}
+#go-review{
+	color:#0078FF;
+	float:right;
+	cursor:pointer;
+	font-size:14px;
+	font-weight:bold;
+}
+footer{
+	    position: relative !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/resources/css/sb-admin-2.min.css">
     <link rel="stylesheet" href="/resources/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="/resources/css/product/adminReviewList.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
 	<link rel="stylesheet" href="/resources/css/memberCommon.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
@@ -209,7 +208,7 @@
                                     <tbody>
                                         <c:forEach items="${rList}" var="review" varStatus="i">
                                         <tr id="trtr">
-                                        	<td id="reivewNo">${review.reviewNo}</td>
+                                        	<td id="reviewNo">${review.reviewNo}</td>
                                         
                                         	<td>${review.productNo}</td>
                                         	<td>${review.memberId}</td>
@@ -231,7 +230,7 @@
                                         	<td style="text-align:center"><input type="checkbox" class="delCheck" name="delCheck"></td>
                                         	
                                         </tr>
-<%--                                         <tr >
+  <%--                                       <tr >
                                         	<td colspan="8" id="reviewContents" >${review.reviewContents}</td>
                                         </tr> --%>
                                         </c:forEach>
@@ -274,7 +273,7 @@
 		var checkNoArr = []; 
 		if(checked.length>0&&confirm("선택하신 리뷰를 삭제하시겠습니까?")){
 			checked.each(function(i){
-				reviewNo=checked.parent().parent().eq(i).siblings('#reviewNo').text();
+				reviewNo=checked.parent().siblings('#reviewNo').text();
 				console.log(reviewNo);
 				checkNoArr.push(reviewNo);
 				console.log(checkNoArr)
@@ -299,9 +298,9 @@
 				}); 
 		}
     }
-/*     $("#popup").click(function(){
+    $("#popup").click(function(){
     	console.log(this.parents());
-    }); */
+    });
     </script>
 </body>
 

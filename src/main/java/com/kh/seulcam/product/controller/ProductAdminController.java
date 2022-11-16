@@ -192,7 +192,7 @@ public class ProductAdminController {
 		return mv;
 
 	}
-
+	//상품정보 수정
 	@RequestMapping(value="/admin/product/Modify", method=RequestMethod.POST)
 	public ModelAndView productModify(ModelAndView mv
 			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
@@ -213,24 +213,6 @@ public class ProductAdminController {
 			befProduct.setMainFilePath(null);
 			befProduct.setMainFileRename(null);
 		}
-//		pService.removeDetail(befProduct.getProductNo());
-//		if(detail.getdList().get(0).getDetailFileName()!=null) {
-//			File delFile = new File(befDList.get(0).getDetailFileRename());
-//			delFile.delete();
-//			befDList.get(0).setDetailFileName(null);
-//			befDList.get(0).setDetailFilePath(null);
-//			befDList.get(0).setDetailFileRename(null);
-//
-//		}
-//		if(detail.getdList().get(1).getDetailFileName()!=null) {
-//			File delFile = new File(befDList.get(1).getDetailFileRename());
-//			delFile.delete();
-//			pService.removeDetail(befDList.get(0));
-//			befDList.get(1).setDetailFileName(null);
-//			befDList.get(1).setDetailFilePath(null);
-//			befDList.get(1).setDetailFileRename(null);
-//
-//		}
 		
 		//수정파일 다시 업로드
 		try {
@@ -304,15 +286,7 @@ public class ProductAdminController {
 				}
 					int result2 =pService.registerProductDetail(dt);
 				}
-				/*
-				 * else { if(!befDList.isEmpty()) { dt.setProductNo(product.getProductNo());
-				 * dt.setDetailFileName(befDList.get(i).getDetailFileName());
-				 * dt.setDetailFilePath(befDList.get(i).getDetailFilePath());
-				 * dt.setDetailFileRename(befDList.get(i).getDetailFileRename()); }
-				 * 
-				 * }
-				 */
-				
+
 			
 			} 
 			if(result >0  ) {

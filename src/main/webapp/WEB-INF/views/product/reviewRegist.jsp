@@ -31,6 +31,7 @@
  <form action="/product/reviewRegister" enctype="multipart/form-data" method="post"> 
 
  <input type="hidden" value=10 name="reviewGrade" id="reviewGrade">  
+ <input type="hidden" value='${memberId }' name="memberId">  
 	 	<div class="range">
 	        <span class="number" id="gradeNumber">0</span>
 	        <input type="radio" name="range" id="range10" value=10 />
@@ -97,6 +98,7 @@
 	             <input type="file" name="myFile" class="drop-zone__input">
 			</div>
         </div>
+        <br>
         <p class="guide" >
 			
 			<input type="button" class="img-delete-bt" value="삭제">

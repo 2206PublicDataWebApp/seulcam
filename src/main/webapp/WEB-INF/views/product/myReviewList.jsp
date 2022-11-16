@@ -20,7 +20,7 @@
 	<div id="header-block">
           <div class="header-wrapper">
               <div class="back-layout">
-                  <button class="go-back" onclick="history.back()">
+                  <button class="go-back" onclick="myHome()">
                       <img src="/resources/images/back_arrow.png">
                   </button>
               </div>
@@ -28,6 +28,7 @@
                   후기내역
               </h2>
           </div>
+		<div class="cm-line"></div>
      </div>
 </header>
     <div class="body-wrapper">
@@ -78,8 +79,9 @@
 							</div>
 							<br>
 							<div class="button">
-								<button type="button" id="review_del" onclick="review_del(${review.reviewNo})">삭제</button>
 								<button type="button" id="review_modi" onclick="review_modi(${review.reviewNo})">수정</button>
+								<br><br>
+								<button type="button" id="review_del" onclick="review_del(${review.reviewNo})">삭제</button>
 							</div>
 				       </div>
 				       <div class="cm-line"></div>
@@ -115,7 +117,9 @@ function review_del(reviewNo){
 function review_modi(reviewNo){
 	location.href="/product/reviewModify?reviewNo="+reviewNo;
 }
-
+function myHome(){
+	location.href="/member/myPageView";
+}
 </script>
 </body>
 </html>

@@ -71,5 +71,5 @@ public interface ProductService {
 
 	public int discountProduct(Product product);
 
-	public int getTotalCount(Integer productNo);
+	public int getReviewTotalCount(Integer productNo);
 }
