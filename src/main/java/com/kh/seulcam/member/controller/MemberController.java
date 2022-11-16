@@ -123,10 +123,10 @@ public class MemberController {
 			
 			//주문내역 갯수 구하기
 			List<Order> oList = oService.printCompleteList(memberId);
+			int count1=0; 
+			int count2=0;
+			int count3=0; 
 			if(!oList.isEmpty()) {
-				int count1=0; 
-				int count2=0;
-				int count3=0; 
 				
 				for (int i = 0; i < oList.size(); i++) { 
 					String dStatus =oList.get(i).getDirivaryStatus(); 
@@ -141,10 +141,10 @@ public class MemberController {
 					}
 				}
 				}
+			}
 				mv.addObject("count1",count1);
 				mv.addObject("count2",count2);
 				mv.addObject("count3",count3);
-			}
 			
 		} catch (Exception e) {
 			response.setContentType("text/html; charset=UTF-8");

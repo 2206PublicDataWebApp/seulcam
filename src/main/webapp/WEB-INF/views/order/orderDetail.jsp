@@ -438,8 +438,6 @@ footer {
 			<div>
 			<input type="hidden" id="memberId" value="${member.memberId }"/>
 				<span id="memberName">${member.memberName }</span>
-			<%-- 	<jsp:include page="/WEB-INF/views/order/addressPopup.jsp"></jsp:include> --%>
-				<!-- <button class="info-button"  id="postcodify_search_button ">배송지 변경</button> -->
 				<button class="info-button btn-blue"  id="btn" onclick="addressChange(this)">배송지 변경</button>
 			</div>
 			<div><span id="memberPhone" class="phone-num">${member.memberPhone }</span></div>
@@ -458,14 +456,11 @@ footer {
 			</div>
 		</div>
 		<hr>
-	<!-- 	<div class="product line">
-		<div class="info"> -->
 		
 		<c:forEach items="${oList}" var="order" varStatus="i">
 		<c:forEach items="${pList}" var="product" varStatus="p">
 		<c:if test="${order.productNo eq product.productNo }">
                                <div class="product-box" >
-                     
                  
                     <div class="order-thumbnail">
                         <div class="thumbnail-box">
@@ -501,36 +496,10 @@ footer {
                     </div>
                 </div>
 		
-		
-			<%-- <table class="list_table">
-				<tr>
-					<td rowspan="4">
-					<img class="p-img" id="img${i.count }" alt="상품이미지" src="/resources/puploadFiles/${product.mainFileRename}" ></td>
-					<td id="order_product${i.count }"style="font-weight:bold">${product.productName }</td>
-					<td align="right">
-						
-					</td>
-				</tr>
-
-				<tr>
-					<td>수량</td>
-					<td>
-						<span id="order_count${i.count }" class="order_count">${order.orderCount}</span>개
-					</td>
-				</tr>
-				<tr>
-					<td>가격</td>
-					<td><span id="order_price${i.count }" class="order_price" >${product.productPrice}</span>원</td>
-				</tr>
-				
-			</table> --%>
 				<input type="hidden" id="p-count"value="${!index.last }"/>
 						</c:if>
 						</c:forEach>
 						</c:forEach>
-			
-		<!-- </div>
-		</div> -->
 		<hr>
 		<div class="point">
 		<div class="info-point">
@@ -548,16 +517,6 @@ footer {
 		
 		</div>
 		<hr>
-		<%-- <div>
-		포인트
-		<span class="point-right">
-		<input id="point" type="text"/>
-		<button class="info-button" onclick="pointCancle()">사용취소</button>
-		</span>
-		</div>
-		<div class="pointinfo">사용가능 포인트 <span id="available-point">${member.totalPoint}</span>원</div>
-		</div>
-		</div> --%>
 
 		<div class="info">
 		<div class="small-title">결제 상세</div><br>
@@ -575,6 +534,7 @@ footer {
 		</div>
 		
 
+	</div>
 	</div>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -715,14 +675,15 @@ footer {
 	//alert($("#total-price").text())
 	
 	function orderPay(){
+		checkUnload = false;
 		const data={
 			Num:createOrderNum(),
 			memberId:$("#memberId").val(),
 			memberName:$("#memberName").text(),
-			name : $("#order_product1").text(),
+			name : $("#order_product1").text()+" 외"+${pCount}+"개",
 			amount : stringNumberToInt($("#total-price").text()),
 			memberPhone : $("#memberPhone").text(),
-			usePoint : stringNumberToInt($("#point").val()),
+			usePoint : $("#point").val(),
 			getPoint : Math.ceil(stringNumberToInt($("#total-price").text())/100*3),
 			orderAddressPost : $("#post").text(),
 			orderAddress1 : $("#address1").text(),
@@ -800,6 +761,7 @@ function paymentCard(data) {
 	
 	
 function paymentComplete(data){
+	console.log(data);
 	$.ajax({
 		url:"/order/payment/complete",
 		method:"POST",

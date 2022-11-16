@@ -201,7 +201,7 @@
   
   <insert id="insertPay">
   INSERT INTO PAY_TBL
-  VALUES(SEQ_PAYNO.NEXTVAL, #{orderNo},#{memberId},#{imp_uid},#{merchant_uid},DEFAULT,#{payPrice},#{productPrice},#{usePoint},#{getPoint},DEFAULT,#{payType})
+  VALUES(SEQ_PAYNO.NEXTVAL,#{orderNo},#{memberId},#{imp_uid},#{merchant_uid},DEFAULT,#{payPrice},#{productPrice},#{usePoint},#{getPoint},DEFAULT,#{payType})
   </insert>
   
   <select id="selectPrintPay" resultMap="orderPayResultMap">
