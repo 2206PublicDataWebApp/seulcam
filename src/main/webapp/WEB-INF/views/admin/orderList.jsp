@@ -273,7 +273,7 @@
 		success:function(data){
 			if(data=="success"){
 				alert("변경 완료되었습니다.");
-				window.location.replace("/orderAdmin/list.kh");
+				window.location.replace("/admin/order/ListView");
 			}else{
 				alert("변경 실패");
 			}

@@ -310,7 +310,7 @@
     		success:function(message){
     			if(message="success"){
     				alert("환불 완료");
-    				location.replace("/orderAdmin/cancle/list.kh");
+    				location.replace("/admin/order/CancleListView");
     			}else{
     				alert("환불 안됨");
     			}

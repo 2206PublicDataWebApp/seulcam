@@ -238,7 +238,6 @@ public class OrderController {
 	int count2=0;
 	int count3=0; 
 	int count4=0; 
-	int count5=0;
 	
 	
 	for (int i = 0; i < oList.size(); i++) { 
@@ -253,18 +252,15 @@ public class OrderController {
 			count3++; 
 			}else if(dStatus.equals("구매확정")) {
 				count4++; 
-				}else if(dStatus.equals("구매취소")) {
-					count5++; 
-					}
+				}
 	}
 	}
-	int count6=count1+count2+count3+count4+count5;
+	int count6=count1+count2+count3+count4;
 	
 	mv.addObject("count1",count1);
 	mv.addObject("count2",count2);
 	mv.addObject("count3",count3);
 	mv.addObject("count4",count4);
-	mv.addObject("count5",count5);
 	mv.addObject("count6",count6);
 	mv.addObject("dirivaryStatus","전체");
 	
