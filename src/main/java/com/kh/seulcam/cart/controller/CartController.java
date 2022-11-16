@@ -161,6 +161,17 @@ public class CartController {
 		String memberId=member.getMemberId();
 		cart.setProductNo(Integer.parseInt(productNo));
 		if(memberId!=null) {
+		List<Cart> cList = cService.printCart(memberId);
+		if(cList != null) {
+			for(int i=0;i<cList.size();i++) { 
+				 int pNo=cList.get(i).getProductNo();
+				 System.out.println(cList);
+				 if(pNo == (Integer.parseInt(productNo))) {
+					 System.out.println(pNo);
+					 return "sameProduct";
+				 }
+		}
+		}
 			cart.setMemberId(memberId);
 		//장바구니 등록
 		int result=cService.registCart(cart);

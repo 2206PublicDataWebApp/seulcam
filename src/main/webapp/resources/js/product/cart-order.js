@@ -16,10 +16,13 @@ $.ajax({
 	if(message=="success"){
 		alert("장바구니에 담겼습니다.");
 		}
-	if(message=="noLogin"){
+	else if(message=="noLogin"){
 		alert("로그인하세요");
 		location.replace("/member/loginView");
 		}
+	else if(message="sameProduct"){
+		alert("이미 담겨진 물건입니다.");
+	}
 	},error:function(){
 	 alert("ajax 통신 오류! 관리자에게 문의해 주세요!");
 	
