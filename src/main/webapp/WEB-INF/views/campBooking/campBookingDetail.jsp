@@ -363,7 +363,8 @@
 								<tr>
 									<td class="infoTitle">숙박기간</td>
 									<td>${campBooking.firstDay} ~ ${campBooking.lastDay}
-										<b>(${campBooking.totalDay}박)</b></td>
+										<b>(${campBooking.totalDay}박)</b>
+									</td>
 								</tr>
 								<tr>
 									<td class="infoTitle">기준인원</td>
@@ -444,14 +445,15 @@
 								</div>
 							</div>
 						</div>
+						
 
 					</div>
-					<br><br>
+					<br><br><br>
 
 
 					<div class="btn_foot">
 						<c:choose>
-							<c:when test="${today >= firstDay || empty pay || campBooking.bookCancleStatus == 'Y'}">
+							<c:when test="${today > firstDay || empty pay || campBooking.bookCancleStatus == 'Y'}">
 
 								<a href="/camp/campList.kh" style="width: 100%;" class="bookBtn">캠핑장 구경하러 가기</a>
 							</c:when>

@@ -557,7 +557,7 @@
                                                     <p class="brand-name">예약번호 : No.${campBookingList.bookingNo } <span
                                                             class="com">취소완료</span></p>
                                                 </c:when>
-                                                <c:when test="${today > lastDay}">
+                                                <c:when test="${today >= lastDay}">
                                                     <p class="brand-name">예약번호 : No.${campBookingList.bookingNo } <span
                                                             class="com">이용완료</span></p>
                                                 </c:when>

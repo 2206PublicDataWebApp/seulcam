@@ -338,7 +338,7 @@
                                     success: function (message) {
                                         if (message = "success") {
                                             alert("환불 완료");
-                                            location.replace("/campAdmin/campBookingList.kh");
+                                            location.replace("/admin/camp/bookingList");
                                         } else {
                                             alert("환불 안됨");
                                         }

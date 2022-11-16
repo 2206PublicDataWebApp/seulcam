@@ -621,7 +621,7 @@ footer {
                         var queryParams = '?' + encodeURIComponent('sort') + '=' + encodeURIComponent('accuracy'); /**/
                         queryParams += '&' + encodeURIComponent('page') + '=' + encodeURIComponent(page);
                         queryParams += '&' + encodeURIComponent('size') + '=' + encodeURIComponent('5');
-                        queryParams += '&' + encodeURIComponent('query') + '=' + encodeURIComponent('${camp.facltNm} 캠핑장'); /**/
+                        queryParams += '&' + encodeURIComponent('query') + '=' + encodeURIComponent('${camp.sigunguNm} ${camp.facltNm} 캠핑장'); /**/
                         queryParams += '&' + encodeURIComponent('serviceKey') + '=' + 'qbHoplMaKq5PUqUFEhfVjBpLiBxBcVPOw%2Fio3GvQ91q8xQjh%2BLZMz4caQ5Nqyt%2BU%2BeCGuAPRaJHRIhTzUqKmHw%3D%3D'; /*Service Key*/
                         var urlBlog = url + queryParams;
                         $.ajax({
