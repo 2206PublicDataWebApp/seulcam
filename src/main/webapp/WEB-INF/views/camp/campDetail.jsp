@@ -297,6 +297,13 @@ footer {
 	flex-direction: column;
 	align-items: center;
 }
+.thumbImgArea{
+
+
+}
+.thumbImg{
+    
+}
 </style>
 
 <body>
@@ -314,9 +321,10 @@ footer {
 				<div class="info_img">
 					<div class="img-slick">
 						<div class="img-wrapper">
-							<div
+                            <div class='thumbImgArea'  style='height: 450px;'><img class='thumbImg' src='${camp.firstImageUrl}' alt=''></div>
+							<!-- <div
 								style='height: 450px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'>
-							</div>
+							</div> -->
 						</div>
 
 					</div>
@@ -400,7 +408,14 @@ footer {
 				<hr>
 				<h4>캠핑장 소개</h4>
 				<div class="intro">
-					<p style="color: #767676;">${camp.intro}</p>
+                    <c:if test='${camp.intro == null}'>
+                        <p style="color: #767676;"> 캠핑장은 굽이치는 홍천강 물줄기를 마주하고 드높은 팔봉산 자락에 위치하여 청정 자연도시 홍천에서 휴식과 여유를 찾는 건강한 가족문화를 위해 조성되었습니다.
+                            드넓은 사이트와 레포츠파크 등 다양한 편의시설을 갖추고 있습니다.
+                            이곳에서 캠핑의 재미와 낭만을 즐기시고, 가족과 즐거운 추억도 만드세요!</p>
+                               
+                    </c:if>
+                    <c:if test='${camp.intro != ""}'><p style="color: #767676;">${camp.intro}</p></c:if>
+					
 				</div>
 				<hr>
 			</div>
@@ -671,7 +686,7 @@ footer {
                                 var str = "";
                                 for (var i = 1; i < data.response.body.items.item.length; i++) {
                                     var campItem = data.response.body.items.item;
-                                    str += "<div  style='height: 450px; background: url(" + campItem[i].imageUrl + ") no-repeat center center #343a40; background-size: 100%;'></div>"
+                                    str += "<div class='thumbImgArea'  style='height: 450px;'><img class='thumbImg' src='" + campItem[i].imageUrl + "' alt=''></div>"
                                 }
                                 $(".img-wrapper").append(str);
                                 $('.img-wrapper').slick({

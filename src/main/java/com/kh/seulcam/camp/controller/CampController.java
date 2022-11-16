@@ -180,10 +180,15 @@ public class CampController {
                     campLike.setMemberId(memberId);
                     likeCheck = cService.campLikeCount(campLike);
                 }
+                Integer minPrice = cService.campMinPrice(cList.get(i).getContentId());
+                if (minPrice == null) {
+                    minPrice = 0;
+                }
                 String starAvg = cService.printStarAvg(cList.get(i).getContentId());
                 if (starAvg == null) {
                     starAvg = "0";
                 }
+                cList.get(i).setMinPrice(minPrice);
                 cList.get(i).setStarAvg(starAvg);
                 cList.get(i).setLikeCheck(likeCheck);
                 cList.get(i).setLikeCount(likeCount);
