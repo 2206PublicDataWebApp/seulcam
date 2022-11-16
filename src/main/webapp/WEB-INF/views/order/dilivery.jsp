@@ -15,22 +15,27 @@
 		type="image/x-icon">
 		<script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
         font-size: 14px;
       	color: #000;
 		background-color: #f1f1f1;
     }
-    header {
-        position: fixed;
-        left: 0px;
-        right: 0px;
-        top: 0px;
-        height: 50px;
-        background-color: rgb(255, 255, 255);
-        z-index: 200;
-        max-width: 768px;
-        margin: 0 auto; 
-    }
+header {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    z-index: 200;
+    max-width: 768px;
+    margin: 0 auto;
+}
 
 .wrap{
  		max-width: 768px;
@@ -101,7 +106,29 @@ h2 {
     width: 25px;
     height: 25px;
 }
-
+.home-layout {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 8px;
+    right: 5px;
+}
+button {
+    border: 0;
+    background: 0 0;
+    cursor: pointer;
+}
+.go-home {
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+.go-home img {
+    width: 25px;
+    height: 25px;
+}
 /* Section */
 .cm-line {
     height: 8px;
@@ -126,7 +153,7 @@ h2 {
     position: absolute; 
     background-color: #e2e5e8;
     height: 1px;
-    top: 25px;
+    top: 40px;
     right: 8%;
     left: 13%;
 }
@@ -134,11 +161,11 @@ h2 {
     position: relative;
     
     display: inline-block;
-    margin-left: 30px;
+    margin: 5px;
 } 
 .tracking-status-item-list{
-	padding-left: 50px;
-	margin-top:20px;
+	padding-left: 40px;
+	margin-top:40px;
 }
 .vertical-line {
     position: absolute;
@@ -177,26 +204,30 @@ color:#03a9f4;
 <body>
 <body>
 	<div class="wrap">
-		<div class="head">
-			<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-		</div>
-		<div class="contents">
+		
 		 <div id="header-block">
 		<header>
 		<div class="header-wrapper">
-		
                     <div class="back-layout">
                         <button class="go-back" onclick="history.back()">
-                            <img src="../../../resources/images/back_arrow.png">
+                            <img src="/resources/images/back_arrow.png"> 
                         </button>
                     </div>
-                    <h2>배송조회</h2>
+                    <h2>
+                        배송조회
+                    </h2>
+
+                    <div class="home-layout">
+                        <button class="go-home" onclick="location.href='/';">
+                            <img src="/resources/images/home.png">
+                        </button>
+                    </div>
                 </div>
-		<div class="cm-line"></div>
                </header> 
 		</div>
+		<div class="cm-line"></div>
 		
-		
+		<div class="contents">
 		<div class="delivary-img">
     	<div class="info-back-line">
         <div class="text-center">

@@ -34,7 +34,12 @@ public class OrderAdminController {
 		private PaymentService paymentService;
 		
 		
-	//주문 보여주기
+	/**
+	 * 주문 보여주기
+	 * 
+	 * @param mv
+	 * @return
+	 */
 		@RequestMapping(value="/admin/order/ListView",method=RequestMethod.GET)
 		public ModelAndView printOrderList(
 				ModelAndView mv
@@ -49,7 +54,12 @@ public class OrderAdminController {
 		}
 		
 		
-	//취소주문 보여주기(환불 여부도 반영)
+	/**
+	 * 취소주문 보여주기(환불 여부도 반영)
+	 * 
+	 * @param mv
+	 * @return
+	 */
 		@RequestMapping(value="/admin/order/CancleListView",method=RequestMethod.GET)
 		public ModelAndView printCancleList(
 				ModelAndView mv
@@ -73,7 +83,12 @@ public class OrderAdminController {
 		}
 		
 		
-	//주문상태 바꿔주기
+	/**
+	 * 주문상태 바꿔주기
+	 * 
+	 * @param order
+	 * @return
+	 */
 		@ResponseBody
 		@RequestMapping(value="/order/admin/cngDilivary",method=RequestMethod.POST)
 	
@@ -89,7 +104,14 @@ public class OrderAdminController {
 			}
 		}
 		
-		//환불
+		/**
+		 * 환불
+		 * 
+		 * @param session
+		 * @param orderPay
+		 * @return
+		 * @throws IOException
+		 */
 		@RequestMapping(value="/payments/cancel",method=RequestMethod.POST)
 		public ResponseEntity<String> paymentComplete(
 				HttpSession session,
@@ -113,9 +135,14 @@ public class OrderAdminController {
 
 		}
 		
-		//환불정보 저장하기//주문 테이블 환불 Y로 환불완료
-		//결제정보 가져오기 use포인트 뽑아서 넣고 
-		//포인트 다시 반납
+	/**
+	 * 	//환불정보 저장하기//주문 테이블 환불 Y로 환불완료
+	 *	//결제정보 가져오기 use포인트 뽑아서 넣고 
+	 *	//포인트 다시 반납
+	 *
+	 * @param orderCancle
+	 * @return
+	 */
 		@ResponseBody
 		@RequestMapping(value="/order/refund/complete",method=RequestMethod.POST)
 		public String registRefund(

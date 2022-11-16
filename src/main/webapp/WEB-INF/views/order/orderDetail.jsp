@@ -58,6 +58,7 @@ header {
     margin: 0 auto; 
 }
 h2 {
+	margin:0;
     font-size: 16px;
 }
 
@@ -167,6 +168,7 @@ width:100%
 }
 .post{
 width:100%;
+margin-top: 6px;
 }
 #addressChangeForm{
 	width:100%;

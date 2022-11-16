@@ -34,24 +34,6 @@ public class PaymentServiceImp implements PaymentService {
 	    private RestTemplate restTemplate=new RestTemplate();
 	    private HttpHeaders headers=new HttpHeaders();
 	    private JSONObject body=new JSONObject();
-		/*
-		 * @Override public String getToken() throws IOException {
-		 * 
-		 * headers.setContentType(MediaType.APPLICATION_JSON); body.put("imp_key",
-		 * imp_key); body.put("imp_secret", imp_secret); try {
-		 * HttpEntity<JSONObject>entity=new HttpEntity<>(body,headers);
-		 * 
-		 * token=restTemplate.postForObject("https://api.iamport.kr/users/getToken",
-		 * entity,IamprotDto.class); System.out.println(token+" FULLtoken");
-		 * 
-		 * return token; }
-		 */
-
-	
-	 // @Value("${imp_key}") private String impKey;
-	  
-	  //@Value("${imp_secret}") private String impSecret;
-	  
 		
 		  @Data
 		  private class Response{
@@ -103,41 +85,9 @@ public class PaymentServiceImp implements PaymentService {
 	  return token; 
 	  }
 	  
-		/*
-		 * public int paymentInfo(String imp_uid, String access_token) throws
-		 * IOException {
-		 * 
-		 * HttpsURLConnection conn = null;
-		 * 
-		 * URL url = new URL("https://api.iamport.kr/payments/" + imp_uid);
-		 * 
-		 * conn = (HttpsURLConnection) url.openConnection();
-		 * 
-		 * conn.setRequestMethod("GET"); conn.setRequestProperty("Authorization",
-		 * access_token); conn.setDoOutput(true);
-		 * 
-		 * BufferedReader br = new BufferedReader(new
-		 * InputStreamReader(conn.getInputStream(), "utf-8"));
-		 * 
-		 * Gson gson = new Gson();
-		 * 
-		 * Response response = gson.fromJson(br.readLine(), Response.class);
-		 * 
-		 * br.close(); conn.disconnect();
-		 * 
-		 * // return response.getClass().get; return response.getResponse().getAmount();
-		 * }
-		 */
-	  
 	  
 	  public void payMentCancle(String access_token, String imp_uid, int amount, String reason) throws IOException  {
 			System.out.println("결제 취소");
-			
-			System.out.println(access_token);
-			
-			System.out.println(imp_uid);
-			System.out.println(amount);
-			
 			
 			HttpsURLConnection conn = null;
 			URL url = new URL("https://api.iamport.kr/payments/cancel");

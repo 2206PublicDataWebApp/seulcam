@@ -36,13 +36,18 @@ public class OrderController {
 	private OrderService oService;
 
 
-	// 주문
+	/**
+	 *주문
+	 * 
+	 * @param mv
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/order/order.kh", method = RequestMethod.GET)
 	public ModelAndView order(ModelAndView mv, HttpSession session) {
 		Member memberId = (Member) session.getAttribute("loginUser");
 		Member member = oService.printMemberInfo(memberId);
 		List<OrderProduct> oList = oService.printProductInfo(memberId);
-		System.out.println(oList);
 
 		if (!oList.isEmpty()) {
 			List<Product> pList = new ArrayList();
@@ -67,7 +72,16 @@ public class OrderController {
 		return mv;
 	}
 
-	// 주문 완료
+	
+	/**
+	 * 
+	 * 주문 완료
+	 *
+	 * @param mv
+	 * @param orderNo
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/order/finish.kh", method = RequestMethod.GET)
 	public ModelAndView orderFinish(ModelAndView mv, @RequestParam("orderNo") Integer orderNo, HttpSession session) {
 		// Member memberId = (Member)session.getAttribute("loginUser");
@@ -80,7 +94,13 @@ public class OrderController {
 		return mv;
 	}
 
-	// 주문 주소 변경
+	
+	/**
+	 * 주문 주소 변경
+	 * 
+	 * @param member
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/order/addressChange.kh", method = RequestMethod.POST)
 	public String addressChange(@ModelAttribute Member member) {
@@ -89,7 +109,15 @@ public class OrderController {
 
 	}
 
-	// 주문성공
+	/**
+	 * 
+	 * 주문성공
+	 * 
+	 * @param order
+	 * @param orderPay
+	 * @param point
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/order/payment/complete", method = RequestMethod.POST)
 	public String orderComplete(
@@ -122,7 +150,12 @@ public class OrderController {
 
 	}
 
-	// 주문성공 배송지 변경
+	/**
+	 * 주문성공 배송지 변경
+	 * 
+	 * @param order
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/order/complete/addressChange.kh", method = RequestMethod.POST)
 	public String orderCompleteAddress(@ModelAttribute Order order) {
@@ -135,7 +168,13 @@ public class OrderController {
 		}
 	}
 
-	// 주문 상세 페이지
+	/**
+	 * 주문 상세 페이지
+	 * 
+	 * @param mv
+	 * @param orderNo
+	 * @return
+	 */
 	@RequestMapping(value = "/order/complete/datail.kh", method = RequestMethod.GET)
 	public ModelAndView printCompleteDetail(ModelAndView mv, @RequestParam("orderNo") Integer orderNo) {
 		Order order = oService.printOrderInfo(orderNo);
@@ -166,7 +205,13 @@ public class OrderController {
 		return mv;
 	}
 
-	// 주문리스트
+	/**
+	 * 주문리스트
+	 * 
+	 * @param mv
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/order/complete/list.kh", method = RequestMethod.GET)
 	public ModelAndView printCompleteList(ModelAndView mv, 
 /*			@RequestParam("memberId") String memberId*/	
@@ -218,14 +263,21 @@ public class OrderController {
 	mv.addObject("count4",count4);
 	mv.addObject("count5",count5);
 	mv.addObject("count6",count6);
-
+	mv.addObject("dirivaryStatus","전체");
+	
 		mv.addObject("oList", oList);
 		mv.setViewName("order/orderCompleteList");
 		return mv;
 
 	}
 
-	//취소주문 리스트
+	/**
+	 * 취소주문 리스트
+	 * 
+	 * @param mv
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/order/complete/Cancle/list", method = RequestMethod.GET)
 	public ModelAndView printCompleteCancleList(ModelAndView mv, 
 		HttpSession session) {
@@ -240,6 +292,7 @@ public class OrderController {
 				List<OrderPay> opList1 = oService.printOrderPay(orderNo);
 				opList.addAll(opList1);
 			}
+			
 			mv.addObject("opList", opList);
 			
 		}
@@ -265,7 +318,7 @@ public class OrderController {
 	mv.addObject("count1",count1);
 	mv.addObject("count2",count2);
 	mv.addObject("count3",count3);
-	
+	mv.addObject("dirivaryStatus","전체");
 
 		mv.addObject("oList", oList);
 		mv.setViewName("order/orderCompleteCancleList");
@@ -280,7 +333,13 @@ public class OrderController {
 	
 	
 	
-	//오더테이블 구매확정으로 바꾸고//맴버 포인트 바꾸고//포인트 적립
+	/**
+	 * //오더테이블 구매확정으로 바꾸고//맴버 포인트 바꾸고//포인트 적립
+	 * 
+	 * @param orderNo
+	 * @param session
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/order/GETPoint", method = RequestMethod.POST)
 		public String getPoint(
@@ -303,7 +362,13 @@ public class OrderController {
 		
 	}
 	
-	//구매 취소로 바꾸기
+	/**
+	 * 구매 취소로 바꾸기
+	 * 
+	 * @param orderNo
+	 * @param session
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/order/cancleOrder",method=RequestMethod.POST)
 		public String calcleOrder(
@@ -329,8 +394,13 @@ public class OrderController {
 	}
 
 	
-	//상세페이지에서 주문으로 넘겨주기
-	//주문하기로 넘겨주기
+	/**
+	 * 상세페이지에서 주문으로 넘겨주기//주문하기로 넘겨주기
+	 * 
+	 * @param orderProduct
+	 * @param session
+	 * @return
+	 */
 		@ResponseBody
 		@RequestMapping(value="/product/order",method=RequestMethod.POST)
 		public String cartOrder(
@@ -358,7 +428,14 @@ public class OrderController {
 			}
 		
 		
-		//취소 배송 상세조회 메뉴 바꾸기
+		/**
+		 * 취소 배송 상세조회 메뉴 바꾸기
+		 * 
+		 * @param mv
+		 * @param dirivaryStatus
+		 * @param session
+		 * @return
+		 */
 		@RequestMapping(value="/order/cancle/delliveryMenu",method=RequestMethod.GET)
 		public ModelAndView cancleChangeMenu(
 				ModelAndView mv,
@@ -386,7 +463,6 @@ public class OrderController {
 				
 				for (int i = 0; i < allList.size(); i++) { 
 					String dStatus =allList.get(i).getDirivaryStatus(); 
-					System.out.println(dStatus);
 					 if(dStatus!=null) {
 				 if(dStatus.equals("구매취소")) {
 								count1++; 
@@ -401,7 +477,7 @@ public class OrderController {
 				mv.addObject("count2",count2);
 				mv.addObject("count3",count3);
 				
-
+					mv.addObject("dirivaryStatus",dirivaryStatus);
 					mv.addObject("oList", oList);
 					mv.setViewName("order/orderCompleteCancleList");
 					return mv;
@@ -410,7 +486,14 @@ public class OrderController {
 		
 		
 		
-		//배송 상세조회 메뉴 바꾸기
+		/**
+		 * 배송 상세조회 메뉴 바꾸기
+		 * 
+		 * @param mv
+		 * @param dirivaryStatus
+		 * @param session
+		 * @return
+		 */
 		@RequestMapping(value="/order/delliveryMenu",method=RequestMethod.GET)
 		public ModelAndView changeMenu(
 				ModelAndView mv,
@@ -466,7 +549,7 @@ public class OrderController {
 				mv.addObject("count4",count4);
 				mv.addObject("count5",count5);
 				mv.addObject("count6",count6);
-
+				mv.addObject("dirivaryStatus",dirivaryStatus);
 				
 				mv.addObject("oList", oList);
 				mv.setViewName("order/orderCompleteList");
@@ -474,7 +557,13 @@ public class OrderController {
 		}
 		
 		
-		//배송조회 화면 보여주기
+		/**
+		 * 배송조회 화면 보여주기
+		 * 
+		 * @param orderNo
+		 * @param mv
+		 * @return
+		 */
 		@RequestMapping(value="/order/delliveryDtail",method=RequestMethod.GET)
 		public ModelAndView changeMenu(
 				@RequestParam("orderNo")int orderNo,
@@ -486,7 +575,12 @@ public class OrderController {
 		}
 		
 		
-		//주문중 페이지 벗어날시 주문상품 삭제(주문취소)
+		/**
+		 * 주문중 페이지 벗어날시 주문상품 삭제(주문취소)
+		 * 
+		 * @param memberId
+		 * @return
+		 */
 		@ResponseBody
 		@RequestMapping(value="/order/notCompleteOrder",method=RequestMethod.GET)
 		public String notCompleteOrder(

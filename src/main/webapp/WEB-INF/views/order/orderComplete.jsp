@@ -108,6 +108,7 @@ body {
 }
 .post{
 width:100%;
+margin-top: 6px;
 }
 .btn-blue{
  	background-color: #0078ff;

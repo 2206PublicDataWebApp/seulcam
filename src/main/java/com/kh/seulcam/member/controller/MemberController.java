@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.kh.seulcam.member.service.MemberService;
+import com.kh.seulcam.order.domain.Order;
+import com.kh.seulcam.order.service.OrderService;
 import com.kh.seulcam.member.domain.Member;
 
 
@@ -35,6 +37,8 @@ public class MemberController {
 	private MemberService mService;
 	@Autowired
 	private JavaMailSender mailSender;
+	@Autowired
+	private OrderService oService;
 	
 		/* 로그인 관련 */
 	// 비로그인 상태일 때 로그인 창으로 이동
@@ -116,7 +120,32 @@ public class MemberController {
 			Member mOne = mService.printOneById(memberId);
 			mv.addObject("member", mOne);
 			mv.setViewName("member/mypage");
-
+			
+			//주문내역 갯수 구하기
+			List<Order> oList = oService.printCompleteList(memberId);
+			if(!oList.isEmpty()) {
+				int count1=0; 
+				int count2=0;
+				int count3=0; 
+				
+				for (int i = 0; i < oList.size(); i++) { 
+					String dStatus =oList.get(i).getDirivaryStatus(); 
+					System.out.println(dStatus);
+				if(dStatus!=null) {
+					if(dStatus.equals("입금확인")) {
+						count1++;
+					}else if(dStatus.equals("배송중")) { 
+						count2++; 
+					}else if(dStatus.equals("배송완료")) { 
+						count3++; 
+					}
+				}
+				}
+				mv.addObject("count1",count1);
+				mv.addObject("count2",count2);
+				mv.addObject("count3",count3);
+			}
+			
 		} catch (Exception e) {
 			response.setContentType("text/html; charset=UTF-8");
 	        PrintWriter out = response.getWriter();

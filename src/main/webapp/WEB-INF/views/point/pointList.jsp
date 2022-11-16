@@ -39,6 +39,8 @@ header {
 }
 h2 {
     font-size: 16px;
+    margin:0;
+    font-weight:bold;
 }
 #header-block {
     height: 50px;
@@ -136,7 +138,7 @@ header {
 		     <span>현재 포인트</span>
 		    </div>
 		    <div class="col">
-		      <span>${totalPoint.totalPoint } 원</span>
+		      <span><fmt:formatNumber value="${totalPoint.totalPoint }" pattern="#,###,###"/> 원</span>
 		    </div>
 		  </div>
 		  </div>
@@ -158,13 +160,13 @@ header {
 		<td>${point.pointDate }</td>
 		<td>${point.pointType }</td>
 		<c:if test="${point.pointType eq '포인트 사용' }">
-		<td style='color:red;'>-${point.point }</td>
+		<td style='color:red;'>-<fmt:formatNumber value="${point.point }" pattern="#,###,###"/>원</td>
 		</c:if>
 		<c:if test="${point.pointType eq '구매확정 적립' }">
-		<td style='color:blue;'>+${point.point }</td>
+		<td style='color:blue;'>+<fmt:formatNumber value="${point.point }" pattern="#,###,###"/>원</td>
 		</c:if>
 		<c:if test="${point.pointType eq '환불완료 반환' }">
-		<td style='color:orange;'>+${point.point }</td>
+		<td style='color:orange;'>+<fmt:formatNumber value="${point.point }" pattern="#,###,###"/>원</td>
 		</c:if>
 		</tr>
 		

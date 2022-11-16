@@ -55,6 +55,8 @@ a {
 
 h2 {
     font-size: 16px;
+   	margin:0;
+    font-weight: bold;
 }
 
 h3 {
@@ -118,6 +120,29 @@ header {
 }
 
 .go-back img {
+    width: 25px;
+    height: 25px;
+}
+.home-layout {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 8px;
+    right: 5px;
+}
+button {
+    border: 0;
+    background: 0 0;
+    cursor: pointer;
+}
+.go-home {
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+.go-home img {
     width: 25px;
     height: 25px;
 }
@@ -425,6 +450,9 @@ footer {
 	width: 60px;
     height: 28px;
 }
+.chkcolor{
+color: #0078ff;
+}
     </style>
 <body>
     <div class="body-wrapper">
@@ -437,6 +465,11 @@ footer {
                         </a>
                     </div>
                     <h2>주문내역</h2>
+                    <div class="home-layout">
+                        <button class="go-home" onclick="location.href='/';">
+                            <img src="/resources/images/home.png">
+                        </button>
+                    </div>
                 </div>
             </header>
         </div>
@@ -446,40 +479,86 @@ footer {
 				<table class="menu-tbl">
 					<tr>
 						<td>
+						<c:if test="${dirivaryStatus eq '전체' }">
+							<ul onclick="location.href='/order/complete/list.kh'">
+								<li class="bold chkcolor" >${count6 }</li>
+								<li class="chkcolor">전체</li>
+							</ul>
+						</c:if>
+						<c:if test="${dirivaryStatus ne '전체' }">
 							<ul onclick="location.href='/order/complete/list.kh'">
 								<li class="bold" >${count6 }</li>
 								<li>전체</li>
 							</ul>
+						</c:if>
 						</td>
 						<td>
+						<c:if test="${dirivaryStatus eq '입금확인' }">
+							<ul onclick="cngDel('입금확인')">
+								<!-- <li class="bold" id="count1"></li> -->
+								<li class="bold chkcolor">${count1 }</li>
+								<li class="chkcolor">입금/결제</li>
+							</ul>
+							</c:if>
+						<c:if test="${dirivaryStatus ne '입금확인' }">
 							<ul onclick="cngDel('입금확인')">
 								<!-- <li class="bold" id="count1"></li> -->
 								<li class="bold">${count1 }</li>
 								<li>입금/결제</li>
 							</ul>
+							</c:if>
 						</td>
 						<td>
+						<c:if test="${dirivaryStatus eq '배송중' }">
+							<ul onclick="cngDel('배송중')">
+							<!-- <li class="bold" id="count2"></li> -->
+								<li class="bold chkcolor">${count2 }</li> 
+								<li class="chkcolor">배송중</li>
+							</ul>
+						</c:if>
+						<c:if test="${dirivaryStatus ne '배송중' }">
 							<ul onclick="cngDel('배송중')">
 							<!-- <li class="bold" id="count2"></li> -->
 								<li class="bold">${count2 }</li> 
 								<li>배송중</li>
 							</ul>
+						</c:if>
 						</td>
 						<td>
+						<c:if test="${dirivaryStatus eq '배송완료' }">
 							<ul onclick="cngDel('배송완료')">
 							<!-- <li class="bold" id="count3"></li> -->
-							<li class="bold">${count3 }</li> 
+							<li class="bold chkcolor">${count3 }</li> 
+								<%-- <li class="bold">${count3 }</li> --%>
+								<li class="chkcolor">배송완료</li>
+							</ul>
+							</c:if>
+						<c:if test="${dirivaryStatus ne '배송완료' }">
+							<ul onclick="cngDel('배송완료')">
+							<!-- <li class="bold" id="count3"></li> -->
+							<li class="bold ">${count3 }</li> 
 								<%-- <li class="bold">${count3 }</li> --%>
 								<li>배송완료</li>
 							</ul>
+							</c:if>
 						</td>
 						<td>
+						<c:if test="${dirivaryStatus eq '구매확정' }">
+							<ul onclick="cngDel('구매확정')">
+							<!-- <li class="bold" id="count4"></li> -->
+							<li class="bold chkcolor">${count4 }</li> 
+								<%-- <li class="bold">${count4 }</li> --%>
+								<li class="chkcolor">구매확정</li>
+							</ul>
+						</c:if>
+						<c:if test="${dirivaryStatus ne '구매확정' }">
 							<ul onclick="cngDel('구매확정')">
 							<!-- <li class="bold" id="count4"></li> -->
 							<li class="bold">${count4 }</li> 
 								<%-- <li class="bold">${count4 }</li> --%>
 								<li>구매확정</li>
 							</ul>
+						</c:if>
 						</td>
 						
 					</tr>

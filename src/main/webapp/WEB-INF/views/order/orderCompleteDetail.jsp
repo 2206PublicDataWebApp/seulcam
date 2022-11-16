@@ -23,7 +23,7 @@ body {
 	color: #000;
 	background-color: #f1f1f1;
 }
-
+/* Header */
 header {
 	position: fixed;
 	left: 0px;
@@ -35,7 +35,81 @@ header {
 	max-width: 768px;
 	margin: 0 auto;
 }
+ h2 {
+    font-size: 16px;
+    margin:0;
+    font-weight: bold;
+} 
 
+#header-block {
+    height: 50px;
+}
+
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 768px;
+    margin: 0 auto;
+    height: 50px;
+    position: relative;
+}
+.back-layout {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 5px;
+    left: 5px;
+}
+
+.go-back {
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+
+.go-back img {
+    width: 25px;
+    height: 25px;
+}
+.home-layout {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 8px;
+    right: 5px;
+}
+.go-home {
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+.go-home img {
+    width: 25px;
+    height: 25px;
+}
+.go-home {
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+
+button {
+    border: 0;
+    background: 0 0;
+    cursor: pointer;
+}
+/* Section */
+.cm-line {
+    height: 10px;
+    background-color: #f1f1f1;
+}
 .wrap {
 	max-width: 768px;
 	margin: 0 auto;
@@ -43,9 +117,9 @@ header {
 	min-height: 100vh;
 }
 
-.contents {
-	padding-top: 60px;
-}
+ .contents {
+	padding-bottom: 60px;
+} 
 .data-No-Date{
 width:100%;
 
@@ -288,9 +362,27 @@ width:160px
 <body>
 
 	<div class="wrap">
-		<div class="head">
-			<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-		</div>
+		<div id="header-block">
+            <header>
+            <div class="header-wrapper">
+                    <div class="back-layout">
+                        <button class="go-back" onclick="history.back()">
+                            <img src="/resources/images/back_arrow.png"> 
+                        </button>
+                    </div>
+                    <h2>
+                        주문 완료 내역
+                    </h2>
+
+                    <div class="home-layout">
+                        <button class="go-home" onclick="location.href='/';">
+                            <img src="/resources/images/home.png">
+                        </button>
+                    </div>
+                </div>
+                </header>
+                </div>
+            <div class="cm-line"></div>
 
 		<div class="contents">
 		
