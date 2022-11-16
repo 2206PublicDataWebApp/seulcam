@@ -144,7 +144,6 @@ public class ProductController {
 			, HttpSession session
 			,@RequestParam(value="myFile", required=false) List<MultipartFile> mfList
 			,HttpServletRequest request
-			,@RequestParam(value="memberId", required=false) String memberId
 			,@RequestParam ("productNo")Integer productNo
 			) {
 		
