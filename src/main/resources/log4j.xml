@@ -32,20 +32,20 @@
 		<appender-ref ref="console" />
 	</logger>
 	<!-- resultset을 제외한 모든 jdbc 호출 정보를 로그로 남김, 로그양이 많고 필요하지 않으면 사용x -->
-	<logger name="jdbc.audit" additivity="false">
+	<!-- <logger name="jdbc.audit" additivity="false">
 		<level value="warn" />
 		<appender-ref ref="console" />
-	</logger>
+	</logger> -->
 	<!-- ResultSet을 포함한 모든 JDBC 호출 정보를 로그로 남김 , 로그양이 많음 -->
-	<logger name="jdbc.resultset" additivity="false">
+	<!-- <logger name="jdbc.resultset" additivity="false">
 		<level value="warn" />
 		<appender-ref ref="console" />
-	</logger>
+	</logger> -->
 	<!-- SQL결과 조회된 데이터의 table을 그려줌 -->
-	<logger name="jdbc.resultsettable" additivity="false">
+	<!-- <logger name="jdbc.resultsettable" additivity="false">
 		<level value="info" />
 		<appender-ref ref="console" />
-	</logger>
+	</logger> -->
 	
 	
 	<!-- Application Loggers -->

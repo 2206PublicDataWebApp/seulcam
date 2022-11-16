@@ -3,6 +3,7 @@ package com.kh.seulcam.camp.controller;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -62,9 +64,24 @@ public class CampAdminController {
     public ModelAndView campAdmin(
             @RequestParam(value = "page", required = false) Integer page,
             @ModelAttribute SearchList sList,
+            HttpSession session,
+            HttpServletRequest request,
             ModelAndView mv) {
         try {
-            System.out.println(page);
+            if (session.getAttribute("loginUser") == null) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
+            Member member = (Member)session.getAttribute("loginUser");
+            Boolean adminCheck = member.getAdminCheck();
+            if(adminCheck==false) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
             if (page != null) {
                 sList.setPage(page);
             }
@@ -106,10 +123,25 @@ public class CampAdminController {
     @RequestMapping(value = "/admin/camp/siteList", method = RequestMethod.GET)
     public ModelAndView campAdminSite(
             @RequestParam(value = "contentId", required = false) int contentId,
+            HttpSession session,
+            HttpServletRequest request,
             ModelAndView mv) {
         try {
             // 세션에 있는 아이디가 어드민이 아니라면 접근하지 못하도록 작동시켜야함
-
+            if (session.getAttribute("loginUser") == null) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
+            Member member = (Member)session.getAttribute("loginUser");
+            Boolean adminCheck = member.getAdminCheck();
+            if(adminCheck==false) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
             Camp camp = cService.printCampDetail(contentId);
             List<CampSite> stList = cService.printSiteList(contentId);
             int result = cService.printSiteListCount(contentId);
@@ -133,9 +165,25 @@ public class CampAdminController {
     @RequestMapping(value = "/campAdmin/campAdminSiteRegist.kh", method = RequestMethod.GET)
     public ModelAndView campAdminSiteRegist(
             @RequestParam(value = "contentId", required = false) int contentId,
+            HttpSession session,
+            HttpServletRequest request,
             ModelAndView mv) {
         try {
             // 세션에 있는 아이디가 어드민이 아니라면 접근하지 못하도록 작동시켜야함
+            if (session.getAttribute("loginUser") == null) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
+            Member member = (Member)session.getAttribute("loginUser");
+            Boolean adminCheck = member.getAdminCheck();
+            if(adminCheck==false) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
             Camp camp = cService.printCampDetail(contentId);
 
             mv.addObject("camp", camp);
@@ -153,10 +201,26 @@ public class CampAdminController {
             @RequestParam(value = "uploadFile", required = false) MultipartFile uploadFile,
             @ModelAttribute CampSite campSite,
             HttpServletRequest request,
+            HttpServletResponse response,
+            HttpSession session,
             ModelAndView mv) {
         try {
             System.out.println(campSite);
             // 세션에 있는 아이디가 어드민이 아니라면 등록하지못하도록 작동시켜야함
+            if (session.getAttribute("loginUser") == null) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
+            Member member = (Member)session.getAttribute("loginUser");
+            Boolean adminCheck = member.getAdminCheck();
+            if(adminCheck==false) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
             int contentId = campSite.getCampId();
             // 캠프 컨트롤러에서도 contentId로 계속 쓰임
             int result = cService.printSiteListCount(contentId);
@@ -205,8 +269,24 @@ public class CampAdminController {
     @RequestMapping(value = "/campAdmin/campSiteModifyView.kh", method = RequestMethod.GET)
     public ModelAndView campSiteModifyView(
             @RequestParam(value = "siteNo", required = false) int siteNo,
+            HttpSession session,
+            HttpServletRequest request,
             ModelAndView mv) {
         try {
+            if (session.getAttribute("loginUser") == null) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
+            Member member = (Member)session.getAttribute("loginUser");
+            Boolean adminCheck = member.getAdminCheck();
+            if(adminCheck==false) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
             CampSite campSite = cService.printSite(siteNo);
             System.out.println(campSite);
             mv.addObject("campSite", campSite);
@@ -224,7 +304,9 @@ public class CampAdminController {
     public ModelAndView campSiteModify(
             @RequestParam(value = "reuploadFile", required = false) MultipartFile reuploadFile,
             @ModelAttribute CampSite campSite,
+            HttpSession session,
             HttpServletRequest request,
+            HttpServletResponse response,
             ModelAndView mv) {
         try {
             int contentId = campSite.getCampId();
@@ -265,7 +347,9 @@ public class CampAdminController {
     public ModelAndView campSiteReUpdate(
             @RequestParam(value = "contentId", required = false) int contentId,
             @RequestParam(value = "siteNo", required = false) int siteNo,
+            HttpServletResponse response,
             HttpServletRequest request,
+            HttpSession session,
             ModelAndView mv) {
         int reUpdate = cService.campSiteReUpdate(siteNo);
         int result = cService.printSiteListCount(contentId);
@@ -284,7 +368,9 @@ public class CampAdminController {
     public ModelAndView campSiteRemove(
             @RequestParam(value = "contentId", required = false) int contentId,
             @RequestParam(value = "siteNo", required = false) int siteNo,
+            HttpServletResponse response,
             HttpServletRequest request,
+            HttpSession session,
             ModelAndView mv) {
         try {
             CampSite campSite = cService.printSite(siteNo);
@@ -319,6 +405,7 @@ public class CampAdminController {
     public ModelAndView campRegistAviCon(
             @RequestParam(value = "contentId", required = false) int contentId,
             HttpServletRequest request,
+            HttpSession session,
             ModelAndView mv) {
         try {
             int result = cService.printSiteListCount(contentId);
@@ -347,9 +434,24 @@ public class CampAdminController {
     //캠핑장 예약리스트 관리
     @RequestMapping(value = "/admin/camp/bookingList", method = RequestMethod.GET)
     public ModelAndView campBookingList(
+            HttpServletRequest request,
             HttpSession session,
             ModelAndView mv) {
         try {
+            if (session.getAttribute("loginUser") == null) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
+            Member member = (Member)session.getAttribute("loginUser");
+            Boolean adminCheck = member.getAdminCheck();
+            if(adminCheck==false) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
             String memberId = null;
             List<CampBooking> cbList = bService.BooingListView(memberId);
             for(int i = 0; i<cbList.size(); i++) {
@@ -418,8 +520,24 @@ public class CampAdminController {
     @ResponseBody
     @RequestMapping(value="/admin/camp/reviewList",method=RequestMethod.GET)
     public ModelAndView campAdminReviewList(
+            HttpServletRequest request,
+            HttpSession session,
             ModelAndView mv) {
         try {
+            if (session.getAttribute("loginUser") == null) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
+            Member member = (Member)session.getAttribute("loginUser");
+            Boolean adminCheck = member.getAdminCheck();
+            if(adminCheck==false) {
+                request.setAttribute("msg", "로그인 정보를 확인해주세요.");
+                request.setAttribute("url", "/");
+                mv.setViewName("common/alert");
+                return mv;
+            }
             List<CampReview> rList = cService.campReviewAllList();
             
             
@@ -583,7 +701,7 @@ public class CampAdminController {
                 urlBuilder.append("&" + URLEncoder.encode("size", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*
                                                                                                                        * OS
                                                                                                                        */
-                urlBuilder.append("&" + URLEncoder.encode("query", "UTF-8") + "=" + URLEncoder.encode(cList.get(i).getFacltNm() + " 캠핑장", "UTF-8")); /*
+                urlBuilder.append("&" + URLEncoder.encode("query", "UTF-8") + "=" + URLEncoder.encode(cList.get(i).getSigunguNm()+" "+cList.get(i).getFacltNm() + " 캠핑장", "UTF-8")); /*
                                                                                                                         * OS
                                                                                                                         */
                 URL url = new URL(urlBuilder.toString());
