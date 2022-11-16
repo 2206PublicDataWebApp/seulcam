@@ -59,6 +59,9 @@ h2 {
 
 h3 {
     text-align: center;
+    margin: 0;
+    font-size: 1.17em;
+    font-weight: bold;
 }
 
 li {
@@ -365,6 +368,22 @@ header {
     font-weight: 600;
 }
 
+.nocamp{
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    }
+    
+.campListBtn {
+    margin: 10px;
+    padding: 6px 30px 5px 30px;
+    color: #0078ff;
+    border: 1px solid #0078ff;
+    border-radius: 5px;
+}
+
 
 /* footer */
 footer {
@@ -569,7 +588,7 @@ footer {
             <c:if test="${empty oList}">
                <div class="product-box nocamp">
                     <h3>주문 내역이 없습니다.</h3>
-                    <p style="color: gray;">멋진 캠핑용품을 쇼핑해보세요</p>
+                    <p style="color: gray; margin-bottom: 0;">멋진 캠핑용품을 쇼핑해보세요</p>
                     <a href="/product/newArrivalList" class="campListBtn">쇼핑하러가기</a>    
                     
                 </div>

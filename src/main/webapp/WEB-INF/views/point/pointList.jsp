@@ -39,9 +39,19 @@ header {
 }
 h2 {
     font-size: 16px;
+    margin: 0;
+    font-weight: bold;
 }
 #header-block {
     height: 50px;
+}
+
+th {
+	text-align: center;
+}
+
+td {
+	text-align: center;
 }
 
 header {
@@ -82,6 +92,7 @@ header {
     width: 40px;
     height: 40px;
     padding: 5px;
+    cursor: pointer;
 }
 
 .go-back img {
@@ -107,7 +118,7 @@ header {
 	font-weight:bold;
 	font-size:20px;
 	height:50px;
- 	padding-top:20px; 
+ 	padding-top:10px; 
 }
 </style>
 <body>

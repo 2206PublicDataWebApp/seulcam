@@ -360,6 +360,14 @@ header {
     font-weight: 600;
 }
 
+.nocamp{
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    }
+
 
 /* footer */
 footer {
@@ -454,13 +462,7 @@ footer {
         color: white;
         background-color: #0078ff;
     }
-    .nocamp{
-        display: flex;
-    height: 300px;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    }
+    
     .go-home {
     display: inline-flex;
     position: relative;
