@@ -299,10 +299,18 @@ footer {
 }
 .thumbImgArea{
 
-
 }
-.thumbImg{
-    
+.thumbImg {
+    width: 100%;
+    height: 500px;
+}
+
+@media screen and (max-width: 768px) {
+	.thumbImg {
+	    width: 100%;
+	    height: 300px;
+}
+	
 }
 </style>
 
@@ -321,7 +329,7 @@ footer {
 				<div class="info_img">
 					<div class="img-slick">
 						<div class="img-wrapper">
-                            <div class='thumbImgArea'  style='height: 450px;'><img class='thumbImg' src='${camp.firstImageUrl}' alt=''></div>
+                            <div class='thumbImgArea'><img class='thumbImg' src='${camp.firstImageUrl}' alt=''></div>
 							<!-- <div
 								style='height: 450px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'>
 							</div> -->
@@ -686,7 +694,7 @@ footer {
                                 var str = "";
                                 for (var i = 1; i < data.response.body.items.item.length; i++) {
                                     var campItem = data.response.body.items.item;
-                                    str += "<div class='thumbImgArea'  style='height: 450px;'><img class='thumbImg' src='" + campItem[i].imageUrl + "' alt=''></div>"
+                                    str += "<div class='thumbImgArea'><img class='thumbImg' src='" + campItem[i].imageUrl + "' alt=''></div>"
                                 }
                                 $(".img-wrapper").append(str);
                                 $('.img-wrapper').slick({
@@ -737,9 +745,9 @@ footer {
                                     if (j != 0) {
                                         str += "<div class='card' style='width: 14rem;' onclick ='location.href=\"/camp/campDetail.kh?contentId=" + campItem[i].contentId + "\"'>"
                                         if (campItem[i].firstImageUrl == "") {
-                                            str += "<img style='max-height:164.66px; height : 100%;' src='https://campingagains3.s3.ap-northeast-2.amazonaws.com/medium_2021_10_17_11_38_57_fad16366d0.png' class='card-img-top' alt=''><div class='card-body'>"
+                                            str += "<img style='height: 164.66px;' src='https://campingagains3.s3.ap-northeast-2.amazonaws.com/medium_2021_10_17_11_38_57_fad16366d0.png' class='card-img-top' alt=''><div class='card-body'>"
                                         } else {
-                                            str += "<img style='max-height:164.66px;' src='" + campItem[i].firstImageUrl + "' class='card-img-top' alt=''><div class='card-body'>"
+                                            str += "<img style='height: 164.66px;' src='" + campItem[i].firstImageUrl + "' class='card-img-top' alt=''><div class='card-body'>"
                                         }
                                         str += "<p class='card-text'><b>" + campItem[i].facltNm + "</b></p><p>" + campItem[i].addr1 + "</p></div></div>"
                                     }
