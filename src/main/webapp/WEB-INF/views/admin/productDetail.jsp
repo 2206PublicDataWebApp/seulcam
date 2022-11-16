@@ -196,7 +196,7 @@
 								            </div>
 								            <div class="box-form">
 								                <label>브랜드</label>
-								                <select class="selectBox"  name="brandName" id="brand_selectBox" readonly>
+								                <select class="selectBox"  name="brandName" id="brand_selectBox" onchange="chageBrand()">
 								                    <c:forEach items="${sNameList }" var="brandName" varStatus="i">
 								                   		 <option value="${brandName.brandName }">${brandName.brandName }</option>
 								                    </c:forEach>
@@ -204,7 +204,7 @@
 								            </div>
 								            <div class="box-form">
 								                <label>카테고리</label>
-								                <select class="selectBox" name="category" id="category_selectBox" readonly>
+								                <select class="selectBox" name="category" id="category_selectBox" onchange="chageCategory()">
 														<option value="텐트">텐트</option>
 														<option value="타프">타프</option>
 														<option value="테이블">테이블</option>
@@ -329,8 +329,12 @@
 <script>
 
 //불러온값에 따라 셀렉트박스 미리 선택
-$("#category_selectBox").val('${product.category}').prop("selected", true);
-$("#brand_selectBox").val('${product.brandName}').prop("selected", true);
+var cate = '${product.category}';
+var bn ='${product.brandName}';
+$("#category_selectBox").val(cate).prop("selected", true);
+$("#brand_selectBox").val(bn).prop("selected", true);
+
+
 
 if(${product.mainFileName!=null}){
 	$(".img-delete-bt").eq(0).click(function(){

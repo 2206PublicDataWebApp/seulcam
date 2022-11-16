@@ -40,6 +40,8 @@
   	</insert>
   	<update id="updateProduct" parameterType="Product">
   	 	UPDATE PRODUCT_TBL SET
+  	 	BRAND_NAME=#{brandName},
+  	 	CATEGORY=#{category},
   	 	PRODUCT_PRICE=#{productPrice},
   	 	PRODUCT_COLOR=#{productColor},
   	 	PRODUCT_STOCK=#{productStock},
