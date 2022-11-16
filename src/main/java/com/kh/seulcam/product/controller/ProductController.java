@@ -9,7 +9,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,17 +34,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.code.geocoder.Geocoder;
-import com.google.code.geocoder.GeocoderRequestBuilder;
-import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderRequest;
-import com.google.code.geocoder.model.GeocoderResult;
-import com.google.code.geocoder.model.GeocoderStatus;
-import com.google.code.geocoder.model.LatLng;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.kh.seulcam.member.domain.Member;
 import com.kh.seulcam.product.domain.Brand;
 import com.kh.seulcam.product.domain.Detail;
@@ -56,7 +47,6 @@ import com.kh.seulcam.product.service.ProductService;
 @Controller
 public class ProductController {
 	
-	private static final HttpsURLConnection HttpsURLConnection = null;
 	@Autowired
 	private ProductService pService ;
 	
@@ -92,6 +82,7 @@ public class ProductController {
 	
 		Product product = pService.getProductByNo(productNo);
 		int resultPrice = pService.discountProduct(product);
+		int reviewCount = pService.getReviewTotalCount(productNo);
 		Member member=null;
 		if(session.getAttribute("loginUser") != null) {
 			member =(Member)session.getAttribute("loginUser");
@@ -101,6 +92,7 @@ public class ProductController {
 		if(product!=null) {
 			mv.addObject("resultPrice", resultPrice);
 			mv.addObject("product", product);
+			mv.addObject("reviewCount", reviewCount);
 		}
 		return mv;
 	}
@@ -151,6 +143,7 @@ public class ProductController {
 			, HttpSession session
 			,@RequestParam(value="myFile", required=false) List<MultipartFile> mfList
 			,HttpServletRequest request
+			,@RequestParam(value="memberId", required=false) String memberId
 			) {
 		System.out.println((Integer)session.getAttribute("productNo"));
 		int productNo=(Integer)session.getAttribute("productNo");
@@ -202,7 +195,7 @@ public class ProductController {
 		int result = pService.registerProductReview(review);
 		if(result>0) {
 			
-			mv.setViewName("redirect:/product/productDetail?productNo="+productNo);
+			mv.setViewName("redirect:/product/myReviewList");
 		}else {
 			mv.setViewName("errorPage");
 		}
@@ -337,11 +330,14 @@ public class ProductController {
 	public ModelAndView reviewListView(
 			@RequestParam("productNo") Integer productNo
 			,HttpServletRequest request
-			,ModelAndView mv
+			
 			,@RequestParam(value="page", required=false) Integer page
 			) {
+		
+		ModelAndView mv = new ModelAndView(); 
+		mv.setViewName("jsonView"); 
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = pService.getTotalCount(productNo);
+		int totalCount = pService.getReviewTotalCount(productNo);
 		int boardLimit = 5;
 		int naviLimit = 5;
 		int maxPage;
@@ -360,6 +356,7 @@ public class ProductController {
 			/*
 			 * Gson gson = new GsonBuilder().create(); return gson.toJson(rList);
 	s		 */
+			mv.addObject("totalCount", totalCount);
 			mv.addObject("maxPage",maxPage);
 			mv.addObject("currentPage",currentPage);
 			mv.addObject("startNavi",startNavi);

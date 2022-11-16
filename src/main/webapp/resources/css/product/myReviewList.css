@@ -79,6 +79,7 @@ button {
     border: 0;
     background: 0 0;
     cursor: pointer;
+  
 }
 header > h1 {
     font-size: 0;
@@ -162,8 +163,12 @@ header > h1 {
 }
 .button{
 	font-size:14px;
-
     font-size: 16px;
+    box-sizing:content-box;
+    overflow: auto;
+    position: relative;
+    
+    
 }
 #review_modi{
 	float:right;
@@ -172,8 +177,10 @@ header > h1 {
      width:15%;
      height:25px;
        border-radius: 4px;
+       margin-bottom:10px;
 }
 #review_del{
+		float:right;
 	background-color: #ccc;
     color: #fff;
     border-radius: 4px;
@@ -181,8 +188,8 @@ header > h1 {
     width:15%;
 }
 .image_panel > img{
-	width:120px;
-	height:120px;
+	width:107px;
+	height:107px;
 }
 .image_panel > img:hover{
 	width: auto;

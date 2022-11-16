@@ -63,7 +63,7 @@
   		DELETE FROM PRODUCT_REVIEW_TBL WHERE REVIEW_NO=#{reviewNo}
   	</delete>
   	<select id="selectAllReview" resultMap="reviewResultMap">
-  		SELECT * FROM PRODUCT_REVIEW_TBL ORDER BY BOARD_NO DESC
+  		SELECT * FROM PRODUCT_REVIEW_TBL ORDER BY REVIEW_NO DESC
   	</select>
   	<select id="selectReviewTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM PRODUCT_REVIEW_TBL WHERE PRODUCT_NO =#{productNo}

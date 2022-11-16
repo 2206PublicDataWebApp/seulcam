@@ -141,6 +141,7 @@
 			          </c:if>
 				</div>
 			</div>
+			<br>
 		<p class="guide" >
 			<input type="button" class="img-delete-bt" value="삭제">
 			<input type="button" class="img-delete-bt" value="삭제">

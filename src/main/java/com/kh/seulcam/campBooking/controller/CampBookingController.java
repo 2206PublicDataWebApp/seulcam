@@ -143,6 +143,9 @@ public class CampBookingController {
             if (format.parse(cBooking.getFirstDay()).getTime() > format.parse(cBooking.getLastDay()).getTime()) {
                 return "wrongApproach";
             }
+            if(cBooking.getBookName() == "" || cBooking.getBookPhone() == "") {
+                return "emptyInfo";
+            }
             bookingStatusSearch bss = new bookingStatusSearch();
             bss.setFirstDay(cBooking.getFirstDay());
             bss.setLastDay(cBooking.getLastDay());

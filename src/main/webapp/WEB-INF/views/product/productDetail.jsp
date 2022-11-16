@@ -36,17 +36,34 @@
 			<div class="cont">
 				<h1>${product.productName }</h1>
 				<br><br>
-				<p> ${product.brandName } / ${product.productNo }</p>
-				<p> ${product.productMaterial } </p>
-				<p class="color">
-					${product.productColor } <span class="colorchip"
-						style="background-color:${product.productColor };">　</span>
-				</p>
+				<table id="info-table">
+					<tr>
+						<td>제품번호</td>
+						<td>${product.productNo }</td>
+					</tr>
+					<tr>
+						<td>브랜드명</td>
+						<td>${product.brandName }</td>
+					</tr>
+					<tr>
+						<td>소재</td>
+						<td>${product.productMaterial }</td>
+					</tr>
+					<tr>
+						<td>색상</td>
+						<td>${product.productColor } <span class="colorchip"
+						style="background-color:${product.productColor };">　</span></td>
+					</tr>
+				</table>
+				<c:if test="${reviewCount ne 0}">
+					<span id="go-review">후기 ${reviewCount }개 보기</span>
+				</c:if>
+			
 				<span class="price"> 
 					<c:if test="${product.discount eq 0}">
                           	<span id="priceBox">
                           		<span class="resultPrice">
-                          			<fmt:formatNumber value="${product.productPrice}" pattern="#,###"/>
+                          			<fmt:formatNumber value="${product.productPrice}" pattern="#,###"/>원
                           			<input type="hidden" id="intPrice" value="${product.productPrice}">
                        			</span>
                        		</span>
@@ -56,13 +73,13 @@
                            <span id="priceBox">
                            	<span class="befPrice" style="text-decoration:line-through" val="${product.productPrice}">${product.productPrice}</span>
                            	<span class="discount" style="color:red;" value="${product.discount }">${product.discount }%↓</span>
-                           	<span class="resultPrice" value="${resultPrice }"><fmt:formatNumber value="${resultPrice }" pattern="#,###"/></span>
+                           	<span class="resultPrice" value="${resultPrice }"><fmt:formatNumber value="${resultPrice }" pattern="#,###"/>원</span>
                            	<input type="hidden" id="intPrice" value="${resultPrice }">
                            </span>
                    	</c:if>
 				</span> <br>
 			</div>
-
+		
 			<div class="count-wrap _count">
 				<button type="button" class="minus">-</button>
 				<input type="text" class="inp"  />
@@ -199,7 +216,9 @@
 	</section>
 <script src="/resources/js/product/cart-order.js"></script>
 <script>
-
+$("#go-review").click(function(){
+	$('html, body').scrollTop( $(document).height() );
+});
  
  //갯수변경, 총액계산
  
@@ -305,12 +324,7 @@
  $("#ac-4").change(function(){
 	 
 	 var productNo="${product.productNo}";
-	 if(${loginUser!=null}){
-		 var loginUser ="${loginUser}";
-		 
-	 }else{
-		 var loginUser ="";
-	 }
+
 	 if($("#ac-4").is(":checked")){
 		 var strDOM="";
 		 $.ajax({
@@ -320,58 +334,74 @@
 				
 				 },
 			 type:"get",
+			dataType: 'json',
 			 success : function(data){
 				 console.log(data);
-				/*  $("#review_title_all").html("");	
-					 for(var i in rList){
-						 var idx = Number(startNum)+Number(i)+1;   
+				 if(data.totalCount!=null){
+					 
+					  $("#review_title_all").html("");	
+									strDOM+='<div id="review_count">구매후기'+data.totalCount+'개</div>';
+						 for(var i in data.rList){
+							 var rList = data.rList[i];
+							 var idx = Number(data.startNum)+Number(i)+1;   
+								 
 							 
-						 
-								var rUrl="../resources/puploadFiles/";
-								strDOM+='<li>';
-							 	strDOM+='<input class="ac-input" id="review-'+i+'" name="review-'+i+'" type="checkbox"/>';
-							 	strDOM+='<label class="ac-label" name="reviewTitle" id="reviewTitle" for="review-'+i+'">';
-							 	if(rList[i].reviewFileRename1!=null){
-								 	strDOM+= '<img src='+rUrl+rList[i].reviewFileRename1+' class="review-thumbNail">';
-							 	}
-							 	strDOM+='<div class="review_title_text"><span>';
-							 	if(rList[i].reviewFileRename1!=null){
-								 	strDOM+=rList[i].memberId+'님의 포토 상품후기</span><br><br><span>'+rList[i].reviewTitle+'</span></div>';
-							 	}else{
-								 	strDOM+=rList[i].memberId+'님의 상품후기</span><br><br><span>'+rList[i].reviewTitle+'</span></div>';
-							 	}
-							 	strDOM +='</label>';
-							 	strDOM+='<article class="ac-text"><div class="ac-sub">';
-							 	strDOM += '<div class="image_panel">';
-							 	if(rList[i].reviewFileRename1!=null){
-						        	strDOM +='<img src='+rUrl+rList[i].reviewFileRename1 +'>';
-							 	}
-							 	if(rList[i].reviewFileRename2!=null){
-						        strDOM +='<img src='+rUrl+rList[i].reviewFileRename2 +'>';
-							 	}
-							 	if(rList[i].reviewFileRename3!=null){
-						        	strDOM +='<img src='+rUrl+rList[i].reviewFileRename3 +'>';
-							 	}
-							 	strDOM+='</div>';
-								strDOM+= '<div class="review-grade"><span class="star">★★★★★';
-								strDOM+= ' <span id="checkstar" style="width:'+(rList[i].reviewGrade*10)+'%">★★★★★</span></span></div>';
-							 	strDOM+= '<p>'+rList[i].reviewTitle+'</p>';
-							 	strDOM+= '<p>'+rList[i].reviewTitle+'</p>';
-							 	strDOM+= '<p>'+rList[i].reviewContents+'</p>';
-							 	
-							 	
-							 	/* if(rList[i].memberId=="${loginUser.memberId}"){
-								 	strDOM+='</div><div><a href="/product/reviewModify?reviewNo='+rList[i].reviewNo;				 		
-								 	strDOM+='&memberId=${loginUser.memberId}" style="float: left;">수정</a>';
-								 	strDOM+='<a href="javascript:void(0)"style="float:right;" onclick="reviewDelete('+rList[i].reviewNo+')">삭제</a></div></article>';
-									 } */
-							// strDOM+='</li>';
-				//	 }
-				//	$("#review_title_all").append(strDOM); */
+									var rUrl="../resources/puploadFiles/";
+									strDOM+='<li>';
+								 	strDOM+='<input class="ac-input" id="review-'+i+'" name="review-'+i+'" type="checkbox"/>';
+								 	strDOM+='<label class="ac-label" name="reviewTitle" id="reviewTitle" for="review-'+i+'">';
+								 	if(rList.reviewFileRename1!=null){
+									 	strDOM+= '<img src='+rUrl+rList.reviewFileRename1+' class="review-thumbNail">';
+								 	}
+								 	strDOM+='<div class="review_title_text"><span>';
+								 	if(rList.reviewFileRename1!=null){
+									 	strDOM+='<b>'+rList.memberId+'님의 포토 상품후기</b></span><br><br><span>'+rList.reviewTitle+'</span></div>';
+								 	}else{
+									 	strDOM+=rList.memberId+'님의 상품후기</span><br><br><span>'+rList.reviewTitle+'</span></div>';
+								 	}
+								 	strDOM +='</label>';
+								 	strDOM+='<article class="ac-text"><div class="ac-sub">';
+								 	strDOM += '<div class="image_panel">';
+								 	if(rList.reviewFileRename1!=null){
+							        	strDOM +='<img src='+rUrl+rList.reviewFileRename1 +'>';
+								 	}
+								 	if(rList.reviewFileRename2!=null){
+							        strDOM +='<img src='+rUrl+rList.reviewFileRename2 +'>';
+								 	}
+								 	if(rList.reviewFileRename3!=null){
+							        	strDOM +='<img src='+rUrl+rList.reviewFileRename3 +'>';
+								 	}
+								 	strDOM+='</div>';
+									strDOM+= '<div class="review-grade"><span class="star">★★★★★';
+									strDOM+= ' <span id="checkstar" style="width:'+(rList.reviewGrade*10)+'%">★★★★★</span></span><span>('+rList.reviewGrade+'/10)</span></div>';
+								 	strDOM+= '<p>'+rList.reviewTitle+'</p>';
+								 	strDOM+= '<p>'+rList.reviewTitle+'</p>';
+								 	strDOM+= '<p>'+rList.reviewContents+'</p>';
+								 	
+								 	
+					
+								 strDOM+='</li>';
+						 }
+						 strDOM+='<div id="reivew_page_box">';
+						 for(var j = 1; j<data.maxPage+1; j++){
+							 if(j==1){
+								 strDOM+='<button type="button" id="reivew_page" onclick="reivewPage('+j+')" style="font-weight:bold">'+j+'</a>';
+							 }else{
+								 
+							 strDOM+='<button type="button" id="reivew_page" onclick="reivewPage('+j+')" style="color:#aaa">'+j+'</a>';
+							 }
+						 }
+						 strDOM+='</div>';
+						
+				 }
+				 else{
+					 $("#review_title_all").html("");	
+					 strDOM+='<div id="no_review">등록된 상품평이 없습니다.</div>';
+				 }
+				 $("#review_title_all").append(strDOM); 
 			 },
 			 error : function(){
-				 $("#review_title_all").html("");	
-				 strDOM+='<div id="no_review">등록된 상품평이 없습니다.</div>';
+				
 				 console.log("리스트불러오기 실패");
 				 $("#review_title_all").append(strDOM);
 			 }
@@ -380,6 +410,83 @@
 	 }
 	 
  });
+ function reivewPage(currentPage){
+	 var productNo="${product.productNo}";
+	var page = currentPage;
+		 var strDOM="";
+		 $.ajax({
+			 
+			 url :"/product/reviewList",
+			 data:{
+				 "productNo":productNo,
+				 "page":page,
+				 },
+			 type:"get",
+			 success : function(data){
+				 console.log(data);
+				  $("#review_title_all").html("");	
+								strDOM+='<div id="review_count">구매후기'+data.totalCount+'개</div>';
+					 for(var i in data.rList){
+						 var rList = data.rList[i];
+						 var idx = Number(data.startNum)+Number(i)+1;   
+							 
+						 
+								var rUrl="../resources/puploadFiles/";
+								strDOM+='<li>';
+							 	strDOM+='<input class="ac-input" id="review-'+i+'" name="review-'+i+'" type="checkbox"/>';
+							 	strDOM+='<label class="ac-label" name="reviewTitle" id="reviewTitle" for="review-'+i+'">';
+							 	if(rList.reviewFileRename1!=null){
+								 	strDOM+= '<img src='+rUrl+rList.reviewFileRename1+' class="review-thumbNail">';
+							 	}
+							 	strDOM+='<div class="review_title_text"><span>';
+							 	if(rList.reviewFileRename1!=null){
+								 	strDOM+='<b>'+rList.memberId+'님의 포토 상품후기</b></span><br><br><span>'+rList.reviewTitle+'</span></div>';
+							 	}else{
+								 	strDOM+=rList.memberId+'님의 상품후기</span><br><br><span>'+rList.reviewTitle+'</span></div>';
+							 	}
+							 	strDOM +='</label>';
+							 	strDOM+='<article class="ac-text"><div class="ac-sub">';
+							 	strDOM += '<div class="image_panel">';
+							 	if(rList.reviewFileRename1!=null){
+						        	strDOM +='<img src='+rUrl+rList.reviewFileRename1 +'>';
+							 	}
+							 	if(rList.reviewFileRename2!=null){
+						        strDOM +='<img src='+rUrl+rList.reviewFileRename2 +'>';
+							 	}
+							 	if(rList.reviewFileRename3!=null){
+						        	strDOM +='<img src='+rUrl+rList.reviewFileRename3 +'>';
+							 	}
+							 	strDOM+='</div>';
+								strDOM+= '<div class="review-grade"><span class="star">★★★★★';
+								strDOM+= ' <span id="checkstar" style="width:'+(rList.reviewGrade*10)+'%">★★★★★</span></span><span>('+rList.reviewGrade+'/10)</span></div>';
+							
+							 	strDOM+= '<p>'+rList.reviewTitle+'</p>';
+							 	strDOM+= '<p>'+rList.reviewTitle+'</p>';
+							 	strDOM+= '<p>'+rList.reviewContents+'</p>';
+							 	
+							 	
+				
+							 strDOM+='</li>';
+					 }
+					 strDOM+='<div id="reivew_page_box">';
+					 for(var j = 1; j<data.maxPage+1; j++){
+						 if(data.currentPage==j){
+							 strDOM+='<button type="button" id="reivew_page" onclick="reivewPage('+j+')" style="font-weight:bold">'+j+'</a>';
+						 }else{
+							 
+						 strDOM+='<button type="button" id="reivew_page" onclick="reivewPage('+j+')"  style="color:#aaa">'+j+'</a>';
+						 }
+					 }
+					 strDOM+='</div>';
+					$("#review_title_all").append(strDOM);
+			 },
+			 error:function(){
+				 console.log("리스트불러오기 실패");
+				 $("#review_title_all").append(strDOM);
+			 }
+		 });
+		
+ }
  
 	function reviewDelete(reviewNo){
 		console.log(reviewNo);
@@ -415,28 +522,9 @@
 			 url:"/product/brandStore",
 			 data:{"brandName":brandName},
 			 type:"get",
-			// dataType:"Object",
+
 			 success:function(data){
-				 	/*// var markers = new Array(); // 마커 정보를 담는 배열
-					var infoWindows = new Array(); // 정보창을 담는 배열
-					 for(var i=0; i<data.bsList.length;i++){
-						 
-						 fullAddr="";
-						 
-						 fullAddr+="<p><button type='button' onclick='findStore()' class='findStore'><b>"+data.bsList[i].storeName+"</b>";
-						 fullAddr+="</button>ㅤㅤ["+data.bsList[i].storeZipcode+"] ";
-						 fullAddr+=data.bsList[i].storeAddr;
-						 fullAddr+=" "+data.bsList[i].storeAddrDetail+"</p><br>";
-						 
-						var marker = new naver.maps.Marker({
-						    position: new naver.maps.LatLng(data.coordsList[i][1], data.coordsList[i][0]),
-						    map: map,
-						    
-						 });
-					
-					 $("#store_addr").append(fullAddr);
-					 }// */
-				  
+
 	
 				var fullAddrs = new Array();
 				var fullAddr = "";
@@ -450,7 +538,6 @@
 				function initMap() { 
 					
 					var areaArr = new Array();  // 지역을 담는 배열 ( 지역명/위도경도 )
-							/*지역구 이름*/			/*위도*/					/*경도*/
 						 for(var i=0; i<data.bsList.length;i++){
 							areaArr.push(
 							 {location : data.bsList[i].storeName , lat : data.coordsList[i][1] , lng : data.coordsList[i][0] },  

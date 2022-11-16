@@ -209,7 +209,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public int getTotalCount(Integer productNo) {
+	public int getReviewTotalCount(Integer productNo) {
 		int totalCount = pStore.selectReviewTotalCount(session,productNo);
 		return totalCount;
 	}

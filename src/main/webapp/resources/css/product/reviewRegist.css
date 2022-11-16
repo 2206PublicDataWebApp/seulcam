@@ -159,16 +159,15 @@ body > section > form>div.box-form > div > textarea{
 .guide {
 	font-size: 14px;
     color: #777;
-    display: block;
+   
     position: relative;
     text-align: left;
     word-break: break-all;
-    display: block;
-    margin-top: 20px;
-    margin-bottom:20px;
+    display: flex;
+ 
     font-size: 14px;
     list-style: none;
-	max-width:400px;     
+	max-width:400px;  
 }
 
 #upload-box-form{
@@ -176,11 +175,12 @@ body > section > form>div.box-form > div > textarea{
 }
 
 input[type=button]{
-	margin-left:80px;
-	margin-right:3px;
+
 	background-color:#ffffff;
 	border:none;
 	cursor:pointer;
+	 margin-left:70px;
+	 margin-right:18px;
 	
 }
 .range {
@@ -205,6 +205,7 @@ input[type=button]{
     margin-left: -10px;
     text-align: center;
     font-size:5px;
+   
 }
 
 .range .number:after {

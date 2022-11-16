@@ -287,7 +287,7 @@
 									</div>
 									<div class="col-8">
 										<input type="tel" class="form-control" name="bookPhone" id="bookPhone"
-											value="${mOne.memberPhone}" placeholder="-를 빼고 입력해주세요." required>
+											value="${mOne.memberPhone}" placeholder="-를 포함하여 입력해주세요." required>
 									</div>
 									<div class="col-4">
 										<h6 style="margin: auto; padding: auto;">요청사항</h6>
@@ -476,6 +476,9 @@
 								else if (result == "success") {
 									console.log(result)
 									paymentCard(data)
+								}else if(result == "emptyInfo"){
+									alert("필수 입력사항을 적어 주세요");
+
 								} else {
 									alert("에러");
 									location.href = "/camp/campSiteDetail.kh?contentId=" + contentId;
@@ -555,7 +558,6 @@
 								var contentId = ${ campSite.campId
 						};
 						if (bookingNo > 0) {
-							alert("예약성공");
 							location.href = "/campBooking/campBookingComplete.kh?bookingNo=" + bookingNo;
 						}
 						else if (bookingNo == "fail") {
