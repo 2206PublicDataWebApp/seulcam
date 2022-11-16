@@ -117,8 +117,25 @@
 		CAMP_REVIEW_STAR = #{campReviewStar}, R_MODIFY_DATE= SYSDATE WHERE
 		CAMP_REVIEW_NO =#{campReviewNo}
 	</update>
-	<select id="selectListCount" resultType="_int">
+	<!-- <select id="selectListCount" resultType="_int">
 		SELECT COUNT(*) FROM(SELECT ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL
+		<where>
+			<if test="city != '' and city != null"> AND DONM = #{city}</if>
+			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>
+			<if test="search != '' and search != null">
+				AND (facltNm LIKE '%'||#{search}||'%'
+				or SIGUNGUNM LIKE '%'||#{search}||'%'
+				or DONM LIKE '%'||#{search}||'%')
+			</if>
+			<if test='regist == "Y"'>
+				AND REGISTAVI = #{regist}
+			</if>
+		</where>
+		)
+	</select> -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM(SELECT ROWNUM AS NUM,A.* FROM 
+		(SELECT * FROM CAMP_TBL WHERE CAMP_TBL.firstImageUrl is not null ORDER BY CAMP_TBL.BLOGCOUNT DESC) A
 		<where>
 			<if test="city != '' and city != null"> AND DONM = #{city}</if>
 			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>

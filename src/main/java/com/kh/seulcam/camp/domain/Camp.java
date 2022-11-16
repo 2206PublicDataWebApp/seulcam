@@ -1,5 +1,6 @@
 package com.kh.seulcam.camp.domain;
 
+
 public class Camp {
 	private int contentId;
 	private String facltNm;
