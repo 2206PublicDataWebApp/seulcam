@@ -55,12 +55,15 @@ a {
 
 h2 {
     font-size: 16px;
-    margin:0;
-    font-weight:bold;
+    margin: 0;
+    font-weight: bold;
 }
 
 h3 {
     text-align: center;
+    margin: 0;
+    font-size: 1.17em;
+    font-weight: bold;
 }
 
 li {
@@ -123,6 +126,7 @@ header {
     width: 25px;
     height: 25px;
 }
+
 .home-layout {
     display: flex;
     position: absolute;
@@ -390,6 +394,22 @@ button {
     font-weight: 600;
 }
 
+.nocamp{
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    }
+    
+.campListBtn {
+    margin: 10px;
+    padding: 6px 30px 5px 30px;
+    color: #0078ff;
+    border: 1px solid #0078ff;
+    border-radius: 5px;
+}
+
 
 /* footer */
 footer {
@@ -471,9 +491,6 @@ footer {
  	height: 2px;
     background-color: #f1f1f1;
 }
-.chkcolor{
-color:#0078ff;
-}
     </style>
 <body>
     <div class="body-wrapper">
@@ -485,7 +502,7 @@ color:#0078ff;
                             <img src="/resources/images/back_arrow.png">
                         </a>
                     </div>
-                    <h2>취소 주문내역</h2>
+                    <h2>취소/환불 주문내역</h2>
                     <div class="home-layout">
                         <button class="go-home" onclick="location.href='/';">
                             <img src="/resources/images/home.png">
@@ -500,56 +517,27 @@ color:#0078ff;
 				<table class="menu-tbl">
 					<tr>
 						<td>
-						<c:if test="${dirivaryStatus eq '전체' }">
-							<ul onclick="location.href='/order/complete/Cancle/list'">
-								<li class="bold chkcolor" >${count3 }</li>
-								<li class="chkcolor">전체</li>
-							</ul>
-						</c:if>
-						<c:if test="${dirivaryStatus ne '전체' }">
 							<ul onclick="location.href='/order/complete/Cancle/list'">
 								<li class="bold" >${count3 }</li>
 								<li>전체</li>
 							</ul>
-						</c:if>
 						</td>
 						<td>
-						<c:if test="${dirivaryStatus eq '구매취소' }">
-							<ul onclick="cngDel('구매취소')">
-							<!-- <li class="bold" id="count5"></li> -->
-							<li class="bold chkcolor">${count1 }</li> 
-								<%-- <li class="bold">${count5 }</li> --%>
-								<li class="chkcolor">구매취소</li>
-							</ul>
-						</c:if>
-						<c:if test="${dirivaryStatus ne '구매취소' }">
 							<ul onclick="cngDel('구매취소')">
 							<!-- <li class="bold" id="count5"></li> -->
 							<li class="bold">${count1 }</li> 
 								<%-- <li class="bold">${count5 }</li> --%>
 								<li>구매취소</li>
 							</ul>
-						</c:if>
 						</td>
 						<td>
-						<c:if test="${dirivaryStatus eq '환불완료' }">
 							<ul onclick="cngDel('환불완료')">
 							<!-- <li class="bold" id="count5"></li> -->
-							<li class="bold chkcolor" >${count2 }</li> 
-								<%-- <li class="bold">${count5 }</li> --%>
-								<li class="chkcolor">환불완료</li>
-							</ul>
-						</c:if>
-						<c:if test="${dirivaryStatus ne '환불완료' }">
-							<ul onclick="cngDel('환불완료')">
-							<!-- <li class="bold" id="count5"></li> -->
-							<li class="bold" >${count2 }</li> 
+							<li class="bold">${count2 }</li> 
 								<%-- <li class="bold">${count5 }</li> --%>
 								<li>환불완료</li>
 							</ul>
-						</c:if>
 						</td>
-						
 					</tr>
 				</table>
 			</div>
@@ -631,7 +619,7 @@ color:#0078ff;
             <c:if test="${empty oList}">
                <div class="product-box nocamp">
                     <h3>주문 내역이 없습니다.</h3>
-                    <p style="color: gray;">멋진 캠핑용품을 쇼핑해보세요</p>
+                    <p style="color: gray; margin-bottom: 0;">멋진 캠핑용품을 쇼핑해보세요</p>
                     <a href="/product/newArrivalList" class="campListBtn">쇼핑하러가기</a>    
                     
                 </div>
@@ -664,7 +652,8 @@ function cngDel(msg){
 		type:"post",
 		data:{"orderNo":orderNo},
 		success:function(data){
-			alert ("구매가 확정되었습니다.");
+			alert ("구매가 확정되었습
+					니다.");
 			location.replace("/order/complete/list.kh");
 			
 		},

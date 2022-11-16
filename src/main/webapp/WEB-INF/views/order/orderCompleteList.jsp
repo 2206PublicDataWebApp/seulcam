@@ -352,6 +352,22 @@ button {
     font-weight: 600;
 }
 
+.nocamp{
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    }
+    
+.campListBtn {
+    margin: 10px;
+    padding: 6px 30px 5px 30px;
+    color: #0078ff;
+    border: 1px solid #0078ff;
+    border-radius: 5px;
+}
+
 
 /* footer */
 footer {

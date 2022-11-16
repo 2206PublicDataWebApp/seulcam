@@ -26,6 +26,14 @@ body {
 	background-color: #f1f1f1;
 }
 
+th {
+	text-align: center;
+}
+
+td {
+	text-align: center;
+}
+
 header {
 	position: fixed;
 	left: 0px;
@@ -109,7 +117,7 @@ header {
 	font-weight:bold;
 	font-size:20px;
 	height:50px;
- 	padding-top:20px; 
+ 	padding-top:10px; 
 }
 .pagination{
         justify-content: center;
