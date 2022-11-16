@@ -58,4 +58,16 @@ public interface CampStore {
 
     public Integer selectMinPrice(SqlSession session, int contentId);
 
+    public List<CampLike> selectLikeList(SqlSession session, String memberId);
+
+    public List<CampReview> selectMyCampReview(SqlSession session, String memberId);
+
+    public int siteRemoveUpdate(SqlSessionTemplate session, int siteNo);
+
+    public Integer myCampReviewCounts(SqlSessionTemplate session, String memberId);
+
+    public List<Camp> selectAllCamp(SqlSessionTemplate session);
+
+    public int updateBlog(SqlSessionTemplate session, Camp camp);
+
 }

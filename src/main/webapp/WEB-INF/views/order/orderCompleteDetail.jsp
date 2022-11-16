@@ -262,7 +262,24 @@ color:#0078ff;
 height:25px;
 width:160px
 }
+.footer-btn {
+   position: fixed;
+	display: flex;
+	float: left;
+    bottom: 0;
+    left: 50%;
+    z-index: 11;
+    background: #fff;
+	height: 53px;
+    width: 100%;
+    max-width: 768px;
+    transform: translateX(-50%);
+	cursor: pointer;
+}
 
+.btnn{
+	width:100%;
+}
 
 
 </style>
@@ -287,6 +304,7 @@ width:160px
 		
 		<hr>
 		<div>
+		<c:if test="${order.dirivaryStatus eq '구매확정'}"> 
 		<c:forEach items="${oList}" var="order" varStatus="i">
 		<c:forEach items="${pList}" var="product" varStatus="p">
 		<c:if test="${order.productNo eq product.productNo }">
@@ -317,10 +335,13 @@ width:160px
                         </div>
                         <div class="option-value">
                             <span>수량:<span id="order_count${i.count }" class="order_count">${order.orderCount}</span>개</span>
+                       		
+                       		 <span><button  style='float: right' class="btn btn-secondary btn-sm"  onclick="reviewRegist(${product.productNo })">후기작성</button></span>
+                       		
+                           
                         </div>
                         <div class="item-amount-wrap">
                             <div class="item-amountc">
-                                
                            
                             </div>
                         </div>
@@ -349,6 +370,48 @@ width:160px
 					<td><span id="order_price${i.count }" class="order_price" data-value="1000">${product.productPrice }</span></td>
 				</tr>
 			</table> --%>
+						</c:if>
+						</c:forEach>
+						</c:forEach>
+						</c:if> 
+		<c:forEach items="${oList}" var="order" varStatus="i">
+		<c:forEach items="${pList}" var="product" varStatus="p">
+		<c:if test="${order.productNo eq product.productNo }">
+			  <div class="product-box" >
+                     
+                 
+                    <div class="order-thumbnail">
+                        <div class="thumbnail-box">
+                            <a href="#" class="thumbnail-link"  onclick="location.href='#'">
+                                <img class="thumbnail-image" id="img${i.count }" alt="상품이미지" src="/resources/puploadFiles/${product.mainFileRename}" ">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product">
+                            <div class="brand-info">
+                                <div class="a-wrap">
+                                    <span class="product-name"id="order_product${i.count}">${product.productName }</span>
+                                            <span class="product-option">${product.brandName }/ <span class="product-option"><b>${product.productColor }</b></span></span>
+                                </div>
+                            </div>
+                            <span class="brand-name"><b><span id="order_price${i.count }" class="order_price" >${product.productPrice}</span></b>
+                            </span>
+                        </div>
+                        <div class="option-value">
+                            <span>수량:<span id="order_count${i.count }" class="order_count">${order.orderCount}</span>개</span>
+                       		
+                       		
+                           
+                        </div>
+                        <div class="item-amount-wrap">
+                            <div class="item-amountc">
+                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			
 						</c:if>
 						</c:forEach>
 						</c:forEach>
@@ -389,6 +452,7 @@ width:160px
 		<span class="right total-Price" id="totalPrice">${orderPay.payPrice }</span>
 		</div>
 		</div>
+		<div class="footer-btn">
 		<c:if test="${order.dirivaryStatus ne'환불완료' and order.dirivaryStatus ne'구매취소' }">
 		<div class="btnn">
 		<button type="button" class="submit-button1" onclick="location.href='/order/complete/list.kh'" >주문 내역 리스트 보기</button>
@@ -401,12 +465,18 @@ width:160px
 		<button type="button" class="submit-button2" onclick="location.href='/product/top20List'" >쇼핑하러 가기</button>
 		</div>
 		</c:if>
+		</div>
 		
 		</div>
 	</div>
 	
 	
 	<script >
+	
+	function reviewRegist(pNo){
+	      location.href="/product/reviewRegist?productNo="+pNo;
+		}
+	
 	<c:forEach items="${oList}" var="order" varStatus="i">
 	var productOnePrice=Number($('#order_price${i.count }').text());
 	$('#order_price${i.count}').html(productOnePrice.toLocaleString('ko-KR')+"원");

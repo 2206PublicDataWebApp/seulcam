@@ -17,6 +17,7 @@ body {
         font-size: 14px;
        	color: #000;
 		background-color: #f1f1f1;
+		height:100%;
     }
     header {
         position: fixed;
@@ -34,10 +35,12 @@ body {
  		max-width: 768px;
         margin: 0 auto; 
         background-color: white;
-        min-height: 100vh;
-}
+        min-height: 100%;
+   		position: relative;
+   		}
 .contents{
-padding-top: 50px;
+	padding-top: 50px;
+   padding-bottom: 53px;
 }
 .title {
 	display: flex;
@@ -177,6 +180,23 @@ width:100%;
 .msg-box{
 padding-top:10px;
 }
+.footer-btn {
+   position: fixed;
+	display: flex;
+	float: left;
+    bottom: 0;
+    left: 50%;
+    z-index: 11;
+    background: #fff;
+	height: 53px;
+    width: 100%;
+    max-width: 768px;
+    transform: translateX(-50%);
+	cursor: pointer;
+}
+.submit-btn{
+	width:100%;
+}
 </style>
 <body>
 	<div class="wrap">
@@ -220,8 +240,10 @@ padding-top:10px;
 		
 		</div>
 		
-		<div>
+		<div class="footer-btn">
+		<div class="submit-btn">
 		<button class="submit-button1" style="border-left:solid 1px #fff"onclick="location.href='/order/complete/list.kh?memberId=${order.memberId}'" >구매내역 보기</button><button class="submit-button2" onclick="location.href='/product/top20List'">쇼핑 홈 가기</button>
+		</div>
 		</div>
 		
 

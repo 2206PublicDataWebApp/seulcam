@@ -62,11 +62,11 @@
 	         </c:if>
         </ul>
             
-    </article>  
+    </article>
+
 </body>
-<footer>
-<%-- <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> --%>
-</footer>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+
 <script>
 	function searchResult(){
 		

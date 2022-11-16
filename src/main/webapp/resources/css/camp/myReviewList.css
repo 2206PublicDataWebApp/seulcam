@@ -1,0 +1,249 @@
+@charset "UTF-8";@charset "UTF-8";
+a {
+    text-decoration: none; 
+    color: black;
+ }
+ 
+ h2 {
+     font-size: 16px;
+ }
+ 
+ h3 {
+     text-align: center;
+ }
+ 
+ li {
+     list-style: none;
+ }
+ 
+body{
+	margin:0px;
+	position: relative;
+	background-color:#f1f1f1;
+}
+.body-wrapper, .header-wrapper{
+	position: relative;
+	max-width:768px;
+	
+}
+.body-wrapper{
+    max-width: 768px;
+    margin: 0 auto;
+    background-color: white;
+    min-height: 100vh;
+	margin:50px auto auto auto;
+}
+.layout-wrapper{
+	background-color:white;
+	padding: 5%;
+}
+a{
+	text-decoration:none;
+}
+
+.go-back {
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+
+.go-back img {
+    width: 25px;
+    height: 25px;
+}
+.logo {
+    width: 95px;
+    height: 40px;
+}
+
+.back-layout {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 5px;
+    left: 5px;
+}
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    margin: 0 auto;
+    height: 50px;
+    position: relative;
+    max-width:768px;
+   
+}
+header {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    max-width: 100%;
+    margin: 0 auto;
+    max-width:768px;
+}
+#header-block {
+    height: 50px;
+     max-width:768px;
+}
+h2 {
+    font-size: 18px;
+}
+button {
+    border: 0;
+    background: 0 0;
+    cursor: pointer;
+}
+header > h1 {
+    font-size: 0;
+}
+.star {
+    position: relative;
+    font-size: 1.5rem;
+    color: #ddd;
+  }
+  
+  .star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .star span {
+    width: 100%;
+    position: absolute; 
+    left: 0;
+    color: red;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  .cm-line{
+      height: 10px;
+    background-color: #f1f1f1;
+    width:100%;
+  }
+  .review-information{
+    display: flex;
+    margin: 0 15px 20px;
+    border-bottom: 1px solid #f1f1f1;
+    justify-content: space-between;
+}
+.review-product-information {
+    cursor: pointer;
+    display: flex;
+    max-height: 54px;
+    align-items: center;
+}
+.review-product-information_thumbnail >img{
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    border-radius: 4px;
+    transform: translate(-50%,-50%);
+    -o-object-fit: contain;
+    object-fit: contain;
+
+}
+.review-product-information_thumbnail{
+	overflow: hidden;
+    position: relative;
+    width: 60px;
+    height: 40px;
+}
+.review-information>span{
+	align:right;
+	margin-top:15px;
+}
+.review-product-information-text{
+	
+	width: calc(100% - 55px);
+	    margin-left: 10px;
+	    font-size: 12px;
+}
+.review-grade{
+	margin-top:10px;
+    height: 20px;
+    padding-bottom: 10px;
+    width:90%;
+}
+.review-contents{
+	font-size:14px;
+	height: 50px;
+}
+.button{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 16px;
+}
+#review_modi{
+	float:right;
+	background-color: #0078ff;
+    color: #fff;
+     width:15%;
+     height:25px;
+       border-radius: 4px;
+}
+#review_del{
+    float:right;
+	background-color: #ccc;
+    color: #fff;
+    border-radius: 4px;
+    height:25px;
+    width:100px;
+}
+.image_panel > img{
+	width:120px;
+	height:120px;
+}
+.image_panel > img:hover{
+	width: auto;
+	height:auto;
+}
+.product-box {
+    display: flex;
+    padding: 24px 15px 20px;
+    cursor: pointer;
+    margin: 10px;
+    box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 25%);
+}
+.nocamp{
+    display: flex;
+height: 300px;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+font-size: 14px;
+}
+.nocamp h3,p{
+    margin: 0;
+    margin-bottom: 3px;
+}
+.campListBtn{
+    margin: 10px;
+    padding: 6px 30px 5px 30px;
+    color: #0078ff;
+    border: 1px solid #0078ff;
+    border-radius: 5px;
+}
+.campListBtn:hover{
+    color: white;
+    background-color: #0078ff;
+}
+.check-bar {
+    display: flex;
+    padding: 15px 15px 0px 15px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}

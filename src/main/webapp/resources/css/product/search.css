@@ -25,6 +25,7 @@ body{
 	    font-size: 12px;
     font-family: 'futura', 'Noto Sans CJK KR',sans-serif;
     overflow-x: hidden;
+    margin-top:56px;
         width: 100%;
     height: 100%;
 }
@@ -228,4 +229,10 @@ article.head > #sortCdDiv >form >select{
 }
 p.color{
 	display:inline;
+}
+
+@media (max-width: 768px) {
+article.list > ul > li {
+    width: 50%;
+}
 }

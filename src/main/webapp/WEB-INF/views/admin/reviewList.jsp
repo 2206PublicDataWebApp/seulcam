@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/resources/css/sb-admin-2.min.css">
     <link rel="stylesheet" href="/resources/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/resources/css/product/adminReviewList.css">
     <link rel="stylesheet" href="/resources/css/fonts.css">
 	<link rel="stylesheet" href="/resources/css/memberCommon.css">
     <link rel="shortcut icon" href="/resources/images/faviconlogo.ico" type="image/x-icon">
@@ -207,13 +208,18 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach items="${rList}" var="review" varStatus="i">
-                                        <tr>
+                                        <tr id="trtr">
                                         	<td id="reivewNo">${review.reviewNo}</td>
                                         
                                         	<td>${review.productNo}</td>
                                         	<td>${review.memberId}</td>
                                         	<td>${review.reviewGrade}</td>
-                                        	<td id="reviewContents"><a href="#">${review.reviewTitle}</a></td>
+                                        	
+                                        		<td id="reviewTitle"><a href="#popup" id="popup">${review.reviewTitle}</a>
+                                        		
+                                        		</td>
+                                        	
+                                     
                                        
                                         	<c:if test="${review.reviewFileName1 ne null or reviewFileRename2 ne null or reviewFileRename1 ne null}">
                                         		<td>O</td>
@@ -225,6 +231,9 @@
                                         	<td style="text-align:center"><input type="checkbox" class="delCheck" name="delCheck"></td>
                                         	
                                         </tr>
+<%--                                         <tr >
+                                        	<td colspan="8" id="reviewContents" >${review.reviewContents}</td>
+                                        </tr> --%>
                                         </c:forEach>
                                     </tbody>
                                 </table>
@@ -290,7 +299,9 @@
 				}); 
 		}
     }
-    
+/*     $("#popup").click(function(){
+    	console.log(this.parents());
+    }); */
     </script>
 </body>
 

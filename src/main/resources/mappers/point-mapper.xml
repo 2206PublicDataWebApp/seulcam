@@ -26,7 +26,11 @@
   
   <select id="selectPrintPointList" resultMap="pointResultMap">
   SELECT *FROM POINT_TBL
-  WHERE MEMBER_ID=#{memberId}
+ WHERE MEMBER_ID=#{memberId}
+  </select>
+  
+  <select id="selectTotalCount" resultType="_int">
+  SELECT COUNT(*) FROM POINT_TBL WHERE MEMBER_ID=#{memberId}
   </select>
   
   

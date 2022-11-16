@@ -21,13 +21,15 @@ public class CampSite {
     private String siteThumbnailPath;
     private String siteThumbnailRename;
     private Date sCreateDate;
+    private String sStatusUse;
+    private String sStatusDel;
     
     public CampSite() {}
 
     public CampSite(int siteNo, String siteName, int campId, String campName, String siteChar, String siteInfo,
             String siteIntro, int standardPeople, int maxPeople, int excessCharge, int inTime, int outTime,
             int sitePrice, int siteCount, String siteThumbnailName, String siteThumbnailPath,
-            String siteThumbnailRename, Date sCreateDate) {
+            String siteThumbnailRename, Date sCreateDate, String sStatusUse, String sStatusDel) {
         this.siteNo = siteNo;
         this.siteName = siteName;
         this.campId = campId;
@@ -46,6 +48,8 @@ public class CampSite {
         this.siteThumbnailPath = siteThumbnailPath;
         this.siteThumbnailRename = siteThumbnailRename;
         this.sCreateDate = sCreateDate;
+        this.sStatusUse = sStatusUse;
+        this.sStatusDel = sStatusDel;
     }
 
     @Override
@@ -55,7 +59,8 @@ public class CampSite {
                 + standardPeople + ", maxPeople=" + maxPeople + ", excessCharge=" + excessCharge + ", inTime=" + inTime
                 + ", outTime=" + outTime + ", sitePrice=" + sitePrice + ", siteCount=" + siteCount
                 + ", siteThumbnailName=" + siteThumbnailName + ", siteThumbnailPath=" + siteThumbnailPath
-                + ", siteThumbnailRename=" + siteThumbnailRename + ", sCreateDate=" + sCreateDate + "]";
+                + ", siteThumbnailRename=" + siteThumbnailRename + ", sCreateDate=" + sCreateDate + ", sStatusUse="
+                + sStatusUse + ", sStatusDel=" + sStatusDel + "]";
     }
 
     public int getSiteNo() {
@@ -201,7 +206,23 @@ public class CampSite {
     public void setsCreateDate(Date sCreateDate) {
         this.sCreateDate = sCreateDate;
     }
-    
+
+    public String getsStatusUse() {
+        return sStatusUse;
+    }
+
+    public void setsStatusUse(String sStatusUse) {
+        this.sStatusUse = sStatusUse;
+    }
+
+    public String getsStatusDel() {
+        return sStatusDel;
+    }
+
+    public void setsStatusDel(String sStatusDel) {
+        this.sStatusDel = sStatusDel;
+    }
+
     
     
     

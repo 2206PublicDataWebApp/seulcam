@@ -1,11 +1,11 @@
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 }
 
 ul {
-    padding-left: 0;
+	padding-left: 0;
 }
 
 h2 {
@@ -23,11 +23,13 @@ hr {
 p {
 	margin-bottom: 4px;
 }
+
 /* 헤더 - 바디 css */
 body {
 	font-size: 14px;
 	color: #000;
 }
+
 header {
 	position: fixed;
 	left: 0px;
@@ -36,8 +38,9 @@ header {
 	height: 50px;
 	background-color: rgb(255, 255, 255);
 	z-index: 200;
-	margin: 0 auto; 
+	margin: 0 auto;
 }
+
 .header-wrapper {
 	display: flex;
 	align-items: center;
@@ -47,13 +50,15 @@ header {
 	height: 50px;
 	position: relative;
 }
+
 .body-wrapper {
 	max-width: 770px;
-    margin: 0 auto; 
-    background-color: white;
-    min-height: 100vh;
+	margin: 0 auto;
+	background-color: white;
+	min-height: 100vh;
 
 }
+
 /* 컨텐츠 css */
 
 .campListMain {
@@ -73,51 +78,62 @@ header {
 	border-bottom: 20px solid rgb(243, 243, 243);
 }
 
-.search_area h2{
-	
+.search_area h2 {
+
 	padding-bottom: 15px;
 	text-align: center;
 }
-.search_area p{
-	
+
+.search_area p {
+
 	font-size: 20px;
 }
+
 select {
-    font-size: 1.1rem;
-    padding: 2px 5px;
+	font-size: 1.1rem;
+	padding: 2px 5px;
 	width: 100%;
 }
+
 .searchCity {
 	margin: auto;
 	padding-bottom: 10px;
 	width: 100%;
 }
+
 .switch_area {
 	padding-bottom: 10px;
 }
-.input-group{
+
+.input-group {
 	margin: auto;
 }
+
 .list_area {
 	padding-left: 10px;
 	padding-right: 10px;
 	margin: auto;
-	
+
 }
+
 .switch_area #switchName {
 	margin: auto;
 	font-size: 20px;
 }
+
 .switch_area #switch {
 	margin: auto;
 	float: right;
 }
+
 .camp_List {
 	padding-bottom: 8px;
 }
+
 .tt {
 	margin: 5px 0px;
 }
+
 .word_area {
 	padding-top: 10px;
 }
@@ -132,72 +148,88 @@ select {
 
 .card-text:last-child {
 	margin-bottom: 5px;
-	
+
 }
 
 #searchResult {
 	font-size: 15px;
 }
-.likeBtn{
+
+.likeBtn {
 	min-width: 50px;
 	max-width: fit-content;
-    display: flex;
-    align-items: center;
-    color: #dc3545;
-    border: 2px solid #dc3545;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.likeBtn:hover{
-    background-color: #dc3545;
-        color: #f1f1f1;
+	display: flex;
+	align-items: center;
+	color: #dc3545;
+	border: 2px solid #dc3545;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
-.alreadyLike{
-    background-color: #dc3545;
-        color: #f1f1f1;
+.likeBtn:hover {
+	background-color: #dc3545;
+	color: #f1f1f1;
 }
+
+.alreadyLike {
+	background-color: #dc3545;
+	color: #f1f1f1;
+}
+
+.alreadyLike:hover {
+	border: 2px solid #9b1b28;
+	background-color: #9b1b28;
+	color: #f1f1f1;
+}
+
 .iZone {
-    display: flex;
+	display: flex;
 }
+
 .heart {
-    margin-top: 2px;
-    margin-left: 8px;
-    margin-right: 2px;
+	margin-top: 2px;
+	margin-left: 8px;
+	margin-right: 2px;
 }
-.likeCount{
-    font-size: 13pt; 
-    margin-left: 5px; 
-    margin-right: 6px; 
-    margin-top: 3px;
+
+.likeCount {
+	font-size: 13pt;
+	margin-left: 5px;
+	margin-right: 6px;
+	margin-top: 3px;
 }
-.starCzone{
+
+.starCzone {
 	max-width: fit-content;
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    color: #dc3545;
-    border: 2px solid #dc3545;
-    border-radius: 5px;
+	margin-left: 10px;
+	display: flex;
+	align-items: center;
+	color: #dc3545;
+	border: 2px solid #dc3545;
+	border-radius: 5px;
 }
-.starC{
-    margin-left: 8px;
-    margin-right: 2px;
+
+.starC {
+	margin-left: 8px;
+	margin-right: 2px;
 }
-.starCount{
-    font-size: 13pt; 
-    margin-left: 5px; 
-    margin-right: 6px; 
-    margin-top: 3px;
+
+.starCount {
+	font-size: 13pt;
+	margin-left: 5px;
+	margin-right: 6px;
+	margin-top: 3px;
 }
+
 .booking {
 	display: flex;
 	height: 100%;
 	font-size: 16px;
 	padding-top: 20px;
 	align-items: flex-end;
-    justify-content: flex-end;
+	justify-content: flex-end;
 }
-.booking p{
+
+.booking p {
 	margin: 0;
 }

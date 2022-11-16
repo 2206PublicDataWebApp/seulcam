@@ -20,16 +20,23 @@ public class PointServiceImpl implements PointService {
 	@Autowired
 	private SqlSession session;
 
-	@Override
-	public List<Point> printAllPointList(String memberId) {
-		List<Point>pList=pStore.printAllPointList(session,memberId);
-		return pList;
-	}
 
 	@Override
 	public Member printTotalPoint(String memberId) {
 		Member totalPoint=pStore.printTotalPoint(session,memberId);
 		return totalPoint;
+	}
+
+	@Override
+	public int getTotalCount(String memberId) {
+		int totalCount=pStore.getTotalCount(session,memberId);
+		return totalCount;
+	}
+
+	@Override
+	public List<Point> printAllPointList(String memberId, int currentPage, int boardLimit) {
+		List<Point>pList=pStore.printAllPointList(session,memberId,currentPage,boardLimit);
+		return pList;
 	}
 
 

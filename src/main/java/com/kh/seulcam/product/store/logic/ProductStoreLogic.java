@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -78,8 +79,13 @@ public class ProductStoreLogic implements ProductStore {
 	}
 
 	@Override
-	public List<Review> selectReviewByProductNo(SqlSession session, Integer productNo) {
-		List<Review> rList=session.selectList("ProductReviewMapper.selectReviewByProductNo", productNo);
+	public List<Review> selectReviewByProductNo(SqlSession session, Integer productNo, int currentPage, int boardLimit) {
+		int offset = (currentPage-1)*boardLimit;
+		RowBounds rowBounds = new RowBounds(offset, boardLimit);
+		
+		
+		
+		List<Review> rList=session.selectList("ProductReviewMapper.selectReviewByProductNo", productNo, rowBounds);
 		return rList;
 	}
 
@@ -182,8 +188,14 @@ public class ProductStoreLogic implements ProductStore {
 	}
 
 	@Override
-	public void deleteDetail(SqlSession session, Detail detail) {
-		session.delete("ProductMapper.deleteDetail", detail);
+	public void deleteDetail(SqlSession session, Detail dt) {
+		session.delete("ProductMapper.deleteDetail", dt);
+	}
+
+	@Override
+	public int selectReviewTotalCount(SqlSession session, Integer productNo) {
+		int totalCount = session.selectOne("ProductReviewMapper.selectReviewTotalCount", productNo);
+		return totalCount;
 	}
 
 

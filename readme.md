@@ -1,6 +1,6 @@
 <h1 align="center">🏕️슬기로운 캠핑 생활</h1>
 <p align="center">
-  <img src="./readme_assets/메인에_들어갈_이미지_이름.png">
+  <img src="./readme_assets/main.PNG">
 </p>
 
 
@@ -10,7 +10,7 @@
 
 <h2 align="center">👪멤버 구성</h2>
 <p align="center">
-  <img src="./readme_assets/멤버 구성에_들어갈_이미지_이름.png">
+  <img src="./readme_assets/team-member.PNG">
 </p>
 <h2 align="center">🛠️개발 환경</h2>
 <p align="center">
@@ -21,3 +21,7 @@
   <img src="./readme_assets/기술 스택에_들어갈_이미지_이름.png">
 </p>
 <h2 align="center">📱주요 기능 및 상세</h2>
+
+
+<h2 align="center">✔︎레퍼런스</h2>
+<p align="center">이 프로젝트는 무신사와 아더에러 사이트를 참고하여 학습용으로 작업 되었습니다.</p>

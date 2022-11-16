@@ -22,12 +22,22 @@ p{
 	font-size:14px;
 	margin-top: 3px;
 }
+body > header, body > nav, body > section{
+    width: 100%;
+    position: relative;
+}
+body > footer{
+	width:768px;
+	margin:auto;
+	position: relative;
+}
 .detail_menu, .shop.detail{
 	max-width:768px;
     margin: 0 auto;
 /* 	border-right:1px solid black;*/
 
 	box-sizing: border-box;
+
 	
 }
 .shop.detail{
@@ -123,11 +133,9 @@ section.shop.detail > article.order .cont >.product_additional > dl > dt.materia
 }
 body > section.detail_menu {
     font-size: 14px;
+    min-height:400px;
 }
-body > header, body > nav, body > section, body > footer {
-    width: 100%;
-    position: relative;
-}
+
 body > section.detail_menu div.ac {
     width: 100%;
     
