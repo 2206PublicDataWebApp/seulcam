@@ -456,7 +456,7 @@ public class MemberController {
 		try {
 			int result = mService.modifyMemberPw(member);
 			if(result > 0) {
-				mv.setViewName("redirect:/member/loginView");
+				mv.setViewName("redirect:/");
 			}else {
 				mv.addObject("msg", "회원 정보 수정 실패!");
 				mv.setViewName("common/errorPage");
