@@ -1,9 +1,11 @@
 package com.kh.seulcam.cart.controller;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.Session;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +36,16 @@ public class CartController {
 	@RequestMapping(value="/cart/cart.kh", method=RequestMethod.GET)
 	public ModelAndView viewCart(
 			ModelAndView mv
-			,HttpSession session) {
+			,HttpSession session
+			, HttpServletResponse response)throws Exception {
 		Member memberId = (Member)session.getAttribute("loginUser");
+		/*
+		 * if(member == null) { response.setContentType("text/html; charset=UTF-8");
+		 * PrintWriter out = response.getWriter();
+		 * out.println("<script>alert('로그인 해주세요.'); history.go(-1);</script>");
+		 * out.flush(); }else {
+		 */
+		//String memberId=member.getMemberId();
 		List<Cart> cList = cService.printAllCart(memberId);
 		if(!cList.isEmpty()) {
 			List<Product>pList = new ArrayList(); 
@@ -45,7 +55,7 @@ public class CartController {
 				 List<Product>ppList= cService.printAllProduct(productNo);
 				pList.addAll(ppList);
 				 	
-			  }
+		  }
 			 int count=pList.size();
 			 int totalPrice=0;
 			 for(int i=0;i<pList.size();i++) {
@@ -59,9 +69,9 @@ public class CartController {
 			mv.addObject("cList",cList);
 		}
 		mv.setViewName("cart/cart");
-		
-		
+		//}
 		return mv;
+		
 	}
 
 	

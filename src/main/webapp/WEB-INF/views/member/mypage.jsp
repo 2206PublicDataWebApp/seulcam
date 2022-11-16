@@ -62,19 +62,19 @@
 
             <div class="order-list">
                 <a class="order-box" href="/order/delliveryMenu?dirivaryStatus=입금확인">
-                    <p class="order-number">0</p>
-                    <p class="order-text">입금<br>결제</p>
+                    <p class="order-number">${count1 }</p>
+                    <p class="order-text">입금/결제</p>
                 </a>
 
                 <a class="order-box" href="/order/delliveryMenu?dirivaryStatus=배송중">
-                    <p class="order-number">0</p>
-                    <p class="order-text">배송 중<br>픽업 대기</p>
+                    <p class="order-number">${count2 }</p>
+                    <p class="order-text">배송 중<br>    </p>
                 </a>
 
 
                 <a class="order-box" href="/order/delliveryMenu?dirivaryStatus=배송완료">
-                    <p class="order-number">0</p>
-                    <p class="order-text">배송 완료<br>픽업 완료</p>
+                    <p class="order-number">${count3 }</p>
+                    <p class="order-text">배송 완료<br>    </p>
                 </a>
             </div>
         </div>
