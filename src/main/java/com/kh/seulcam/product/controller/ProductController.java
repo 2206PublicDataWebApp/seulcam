@@ -134,6 +134,7 @@ public class ProductController {
 		System.out.println(memberId);
 		mv.addObject("productName", product.getProductName());
 		mv.addObject("memberId", memberId);
+		mv.addObject("productNo",productNo);
 		return mv;
 	}
 	//리뷰등록
@@ -144,9 +145,9 @@ public class ProductController {
 			,@RequestParam(value="myFile", required=false) List<MultipartFile> mfList
 			,HttpServletRequest request
 			,@RequestParam(value="memberId", required=false) String memberId
+			,@RequestParam ("productNo")Integer productNo
 			) {
-		System.out.println((Integer)session.getAttribute("productNo"));
-		int productNo=(Integer)session.getAttribute("productNo");
+		
 		review.setProductNo(productNo);
 		try {
 			for(int i=0; i<mfList.size(); i++) {

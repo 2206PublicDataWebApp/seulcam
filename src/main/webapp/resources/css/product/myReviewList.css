@@ -1,9 +1,13 @@
 @charset "UTF-8";@charset "UTF-8";
-
+*{
+	box-sizing: border-box;
+}
 body{
-	margin:0px;
-	position: relative;
-	background-color:#f1f1f1;
+	    font-size: 14px;
+    line-height: 1.5;
+    color: #000;
+    background-color: #f1f1f1;
+}
 }
 .body-wrapper, .header-wrapper{
 	position: relative;
@@ -11,8 +15,13 @@ body{
 	
 }
 .body-wrapper{
-	margin:50px auto auto auto;
+	    max-width: 768px;
+    margin: 60px auto;
+    background-color: white;
+    min-height: 100vh;
 }
+
+
 .layout-wrapper{
 	background-color:white;
 	padding: 5%;
@@ -33,6 +42,20 @@ a{
     width: 25px;
     height: 25px;
 }
+.go-home {
+    display: inline-flex;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+.home-layout {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    top: 8px;
+    right: 5px;
+}
 .logo {
     width: 95px;
     height: 40px;
@@ -49,7 +72,6 @@ a{
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 100%;
     margin: 0 auto;
     height: 50px;
     position: relative;
@@ -194,4 +216,39 @@ header > h1 {
 .image_panel > img:hover{
 	width: auto;
 	height:auto;
+}
+
+.noreview{
+	    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+        margin: 10px;
+    box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 25%);
+}
+
+h3{
+	    text-align: center;
+}
+.goreview{
+	  margin: 10px;
+    padding: 6px 30px 5px 30px;
+    color: #0078ff;
+    border: 1px solid #0078ff;
+    border-radius: 5px;
+}
+
+
+  .check-bar {
+    display: flex;
+    padding: 15px 15px 0px 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+img {
+    max-width: 100%;
+    border: none;
+    line-height: 0;
+    vertical-align: top;
 }

@@ -28,10 +28,10 @@
 </header>
 <body>
  <section class="review" >
- <form action="/product/reviewRegister" enctype="multipart/form-data" method="post"> 
+ <form action="/product/reviewRegister" enctype="multipart/form-data" method="post">
+ <input type="hidden" name="productNo" value="${productNo }"> 
 
  <input type="hidden" value=10 name="reviewGrade" id="reviewGrade">  
- <input type="hidden" value='${memberId }' name="memberId">  
 	 	<div class="range">
 	        <span class="number" id="gradeNumber">0</span>
 	        <input type="radio" name="range" id="range10" value=10 />

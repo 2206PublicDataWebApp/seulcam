@@ -16,23 +16,38 @@
     <script src="../../../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
-<header>
-	<div id="header-block">
-          <div class="header-wrapper">
-              <div class="back-layout">
-                  <button class="go-back" onclick="myHome()">
-                      <img src="/resources/images/back_arrow.png">
-                  </button>
-              </div>
-              <h2>
-                  후기내역
-              </h2>
-          </div>
-		<div class="cm-line"></div>
-     </div>
-</header>
-    <div class="body-wrapper">
+ <div class="body-wrapper">
+		<header>
+			<div id="header-block">
+		          <div class="header-wrapper">
+		              <div class="back-layout">
+		                  <button class="go-back" onclick="myHome()">
+		                      <img src="/resources/images/back_arrow.png">
+		                  </button>
+		              </div>
+		              <div class="home-layout">
+                                    <button class="go-home" onclick="location.href='/';">
+                                        <img src="/resources/images/home.png">
+                                    </button>
+                                </div>
+		              <h2>
+		                  후기내역
+		              </h2>
+		          </div>
+				<div class="cm-line"></div>
+		     </div>
+		</header>
+
 	   <section>
+	   <div class="order-check">
+                            <div class="check-bar">
+
+                                <label for="check-all">전체리뷰 <b>
+                                        ${rList.size()}
+                                    </b>개</label>
+                                <!-- <button class="delete-btn">선택</button> -->
+                            </div>
+                        </div>
 		   <c:if test="${!empty rList }">
 		   		<c:forEach var="review" items="${rList }" varStatus="i">
 				       <div class="layout-wrapper">
@@ -87,6 +102,14 @@
 				       <div class="cm-line"></div>
 			       </c:forEach>
 			</c:if>
+			  <c:if test="${empty rList}">
+                    <div class="product-box noreview">
+                        <h3>작성하신 리뷰가 없습니다.</h3>
+                        <p style="color: gray;">리뷰를 작성해 보세요.</p>
+                        <a href="/order/delliveryMenu?dirivaryStatus=구매확정" class="goreview">구매완료 페이지로 이동</a>
+
+                    </div>
+                </c:if>
 	   </section>
 
 </div>
