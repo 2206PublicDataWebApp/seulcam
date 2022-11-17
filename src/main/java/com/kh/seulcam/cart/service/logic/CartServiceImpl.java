@@ -68,6 +68,12 @@ public class CartServiceImpl implements CartService {
 		return result;
 	}
 
+	@Override
+	public List<Cart> printCart(String memberId) {
+		List<Cart>cList= cStore.printCart(session,memberId);
+		return cList;
+	}
+
 	
 
 }

@@ -62,6 +62,12 @@ public class CartStoreLogic implements CartStore{
 		int result=session.insert("CartMapper.insertProduct",cart);
 		return result;
 	}
+
+	@Override
+	public List<Cart> printCart(SqlSession session, String memberId) {
+		List<Cart>cList = session.selectList("CartMapper.selectAllCart",memberId);
+		return cList;
+	}
 	
 
 }

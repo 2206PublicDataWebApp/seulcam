@@ -110,6 +110,38 @@ public class OrderController {
 		return "success";
 
 	}
+	
+	/*@RequestMapping(value = "/order/payment/complete/mobile", method = RequestMethod.POST)
+	public String orderCompleteMobile(
+			@ModelAttribute Order order,
+			@ModelAttribute OrderPay orderPay,
+			@ModelAttribute Point point
+			) {
+		int result = oService.conpleteOrder(order);
+		int orderNo = order.getOrderNo();
+		String memberId = order.getMemberId();
+		// 주문상품에 주문번호 넣고 주문상태 Y로 바꾸는 코드
+		int result1 = oService.registOrderNo(orderNo, memberId);
+		// 결제테이블에 정보 넣기
+		orderPay.setOrderNo(orderNo);
+		orderPay.setPayType("P");
+		System.out.println(orderPay);
+		int result2 = oService.registOrderPrice(orderPay);
+		// 포인트테이블에 정보 넣기
+		if(point.getPoint() != "") {
+		int result3=oService.registUsePoint(point);
+		}
+		//상품 갯수 카운트 올리기
+		List<OrderProduct>pNoList=oService.plusProduct(orderNo);
+		for (int i = 0; i < pNoList.size(); i++) {
+			int productNo = pNoList.get(i).getProductNo();
+			int result4=oService.plusProductCount(productNo);
+
+		}
+		
+		return String.valueOf(orderNo);
+
+	}*/
 
 	/**
 	 * 
@@ -238,7 +270,6 @@ public class OrderController {
 	int count2=0;
 	int count3=0; 
 	int count4=0; 
-	int count5=0;
 	
 	
 	for (int i = 0; i < oList.size(); i++) { 
@@ -253,18 +284,15 @@ public class OrderController {
 			count3++; 
 			}else if(dStatus.equals("구매확정")) {
 				count4++; 
-				}else if(dStatus.equals("구매취소")) {
-					count5++; 
-					}
+				}
 	}
 	}
-	int count6=count1+count2+count3+count4+count5;
+	int count6=count1+count2+count3+count4;
 	
 	mv.addObject("count1",count1);
 	mv.addObject("count2",count2);
 	mv.addObject("count3",count3);
 	mv.addObject("count4",count4);
-	mv.addObject("count5",count5);
 	mv.addObject("count6",count6);
 	mv.addObject("dirivaryStatus","전체");
 	

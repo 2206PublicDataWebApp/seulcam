@@ -450,7 +450,7 @@ footer {
 				<option  value="" disabled selected hidden>배송시 요청사항을 선택하세요</option>
 				<option>부재 시 경비실에 맡겨주세요</option>
 				<option>부재 시 택배함에 넣어주세요</option>
-				<option>부재 시 집 앞에 넣어주세요</option>
+				<option>부재 시 집 앞에 놓아주세요</option>
 				<option>배송 전 연락 바랍니다.</option>
 			</select>
 			</div>
@@ -645,8 +645,10 @@ footer {
 	if(parseInt(point)>parseInt(userpoint)){
 		alert ("보유 포인트를 초과하였습니다.");
 		pointCancle();
-		
+	}else if(parseInt(point)>parseInt(stringNumberToInt($("#total-price").html()))){
+		alert("결제 금액을 초과 할 수 없습니다.")
 	}
+	
 	else{
 	$("#point-price").html('-'+priceToString(point)+'원');
 	
@@ -680,7 +682,7 @@ footer {
 			Num:createOrderNum(),
 			memberId:$("#memberId").val(),
 			memberName:$("#memberName").text(),
-			name : $("#order_product1").text()+" 외"+${pCount}+"개",
+			name : $("#order_product1").text()+" 외 "+(${pCount}-1)+"개",
 			amount : stringNumberToInt($("#total-price").text()),
 			memberPhone : $("#memberPhone").text(),
 			usePoint : $("#point").val(),
@@ -691,7 +693,7 @@ footer {
 			payPrice : stringNumberToInt($("#total-price").text()),
 			productPrice : stringNumberToInt($("#product_price").text()),
 			orderMainFileRename : $('#img1').attr("src"),
-			orderMainProductName:$("#order_product1").text(),
+			orderMainProductName:$("#order_product1").text()+" 외 "+(${pCount}-1)+"개",
 			point:$("#point").val(),
 			orderMessage:$("#message").val()
 				
@@ -716,7 +718,7 @@ function paymentCard(data) {
 		// 모바일로 결제시 이동페이지
 		const pathName = location.pathname;
 		const href = location.href;
-		const m_redirect = href.replaceAll(pathName, "");
+		const m_redirect = href.replaceAll(pathName, "/order/payment/complete/mobile");
 		
 		var IMP = window.IMP;
 		IMP.init("imp56144003"); 

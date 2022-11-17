@@ -25,5 +25,7 @@ public interface CartStore {
 
 	//장바구니 등록
 	public int registCart(SqlSession session, Cart cart);
+	//장바구니 가져오기(중복확인)
+	public List<Cart> printCart(SqlSession session, String memberId);
 
 }

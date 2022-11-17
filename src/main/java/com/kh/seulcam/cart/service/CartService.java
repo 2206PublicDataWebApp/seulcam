@@ -26,5 +26,8 @@ public interface CartService {
 
 	//장바구니 등록
 	public int registCart(Cart cart);
+	
+	//장바구니 리스트 가져오기
+	public List<Cart> printCart(String memberId);
 
 }

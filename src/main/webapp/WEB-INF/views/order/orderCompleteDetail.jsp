@@ -440,32 +440,11 @@ width:160px
                     </div>
                 </div>
 			
-			
-			<%-- <table class="list_table">
-				<tr>
-					<td rowspan="4">
-					<img class="p-img" alt="상품이미지" src="/resources/puploadFiles/${product.mainFileRename}" ></td>
-					<td id="order_product${i.count }"style="font-weight:bold">${product.productName }</td>
-					<td align="right">
-						
-					</td>
-				</tr>
-
-				<tr>
-					<td>수량</td>
-					<td>
-						<span id="order_count${i.count }" class="order_count">${order.orderCount}</span>개
-					</td>
-				</tr>
-				<tr>
-					<td>가격</td>
-					<td><span id="order_price${i.count }" class="order_price" data-value="1000">${product.productPrice }</span></td>
-				</tr>
-			</table> --%>
 						</c:if>
 						</c:forEach>
 						</c:forEach>
 						</c:if> 
+	   <c:if test="${order.dirivaryStatus ne '구매확정'}"> 	
 		<c:forEach items="${oList}" var="order" varStatus="i">
 		<c:forEach items="${pList}" var="product" varStatus="p">
 		<c:if test="${order.productNo eq product.productNo }">
@@ -507,6 +486,7 @@ width:160px
 						</c:if>
 						</c:forEach>
 						</c:forEach>
+					</c:if>
 		</div>
 		<hr>
 		

@@ -222,11 +222,16 @@
 												<c:if test="${order.cancleStatus eq 'N' }">
 												<select name="dilivaryStatus" id="dilivaryStatus"  onchange="cngStatus(this)">
 												<option value="" disabled selected hidden>상태선택</option>
-												<option value="입금전">입금전</option>
+												<!-- <option>입금전</option>
+												<option>입금확인</option>
+												<option>배송중</option>
+												<option>배송완료</option>
+												<option>구매확정</option> -->
+ 												<option value="입금전">입금전</option>
 												<option value="입금확인">입금확인</option>
 												<option value="배송중">배송중</option>
 												<option value="배송완료">배송완료</option>
-												<option value="구매확정">구매확정</option>
+												<option value="구매확정">구매확정</option> 
 												</select>
 												
 												</c:if>
@@ -263,8 +268,9 @@
     
     <script type="text/javascript">
 	function cngStatus(obj){
-	var change=$("#dilivaryStatus").val();
+	var change=$(obj).parent().children("#dilivaryStatus").val();
 	var orderNo=$(obj).parent().parent().children("#orderNo").text();
+	alert(change);
 	
 	$.ajax({
 		url:"/order/admin/cngDilivary",
@@ -273,7 +279,7 @@
 		success:function(data){
 			if(data=="success"){
 				alert("변경 완료되었습니다.");
-				window.location.replace("/orderAdmin/list.kh");
+				window.location.replace("/admin/order/ListView");
 			}else{
 				alert("변경 실패");
 			}
