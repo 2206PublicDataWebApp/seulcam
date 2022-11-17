@@ -525,7 +525,7 @@
                                 <fmt:formatDate value="${dateValue}" pattern="yyyy-MM-dd" />
                             </c:set>
                             <c:choose>
-                                <c:when test="${today > lastDay}">
+                                <c:when test="${today >= lastDay}">
                                     <div class="product-box disabled"
                                         onclick='location.href="/campBooking/campBookingDetail.kh?bookingNo="+${campBookingList.bookingNo }+""'>
                                 </c:when>

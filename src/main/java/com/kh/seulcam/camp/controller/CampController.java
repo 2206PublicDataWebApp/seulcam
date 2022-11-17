@@ -84,6 +84,7 @@ public class CampController {
             Integer likeCount = cService.campLikeCount(campLike);
             Member member = (Member) session.getAttribute("loginUser");
             Integer likeCheck = 0;
+            int walking =0;
             // 최소 가격 체크
 
             Integer minPrice;
@@ -96,8 +97,9 @@ public class CampController {
             if (member != null) {
                 String memberId = member.getMemberId();
                 campLike.setMemberId(memberId);
+                walking = cService.countWalking(contentId,memberId);
             }
-
+            mv.addObject("walking", walking);
             mv.addObject("starAvg", starAvg);
             mv.addObject("likeCheck", likeCheck);
             mv.addObject("likeCount", likeCount);
@@ -123,18 +125,20 @@ public class CampController {
             if (!cList.isEmpty()) {
                 cList.get(0).setBlogCount(result);
             }
+            Member member = (Member) session.getAttribute("loginUser");
             for (int i = 0; i < cList.size(); i++) {
                 // 캠핑장 좋아요
                 CampLike campLike = new CampLike();
                 campLike.setCampId(cList.get(i).getContentId() + "");
                 // 좋아요 갯수
                 Integer likeCount = cService.campLikeCount(campLike);
-                Member member = (Member) session.getAttribute("loginUser");
                 Integer likeCheck = 0;
+                int walking =0;
                 if (member != null) {
                     String memberId = member.getMemberId();
                     campLike.setMemberId(memberId);
                     likeCheck = cService.campLikeCount(campLike);
+                    walking = cService.countWalking(cList.get(i).getContentId(),memberId);
                 }
                 Integer minPrice = cService.campMinPrice(cList.get(i).getContentId());
                 ;
@@ -146,6 +150,7 @@ public class CampController {
                 if (starAvg == null) {
                     starAvg = "0";
                 }
+                cList.get(i).setWalking(walking);
                 cList.get(i).setMinPrice(minPrice);
                 cList.get(i).setStarAvg(starAvg);
                 cList.get(i).setLikeCheck(likeCheck);
@@ -169,16 +174,18 @@ public class CampController {
             HttpSession session) {
         try {
             List<Camp> cList = cService.printCampList(sList);
+            Member member = (Member) session.getAttribute("loginUser");
             for (int i = 0; i < cList.size(); i++) {
                 CampLike campLike = new CampLike();
                 campLike.setCampId(cList.get(i).getContentId() + "");
                 Integer likeCount = cService.campLikeCount(campLike);
-                Member member = (Member) session.getAttribute("loginUser");
                 Integer likeCheck = 0;
+                int walking =0;
                 if (member != null) {
                     String memberId = member.getMemberId();
                     campLike.setMemberId(memberId);
                     likeCheck = cService.campLikeCount(campLike);
+                    walking = cService.countWalking(cList.get(i).getContentId(),memberId);
                 }
                 Integer minPrice = cService.campMinPrice(cList.get(i).getContentId());
                 if (minPrice == null) {
@@ -188,6 +195,7 @@ public class CampController {
                 if (starAvg == null) {
                     starAvg = "0";
                 }
+                cList.get(i).setWalking(walking);
                 cList.get(i).setMinPrice(minPrice);
                 cList.get(i).setStarAvg(starAvg);
                 cList.get(i).setLikeCheck(likeCheck);

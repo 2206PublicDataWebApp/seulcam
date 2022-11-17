@@ -85,6 +85,7 @@ public class CampAdminController {
             if (page != null) {
                 sList.setPage(page);
             }
+            sList.setType("A");
             List<Camp> cList = cService.printCampList(sList);
             int result = cService.printListCount(sList);
 

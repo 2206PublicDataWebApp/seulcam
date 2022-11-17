@@ -216,6 +216,12 @@ public class CampServieImpl implements CampServie{
         int result = cStore.updateBlog(session,camp);
         return result;
     }
+
+    @Override
+    public int countWalking(int contentId, String memberId) {
+        int result = cStore.selectWalking(session, contentId,memberId);
+        return result;
+    }
     
     
 

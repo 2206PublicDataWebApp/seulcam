@@ -312,6 +312,22 @@ footer {
 }
 	
 }
+.walking{
+	max-width: fit-content;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    color: #343a40;
+    border: 2px solid #343a40;
+	font-size: 16px;
+    border-radius: 5px;
+	padding: 6px;
+}
+.done {
+	color: white;
+	background-color: #343a40;
+	border: 2px solid #343a40;
+}
 </style>
 
 <body>
@@ -329,7 +345,12 @@ footer {
 				<div class="info_img">
 					<div class="img-slick">
 						<div class="img-wrapper">
-                            <div class='thumbImgArea'><img class='thumbImg' src='${camp.firstImageUrl}' alt=''></div>
+                            <c:if test="${camp.firstImageUrl == null || camp.firstImageUrl ==''}">
+                                <div class='thumbImgArea'><img class='thumbImg' src='https://3.bp.blogspot.com/-ZKBbW7TmQD4/U6P_DTbE2MI/AAAAAAAADjg/wdhBRyLv5e8/s1600/noimg.gif' alt=''></div>
+                            </c:if>
+                            <c:if test="${camp.firstImageUrl != null}">
+                                <div class='thumbImgArea'><img class='thumbImg' src='${camp.firstImageUrl}' alt=''></div>
+                            </c:if>
 							<!-- <div
 								style='height: 450px; background: url(${camp.firstImageUrl}) no-repeat center center #343a40; background-size: 100%;'>
 							</div> -->
@@ -383,6 +404,12 @@ footer {
 									pattern="0.00" value="${starAvg}" />
 							</span>
 						</div>
+                        <c:if test="${walking > 0}">
+                            <div class='walking done'><i class='fas fa-walking'></i></div>
+                        </c:if>
+                        <c:if test="${walking < 1}">
+                            <div class='walking'><i class='fas fa-walking'></i></div>
+                        </c:if>
 					</div>
 					<div align="right" style="width: 50%; float: left;">
 						<c:if test="${camp.registAvi == 'Y'}">
@@ -882,7 +909,7 @@ footer {
                         else if (campReviewContents.trim() == "") {
                             alert("리뷰 내용을 등록하세요.");
                         }
-                        else if (confirm("리뷰를 등록하시겠습니까?")) {
+                        else {
                             // location.href="/member/loginView";
                             $.ajax({
                                 url: "/camp/campReviewWrite.kh",
@@ -897,7 +924,6 @@ footer {
                                 },
                                 success: function (result) {
                                     if (result == "success") {
-                                        alert("등록완료");
                                         starAvg()
                                         campReviewList()
                                     } else {

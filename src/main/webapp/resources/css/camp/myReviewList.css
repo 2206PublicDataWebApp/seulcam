@@ -179,7 +179,7 @@ header > h1 {
 }
 .review-contents{
 	font-size:14px;
-	height: 50px;
+	height: fit-content;
 }
 .button{
     display: flex;

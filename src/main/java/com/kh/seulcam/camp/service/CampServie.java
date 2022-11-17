@@ -67,5 +67,7 @@ public interface CampServie {
 
     public int updateBlogData(Camp camp);
 
+    public int countWalking(int contentId, String memberId);
+
 
 }

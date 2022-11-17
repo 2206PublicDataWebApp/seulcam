@@ -70,4 +70,6 @@ public interface CampStore {
 
     public int updateBlog(SqlSessionTemplate session, Camp camp);
 
+    public int selectWalking(SqlSessionTemplate session, int contentId, String memberId);
+
 }
