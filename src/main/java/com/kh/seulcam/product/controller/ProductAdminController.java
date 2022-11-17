@@ -179,6 +179,7 @@ public class ProductAdminController {
 		List<HashMap>sNameList = pService.getTotalStoreName();
 		Product product =pService.getProductByNo(productNo);
 		List<Detail> dList=pService.printAllDetailInfo(productNo);
+
 		mv.addObject("dList", dList);
 		if(!sNameList.isEmpty()&&product!=null) {
 			mv.addObject("sNameList", sNameList);

@@ -29,7 +29,7 @@
 	                </c:if>
 	                
 	                <c:if test="${loginUser.adminCheck == true }">
-	                <a href="/member/memberListView"><i class="member-icon"></i></a>
+	                 <a href="/admin/member/ListView"><i class="member-icon"></i></a>
 	                </c:if>
                 </li>
             </ul>

@@ -207,7 +207,7 @@
                                         	<td id="storeNo">${brand.storeNo }</td>
                                         	<td><a href="#">${brand.brandName }</a></td>
                                         	<c:if test="${brand.storeAddr eq null }">
-                                        		<td colspan="2">스토어 미등록</td>>
+                                        		<td colspan="2">스토어 미등록</td>
                                         	</c:if>
                                         	<c:if test="${brand.storeAddr ne null }">
                                         		<td>${brand.storeName }</td>
@@ -220,7 +220,7 @@
                                     </tbody>
                                 </table>
 	                                <input type="button" class="page-link" onclick="selectDel()"style="margin-top:10px; margin-left: 0px; float:right; color:red; display:inline;border-radius: 0.35rem;"value="선택삭제">
-                                <input type="button" class="page-link" onclick="brandRegist()"style="margin-top:10px;margin-left:2px; float:left; color:#4e73df; display:inline;border-radius: 0.35rem;"value="상품등록">
+                                <input type="button" class="page-link" onclick="brandRegist()"style="margin-top:10px;margin-left:2px; float:left; color:#4e73df; display:inline;border-radius: 0.35rem;"value="브랜드등록">
                             </div>
                         </div>
                     </div>

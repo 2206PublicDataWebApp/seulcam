@@ -2,6 +2,9 @@
 body{
 	margin-top:150px;
 	position:relative;
+	max-width:768px;
+	margin:auto;
+	background-color:#f1f1f1;
 }
 .go-back {
     display: inline-flex;
@@ -10,6 +13,11 @@ body{
     height: 40px;
     padding: 5px;
 }
+#header-block{
+		max-width:768px;
+	margin:auto;
+}
+
 
 .go-back img {
     width: 25px;
@@ -102,6 +110,10 @@ body > section > form>div.box-form > div > textarea{
   background-size:115px;
   z-index:100;
   
+}
+.review{
+	padding:200px 15px 100px;;
+	background-color:#ffffff;
 }
 .drop-zone__prompt{
     color: darkgrey;

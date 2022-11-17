@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
@@ -417,21 +418,26 @@ public class ProductController {
 			,@RequestParam("brandName") String brandName
 			,HttpServletRequest req, HttpServletResponse response) {
 		List<Brand> bsList = pService.getbrandStore(brandName);
+		
 		ArrayList<Float[]> coordsList =new ArrayList<Float[]>();
-		Float[] coords=null;
-		if(bsList.get(0).getStoreAddr()!=null) {
+		
 			try {
 				for(int i = 0; i<bsList.size(); i++) {
-					String address = bsList.get(i).getStoreAddr();
-					coords = geoCoder(address);
-					coordsList.add(coords);
-					coordsList.get(i)[0]=coords[0];
-					coordsList.get(i)[1]=coords[1];
-					System.out.println(coords[0].toString());
+					if(!Objects.isNull(bsList.get(i).getStoreAddr())) {
+						String address = bsList.get(i).getStoreAddr();
+						Float[] coords = new Float[2];
+								coords = geoCoder(address);
+						coordsList.add(coords);
+						coordsList.get(i)[0]=coords[0];
+						coordsList.get(i)[1]=coords[1];
+						System.out.println(coordsList.get(i)[0].toString());
+						System.out.println(coordsList.get(i)[1].toString());
+					}else {
+						Float[] coords = new Float[2];
+						coordsList.add(coords);
+					}
 				}
 					
-					mv.addObject("bsList", bsList);
-					mv.addObject("coordsList", coordsList);
 					Map<String,Object> hMap = new HashMap<String,Object>();
 					hMap.put("bsList",bsList);
 					hMap.put("coordsList",coordsList);
@@ -443,7 +449,6 @@ public class ProductController {
 				e.printStackTrace();
 			}
 			
-		}
 		
 		return null;
 		

@@ -516,7 +516,7 @@ $("#go-review").click(function(){
 				    center: new naver.maps.LatLng(36.3504119, 127.3845475),
 				    zoom: 5
 				}); */
-
+	var fullAddr="";
 	 if($("#ac-2").is(":checked")){
 		 $.ajax({
 			 url:"/product/brandStore",
@@ -527,7 +527,7 @@ $("#go-review").click(function(){
 
 	
 				var fullAddrs = new Array();
-				var fullAddr = "";
+				fullAddr = "";
 				$(function() {
 					
 					initMap();
@@ -539,15 +539,17 @@ $("#go-review").click(function(){
 					
 					var areaArr = new Array();  // 지역을 담는 배열 ( 지역명/위도경도 )
 						 for(var i=0; i<data.bsList.length;i++){
-							areaArr.push(
-							 {location : data.bsList[i].storeName , lat : data.coordsList[i][1] , lng : data.coordsList[i][0] },  
-							);
-							 fullAddr+="<p><button type='button' onclick='findStore("+i+")' class='findStore'><b>"+data.bsList[i].storeName+"</b>";
-							 fullAddr+="</button>ㅤㅤ["+data.bsList[i].storeZipcode+"] ";
-							 fullAddr+=data.bsList[i].storeAddr;
-							 fullAddr+=" "+data.bsList[i].storeAddrDetail+"</p><br>";
-							 fullAddrs.push("<p>"+data.bsList[i].storeAddr+"</p><p>"+data.bsList[i].storeAddrDetail)+"</p>";
-						 
+							 if(data.bsList[i].storeName!=null){
+								 
+								areaArr.push(
+								 {location : data.bsList[i].storeName , lat : data.coordsList[i][1] , lng : data.coordsList[i][0] },  
+								);
+								 fullAddr+="<p><button type='button' onclick='findStore("+i+")' class='findStore'><b>"+data.bsList[i].storeName+"</b>";
+								 fullAddr+="</button>ㅤㅤ["+data.bsList[i].storeZipcode+"] ";
+								 fullAddr+=data.bsList[i].storeAddr;
+								 fullAddr+=" "+data.bsList[i].storeAddrDetail+"</p><br>";
+								 fullAddrs.push("<p>"+data.bsList[i].storeAddr+"</p><p>"+data.bsList[i].storeAddrDetail)+"</p>";
+							 }
 						 }
 						 $("#store_addr").append(fullAddr);
 						
