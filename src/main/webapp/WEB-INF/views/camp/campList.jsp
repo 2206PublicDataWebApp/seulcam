@@ -25,6 +25,7 @@
 					href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 				<script type="text/javascript"
 					src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+				<script src="https://kit.fontawesome.com/cb40f8d009.js" crossorigin="anonymous"></script>
 			</head>
 
 			<body>
@@ -250,12 +251,23 @@
 												str += "<div class='likeBtn' id='like-" + data[i].contentId + "' onclick='likeButton(" + data[i].contentId + "," + data[i].mapX + "," + data[i].mapY + ")' ><svg class='heart' xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16'>"
 											}
 											str += "<path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z'></path></svg><span class='likeCount' id='likeCount-" + data[i].contentId + "'>" + data[i].likeCount + "</span></div>"
-											str += "<div  class='starCzone' > <svg class='starC' xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-star-fill' viewBox='0 0 16 16'><path d='M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z'/></svg></svg><span class='starCount'>" + avg + "</span>"
-											str += "</div></div></div><div class='col-4' style='padding-left:0;'>"
+											str += "<div  class='starCzone' > <svg class='starC' xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-star-fill' viewBox='0 0 16 16'><path d='M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z'/></svg></svg><span class='starCount'>" + avg + "</span></div>"
+											if (data[i].walking > 0) {
+												str += "<div class='walking done'><i class='fas fa-walking'></i></div>"
+											} else {
+												str += "<div class='walking'><i class='fas fa-walking'></i></div>"
+											}
+											
+											str += "</div></div><div class='col-4' style='padding-left:0;'>"
+											
 											if (data[i].registAvi == 'Y') {
 												str += "<div class='booking'><div style='display:flex; flex-direction: column;'><p style='font-size : 10pt; color : #dc3545'><b>예약가능</b></p><p style='font-size : 16pt;'><b>" + data[i].minPrice.toLocaleString('ko-KR') + "원~</b></p></div></div>"
 											}
 											str += "</div></div></div></div><hr>"
+											
+								
+							
+
 										}
 
 

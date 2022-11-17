@@ -27,10 +27,10 @@
 		<appender-ref ref="console" />
 	</logger>
 	<!-- sql문만 로그를 남김,preparedstatement일 경우 ?(위치홀더)값이 완전히 보임 -->
-	<logger name="jdbc.sqlonly" additivity="false">
+	<!-- <logger name="jdbc.sqlonly" additivity="false">
 		<level value="info" />
 		<appender-ref ref="console" />
-	</logger>
+	</logger> -->
 	<!-- resultset을 제외한 모든 jdbc 호출 정보를 로그로 남김, 로그양이 많고 필요하지 않으면 사용x -->
 	<!-- <logger name="jdbc.audit" additivity="false">
 		<level value="warn" />

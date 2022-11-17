@@ -195,4 +195,13 @@ public class CampStoreLogic implements CampStore{
         return result;
     }
 
+    @Override
+    public int selectWalking(SqlSessionTemplate session, int contentId, String memberId) {
+        HashMap<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("contentId", contentId);
+        paramMap.put("memberId",memberId);
+        int result = session.selectOne("CampMapper.selectWalking",paramMap);
+        return result;
+    }
+
 }

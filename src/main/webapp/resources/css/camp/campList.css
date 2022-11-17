@@ -233,3 +233,19 @@ select {
 .booking p {
 	margin: 0;
 }
+.walking{
+	max-width: fit-content;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    color: #343a40;
+    border: 2px solid #343a40;
+	font-size: 16px;
+    border-radius: 5px;
+	padding: 6px;
+}
+.done {
+	color: white;
+	background-color: #343a40;
+	border: 2px solid #343a40;
+}

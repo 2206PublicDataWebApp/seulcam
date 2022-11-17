@@ -237,6 +237,11 @@
 				margin: 0 auto;
 				font-family: "NotoSansR";
 			}
+			@media screen and (max-width: 576px){
+			.sec_cal{
+					max-width: 330px;
+					margin: 1.75rem auto;
+				}}
 
 			.sec_cal .cal_nav {
 				display: flex;
