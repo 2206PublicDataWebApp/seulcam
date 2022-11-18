@@ -3,6 +3,8 @@
   <img src="./readme_assets/main.PNG">
 </p>
 
+## :film_projector: [웹버전 시연영상](https://youtu.be/21dfU2m0mz4) :iphone: [모바일버전 시연영상](https://www.youtube.com/watch?v=zY-UIjQ4CIA) :loudspeaker:[기획보고서](https://docs.google.com/presentation/d/1Ca5pK43d-58go0l-kLcL0n4C1WrkNRMsRplX9AVcZqE/edit?usp=sharing)
+
 
 
 <h2 align="center">📅개발 기간</h2>
