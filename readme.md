@@ -41,37 +41,37 @@
 
 ### 1. 로그인
 <p align="center">
-  <img src="./Readme_assets/login.PNG">
+  <img src="./readme_assets/login.png">
 <p>
 <br>
   
 ### 2. 회원 가입
 <p align="center">
-  <img src="./Readme_assets/register.PNG">
+  <img src="./readme_assets/register.png">
 <p>
 <br>
   
 ### 3. 아이디 찾기
 <p align="center">
-  <img src="./Readme_assets/id_find.png">
+  <img src="./readme_assets/id_find.png">
 <p>
 <br>
 
 ### 4. 비밀번호 찾기
 <p align="center">
-  <img src="./Readme_assets/pw_find.png">
+  <img src="./readme_assets/pw_find.png">
 <p>
 <br>
   
 ### 5. 마이페이지
 <p align="center">
-  <img src="./Readme_assets/mypage.png">
+  <img src="./readme_assets/mypage.png">
 <p>
 <br>
 
 ### 6. 마이페이지 회원관리
 <p align="center">
-  <img src="./Readme_assets/mypage_member.png">
+  <img src="./readme_assets/mypage_member.png">
 <p>
 <br>
   
