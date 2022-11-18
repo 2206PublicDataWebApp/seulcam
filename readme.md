@@ -6,7 +6,8 @@
 ## :film_projector: [웹버전 시연영상](https://youtu.be/21dfU2m0mz4) :iphone: [모바일버전 시연영상](https://www.youtube.com/watch?v=zY-UIjQ4CIA) :loudspeaker:[기획보고서](https://docs.google.com/presentation/d/1Ca5pK43d-58go0l-kLcL0n4C1WrkNRMsRplX9AVcZqE/edit?usp=sharing)
 
 <h2 align="center">📅프로젝트 소개</h2>
-<p align="center">2022-10-17 ~ 2022-11-18</p>
+<p align="center">유명한 브랜드부터 떠오르는 브랜드들까지 모두 모아놓은 캠핑 용품계의 무신사, 캠핑 브랜드 멀티샵 기능과 전국의 캠핑장을 조회하고 예약할 수 있는 캠핑 계의 야놀자 기능을 합쳐놓은 서비스입니다.
+</p>
 
 
 <h2 align="center">📅개발 기간</h2>
