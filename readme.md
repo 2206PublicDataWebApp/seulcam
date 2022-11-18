@@ -41,23 +41,39 @@
 
 ### 1. 로그인
 <p align="center">
-  <img src="./Readme_assets/이미지_파일.jpg">
+  <img src="./Readme_assets/login.PNG">
 <p>
 <br>
   
 ### 2. 회원 가입
 <p align="center">
-  <img src="./Readme_assets/이미지_파일.jpg">
+  <img src="./Readme_assets/register.PNG">
 <p>
 <br>
   
-### 3. 아이디 찾기, 비밀번호 찾기
+### 3. 아이디 찾기
 <p align="center">
-  <img src="./Readme_assets/이미지_파일.jpg">
+  <img src="./Readme_assets/id_find.png">
+<p>
+<br>
+
+### 4. 비밀번호 찾기
+<p align="center">
+  <img src="./Readme_assets/pw_find.png">
 <p>
 <br>
   
-  
+### 5. 마이페이지
+<p align="center">
+  <img src="./Readme_assets/mypage.png">
+<p>
+<br>
+
+### 6. 마이페이지 회원관리
+<p align="center">
+  <img src="./Readme_assets/mypage_member.png">
+<p>
+<br>
   
   
   
