@@ -84,7 +84,7 @@
 
 ### 7. 장바구니
 <p align="center">
-  <img src="./readme_assets/mypage_member.png">
+  <img src="./readme_assets/장바구니.png">
 <p>
 <br>
   
