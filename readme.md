@@ -94,13 +94,13 @@
 <p>
 <br>
 
-### 9. 주문완료,취소 리스트
+### 9. 주문완료 리스트, 취소 리스트
 <p align="center">
   <img src="./readme_assets/orderList.png">
 <p>
 <br>
 
-### 10. 배송,포인트 조회
+### 10. 배송 조회, 포인트 조회
 <p align="center">
   <img src="./readme_assets/point-dilivery.png">
 <p>
