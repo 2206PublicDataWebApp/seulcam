@@ -121,22 +121,22 @@
   
 ### 13. 전국 캠핑장 검색
 <p align="center">
-  <img style="height : 600px;" src="https://user-images.githubusercontent.com/108412831/205023621-58bc6da5-dcb3-4467-ada2-4e4d05f837b4.gif">
-  <img style="height : 600px" src="https://user-images.githubusercontent.com/108412831/205024448-7dd3d5c8-f43c-4715-88b4-3d770c317ee3.gif">
+  <img style="height : 600px; padding: 10px;" src="https://user-images.githubusercontent.com/108412831/205023621-58bc6da5-dcb3-4467-ada2-4e4d05f837b4.gif">
+  <img style="height : 600px; padding: 10px;" src="https://user-images.githubusercontent.com/108412831/205024448-7dd3d5c8-f43c-4715-88b4-3d770c317ee3.gif">
 <p>
 <br>
 
 ### 14. 캠핑장 상세 페이지, 좋아요, 댓글
 <p align="center">
-<img style="height : 600px" src="https://user-images.githubusercontent.com/108412831/205026905-b90f70db-c9dd-4450-868c-b6b891e2f1af.gif">
-<img style="height : 600px" src="https://user-images.githubusercontent.com/108412831/205027152-a4e001b5-cc55-4fd0-a245-4896da491859.gif">
+<img style="height : 600px; padding: 10px;" src="https://user-images.githubusercontent.com/108412831/205026905-b90f70db-c9dd-4450-868c-b6b891e2f1af.gif">
+<img style="height : 600px; padding: 10px;" src="https://user-images.githubusercontent.com/108412831/205027152-a4e001b5-cc55-4fd0-a245-4896da491859.gif">
 <p>
 <br>
 
 ### 15. 캠핑장 예약
 <p align="center">
-  <img style="height : 600px" src="https://user-images.githubusercontent.com/108412831/205027999-4fa80ce9-5e6d-4455-afec-406553154f95.gif">
-  <img style="height : 600px" src="https://user-images.githubusercontent.com/108412831/205028099-4083b8e1-7f41-4bfa-ba24-12d7b7897d10.gif">
+  <img style="height : 600px; padding: 10px;" src="https://user-images.githubusercontent.com/108412831/205027999-4fa80ce9-5e6d-4455-afec-406553154f95.gif">
+  <img style="height : 600px; padding: 10px;" src="https://user-images.githubusercontent.com/108412831/205028099-4083b8e1-7f41-4bfa-ba24-12d7b7897d10.gif">
 <p>
 <br>
 
