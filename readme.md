@@ -15,7 +15,7 @@
 
 <h2 align="center">👪멤버 구성</h2>
 <p align="center">
-  <img src="./readme_assets/team-member.PNG">
+  <img src="./readme_assets/team-member.png">
 </p>
 <h2 align="center">🛠️개발 환경</h2>
 <p align="center">
