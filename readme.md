@@ -142,10 +142,10 @@
 
 ### 16. 캠핑장 마이페이지
 <p align="center">
-  <img style="height : 500px" src="https://user-images.githubusercontent.com/108412831/205028330-e6872dc8-547c-4c8e-a57a-1a386cc64d21.PNG">
-  <img style="height : 500px" src="https://user-images.githubusercontent.com/108412831/205028364-a66679bb-a80a-4ac2-af0e-926b889c3673.PNG">
-  <img style="height : 500px" src="https://user-images.githubusercontent.com/108412831/205028410-1cfeb0c5-4340-4284-9482-ed4bdbc1eafd.PNG">
-  <img style="height : 500px" src="https://user-images.githubusercontent.com/108412831/205028439-033d1f08-0e4b-452a-b7fb-5001b57d0098.PNG">  
+  <img style="height : 450px" src="https://user-images.githubusercontent.com/108412831/205028330-e6872dc8-547c-4c8e-a57a-1a386cc64d21.PNG">
+  <img style="height : 450px" src="https://user-images.githubusercontent.com/108412831/205028364-a66679bb-a80a-4ac2-af0e-926b889c3673.PNG">
+  <img style="height : 450px" src="https://user-images.githubusercontent.com/108412831/205028410-1cfeb0c5-4340-4284-9482-ed4bdbc1eafd.PNG">
+  <img style="height : 450px" src="https://user-images.githubusercontent.com/108412831/205028439-033d1f08-0e4b-452a-b7fb-5001b57d0098.PNG">  
 <p>
 <br>
 
